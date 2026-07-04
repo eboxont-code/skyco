@@ -21,29 +21,28 @@ const quotes = [
 
 export function MotivationBand() {
   return (
-    <section id="motivation" className="px-6 py-24 bg-motivation-band">
+    <section id="motivation" className="px-6 py-12 md:py-16 bg-motivation-band">
       <div className="mx-auto max-w-6xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            A quiet boost when you need it
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+          <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+            A quiet boost, whenever you need it.
           </h2>
-          <p className="mt-4 text-lg text-white/80 leading-relaxed">
-            Real, energising reminders that you&apos;re capable of doing hard things
-            and that taking care of yourself matters.
+          <p className="max-w-sm text-sm text-white/80 leading-relaxed">
+            Real, energising reminders — because taking care of yourself matters.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {quotes.map((quote, i) => (
             <div
               key={i}
-              className="rounded-2xl bg-white/15 backdrop-blur-sm p-8 border border-white/20 transition-all hover:bg-white/20"
+              className="rounded-xl bg-white/12 backdrop-blur-sm p-5 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5"
             >
-              <Quote className="h-8 w-8 text-white/60" />
-              <p className="mt-4 text-lg font-medium text-white leading-relaxed">
+              <Quote className="h-5 w-5 text-white/70" />
+              <p className="mt-2 text-sm font-semibold text-white leading-relaxed">
                 &ldquo;{quote.text}&rdquo;
               </p>
-              <p className="mt-4 text-sm font-medium text-white/70">
+              <p className="mt-3 text-[11px] font-bold uppercase tracking-wider text-white/60">
                 — {quote.author}
               </p>
             </div>
