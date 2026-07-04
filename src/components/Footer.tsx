@@ -3,7 +3,7 @@ import badge from "@/assets/skyco-badge.png.asset.json";
 
 export function Footer() {
   return (
-    <footer className="border-t border-sky-bright/20 bg-gradient-to-b from-background to-sky-ice/50 px-6 py-6">
+    <footer className="border-t border-sky-bright/20 bg-gradient-to-b from-background to-sky-ice/50 px-6 py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 sm:flex-row">
         <div className="flex items-center gap-2 text-foreground">
           <img src={badge.url} alt="SkyCo" className="h-8 w-8 rounded-full" />

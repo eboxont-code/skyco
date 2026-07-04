@@ -13,21 +13,21 @@ export function HelpSection() {
   };
 
   return (
-    <section id="help" className="px-6 py-14 md:py-20">
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:items-start">
+    <section id="help" className="px-6 py-20 md:py-28">
+      <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-2 md:items-start">
         <div>
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white">
             <MessageCircleHeart className="h-5 w-5" />
           </div>
           <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Say hello</p>
-          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             Ask for a <span className="text-gradient-sky">little help</span>
           </h2>
-          <p className="mt-4 text-base text-muted-foreground leading-relaxed">
+          <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             Need a quick answer, a suggestion, or someone to point you in a
             better direction? Send a message — we&apos;re listening.
           </p>
-          <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+          <ul className="mt-6 space-y-3 text-base text-muted-foreground">
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-bright"/> Suggest a tool you&apos;d love to see</li>
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Share what would make your day easier</li>
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Just say hi — we read every message</li>
