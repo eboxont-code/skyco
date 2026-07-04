@@ -1,37 +1,56 @@
 ## Goal
 
-Link the "Currency Converter" tool card to the live CurrenSee site, rewrite copy in a warmer first-person human voice (no em dashes, no AI-flavored phrasing), and clean up production-readiness issues.
+Ship SkyCo. Point Currency Converter at its real custom domain, tighten the footer, and clear every actionable SEO/accessibility finding so the live site is production-ready.
 
 ## Changes
 
-### 1. Link Currency Converter to CurrenSee
+### 1. Currency Converter → live custom domain
 
-- `src/components/ToolsGrid.tsx`: add optional `href` + `status` handling. For the Currency Converter card, set `href: "https://skycocurrensee.lovable.app"` and status `"Live"` (with an external-link icon). Card becomes a real `<a target="_blank" rel="noopener noreferrer">`. Other three cards keep the "Coming soon" pill and stay non-clickable.
+`src/components/ToolsGrid.tsx`: change the Currency Converter `href` from `https://skycocurrensee.lovable.app` to `https://currensee.skyco.online/`. Keep the card as a real `<a target="_blank" rel="noopener noreferrer">` with the "Live" pill.
 
-### 2. Rewrite copy — human, first-person, no em dashes
+### 2. Footer polish
 
-Replace every `—` with a period, comma, or parentheses depending on rhythm. Swap AI-flavored lines ("quiet place built to help you…", "small lifts that add up", "we read every message", "as above, so below" chrome text stays as tagline only) for a personal "I / we" voice from the maker.
+`src/components/Footer.tsx`: rewrite the copyright line to
+`© 2026 SkyCo. Made with ♥` (heart icon only, no trailing "for real people" text). Keep the year dynamic via `new Date().getFullYear()` so it stays correct.
 
-Files touched:
+### 3. SEO findings (clear all failing)
 
-- `src/components/Hero.tsx` — new headline copy + description in first person (e.g. "Hi, I'm building SkyCo. It's a small collection of tools I actually use to keep my week calm.").
-- `src/components/Mission.tsx` — section heading + three pillar descriptions rewritten as personal notes.
-- `src/components/ToolsGrid.tsx` — tool descriptions rewritten short and plain; intro paragraph rewritten.
-- `src/components/HelpSection.tsx` — heading, intro, bullet list, form labels/placeholders, success message.
-- `src/components/MotivationBand.tsx` — heading + fallback caption text.
-- `src/components/Footer.tsx` — tagline + copyright line (remove `·` em-dash-adjacent styling, use plain punctuation).
-- `src/routes/__root.tsx` — `<title>`, meta description, og/twitter title + description rewritten in same voice, em dashes removed.
+- **Homepage heading & links (`agent_content:content`)** — `Hero.tsx`: change H1 from "Welcome to SkyCo" to `SkyCo. Small, honest tools for everyday life.` (descriptor + brand). Change the "Learn More" button text to `Read about the mission`. `Navbar.tsx` + `Footer.tsx`: update logo `alt` from `"SkyCo"` to `"SkyCo brand mark"`.
+- **Structured data (`agent_metadata:structured_data`)** — `src/routes/__root.tsx`: add `scripts` with two JSON-LD blocks (WebSite + Organization) using name `SkyCo`, url `https://skycoonline.lovable.app`, and logo pointing at the badge asset URL.
+- **robots.txt (`http:robots`)** — create `public/robots.txt`:
+  ```
+  User-agent: *
+  Allow: /
+  Sitemap: https://skycoonline.lovable.app/sitemap.xml
+  ```
+- **sitemap.xml (`http:sitemap`)** — create `src/routes/sitemap[.]xml.ts` as a server route returning XML with a single `/` entry (only public route in the app), `BASE_URL = "https://skycoonline.lovable.app"`.
+- **llms.txt (`http:llms_txt`)** — create `public/llms.txt` with `# SkyCo`, one-line summary, and a Pages section linking `/` only (no other public routes, no auth/admin surfaces).
+- **Lighthouse performance (`lighthouse:lighthouse_performance`)** — `Hero.tsx`: add `width`/`height` and `fetchpriority="high"` on the badge hero image, remove any lazy loading. `__root.tsx`: add a `<link rel="preload" as="image">` for the badge asset URL in the root `head().links`.
+- **Lighthouse accessibility (`lighthouse:lighthouse_accessibility`)** — `src/routes/index.tsx`: wrap the section content (Hero through HelpSection) in a single `<main>` between Navbar and Footer. No color changes needed (existing tokens already meet contrast).
+- **Google Search Console (`gsc:gsc`)** — call `standard_connectors--connect` with `google_search_console` so the user can authorize, then run the META verification + `PUT sites/...` flow against `https://skycoonline.lovable.app/`. Requires user to complete the OAuth prompt.
 
-### 3. Production polish (scan pass)
+After edits, call `seo_chat--update_findings` to mark each fixed finding.
 
-- Remove leftover `—` characters anywhere in `src/` (grep pass across components + root meta).
-- `HelpSection`: form currently only sets local `submitted` state and never sends the message. Add a minimal `mailto:` submission (open user's mail client to `hello@skyco.online` or similar) so the contact form actually does something in production. Confirm the destination email with the user before wiring, or fall back to just keeping the visual confirmation and add a note.
-- Trigger the SEO scanner after edits to catch anything the copy rewrite affected (title/description length, H1 uniqueness).
+### 4. Security & integrity pass
 
-## One thing I need from you
+- `security--run_security_scan` for a fresh scan (last supabase/supply-chain scan is >12h stale). Current results show 0 findings across all scanners; re-run to confirm before publishing.
+- Quiet fix the runtime error `error loading dynamically imported module … createIsomorphicFn.js` (dev-only stale module cache from the Firecrawl work) by restarting the dev server after edits land.
+- Verify Firecrawl connector is still linked and `LOVABLE_API_KEY` is present (Instagram tiles gracefully fall back to emojis on 403, which is already handled).
 
-For the contact form, what should happen when someone hits **Send Message**?
+### 5. Skip / not doing
 
-1. Open their mail app with a prefilled email to an address you own : send to support@skyco.online
+- No copy rewrites beyond the H1 / Learn More / Footer lines above — the rest is already in the user's voice.
+- No custom domain wiring on the SkyCo project itself (user hasn't asked; live URL is `skyco.online`).
+- Not publishing from the tool — user publishes from the Publish button when ready.
 
-Reply with 1 / 2 / 3 (and the email if option 1) and I'll implement.
+## Files touched
+
+- `src/components/ToolsGrid.tsx` (href)
+- `src/components/Footer.tsx` (copyright + alt)
+- `src/components/Hero.tsx` (H1, button text, image attrs)
+- `src/components/Navbar.tsx` (alt)
+- `src/routes/__root.tsx` (JSON-LD, preload)
+- `src/routes/index.tsx` (single `<main>`)
+- `public/robots.txt` (new)
+- `public/llms.txt` (new)
+- `src/routes/sitemap[.]xml.ts` (new)

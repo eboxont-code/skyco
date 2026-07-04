@@ -43,7 +43,7 @@ const tools: Tool[] = [
     description:
       "CurrenSee is my little converter for travel days and cross-border shopping. Try it out.",
     status: "Live",
-    href: "https://skycocurrensee.lovable.app",
+    href: "https://currensee.skyco.online/",
   },
 ];
 

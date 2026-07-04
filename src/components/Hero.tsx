@@ -17,7 +17,7 @@ export function Hero() {
           </div>
 
           <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            Welcome to <span className="text-gradient-sky">SkyCo</span>
+            <span className="text-gradient-sky">SkyCo</span>. Small, honest tools for everyday life.
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:mx-0 mx-auto">
@@ -36,7 +36,7 @@ export function Hero() {
               href="#mission"
               className="inline-flex items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 py-3 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
             >
-              Learn More
+              Read about the mission
             </a>
           </div>
         </div>
@@ -45,7 +45,11 @@ export function Hero() {
           <div className="absolute inset-0 -z-10 rounded-full bg-sky-bright/25 blur-3xl" />
           <img
             src={badge.url}
-            alt="SkyCo — As Above, So Below"
+            alt="SkyCo brand mark"
+            width={384}
+            height={384}
+            fetchPriority="high"
+            decoding="async"
             className="w-72 md:w-96 drop-shadow-[0_20px_40px_rgba(11,59,140,0.35)] animate-[float_6s_ease-in-out_infinite]"
           />
         </div>

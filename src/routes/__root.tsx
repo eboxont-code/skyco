@@ -96,6 +96,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
+      {
+        rel: "preload",
+        as: "image",
+        href: "/__l5e/assets-v1/4a615c4c-3ced-40e4-a437-0b7ba2d19474/skyco-badge.png",
+        fetchpriority: "high",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "SkyCo",
+          url: "https://skycoonline.lovable.app",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "SkyCo",
+          url: "https://skycoonline.lovable.app",
+          logo: "https://skycoonline.lovable.app/__l5e/assets-v1/4a615c4c-3ced-40e4-a437-0b7ba2d19474/skyco-badge.png",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
