@@ -1,27 +1,24 @@
-import { Cloud, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
+import badge from "@/assets/skyco-badge.png.asset.json";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-muted/20 px-6 py-12">
-      <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <div className="flex items-center gap-2 text-foreground">
-            <Cloud className="h-5 w-5 text-sky-bright" />
-            <span className="font-semibold">SkyCo</span>
-          </div>
-
-          <p className="text-sm text-muted-foreground">
+    <footer className="border-t border-sky-bright/20 bg-gradient-to-b from-background to-sky-ice/50 px-6 py-6">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 sm:flex-row">
+        <div className="flex items-center gap-2 text-foreground">
+          <img src={badge.url} alt="SkyCo" className="h-8 w-8 rounded-full" />
+          <span className="text-sm font-extrabold">
+            Sky<span className="text-sky-bright">Co</span>
+          </span>
+          <span className="ml-2 text-xs font-semibold uppercase tracking-widest text-sky-deep/70">
             As Above, So Below
-          </p>
-
-          <p className="flex items-center gap-1 text-sm text-muted-foreground">
-            Built with <Heart className="h-3.5 w-3.5 text-sky-bright" /> for real people
-          </p>
+          </span>
         </div>
 
-        <div className="mt-8 text-center text-xs text-muted-foreground/60">
-          &copy; {new Date().getFullYear()} SkyCo. Small lifts for better days.
-        </div>
+        <p className="flex items-center gap-1 text-xs text-muted-foreground">
+          &copy; {new Date().getFullYear()} SkyCo · Built with
+          <Heart className="h-3 w-3 fill-sky-bright text-sky-bright" /> for real people
+        </p>
       </div>
     </footer>
   );

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Cloud } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import badge from "@/assets/skyco-badge.png.asset.json";
 
 const navLinks = [
   { label: "Tools", href: "#tools" },
@@ -27,13 +28,15 @@ export function Navbar() {
           : "bg-transparent"
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
         <a href="#" className="flex items-center gap-2 text-foreground">
-          <Cloud className="h-7 w-7 text-sky-bright" />
-          <span className="text-xl font-bold tracking-tight">SkyCo</span>
+          <img src={badge.url} alt="SkyCo" className="h-10 w-10 rounded-full" />
+          <span className="text-lg font-extrabold tracking-tight">
+            Sky<span className="text-sky-bright">Co</span>
+          </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -45,7 +48,7 @@ export function Navbar() {
           ))}
           <a
             href="#help"
-            className="rounded-full bg-sky-deep px-5 py-2 text-sm font-medium text-primary-foreground transition-all hover:bg-sky-deep/90 hover:shadow-md"
+            className="rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
           >
             Get in Touch
           </a>

@@ -1,56 +1,37 @@
-## Goal
+## Brand + density refresh
 
-Create a welcoming, energetic landing page for SkyCo that communicates its mission, previews the available tools, and leaves visitors feeling supported and motivated.
+**Logos & assets**
+- Upload the four provided images via `lovable-assets` CLI:
+  - `1_to_2_ratio.png` → horizontal lockup (navbar, footer)
+  - `xSkyCo.png` (circular badge) → hero mark
+  - `cropped-skyco-compress.png` → favicon + og image
+  - `SkyCo_2.png` → reserved alt badge
+- Replace text-only "SkyCo" wordmark in `Navbar` and `Footer` with the horizontal logo image.
+- Add the circular badge as a floating hero element next to the headline.
+- Update `public/favicon.png` (via asset) and wire in `src/routes/__root.tsx` head links + `og:image`.
 
-## Design Direction: Sky & Light
+**Color scheme (match logo cyan/blue)**
+Rework tokens in `src/styles.css`:
+- `--sky-bright`: vivid cyan `#22c9e6` (logo background)
+- `--sky-deep`: deep royal blue `#0b3b8c` (logo wing shadows)
+- `--sky-mid`: bright azure `#2b8bff`
+- `--sky-ice`: pale cyan `#c8f1fa`
+- Primary → deep blue; accents → cyan; hero gradient goes cyan → azure → deep blue (bolder, less pastel).
+- Buttons: solid deep-blue with cyan glow hover; outline variants use cyan border.
 
-- **Palette**: airy sky blues and soft whites (#e0f2fe, #7dd3fc, #38bdf8, #0c4a6e)
-- **Tone**: bright, warm, encouraging — like someone quietly cheering you on
-- **Typography**: clean, modern sans-serif with generous whitespace
-- **Feel**: open, uplifting, uncluttered
+**Tighten spacing (fix empty feel)**
+- Reduce section vertical padding from `py-24/py-32` → `py-12 md:py-16`.
+- Hero: shrink min-height from `100vh` → `auto` with `py-16 md:py-24`; two-column layout (copy left, circular logo right) so it's not a sparse centered block.
+- Mission: 4 compact pillar cards in one row on desktop (was large 3-up), smaller padding, tighter gap.
+- Tools grid: reduce card padding, tighter gap-4, add subtle logo-cyan accent stripe.
+- Motivation band: shorter (`py-10`), single-line rotating quote.
+- Help section: two-column (intro left, form right) instead of stacked full-width.
+- Footer: compact single row with mini logo + links.
+- Global container max-width tightened to `max-w-6xl`; consistent `gap-6` rhythm.
 
-## Plan
+**Files touched**
+- new: `src/assets/skyco-logo.png.asset.json`, `src/assets/skyco-badge.png.asset.json`, `src/assets/skyco-icon.png.asset.json`
+- edited: `src/styles.css`, `src/routes/__root.tsx`, `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/Mission.tsx`, `src/components/ToolsGrid.tsx`, `src/components/MotivationBand.tsx`, `src/components/HelpSection.tsx`, `src/components/Footer.tsx`
+- delete: default `public/favicon.ico`
 
-### 1. Design System Setup
-
-- Update `src/styles.css` with SkyCo's light-theme tokens (sky blues as primary/accent, warm off-white background)
-- Add a subtle animated sky/cloud or gradient hero background (CSS-only, lightweight)
-- Register any needed custom utilities
-
-### 2. Homepage Sections (single route: `/`)
-
-Build the landing page in `src/routes/index.tsx` with these sections:
-
-- **Navigation bar**: minimal, fixed top — SkyCo logo/name + links to sections (Tools, Motivation, Help) + CTA
-- **Hero**: large friendly headline ("Welcome to SkyCo"), subheadline about practical support, soft sky gradient background, gentle scroll cue
-- **Mission/About**: 2-3 short paragraphs explaining what SkyCo is and who it's for — warm, human copy pulled from the brand description
-- **Tools showcase**: 4 tool cards in a clean grid — Grocery List, Budget Tracker, Calendar, Currency Converter. Each card gets an icon, short description, and a "Coming soon" or disabled "Open" state. Visually inviting even if not yet interactive.
-- Moreover: Its broadly focused on Body, Mind, Success
-- **Motivation band**: a full-width section with rotating/uplifting quotes — real, energising reminders. Warm sky-toned background.
-- **Help/Requests**: a simple form area where visitors can ask a question or make a small request. Clean fields (name, message), encouraging microcopy.
-- **Footer**: links, small brand sign-off, "As Above, So Below" tagline
-
-### 3. Metadata & Branding
-
-- Update `src/routes/__root.tsx` head meta: title "SkyCo — As Above, So Below", description, OG tags for social sharing
-- Ensure responsive viewport and favicon links are correct
-
-### 4. Responsive & Polish
-
-- Mobile-first layout: stacked sections on small screens, grid cards on larger
-- Smooth scroll between nav anchors
-- Subtle hover states on cards and buttons
-- No placeholder images — use Lucide icons and CSS shapes/gradients
-
-## Out of Scope (for this plan)
-
-- No backend/database yet — the help form will be client-only or a no-op submit
-- Individual tool pages/interactive tools — they are previewed but not wired up
-- Authentication
-
-## Files to modify/create
-
-- `src/styles.css` — theme tokens
-- `src/routes/index.tsx` — full landing page
-- `src/routes/__root.tsx` — head metadata
-- `src/components/` — small reusable section components (Hero, ToolCard, QuoteBand, etc.)
+**Out of scope:** tool functionality, backend, new sections.
