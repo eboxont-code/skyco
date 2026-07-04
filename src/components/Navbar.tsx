@@ -30,7 +30,7 @@ export function Navbar() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
         <a href="#" className="flex items-center gap-2 text-foreground">
-          <img src={badge.url} alt="SkyCo" className="h-10 w-10 rounded-full" />
+          <img src={badge.url} alt="SkyCo brand mark" className="h-10 w-10 rounded-full" />
           <span className="text-lg font-extrabold tracking-tight">
             Sky<span className="text-sky-bright">Co</span>
           </span>

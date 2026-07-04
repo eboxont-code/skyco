@@ -15,11 +15,13 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <Hero />
-      <Mission />
-      <ToolsGrid />
-      <MotivationBand />
-      <HelpSection />
+      <main>
+        <Hero />
+        <Mission />
+        <ToolsGrid />
+        <MotivationBand />
+        <HelpSection />
+      </main>
       <Footer />
     </div>
   );

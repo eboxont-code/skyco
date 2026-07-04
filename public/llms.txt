@@ -1,0 +1,9 @@
+# SkyCo
+
+> Small, honest tools for everyday life. A currency converter, a grocery list, and a few more on the way.
+
+SkyCo is a personal collection of quiet, no-signup web tools built by one maker for real weekly use.
+
+## Pages
+
+- [Home](/): Overview of SkyCo, the toolkit, the mission, and how to get in touch.
