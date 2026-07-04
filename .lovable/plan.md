@@ -1,37 +1,37 @@
-## Brand + density refresh
+## Goal
 
-**Logos & assets**
-- Upload the four provided images via `lovable-assets` CLI:
-  - `1_to_2_ratio.png` → horizontal lockup (navbar, footer)
-  - `xSkyCo.png` (circular badge) → hero mark
-  - `cropped-skyco-compress.png` → favicon + og image
-  - `SkyCo_2.png` → reserved alt badge
-- Replace text-only "SkyCo" wordmark in `Navbar` and `Footer` with the horizontal logo image.
-- Add the circular badge as a floating hero element next to the headline.
-- Update `public/favicon.png` (via asset) and wire in `src/routes/__root.tsx` head links + `og:image`.
+Link the "Currency Converter" tool card to the live CurrenSee site, rewrite copy in a warmer first-person human voice (no em dashes, no AI-flavored phrasing), and clean up production-readiness issues.
 
-**Color scheme (match logo cyan/blue)**
-Rework tokens in `src/styles.css`:
-- `--sky-bright`: vivid cyan `#22c9e6` (logo background)
-- `--sky-deep`: deep royal blue `#0b3b8c` (logo wing shadows)
-- `--sky-mid`: bright azure `#2b8bff`
-- `--sky-ice`: pale cyan `#c8f1fa`
-- Primary → deep blue; accents → cyan; hero gradient goes cyan → azure → deep blue (bolder, less pastel).
-- Buttons: solid deep-blue with cyan glow hover; outline variants use cyan border.
+## Changes
 
-**Tighten spacing (fix empty feel)**
-- Reduce section vertical padding from `py-24/py-32` → `py-12 md:py-16`.
-- Hero: shrink min-height from `100vh` → `auto` with `py-16 md:py-24`; two-column layout (copy left, circular logo right) so it's not a sparse centered block.
-- Mission: 4 compact pillar cards in one row on desktop (was large 3-up), smaller padding, tighter gap.
-- Tools grid: reduce card padding, tighter gap-4, add subtle logo-cyan accent stripe.
-- Motivation band: shorter (`py-10`), single-line rotating quote.
-- Help section: two-column (intro left, form right) instead of stacked full-width.
-- Footer: compact single row with mini logo + links.
-- Global container max-width tightened to `max-w-6xl`; consistent `gap-6` rhythm.
+### 1. Link Currency Converter to CurrenSee
 
-**Files touched**
-- new: `src/assets/skyco-logo.png.asset.json`, `src/assets/skyco-badge.png.asset.json`, `src/assets/skyco-icon.png.asset.json`
-- edited: `src/styles.css`, `src/routes/__root.tsx`, `src/components/Navbar.tsx`, `src/components/Hero.tsx`, `src/components/Mission.tsx`, `src/components/ToolsGrid.tsx`, `src/components/MotivationBand.tsx`, `src/components/HelpSection.tsx`, `src/components/Footer.tsx`
-- delete: default `public/favicon.ico`
+- `src/components/ToolsGrid.tsx`: add optional `href` + `status` handling. For the Currency Converter card, set `href: "https://skycocurrensee.lovable.app"` and status `"Live"` (with an external-link icon). Card becomes a real `<a target="_blank" rel="noopener noreferrer">`. Other three cards keep the "Coming soon" pill and stay non-clickable.
 
-**Out of scope:** tool functionality, backend, new sections.
+### 2. Rewrite copy — human, first-person, no em dashes
+
+Replace every `—` with a period, comma, or parentheses depending on rhythm. Swap AI-flavored lines ("quiet place built to help you…", "small lifts that add up", "we read every message", "as above, so below" chrome text stays as tagline only) for a personal "I / we" voice from the maker.
+
+Files touched:
+
+- `src/components/Hero.tsx` — new headline copy + description in first person (e.g. "Hi, I'm building SkyCo. It's a small collection of tools I actually use to keep my week calm.").
+- `src/components/Mission.tsx` — section heading + three pillar descriptions rewritten as personal notes.
+- `src/components/ToolsGrid.tsx` — tool descriptions rewritten short and plain; intro paragraph rewritten.
+- `src/components/HelpSection.tsx` — heading, intro, bullet list, form labels/placeholders, success message.
+- `src/components/MotivationBand.tsx` — heading + fallback caption text.
+- `src/components/Footer.tsx` — tagline + copyright line (remove `·` em-dash-adjacent styling, use plain punctuation).
+- `src/routes/__root.tsx` — `<title>`, meta description, og/twitter title + description rewritten in same voice, em dashes removed.
+
+### 3. Production polish (scan pass)
+
+- Remove leftover `—` characters anywhere in `src/` (grep pass across components + root meta).
+- `HelpSection`: form currently only sets local `submitted` state and never sends the message. Add a minimal `mailto:` submission (open user's mail client to `hello@skyco.online` or similar) so the contact form actually does something in production. Confirm the destination email with the user before wiring, or fall back to just keeping the visual confirmation and add a note.
+- Trigger the SEO scanner after edits to catch anything the copy rewrite affected (title/description length, H1 uniqueness).
+
+## One thing I need from you
+
+For the contact form, what should happen when someone hits **Send Message**?
+
+1. Open their mail app with a prefilled email to an address you own : send to support@skyco.online
+
+Reply with 1 / 2 / 3 (and the email if option 1) and I'll implement.

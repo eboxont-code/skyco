@@ -5,19 +5,19 @@ const pillars = [
     icon: Heart,
     title: "Body & Mind",
     description:
-      "Take care of yourself. Small habits, better organisation, and steady progress that actually fits real life.",
+      "I care about the boring basics. Sleep, water, a walk, one small habit at a time.",
   },
   {
     icon: Target,
     title: "Personal Growth",
     description:
-      "Build what matters to you. Protect your peace, improve your habits, and feel more capable every day.",
+      "I want to feel a little more capable each week. Not perfect, just moving forward.",
   },
   {
     icon: Zap,
     title: "Everyday Energy",
     description:
-      "Practical tools that remove friction — so you have more time and headspace for what you love.",
+      "The less time I lose to friction, the more I have for the people and work I love.",
   },
 ];
 
@@ -26,13 +26,13 @@ export function Mission() {
     <section id="mission" className="relative px-6 py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-[1fr_1.4fr] md:items-center">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Our mission</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Why I'm doing this</p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             Small lifts that <span className="text-gradient-sky">add up</span>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-            Practical support makes a real difference — not in a loud way, in a
-            steady, encouraging way that fits into real life.
+            I don't believe in life hacks or big overnight changes. I believe
+            in tiny, honest tools that quietly help. That's what I'm making here.
           </p>
         </div>
 

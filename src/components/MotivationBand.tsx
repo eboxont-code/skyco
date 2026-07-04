@@ -29,7 +29,7 @@ export function MotivationBand() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/80">On Instagram</p>
             <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Follow{" "}
+              I post over on{" "}
               <a
                 href={PROFILE_URL}
                 target="_blank"

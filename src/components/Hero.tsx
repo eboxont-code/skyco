@@ -17,12 +17,13 @@ export function Hero() {
           </div>
 
           <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            Welcome to <span className="text-gradient-sky">SkyCo</span>
+            Hi, I'm <span className="text-gradient-sky">SkyCo</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:mx-0 mx-auto">
-            A quiet place built to help you move through your days with more
-            ease, more clarity, and more energy for whatever matters to you.
+            I'm building a small corner of the internet with tools I actually
+            use myself. Nothing fancy. Just simple things that make my week
+            feel a bit lighter, and I hope they do the same for you.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
