@@ -53,7 +53,13 @@ export const getInstagramPosts = createServerFn({ method: "GET" }).handler(
     });
 
     if (!res.ok) {
-      throw new Error(`Firecrawl error ${res.status}: ${await res.text()}`);
+      // Firecrawl blocks instagram.com ("we do not support this site") and
+      // may rate-limit or error on other providers. Degrade gracefully so
+      // the UI can render its fallback tiles instead of a blank screen.
+      console.warn(
+        `[instagram] Firecrawl ${res.status}: ${await res.text().catch(() => "")}`,
+      );
+      return [];
     }
     const body = (await res.json()) as {
       data?: { json?: { posts?: IgPost[] } };
