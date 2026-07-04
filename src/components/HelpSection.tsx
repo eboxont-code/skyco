@@ -13,24 +13,31 @@ export function HelpSection() {
   };
 
   return (
-    <section id="help" className="px-6 py-24">
-      <div className="mx-auto max-w-2xl text-center">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-sky-light text-sky-deep">
-          <MessageCircleHeart className="h-6 w-6" />
+    <section id="help" className="px-6 py-14 md:py-20">
+      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:items-start">
+        <div>
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white">
+            <MessageCircleHeart className="h-5 w-5" />
+          </div>
+          <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Say hello</p>
+          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+            Ask for a <span className="text-gradient-sky">little help</span>
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground leading-relaxed">
+            Need a quick answer, a suggestion, or someone to point you in a
+            better direction? Send a message — we&apos;re listening.
+          </p>
+          <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-bright"/> Suggest a tool you&apos;d love to see</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Share what would make your day easier</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Just say hi — we read every message</li>
+          </ul>
         </div>
-        <h2 className="mt-6 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Ask for a little help
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          Sometimes you just need a quick answer, a suggestion, or someone to
-          point you in a better direction. Send a message — we&apos;re listening.
-        </p>
-      </div>
 
-      <div className="mx-auto mt-12 max-w-lg">
+        <div>
         {submitted ? (
-          <div className="rounded-2xl border border-border bg-card p-10 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-sky-light text-sky-deep">
+          <div className="rounded-2xl border border-sky-bright/30 bg-card p-8 text-center shadow-glow-cyan">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-sky-bright to-sky-azure text-white">
               <Send className="h-5 w-5" />
             </div>
             <h3 className="mt-4 text-xl font-semibold text-foreground">
@@ -44,12 +51,12 @@ export function HelpSection() {
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="space-y-5 rounded-2xl border border-border bg-card p-8"
+            className="space-y-4 rounded-2xl border border-sky-bright/25 bg-card p-6 shadow-sm"
           >
             <div>
               <label
                 htmlFor="name"
-                className="mb-2 block text-sm font-medium text-foreground"
+                className="mb-1.5 block text-sm font-semibold text-foreground"
               >
                 Your name
               </label>
@@ -64,7 +71,7 @@ export function HelpSection() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-sm font-medium text-foreground"
+                className="mb-1.5 block text-sm font-semibold text-foreground"
               >
                 Email
               </label>
@@ -80,7 +87,7 @@ export function HelpSection() {
             <div>
               <label
                 htmlFor="message"
-                className="mb-2 block text-sm font-medium text-foreground"
+                className="mb-1.5 block text-sm font-semibold text-foreground"
               >
                 Your message
               </label>
@@ -89,19 +96,20 @@ export function HelpSection() {
                 name="message"
                 placeholder="What would you like help with?"
                 required
-                rows={4}
+                rows={3}
                 className="rounded-xl resize-none"
               />
             </div>
             <Button
               type="submit"
-              className="w-full rounded-full bg-sky-deep text-primary-foreground hover:bg-sky-deep/90"
+              className="w-full rounded-full bg-sky-deep text-primary-foreground hover:bg-sky-azure shadow-glow-cyan"
             >
               <Send className="mr-2 h-4 w-4" />
               Send Message
             </Button>
           </form>
         )}
+        </div>
       </div>
     </section>
   );
