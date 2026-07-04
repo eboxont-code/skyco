@@ -81,10 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "SkyCo is here to help you move through your days with more ease, clarity, and energy. Simple tools, genuine support, and quiet encouragement for real life." },
       { name: "author", content: "SkyCo" },
       { property: "og:title", content: "SkyCo — As Above, So Below" },
-      { property: "og:description", content: "Practical tools and genuine encouragement to help you live better, one small lift at a time." },
+      { property: "og:description", content: "SkyCo is here to help you move through your days with more ease, clarity, and energy. Simple tools, genuine support, and quiet encouragement for real life." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@skyco" },
+      { name: "twitter:title", content: "SkyCo — As Above, So Below" },
+      { name: "twitter:description", content: "SkyCo is here to help you move through your days with more ease, clarity, and energy. Simple tools, genuine support, and quiet encouragement for real life." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e16c621-9b0d-4d16-9d5d-9884231a1de6/id-preview-4ca63d0b--3706605c-043c-43bf-a5d9-c50fe65c055d.lovable.app-1783140813249.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e16c621-9b0d-4d16-9d5d-9884231a1de6/id-preview-4ca63d0b--3706605c-043c-43bf-a5d9-c50fe65c055d.lovable.app-1783140813249.png" },
     ],
     links: [
       {
