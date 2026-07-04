@@ -9,6 +9,16 @@ export function HelpSection() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+    const subject = encodeURIComponent(`Hello from ${name || "a friend"} on SkyCo`);
+    const body = encodeURIComponent(
+      `Hi,\n\n${message}\n\nFrom: ${name}\nReply to: ${email}`
+    );
+    window.location.href = `mailto:support@skyco.online?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -21,16 +31,16 @@ export function HelpSection() {
           </div>
           <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Say hello</p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Ask for a <span className="text-gradient-sky">little help</span>
+            Come say <span className="text-gradient-sky">hi</span>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-            Need a quick answer, a suggestion, or someone to point you in a
-            better direction? Send a message — we&apos;re listening.
+            I'd genuinely love to hear from you. Feedback, ideas, or a
+            friendly hello all land in the same inbox and I read every one.
           </p>
           <ul className="mt-6 space-y-3 text-base text-muted-foreground">
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-bright"/> Suggest a tool you&apos;d love to see</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Share what would make your day easier</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Just say hi — we read every message</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-bright"/> Tell me about a tool you wish existed</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Share something that would make your day easier</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Or just say hi. That works too.</li>
           </ul>
         </div>
 
@@ -41,11 +51,11 @@ export function HelpSection() {
               <Send className="h-5 w-5" />
             </div>
             <h3 className="mt-4 text-xl font-semibold text-foreground">
-              Message sent
+              Thanks for that
             </h3>
             <p className="mt-2 text-muted-foreground">
-              Thanks for reaching out. We&apos;ll read every word and get back to you
-              as soon as we can.
+              Your mail app should have opened with your message ready to
+              send. Hit send and I'll get back to you as soon as I can.
             </p>
           </div>
         ) : (
@@ -63,7 +73,7 @@ export function HelpSection() {
               <Input
                 id="name"
                 name="name"
-                placeholder="What should we call you?"
+                placeholder="What can I call you?"
                 required
                 className="rounded-xl"
               />
@@ -94,7 +104,7 @@ export function HelpSection() {
               <Textarea
                 id="message"
                 name="message"
-                placeholder="What would you like help with?"
+                placeholder="What's on your mind?"
                 required
                 rows={3}
                 className="rounded-xl resize-none"

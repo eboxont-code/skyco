@@ -16,8 +16,8 @@ export function Footer() {
         </div>
 
         <p className="flex items-center gap-1 text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} SkyCo · Built with
-          <Heart className="h-3 w-3 fill-sky-bright text-sky-bright" /> for real people
+          &copy; {new Date().getFullYear()} SkyCo. Made with
+          <Heart className="h-3 w-3 fill-sky-bright text-sky-bright" /> for real people.
         </p>
       </div>
     </footer>
