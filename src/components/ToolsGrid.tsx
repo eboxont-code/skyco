@@ -39,37 +39,41 @@ const tools = [
 
 export function ToolsGrid() {
   return (
-    <section id="tools" className="px-6 py-24 bg-muted/30">
+    <section id="tools" className="px-6 py-14 md:py-20 bg-gradient-to-b from-sky-ice/60 to-background">
       <div className="mx-auto max-w-6xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Tools for real life
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-            Small but genuinely useful things that remove little points of stress
-            from your day. Simple on purpose. Clean. Easy to pick up and put down.
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">The Toolkit</p>
+            <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+              Tools for <span className="text-gradient-sky">real life</span>
+            </h2>
+          </div>
+          <p className="max-w-md text-sm text-muted-foreground leading-relaxed">
+            Small but genuinely useful. Simple on purpose. Clean. Easy to pick
+            up and put down.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tools.map((tool) => (
             <div
               key={tool.title}
-              className="group relative flex flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-lg hover:shadow-sky-bright/10 hover:-translate-y-1"
+              className="group relative flex flex-col overflow-hidden rounded-xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-1 hover:border-sky-bright hover:shadow-glow-cyan"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-light text-sky-deep transition-colors group-hover:bg-sky-bright group-hover:text-primary-foreground">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-bright via-sky-azure to-sky-deep opacity-70" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-sky-bright to-sky-azure text-white shadow-sm">
                 <tool.icon className="h-5 w-5" />
               </div>
 
-              <h3 className="mt-4 text-lg font-semibold text-foreground">
+              <h3 className="mt-3 text-base font-bold text-foreground">
                 {tool.title}
               </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
                 {tool.description}
               </p>
 
-              <div className="mt-5 flex items-center gap-2 text-xs font-medium text-sky-deep/70">
-                <Clock className="h-3.5 w-3.5" />
+              <div className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-sky-ice px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-deep">
+                <Clock className="h-3 w-3" />
                 {tool.status}
               </div>
             </div>
