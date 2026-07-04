@@ -147,8 +147,27 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+@utility text-gradient-sky {
+  background: linear-gradient(135deg, var(--sky-bright), var(--sky-deep));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility bg-hero-gradient {
+  background: linear-gradient(180deg, var(--sky-light) 0%, var(--background) 100%);
+}
+
+@utility bg-motivation-band {
+  background: linear-gradient(135deg, var(--sky-medium) 0%, var(--sky-bright) 50%, var(--sky-deep) 100%);
 }
