@@ -32,7 +32,8 @@ export function Mission() {
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             I don't believe in life hacks or big overnight changes. I believe
-            in tiny, honest tools that quietly help. That's what I'm making here.
+            in tiny, honest tools that quietly help. Three of them are already
+            live, and I keep adding one whenever I hit a problem worth solving.
           </p>
         </div>
 

@@ -2,25 +2,14 @@ import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import badge from "@/assets/skyco-badge.png.asset.json";
+import { liveProjects } from "@/lib/projects";
 
-// SkyCo is the parent brand; these are its sister projects.
-const projects = [
-  {
-    label: "Celestial Timekeeper",
-    tagline: "Calendar & time across cultures",
-    href: "https://stellar-chronos-spark.lovable.app",
-  },
-  {
-    label: "My Finance Friend",
-    tagline: "Personal portfolio tracker",
-    href: "https://chat-folio-pilot.lovable.app",
-  },
-  {
-    label: "CurrenSee",
-    tagline: "Live currency converter",
-    href: "https://currensee.skyco.online",
-  },
-];
+// SkyCo is the parent brand; these are its live projects.
+const projects = liveProjects.map((p) => ({
+  label: p.name,
+  tagline: p.tagline,
+  href: p.href,
+}));
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,6 +21,15 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!projectsOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setProjectsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [projectsOpen]);
 
   return (
     <header
@@ -55,6 +53,9 @@ export function Navbar() {
             className="relative"
             onMouseEnter={() => setProjectsOpen(true)}
             onMouseLeave={() => setProjectsOpen(false)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node)) setProjectsOpen(false);
+            }}
           >
             <button
               type="button"
@@ -85,7 +86,7 @@ export function Navbar() {
                         <span className="block text-sm font-semibold text-foreground">{p.label}</span>
                         <span className="block text-xs text-muted-foreground">{p.tagline}</span>
                       </span>
-                      <ExternalLink className="h-3.5 w-3.5 mt-1 text-muted-foreground shrink-0" />
+                      <ExternalLink className="h-3.5 w-3.5 mt-1 text-muted-foreground shrink-0" aria-hidden="true" />
                     </a>
                   ))}
                 </div>
@@ -135,7 +136,7 @@ export function Navbar() {
                     <span className="block text-sm font-semibold text-foreground">{p.label}</span>
                     <span className="block text-xs text-muted-foreground">{p.tagline}</span>
                   </span>
-                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
                 </a>
               ))}
             </div>
