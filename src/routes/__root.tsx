@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "preload",
         as: "image",
         href: "/__l5e/assets-v1/4a615c4c-3ced-40e4-a437-0b7ba2d19474/skyco-badge.png",
-        fetchpriority: "high",
+        fetchPriority: "high",
       },
     ],
     scripts: [
