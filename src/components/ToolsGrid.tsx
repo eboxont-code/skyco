@@ -1,51 +1,11 @@
-import {
-  ShoppingCart,
-  Wallet,
-  CalendarDays,
-  ArrowLeftRight,
-  Clock,
-  ArrowUpRight,
-} from "lucide-react";
+import { ArrowUpRight, ArrowLeftRight, CalendarDays, Wallet, Clock } from "lucide-react";
+import { liveProjects, upcomingProjects } from "@/lib/projects";
 
-type Tool = {
-  icon: typeof ShoppingCart;
-  title: string;
-  description: string;
-  status: "Live" | "Coming soon";
-  href?: string;
+const icons: Record<string, typeof ArrowLeftRight> = {
+  currensee: ArrowLeftRight,
+  chronos: CalendarDays,
+  "my-finance-friend": Wallet,
 };
-
-const tools: Tool[] = [
-  {
-    icon: ShoppingCart,
-    title: "Grocery List",
-    description:
-      "A quick list I can build on my phone and actually take to the shop. No accounts, no clutter.",
-    status: "Coming soon",
-  },
-  {
-    icon: Wallet,
-    title: "Budget & Expenses",
-    description:
-      "The simple money tracker I wish existed. Type it in, see where it's going, move on.",
-    status: "Coming soon",
-  },
-  {
-    icon: CalendarDays,
-    title: "Calendar",
-    description:
-      "The dates I care about, right in my browser. Nothing to sync, nothing to log into.",
-    status: "Coming soon",
-  },
-  {
-    icon: ArrowLeftRight,
-    title: "Currency Converter",
-    description:
-      "CurrenSee is my little converter for travel days and cross-border shopping. Try it out.",
-    status: "Live",
-    href: "https://currensee.skyco.online/",
-  },
-];
 
 export function ToolsGrid() {
   return (
@@ -55,59 +15,70 @@ export function ToolsGrid() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">The Toolkit</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-              Tools I'm building for <span className="text-gradient-sky">real life</span>
+              Three tools live, more on <span className="text-gradient-sky">the way</span>
             </h2>
           </div>
           <p className="max-w-md text-base text-muted-foreground leading-relaxed">
-            One is already live. The rest I'm working on, slowly, in the
-            evenings. If something here would help you, let me know.
+            Each one started because I needed it myself. They all run on their
+            own site, and they're all free to open right now.
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {tools.map((tool) => {
-            const isLive = tool.status === "Live" && tool.href;
-            const Wrapper: React.ElementType = isLive ? "a" : "div";
-            const wrapperProps = isLive
-              ? {
-                  href: tool.href,
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                }
-              : {};
-
+        <h3 className="sr-only">Live projects</h3>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {liveProjects.map((project) => {
+            const Icon = icons[project.slug] ?? ArrowUpRight;
             return (
-              <Wrapper
-                key={tool.title}
-                {...wrapperProps}
+              <a
+                key={project.slug}
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative flex flex-col overflow-hidden rounded-2xl border border-sky-bright/20 bg-card p-6 transition-all hover:-translate-y-1 hover:border-sky-bright hover:shadow-glow-cyan"
               >
                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-bright via-sky-azure to-sky-deep opacity-70" />
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white shadow-sm">
-                  <tool.icon className="h-6 w-6" />
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white shadow-sm">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <span className="rounded-full bg-sky-ice px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-sky-deep">
+                    Live
+                  </span>
                 </div>
 
-                <h3 className="mt-4 text-lg font-bold text-foreground">
-                  {tool.title}
-                </h3>
+                <h4 className="mt-4 text-lg font-bold text-foreground">{project.name}</h4>
+                <p className="text-xs font-semibold uppercase tracking-wider text-sky-bright">
+                  {project.tagline}
+                </p>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {tool.description}
+                  {project.description}
                 </p>
 
-                {isLive ? (
-                  <div className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-sky-deep px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white">
-                    <ArrowUpRight className="h-3 w-3" />
-                    Open {tool.title}
-                  </div>
-                ) : (
-                  <div className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-sky-ice px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-sky-deep">
-                    <Clock className="h-3 w-3" />
-                    {tool.status}
-                  </div>
-                )}
-              </Wrapper>
+                <span className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-sky-deep px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white">
+                  <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+                  Open {project.name}
+                </span>
+              </a>
             );
           })}
+        </div>
+
+        <h3 className="mt-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
+          On the way
+        </h3>
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
+          {upcomingProjects.map((item) => (
+            <div
+              key={item.name}
+              className="rounded-xl border border-dashed border-sky-bright/30 bg-card/50 p-5"
+            >
+              <div className="flex items-center gap-2">
+                <Clock className="h-3.5 w-3.5 text-sky-deep" aria-hidden="true" />
+                <h4 className="text-sm font-bold text-foreground">{item.name}</h4>
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
