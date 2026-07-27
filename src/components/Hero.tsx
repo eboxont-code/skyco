@@ -21,8 +21,8 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:mx-0 mx-auto">
-            I'm building a small corner of the internet with tools I actually use myself. Nothing fancy. Just simple
-            things that make my week feel a bit lighter, and I hope they do the same for you.
+            Three tools are live right now: CurrenSee for rates, Chronos for calendars, and My Finance Friend for
+            my portfolio. All built because I needed them myself, and all free to open.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
@@ -30,7 +30,7 @@ export function Hero() {
               href="#tools"
               className="inline-flex items-center justify-center rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
             >
-              Explore the Tools
+              See the live tools
             </a>
             <a
               href="#mission"

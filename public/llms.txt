@@ -1,9 +1,15 @@
 # SkyCo
 
-> Small, honest tools for everyday life. A currency converter, a grocery list, and a few more on the way.
+> Small, honest tools for everyday life. Three are live today: a currency converter, a multi-calendar app, and a chat-based portfolio tracker.
 
-SkyCo is a personal collection of quiet, no-signup web tools built by one maker for real weekly use.
+SkyCo is the parent brand for a family of quiet, no-clutter web tools built by one maker for real weekly use. Each project lives on its own site and links back here.
 
 ## Pages
 
-- [Home](/): Overview of SkyCo, the toolkit, the mission, and how to get in touch.
+- [Home](https://skyco.online/): Overview of SkyCo, the live projects, the mission, and how to get in touch.
+
+## Projects
+
+- [CurrenSee](https://currensee.skyco.online/): Live fiat and crypto conversion, rate charts, and price alerts.
+- [Chronos (Celestial Timekeeper)](https://chronos.skyco.online/): Gregorian, Hijri, Hebrew, Chinese, and Persian calendars side by side, with scheduling.
+- [My Finance Friend](https://chat-folio-pilot.lovable.app/): Track stocks and ETFs by chatting in plain English, with a preview before anything saves.
