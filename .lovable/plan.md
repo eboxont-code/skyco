@@ -1,56 +1,51 @@
-## Goal
+## What I verified
 
-Ship SkyCo. Point Currency Converter at its real custom domain, tighten the footer, and clear every actionable SEO/accessibility finding so the live site is production-ready.
+- Live projects in your workspace: **CurrenSee**, **Celestial Timekeeper (Chronos)**, **My Finance Friend**.
+- Domain checks (HTTP 200): `skyco.online`, `currensee.skyco.online`, `chronos.skyco.online`.
+- **My Finance Friend has no skyco.online subdomain yet** — I probed finance/mff/portfolio/money/financefriend/etc., all fail to resolve. Only `chat-folio-pilot.lovable.app` responds. I'll use the lovable URL for now and swap it the moment you connect a subdomain (see note at the end).
+- SkyCo's Tools grid still lists Calendar and Budget as "Coming soon" even though Chronos and Finance Friend are live — that's the core data gap.
 
 ## Changes
 
-### 1. Currency Converter → live custom domain
+### 1. Tools section: Live now + On the way
 
-`src/components/ToolsGrid.tsx`: change the Currency Converter `href` from `https://skycocurrensee.lovable.app` to `https://currensee.skyco.online/`. Keep the card as a real `<a target="_blank" rel="noopener noreferrer">` with the "Live" pill.
+`src/components/ToolsGrid.tsx` becomes two rows:
 
-### 2. Footer polish
+**Live now** (real cards, real links, real feature copy pulled from each project):
+- **CurrenSee** — live fiat + crypto conversion, rate charts, price alerts. → `https://currensee.skyco.online/`
+- **Chronos (Celestial Timekeeper)** — Gregorian, Hijri, Hebrew, Chinese and Persian calendars side by side, plus scheduling. → `https://chronos.skyco.online/`
+- **My Finance Friend** — track stocks and ETFs by chatting in plain English, with a preview before anything saves. → `https://chat-folio-pilot.lovable.app/`
 
-`src/components/Footer.tsx`: rewrite the copyright line to
-`© 2026 SkyCo. Made with ♥` (heart icon only, no trailing "for real people" text). Keep the year dynamic via `new Date().getFullYear()` so it stays correct.
+**On the way** (muted, smaller cards, no links): Grocery List, Budget & Expenses (folded into the Finance Friend story or kept as a separate idea), and Notes/Calendar extras.
 
-### 3. SEO findings (clear all failing)
+### 2. Navbar + Footer
 
-- **Homepage heading & links (`agent_content:content`)** — `Hero.tsx`: change H1 from "Welcome to SkyCo" to `SkyCo. Small, honest tools for everyday life.` (descriptor + brand). Change the "Learn More" button text to `Read about the mission`. `Navbar.tsx` + `Footer.tsx`: update logo `alt` from `"SkyCo"` to `"SkyCo brand mark"`.
-- **Structured data (`agent_metadata:structured_data`)** — `src/routes/__root.tsx`: add `scripts` with two JSON-LD blocks (WebSite + Organization) using name `SkyCo`, url `https://skycoonline.lovable.app`, and logo pointing at the badge asset URL.
-- **robots.txt (`http:robots`)** — create `public/robots.txt`:
-  ```
-  User-agent: *
-  Allow: /
-  Sitemap: https://skycoonline.lovable.app/sitemap.xml
-  ```
-- **sitemap.xml (`http:sitemap`)** — create `src/routes/sitemap[.]xml.ts` as a server route returning XML with a single `/` entry (only public route in the app), `BASE_URL = "https://skycoonline.lovable.app"`.
-- **llms.txt (`http:llms_txt`)** — create `public/llms.txt` with `# SkyCo`, one-line summary, and a Pages section linking `/` only (no other public routes, no auth/admin surfaces).
-- **Lighthouse performance (`lighthouse:lighthouse_performance`)** — `Hero.tsx`: add `width`/`height` and `fetchpriority="high"` on the badge hero image, remove any lazy loading. `__root.tsx`: add a `<link rel="preload" as="image">` for the badge asset URL in the root `head().links`.
-- **Lighthouse accessibility (`lighthouse:lighthouse_accessibility`)** — `src/routes/index.tsx`: wrap the section content (Hero through HelpSection) in a single `<main>` between Navbar and Footer. No color changes needed (existing tokens already meet contrast).
-- **Google Search Console (`gsc:gsc`)** — call `standard_connectors--connect` with `google_search_console` so the user can authorize, then run the META verification + `PUT sites/...` flow against `https://skycoonline.lovable.app/`. Requires user to complete the OAuth prompt.
+- `src/components/Navbar.tsx`: fix the CurrenSee href to include the trailing slash, point Celestial Timekeeper at `https://chronos.skyco.online`, keep My Finance Friend on its lovable URL, and sharpen taglines to match the real features.
+- `src/components/Footer.tsx`: add a "Projects" column linking the same three live apps so every page footer cross-links the family.
 
-After edits, call `seo_chat--update_findings` to mark each fixed finding.
+### 3. Copy that matches reality
 
-### 4. Security & integrity pass
+`src/components/Hero.tsx` and `src/components/Mission.tsx`: change "nothing live yet" framing to "three tools live, more on the way", keeping your first-person voice. No em dashes.
 
-- `security--run_security_scan` for a fresh scan (last supabase/supply-chain scan is >12h stale). Current results show 0 findings across all scanners; re-run to confirm before publishing.
-- Quiet fix the runtime error `error loading dynamically imported module … createIsomorphicFn.js` (dev-only stale module cache from the Firecrawl work) by restarting the dev server after edits land.
-- Verify Firecrawl connector is still linked and `LOVABLE_API_KEY` is present (Instagram tiles gracefully fall back to emojis on 403, which is already handled).
+### 4. SEO / structured data full pass
 
-### 5. Skip / not doing
+- `src/routes/__root.tsx`: switch every URL from `skycoonline.lovable.app` to `https://skyco.online` (JSON-LD WebSite + Organization, logo). Add `og:url` and `og:site_name`.
+- Extend the Organization JSON-LD with `subOrganization` / an `ItemList` of the three live projects so search engines understand SkyCo as the parent brand.
+- `src/routes/index.tsx`: add a leaf `head()` with its own title, description, og:*, `og:url` and a self-referencing `<link rel="canonical">` on `https://skyco.online/`.
+- `src/routes/sitemap[.]xml.ts`: set `BASE_URL` to `https://skyco.online`.
+- `public/robots.txt`: point the Sitemap directive at `https://skyco.online/sitemap.xml`.
+- `public/llms.txt`: rewrite to describe SkyCo as the hub and list the three live project URLs.
 
-- No copy rewrites beyond the H1 / Learn More / Footer lines above — the rest is already in the user's voice.
-- No custom domain wiring on the SkyCo project itself (user hasn't asked; live URL is `skyco.online`).
-- Not publishing from the tool — user publishes from the Publish button when ready.
+### 5. Accessibility + integrity check
+
+- Re-check the projects dropdown for keyboard access (Escape to close, focus handling) since it's currently hover/click only.
+- Confirm all external links carry `target="_blank" rel="noopener noreferrer"` and that external-link icons have accessible labels.
+- Run a security scan and re-check SEO findings, marking the ones these edits resolve.
+
+## Note on Finance Friend
+
+If you want it on `finance.skyco.online` (or another subdomain), connect it in that project's Settings → Domains. Tell me once it resolves and I'll swap the link everywhere in one pass. I can't add domains to another project from here.
 
 ## Files touched
 
-- `src/components/ToolsGrid.tsx` (href)
-- `src/components/Footer.tsx` (copyright + alt)
-- `src/components/Hero.tsx` (H1, button text, image attrs)
-- `src/components/Navbar.tsx` (alt)
-- `src/routes/__root.tsx` (JSON-LD, preload)
-- `src/routes/index.tsx` (single `<main>`)
-- `public/robots.txt` (new)
-- `public/llms.txt` (new)
-- `src/routes/sitemap[.]xml.ts` (new)
+`src/components/ToolsGrid.tsx`, `src/components/Navbar.tsx`, `src/components/Footer.tsx`, `src/components/Hero.tsx`, `src/components/Mission.tsx`, `src/routes/__root.tsx`, `src/routes/index.tsx`, `src/routes/sitemap[.]xml.ts`, `public/robots.txt`, `public/llms.txt`
