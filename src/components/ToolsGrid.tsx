@@ -15,12 +15,12 @@ export function ToolsGrid() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">The Toolkit</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-              Three tools live, more on <span className="text-gradient-sky">the way</span>
+              Three products live, more on <span className="text-gradient-sky">the way</span>
             </h2>
           </div>
           <p className="max-w-md text-base text-muted-foreground leading-relaxed">
-            Each one started because I needed it myself. They all run on their
-            own site, and they're all free to open right now.
+            Every SkyCo product starts with a problem we run into ourselves. Each one runs on its own
+            site and is free to open right now.
           </p>
         </div>
 

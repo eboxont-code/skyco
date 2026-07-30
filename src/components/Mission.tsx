@@ -3,21 +3,21 @@ import { Heart, Target, Zap } from "lucide-react";
 const pillars = [
   {
     icon: Heart,
-    title: "Body & Mind",
+    title: "Built for daily use",
     description:
-      "I care about the boring basics. Sleep, water, a walk, one small habit at a time.",
+      "We ship tools our own team opens every week, not features that look good in a demo.",
   },
   {
     icon: Target,
-    title: "Personal Growth",
+    title: "One job per product",
     description:
-      "I want to feel a little more capable each week. Not perfect, just moving forward.",
+      "Each SkyCo product solves a single problem properly instead of stretching into a suite.",
   },
   {
     icon: Zap,
-    title: "Everyday Energy",
+    title: "No friction, no clutter",
     description:
-      "The less time I lose to friction, the more I have for the people and work I love.",
+      "Fast to load, free to open, and no sign-up wall standing between you and the answer.",
   },
 ];
 
@@ -26,14 +26,14 @@ export function Mission() {
     <section id="mission" className="relative px-6 py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-[1fr_1.4fr] md:items-center">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Why I'm doing this</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">How we work</p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Small lifts that <span className="text-gradient-sky">add up</span>
+            A founder-led studio for <span className="text-gradient-sky">practical software</span>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-            I don't believe in life hacks or big overnight changes. I believe
-            in tiny, honest tools that quietly help. Three of them are already
-            live, and I keep adding one whenever I hit a problem worth solving.
+            SkyCo is a small, founder-led company. We build focused web products for the everyday
+            problems people actually hit: converting money, keeping track of dates, following a
+            portfolio. Three are live, and we add a new one when a problem is worth solving properly.
           </p>
         </div>
 

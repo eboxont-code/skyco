@@ -18,7 +18,7 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-              The home base for every small tool I build.
+              The home base for every product SkyCo builds.
             </p>
           </div>
 
