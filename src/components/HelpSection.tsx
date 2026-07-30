@@ -14,7 +14,7 @@ export function HelpSection() {
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
-    const subject = encodeURIComponent(`Hello from ${name || "a friend"} on SkyCo`);
+    const subject = encodeURIComponent(`SkyCo enquiry from ${name || "a visitor"}`);
     const body = encodeURIComponent(
       `Hi,\n\n${message}\n\nFrom: ${name}\nReply to: ${email}`
     );
@@ -29,18 +29,18 @@ export function HelpSection() {
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white">
             <MessageCircleHeart className="h-5 w-5" />
           </div>
-          <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Say hello</p>
+          <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Contact SkyCo</p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Come say <span className="text-gradient-sky">hi</span>
+            Get in <span className="text-gradient-sky">touch</span>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-            I'd genuinely love to hear from you. Feedback, ideas, or a
-            friendly hello all land in the same inbox and I read every one.
+            Feedback, product ideas and partnership questions all reach the same inbox at
+            support@skyco.online, and we read every message.
           </p>
           <ul className="mt-6 space-y-3 text-base text-muted-foreground">
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-bright"/> Tell me about a tool you wish existed</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Share something that would make your day easier</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Or just say hi. That works too.</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-bright"/> Request a tool you wish existed</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Report a bug in one of our live products</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Talk to us about working together</li>
           </ul>
         </div>
 
@@ -51,11 +51,11 @@ export function HelpSection() {
               <Send className="h-5 w-5" />
             </div>
             <h3 className="mt-4 text-xl font-semibold text-foreground">
-              Thanks for that
+              Thanks for reaching out
             </h3>
             <p className="mt-2 text-muted-foreground">
-              Your mail app should have opened with your message ready to
-              send. Hit send and I'll get back to you as soon as I can.
+              Your mail app should have opened with the message ready to send. Send it and we will
+              reply as soon as we can.
             </p>
           </div>
         ) : (
@@ -73,7 +73,7 @@ export function HelpSection() {
               <Input
                 id="name"
                 name="name"
-                placeholder="What can I call you?"
+                placeholder="Who are we speaking with?"
                 required
                 className="rounded-xl"
               />
