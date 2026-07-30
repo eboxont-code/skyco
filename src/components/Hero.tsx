@@ -17,12 +17,13 @@ export function Hero() {
           </div>
 
           <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            <span className="text-gradient-sky">SkyCo</span>. Small, honest tools for everyday life.
+            <span className="text-gradient-sky">SkyCo</span> builds small tools for everyday life.
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:mx-0 mx-auto">
-            Three tools are live right now: CurrenSee for rates, Chronos for calendars, and My Finance Friend for
-            my portfolio. All built because I needed them myself, and all free to open.
+            Three of our products are live today: CurrenSee for currency and crypto rates, Chronos for
+            multi-calendar planning, and My Finance Friend for portfolio tracking. All free to open, no
+            account required.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
@@ -30,13 +31,13 @@ export function Hero() {
               href="#tools"
               className="inline-flex items-center justify-center rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
             >
-              See the live tools
+              See our live tools
             </a>
             <a
               href="#mission"
               className="inline-flex items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 py-3 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
             >
-              Read about the mission
+              How we work
             </a>
           </div>
         </div>
