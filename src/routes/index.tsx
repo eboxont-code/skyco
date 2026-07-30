@@ -11,17 +11,17 @@ import { liveProjects } from "@/lib/projects";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SkyCo | Small, honest tools for everyday life" },
+      { title: "SkyCo | Small web tools for everyday life" },
       {
         name: "description",
         content:
-          "SkyCo is home to three live tools: CurrenSee for currency and crypto rates, Chronos for multi-calendar planning, and My Finance Friend for portfolio tracking.",
+          "SkyCo is a founder-led studio with three live products: CurrenSee for currency and crypto rates, Chronos for multi-calendar planning, and My Finance Friend for portfolio tracking.",
       },
-      { property: "og:title", content: "SkyCo | Small, honest tools for everyday life" },
+      { property: "og:title", content: "SkyCo | Small web tools for everyday life" },
       {
         property: "og:description",
         content:
-          "Three live tools from SkyCo: CurrenSee for rates, Chronos for calendars, and My Finance Friend for your portfolio.",
+          "Three live products from SkyCo: CurrenSee for rates, Chronos for calendars, and My Finance Friend for portfolios.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/" },
