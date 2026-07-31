@@ -5,7 +5,7 @@ const pillars = [
     icon: Heart,
     title: "Built for daily use",
     description:
-      "We ship tools our own team opens every week, not features that look good in a demo.",
+      "I ship tools I open myself every week, not features that only look good in a demo.",
   },
   {
     icon: Target,
@@ -26,14 +26,14 @@ export function Mission() {
     <section id="mission" className="relative px-6 py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-[1fr_1.4fr] md:items-center">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">How we work</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">How I work</p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             A founder-led studio for <span className="text-gradient-sky">practical software</span>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-            SkyCo is a small, founder-led company. We build focused web products for the everyday
-            problems people actually hit: converting money, keeping track of dates, following a
-            portfolio. Three are live, and we add a new one when a problem is worth solving properly.
+            SkyCo is a small, founder-led company, and I run it. I build focused web products for the
+            everyday problems people actually hit: converting money, keeping track of dates, following a
+            portfolio. Three are live, and I add a new one when a problem is worth solving properly.
           </p>
         </div>
 
