@@ -19,7 +19,7 @@ export function ToolsGrid() {
             </h2>
           </div>
           <p className="max-w-md text-base text-muted-foreground leading-relaxed">
-            Every SkyCo product starts with a problem we run into ourselves. Each one runs on its own
+            Every SkyCo product starts with a problem I run into myself. Each one runs on its own
             site and is free to open right now.
           </p>
         </div>
