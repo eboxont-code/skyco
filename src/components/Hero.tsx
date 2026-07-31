@@ -21,7 +21,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:mx-0 mx-auto">
-            Three of our products are live today: CurrenSee for currency and crypto rates, Chronos for
+            Three of my products are live today: CurrenSee for currency and crypto rates, Chronos for
             multi-calendar planning, and My Finance Friend for portfolio tracking. All free to open, no
             account required.
           </p>
@@ -31,13 +31,13 @@ export function Hero() {
               href="#tools"
               className="inline-flex items-center justify-center rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
             >
-              See our live tools
+              See my live tools
             </a>
             <a
               href="#mission"
               className="inline-flex items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 py-3 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
             >
-              How we work
+              How I work
             </a>
           </div>
         </div>
