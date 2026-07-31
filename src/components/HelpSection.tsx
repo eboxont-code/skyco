@@ -35,12 +35,12 @@ export function HelpSection() {
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             Feedback, product ideas and partnership questions all reach the same inbox at
-            support@skyco.online, and we read every message.
+            support@skyco.online, and I read every message.
           </p>
           <ul className="mt-6 space-y-3 text-base text-muted-foreground">
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-bright"/> Request a tool you wish existed</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Report a bug in one of our live products</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Talk to us about working together</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Report a bug in one of my live products</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Talk to me about working together</li>
           </ul>
         </div>
 
@@ -54,8 +54,8 @@ export function HelpSection() {
               Thanks for reaching out
             </h3>
             <p className="mt-2 text-muted-foreground">
-              Your mail app should have opened with the message ready to send. Send it and we will
-              reply as soon as we can.
+              Your mail app should have opened with the message ready to send. Send it and I will
+              reply as soon as I can.
             </p>
           </div>
         ) : (
@@ -73,7 +73,7 @@ export function HelpSection() {
               <Input
                 id="name"
                 name="name"
-                placeholder="Who are we speaking with?"
+                placeholder="Who am I speaking with?"
                 required
                 className="rounded-xl"
               />
