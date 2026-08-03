@@ -5,7 +5,7 @@ import { countWord, listNames } from "@/lib/project-copy";
 
 export function Hero({ directory }: { directory: ResolvedProject[] }) {
   const live = splitDirectory(directory).live;
-  const summary = live.map((p) => `${p.name} for ${p.tagline.toLowerCase()}`);
+  const names = listNames(live.map((p) => p.name));
   return (
     <section className="relative overflow-hidden bg-hero-gradient px-6 pt-32 pb-24 md:pt-40 md:pb-32">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -26,7 +26,8 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:mx-0 mx-auto">
             {countWord(live.length)} of my products {live.length === 1 ? "is" : "are"} live today:{" "}
-            {listNames(summary)}. All free to open, no account required.
+            {names}. Each one does a single job well, and all of them are free to open with no account
+            required.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
