@@ -2,16 +2,15 @@ import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import badge from "@/assets/skyco-badge.png.asset.json";
-import { liveProjects } from "@/lib/projects";
+import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
-// SkyCo is the parent brand; these are its live projects.
-const projects = liveProjects.map((p) => ({
-  label: p.name,
-  tagline: p.tagline,
-  href: p.href,
-}));
-
-export function Navbar() {
+export function Navbar({ directory }: { directory: ResolvedProject[] }) {
+  // SkyCo is the parent brand; these are its live projects.
+  const projects = splitDirectory(directory).live.map((p) => ({
+    label: p.name,
+    tagline: p.tagline,
+    href: p.href,
+  }));
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
