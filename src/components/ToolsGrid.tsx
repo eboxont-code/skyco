@@ -1,13 +1,28 @@
-import { ArrowUpRight, ArrowLeftRight, CalendarDays, Wallet, Clock } from "lucide-react";
-import { liveProjects, upcomingProjects } from "@/lib/projects";
+import {
+  ArrowUpRight,
+  ArrowLeftRight,
+  CalendarDays,
+  Wallet,
+  ShoppingBasket,
+  NotebookPen,
+  Clock,
+  Sparkles,
+} from "lucide-react";
+import { splitDirectory, type ProjectIcon, type ResolvedProject } from "@/lib/projects";
+import { countWord } from "@/lib/project-copy";
 
-const icons: Record<string, typeof ArrowLeftRight> = {
-  currensee: ArrowLeftRight,
-  chronos: CalendarDays,
-  "my-finance-friend": Wallet,
+const icons: Record<ProjectIcon, typeof ArrowLeftRight> = {
+  converter: ArrowLeftRight,
+  calendar: CalendarDays,
+  wallet: Wallet,
+  grocery: ShoppingBasket,
+  notes: NotebookPen,
+  default: Sparkles,
 };
 
-export function ToolsGrid() {
+export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
+  const { live: liveProjects, upcoming: upcomingProjects } = splitDirectory(directory);
+
   return (
     <section id="tools" className="px-6 py-20 md:py-28 bg-gradient-to-b from-sky-ice/60 to-background">
       <div className="mx-auto max-w-6xl">
@@ -15,7 +30,8 @@ export function ToolsGrid() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">The Toolkit</p>
             <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-              Three products live, more on <span className="text-gradient-sky">the way</span>
+              {countWord(liveProjects.length)} products live, more on{" "}
+              <span className="text-gradient-sky">the way</span>
             </h2>
           </div>
           <p className="max-w-md text-base text-muted-foreground leading-relaxed">
@@ -27,7 +43,7 @@ export function ToolsGrid() {
         <h3 className="sr-only">Live projects</h3>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {liveProjects.map((project) => {
-            const Icon = icons[project.slug] ?? ArrowUpRight;
+            const Icon = icons[project.icon] ?? icons.default;
             return (
               <a
                 key={project.slug}
@@ -63,23 +79,29 @@ export function ToolsGrid() {
           })}
         </div>
 
-        <h3 className="mt-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
-          On the way
-        </h3>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          {upcomingProjects.map((item) => (
-            <div
-              key={item.name}
-              className="rounded-xl border border-dashed border-sky-bright/30 bg-card/50 p-5"
-            >
-              <div className="flex items-center gap-2">
-                <Clock className="h-3.5 w-3.5 text-sky-deep" aria-hidden="true" />
-                <h4 className="text-sm font-bold text-foreground">{item.name}</h4>
-              </div>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+        {upcomingProjects.length > 0 && (
+          <>
+            <h3 className="mt-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
+              On the way
+            </h3>
+            <div className="mt-5 grid gap-4 sm:grid-cols-3">
+              {upcomingProjects.map((item) => (
+                <div
+                  key={item.slug}
+                  className="rounded-xl border border-dashed border-sky-bright/30 bg-card/50 p-5"
+                >
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-3.5 w-3.5 text-sky-deep" aria-hidden="true" />
+                    <h4 className="text-sm font-bold text-foreground">{item.name}</h4>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </section>
   );
