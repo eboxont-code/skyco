@@ -1,8 +1,9 @@
 import { Heart, ExternalLink } from "lucide-react";
 import badge from "@/assets/skyco-badge.png.asset.json";
-import { liveProjects } from "@/lib/projects";
+import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
-export function Footer() {
+export function Footer({ directory }: { directory: ResolvedProject[] }) {
+  const liveProjects = splitDirectory(directory).live;
   return (
     <footer className="border-t border-sky-bright/20 bg-gradient-to-b from-background to-sky-ice/50 px-6 py-12">
       <div className="mx-auto max-w-6xl">
