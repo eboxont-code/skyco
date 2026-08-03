@@ -22,16 +22,14 @@ export const Route = createFileRoute("/")({
     const directory = loaderData ?? fallbackDirectory;
     const liveProjects = splitDirectory(directory).live;
     const names = listNames(liveProjects.map((p) => p.name));
-    const detailed = listNames(
-      liveProjects.map((p) => `${p.name} for ${p.tagline.toLowerCase()}`),
-    );
+    const detailed = listNames(liveProjects.map((p) => `${p.name} (${p.tagline.toLowerCase()})`));
 
     return {
     meta: [
       { title: "SkyCo | Small web tools for everyday life" },
       {
         name: "description",
-        content: `SkyCo is a founder-led studio building focused web tools: ${detailed}. Free to open, no account required.`.slice(
+        content: `SkyCo is a founder-led studio building focused web tools: ${detailed}.`.slice(
           0,
           158,
         ),
