@@ -1,4 +1,6 @@
 import { Heart, Target, Zap } from "lucide-react";
+import { splitDirectory, type ResolvedProject } from "@/lib/projects";
+import { countWord } from "@/lib/project-copy";
 
 const pillars = [
   {
@@ -21,7 +23,8 @@ const pillars = [
   },
 ];
 
-export function Mission() {
+export function Mission({ directory }: { directory: ResolvedProject[] }) {
+  const liveCount = splitDirectory(directory).live.length;
   return (
     <section id="mission" className="relative px-6 py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-[1fr_1.4fr] md:items-center">
@@ -33,7 +36,9 @@ export function Mission() {
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
             SkyCo is a small, founder-led company, and I run it. I build focused web products for the
             everyday problems people actually hit: converting money, keeping track of dates, following a
-            portfolio. Three are live, and I add a new one when a problem is worth solving properly.
+            portfolio, getting the weekly shop done. {countWord(liveCount)}{" "}
+            {liveCount === 1 ? "is" : "are"} live, and I add a new one when a problem is worth solving
+            properly.
           </p>
         </div>
 
