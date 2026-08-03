@@ -100,13 +100,21 @@ export const projectRegistry: SkyCoProject[] = [
  * Status used before (or instead of) a live probe. Keep this in sync with what
  * is genuinely reachable today; the runtime probe corrects it either way.
  */
-const knownLive = new Set(["currensee", "chronos", "my-finance-friend", "grocery-packs"]);
+const knownHrefs: Record<string, string> = {
+  currensee: "https://currensee.skyco.online/",
+  chronos: "https://chronos.skyco.online/",
+  "my-finance-friend": "https://chat-folio-pilot.lovable.app/",
+  "grocery-packs": "https://skyco-easy-list-hub.lovable.app/",
+};
 
-export const fallbackDirectory: ResolvedProject[] = projectRegistry.map((project) => ({
-  ...project,
-  href: project.candidates[project.candidates.length - 1] ?? "https://skyco.online/",
-  live: knownLive.has(project.slug),
-}));
+export const fallbackDirectory: ResolvedProject[] = projectRegistry.map((project) => {
+  const known = knownHrefs[project.slug];
+  return {
+    ...project,
+    href: known ?? project.candidates[0] ?? "https://skyco.online/",
+    live: Boolean(known),
+  };
+});
 
 export function splitDirectory(directory: ResolvedProject[]) {
   return {
