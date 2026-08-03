@@ -6,22 +6,40 @@ import { ToolsGrid } from "@/components/ToolsGrid";
 import { MotivationBand } from "@/components/MotivationBand";
 import { HelpSection } from "@/components/HelpSection";
 import { Footer } from "@/components/Footer";
-import { liveProjects } from "@/lib/projects";
+import { fallbackDirectory, splitDirectory, type ResolvedProject } from "@/lib/projects";
+import { getProjectDirectory } from "@/lib/projects.functions";
+import { listNames } from "@/lib/project-copy";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
+  loader: async (): Promise<ResolvedProject[]> => {
+    try {
+      return await getProjectDirectory();
+    } catch {
+      return fallbackDirectory;
+    }
+  },
+  head: ({ loaderData }) => {
+    const directory = loaderData ?? fallbackDirectory;
+    const liveProjects = splitDirectory(directory).live;
+    const names = listNames(liveProjects.map((p) => p.name));
+    const detailed = listNames(
+      liveProjects.map((p) => `${p.name} for ${p.tagline.toLowerCase()}`),
+    );
+
+    return {
     meta: [
       { title: "SkyCo | Small web tools for everyday life" },
       {
         name: "description",
-        content:
-          "SkyCo is a founder-led studio with three live products: CurrenSee for currency and crypto rates, Chronos for multi-calendar planning, and My Finance Friend for portfolio tracking.",
+        content: `SkyCo is a founder-led studio building focused web tools: ${detailed}. Free to open, no account required.`.slice(
+          0,
+          158,
+        ),
       },
       { property: "og:title", content: "SkyCo | Small web tools for everyday life" },
       {
         property: "og:description",
-        content:
-          "Three live products from SkyCo: CurrenSee for rates, Chronos for calendars, and My Finance Friend for portfolios.",
+        content: `Live products from SkyCo: ${names}.`,
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/" },
@@ -45,22 +63,24 @@ export const Route = createFileRoute("/")({
         }),
       },
     ],
-  }),
+    };
+  },
   component: Index,
 });
 
 function Index() {
+  const directory = Route.useLoaderData();
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      <Navbar directory={directory} />
       <main>
-        <Hero />
-        <Mission />
-        <ToolsGrid />
+        <Hero directory={directory} />
+        <Mission directory={directory} />
+        <ToolsGrid directory={directory} />
         <MotivationBand />
         <HelpSection />
       </main>
-      <Footer />
+      <Footer directory={directory} />
     </div>
   );
 }
