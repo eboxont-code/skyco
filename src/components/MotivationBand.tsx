@@ -1,27 +1,16 @@
-import { Instagram, ArrowUpRight, Heart, MessageCircle } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
-import { getInstagramPosts, type IgPost } from "@/lib/instagram.functions";
+import { Instagram, ArrowUpRight } from "lucide-react";
 
 const HANDLE = "skyco.online";
 const PROFILE_URL = `https://www.instagram.com/${HANDLE}/`;
 
-const fallbackEmojis = ["🌤️", "🕊️", "✨", "🌊"];
+const tiles = [
+  { emoji: "🌤️", label: "Build notes", copy: "What I am shipping this week" },
+  { emoji: "🕊️", label: "Behind the scenes", copy: "How each SkyCo tool comes together" },
+  { emoji: "✨", label: "New releases", copy: "First look at every launch" },
+  { emoji: "🌊", label: "Ideas", copy: "Problems worth building for" },
+];
 
 export function MotivationBand() {
-  const fetchPosts = useServerFn(getInstagramPosts);
-  const { data: posts, isLoading } = useQuery({
-    queryKey: ["instagram-posts", HANDLE],
-    queryFn: () => fetchPosts(),
-    staleTime: 1000 * 60 * 30,
-    retry: 1,
-  });
-
-  const tiles: (IgPost | null)[] =
-    posts && posts.length > 0
-      ? posts.slice(0, 4).concat(Array(Math.max(0, 4 - posts.length)).fill(null))
-      : [null, null, null, null];
-
   return (
     <section id="motivation" className="px-6 py-20 md:py-24 bg-motivation-band">
       <div className="mx-auto max-w-6xl">
@@ -46,62 +35,32 @@ export function MotivationBand() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-sky-deep transition-all hover:shadow-glow-cyan hover:-translate-y-0.5"
           >
-            <Instagram className="h-4 w-4" />
+            <Instagram className="h-4 w-4" aria-hidden="true" />
             Open Instagram
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {tiles.map((tile, i) => {
-            const href = tile?.url ?? PROFILE_URL;
-            return (
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {tiles.map((tile) => (
+            <li key={tile.label}>
               <a
-                key={i}
-                href={href}
+                href={PROFILE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative aspect-square overflow-hidden rounded-2xl bg-white/12 backdrop-blur-sm border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-1"
+                className="group relative flex aspect-square flex-col justify-end overflow-hidden rounded-2xl border border-white/20 bg-white/12 backdrop-blur-sm transition-all hover:bg-white/20 hover:-translate-y-1"
               >
-                {tile?.thumbnail ? (
-                  <img
-                    src={tile.thumbnail}
-                    alt={tile.caption || `Post by @${HANDLE}`}
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-90 transition-transform group-hover:scale-110">
-                    {isLoading ? (
-                      <span className="h-6 w-6 animate-spin rounded-full border-2 border-white/40 border-t-white" />
-                    ) : (
-                      fallbackEmojis[i]
-                    )}
-                  </div>
-                )}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-sky-night/90 via-sky-night/40 to-transparent p-4">
-                  {tile?.caption ? (
-                    <p className="text-sm font-semibold text-white line-clamp-2">
-                      {tile.caption}
-                    </p>
-                  ) : (
-                    <p className="text-sm font-semibold text-white/90">
-                      {isLoading ? "Loading latest posts…" : `Latest from @${HANDLE}`}
-                    </p>
-                  )}
-                  <div className="mt-2 flex items-center gap-3 text-[11px] font-bold uppercase tracking-wider text-white/70">
-                    <span className="flex items-center gap-1"><Heart className="h-3 w-3" /> View</span>
-                    <span className="flex items-center gap-1"><MessageCircle className="h-3 w-3" /> @{HANDLE}</span>
-                  </div>
-                </div>
-                <div className="absolute top-3 right-3 rounded-full bg-white/90 p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Instagram className="h-3.5 w-3.5 text-sky-deep" />
-                </div>
+                <span className="absolute inset-0 flex items-center justify-center text-6xl opacity-90 transition-transform group-hover:scale-110">
+                  {tile.emoji}
+                </span>
+                <span className="relative bg-gradient-to-t from-sky-night/90 via-sky-night/40 to-transparent p-4">
+                  <span className="block text-sm font-semibold text-white">{tile.label}</span>
+                  <span className="mt-1 block text-xs text-white/75">{tile.copy}</span>
+                </span>
               </a>
-            );
-          })}
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
