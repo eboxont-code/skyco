@@ -1,5 +1,5 @@
 import { Heart, ExternalLink } from "lucide-react";
-import badge from "@/assets/skyco-badge.png.asset.json";
+import badge from "@/assets/skyco-badge-96.webp";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
 export function Footer({ directory }: { directory: ResolvedProject[] }) {
@@ -10,7 +10,16 @@ export function Footer({ directory }: { directory: ResolvedProject[] }) {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-2 text-foreground">
-              <img src={badge.url} alt="SkyCo brand mark" className="h-8 w-8 rounded-full" />
+              <img
+                src={badge}
+                alt=""
+                aria-hidden="true"
+                width={96}
+                height={96}
+                loading="lazy"
+                decoding="async"
+                className="h-8 w-8 rounded-full"
+              />
               <span className="text-sm font-extrabold">
                 Sky<span className="text-sky-bright">Co</span>
               </span>
@@ -24,7 +33,7 @@ export function Footer({ directory }: { directory: ResolvedProject[] }) {
           </div>
 
           <nav aria-label="SkyCo projects">
-            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Projects</h2>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Projects</p>
             <ul className="mt-3 space-y-2">
               {liveProjects.map((project) => (
                 <li key={project.slug}>
@@ -36,9 +45,42 @@ export function Footer({ directory }: { directory: ResolvedProject[] }) {
                   >
                     {project.name}
                     <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                    <span className="sr-only">(opens in a new tab)</span>
                   </a>
                 </li>
               ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="More from SkyCo">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">SkyCo</p>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <li>
+                <a href="#tools" className="transition-colors hover:text-foreground">
+                  All tools
+                </a>
+              </li>
+              <li>
+                <a href="#mission" className="transition-colors hover:text-foreground">
+                  How I work
+                </a>
+              </li>
+              <li>
+                <a href="mailto:support@skyco.online" className="transition-colors hover:text-foreground">
+                  support@skyco.online
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/skyco.online/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+                >
+                  Instagram
+                  <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                </a>
+              </li>
             </ul>
           </nav>
         </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
-import badge from "@/assets/skyco-badge.png.asset.json";
+import badge from "@/assets/skyco-badge-96.webp";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
 export function Navbar({ directory }: { directory: ResolvedProject[] }) {
@@ -41,7 +41,15 @@ export function Navbar({ directory }: { directory: ResolvedProject[] }) {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
         <a href="/" className="flex items-center gap-2 text-foreground" aria-label="SkyCo home">
-          <img src={badge.url} alt="SkyCo brand mark" className="h-10 w-10 rounded-full" />
+          <img
+            src={badge}
+            alt=""
+            aria-hidden="true"
+            width={96}
+            height={96}
+            decoding="async"
+            className="h-10 w-10 rounded-full"
+          />
           <span className="text-lg font-extrabold tracking-tight">
             Sky<span className="text-sky-bright">Co</span>
           </span>
