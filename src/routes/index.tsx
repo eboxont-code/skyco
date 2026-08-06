@@ -41,6 +41,16 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/" },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e16c621-9b0d-4d16-9d5d-9884231a1de6/id-preview-4ca63d0b--3706605c-043c-43bf-a5d9-c50fe65c055d.lovable.app-1783140813249.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e16c621-9b0d-4d16-9d5d-9884231a1de6/id-preview-4ca63d0b--3706605c-043c-43bf-a5d9-c50fe65c055d.lovable.app-1783140813249.png",
+      },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/" }],

@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import badge512 from "../assets/skyco-badge-512.webp";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { liveProjects } from "../lib/projects";
 
@@ -89,8 +90,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@skyco" },
       { name: "twitter:title", content: "SkyCo | Small web tools for everyday life" },
       { name: "twitter:description", content: `A founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. All free to open.` },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e16c621-9b0d-4d16-9d5d-9884231a1de6/id-preview-4ca63d0b--3706605c-043c-43bf-a5d9-c50fe65c055d.lovable.app-1783140813249.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1e16c621-9b0d-4d16-9d5d-9884231a1de6/id-preview-4ca63d0b--3706605c-043c-43bf-a5d9-c50fe65c055d.lovable.app-1783140813249.png" },
     ],
     links: [
       {
@@ -101,9 +100,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "preload",
         as: "image",
-        href: "/__l5e/assets-v1/4a615c4c-3ced-40e4-a437-0b7ba2d19474/skyco-badge.png",
+        href: badge512,
         fetchPriority: "high",
       },
+      { rel: "preconnect", href: "https://currensee.skyco.online" },
     ],
     scripts: [
       {
