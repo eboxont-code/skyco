@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { splitDirectory, type ProjectIcon, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
+import { useWebMCPTools, text } from "@/lib/webmcp";
 
 const icons: Record<ProjectIcon, typeof ArrowLeftRight> = {
   converter: ArrowLeftRight,
@@ -22,6 +23,38 @@ const icons: Record<ProjectIcon, typeof ArrowLeftRight> = {
 
 export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
   const { live: liveProjects, upcoming: upcomingProjects } = splitDirectory(directory);
+
+  // WebMCP: expose the product directory so agents get real URLs and status.
+  useWebMCPTools([
+    {
+      name: "list_skyco_products",
+      description:
+        "List SkyCo products with their name, what they do, live status and URL. Use it to answer what SkyCo offers or to find the right SkyCo product for a task.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          status: {
+            type: "string",
+            enum: ["live", "upcoming", "all"],
+            description: "Filter by product status. Defaults to live.",
+          },
+        },
+        required: [],
+        additionalProperties: false,
+      },
+      execute: async (args) => {
+        const status = args["status"] === "upcoming" || args["status"] === "all" ? args["status"] : "live";
+        const rows =
+          status === "all" ? directory : directory.filter((p) => (status === "live" ? p.live : !p.live));
+        if (rows.length === 0) return text("No SkyCo products match that status.");
+        return text(
+          rows
+            .map((p) => `${p.name} (${p.live ? "live" : "on the way"}): ${p.description}${p.live ? ` ${p.href}` : ""}`)
+            .join("\n"),
+        );
+      },
+    },
+  ]);
 
   return (
     <section id="tools" className="px-6 py-20 md:py-28 bg-gradient-to-b from-sky-ice/60 to-background">
