@@ -6,10 +6,12 @@ export const Route = createFileRoute("/llms.txt")({
   server: {
     handlers: {
       GET: async () => {
+        // Never block the response on outbound probes: read whatever is
+        // already known and let the discovery cache refresh in the background.
         let directory = fallbackDirectory;
         try {
-          const { resolveProjectDirectory } = await import("@/lib/project-discovery.server");
-          directory = await resolveProjectDirectory();
+          const { getDirectorySnapshot } = await import("@/lib/project-discovery.server");
+          directory = getDirectorySnapshot();
         } catch {
           directory = fallbackDirectory;
         }

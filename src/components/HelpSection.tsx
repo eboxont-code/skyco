@@ -1,19 +1,15 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Send, MessageCircleHeart } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useWebMCPTools, text } from "@/lib/webmcp";
 
 export function HelpSection() {
   const [submitted, setSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
+  const openMail = (name: string, email: string, message: string) => {
     const subject = encodeURIComponent(`SkyCo enquiry from ${name || "a visitor"}`);
     const body = encodeURIComponent(
       `Hi,\n\n${message}\n\nFrom: ${name}\nReply to: ${email}`
@@ -21,6 +17,50 @@ export function HelpSection() {
     window.location.href = `mailto:support@skyco.online?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    openMail(
+      String(data.get("name") ?? "").trim(),
+      String(data.get("email") ?? "").trim(),
+      String(data.get("message") ?? "").trim(),
+    );
+  };
+
+  // WebMCP: let an AI agent fill and submit this form without scraping the DOM.
+  useWebMCPTools([
+    {
+      name: "contact_skyco",
+      description:
+        "Send a message to SkyCo (support@skyco.online) about feedback, a product idea, a bug in a SkyCo product, or working together. Opens the visitor's mail app with the message prepared.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          name: { type: "string", description: "Name of the person getting in touch.", minLength: 1, maxLength: 100 },
+          email: { type: "string", format: "email", description: "Email address SkyCo should reply to." },
+          message: { type: "string", description: "The message to send.", minLength: 1, maxLength: 4000 },
+        },
+        required: ["name", "email", "message"],
+        additionalProperties: false,
+      },
+      execute: async (args) => {
+        const name = String(args["name"] ?? "").trim();
+        const email = String(args["email"] ?? "").trim();
+        const message = String(args["message"] ?? "").trim();
+        if (!name || !email || !message) {
+          return text("name, email and message are all required.");
+        }
+        const form = formRef.current;
+        if (form) {
+          (form.elements.namedItem("name") as HTMLInputElement | null)?.setAttribute("value", name);
+          (form.elements.namedItem("email") as HTMLInputElement | null)?.setAttribute("value", email);
+        }
+        openMail(name, email, message);
+        return text(`Prepared an email to support@skyco.online from ${name} (${email}).`);
+      },
+    },
+  ]);
 
   return (
     <section id="help" className="px-6 py-20 md:py-28">
@@ -60,7 +100,12 @@ export function HelpSection() {
           </div>
         ) : (
           <form
+            ref={formRef}
             onSubmit={handleSubmit}
+            name="contact_skyco"
+            aria-label="Contact SkyCo"
+            data-webmcp-tool="contact_skyco"
+            data-webmcp-description="Send a message to SkyCo about feedback, product ideas, bugs or working together."
             className="space-y-4 rounded-2xl border border-sky-bright/25 bg-card p-6 shadow-sm"
           >
             <div>
@@ -73,6 +118,8 @@ export function HelpSection() {
               <Input
                 id="name"
                 name="name"
+                autoComplete="name"
+                data-webmcp-param="name"
                 placeholder="Who am I speaking with?"
                 required
                 className="rounded-xl"
@@ -89,6 +136,8 @@ export function HelpSection() {
                 id="email"
                 name="email"
                 type="email"
+                autoComplete="email"
+                data-webmcp-param="email"
                 placeholder="you@example.com"
                 required
                 className="rounded-xl"
@@ -104,6 +153,7 @@ export function HelpSection() {
               <Textarea
                 id="message"
                 name="message"
+                data-webmcp-param="message"
                 placeholder="What's on your mind?"
                 required
                 rows={3}
