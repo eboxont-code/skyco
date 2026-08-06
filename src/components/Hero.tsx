@@ -1,5 +1,5 @@
 import { Sparkles } from "lucide-react";
-import badge from "@/assets/skyco-badge.png.asset.json";
+import badge from "@/assets/skyco-badge-512.webp";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord, listNames } from "@/lib/project-copy";
 
@@ -49,10 +49,10 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
         <div className="relative flex justify-center md:justify-end">
           <div className="absolute inset-0 -z-10 rounded-full bg-sky-bright/25 blur-3xl" />
           <img
-            src={badge.url}
-            alt="SkyCo brand mark"
-            width={384}
-            height={384}
+            src={badge}
+            alt="SkyCo brand mark: a bird inside a glowing blue ring"
+            width={512}
+            height={512}
             fetchPriority="high"
             decoding="async"
             className="w-72 md:w-96 drop-shadow-[0_20px_40px_rgba(11,59,140,0.35)] animate-[float_6s_ease-in-out_infinite]"
