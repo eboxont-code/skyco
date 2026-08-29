@@ -150,3 +150,16 @@ export function splitDirectory(directory: ResolvedProject[]) {
 
 /** Kept for callers that only need the currently live set. */
 export const liveProjects: ResolvedProject[] = splitDirectory(fallbackDirectory).live;
+
+/** Resolve the outbound URL for a clean SkyCo entry path such as /currensee. */
+export function hrefForSlug(slug: string): string {
+  return fallbackDirectory.find((p) => p.slug === slug)?.href ?? "https://skyco.online/";
+}
+
+/**
+ * The URL to send a visitor to. Prefer the clean SkyCo entry path so every
+ * product is shareable under one domain; fall back to the product URL.
+ */
+export function entryHref(project: ResolvedProject): string {
+  return project.path ?? project.href;
+}
