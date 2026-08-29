@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as GroceryRouteImport } from './routes/grocery'
+import { Route as FinanceRouteImport } from './routes/finance'
+import { Route as CurrenseeRouteImport } from './routes/currensee'
+import { Route as ChronosRouteImport } from './routes/chronos'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -23,6 +27,26 @@ const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
   path: '/llms.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GroceryRoute = GroceryRouteImport.update({
+  id: '/grocery',
+  path: '/grocery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceRoute = FinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CurrenseeRoute = CurrenseeRouteImport.update({
+  id: '/currensee',
+  path: '/currensee',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChronosRoute = ChronosRouteImport.update({
+  id: '/chronos',
+  path: '/chronos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +55,68 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chronos': typeof ChronosRoute
+  '/currensee': typeof CurrenseeRoute
+  '/finance': typeof FinanceRoute
+  '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chronos': typeof ChronosRoute
+  '/currensee': typeof CurrenseeRoute
+  '/finance': typeof FinanceRoute
+  '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chronos': typeof ChronosRoute
+  '/currensee': typeof CurrenseeRoute
+  '/finance': typeof FinanceRoute
+  '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/llms.txt' | '/sitemap.xml'
+  fullPaths:
+    | '/'
+    | '/chronos'
+    | '/currensee'
+    | '/finance'
+    | '/grocery'
+    | '/llms.txt'
+    | '/sitemap.xml'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/llms.txt' | '/sitemap.xml'
-  id: '__root__' | '/' | '/llms.txt' | '/sitemap.xml'
+  to:
+    | '/'
+    | '/chronos'
+    | '/currensee'
+    | '/finance'
+    | '/grocery'
+    | '/llms.txt'
+    | '/sitemap.xml'
+  id:
+    | '__root__'
+    | '/'
+    | '/chronos'
+    | '/currensee'
+    | '/finance'
+    | '/grocery'
+    | '/llms.txt'
+    | '/sitemap.xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChronosRoute: typeof ChronosRoute
+  CurrenseeRoute: typeof CurrenseeRoute
+  FinanceRoute: typeof FinanceRoute
+  GroceryRoute: typeof GroceryRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
@@ -75,6 +137,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LlmsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grocery': {
+      id: '/grocery'
+      path: '/grocery'
+      fullPath: '/grocery'
+      preLoaderRoute: typeof GroceryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance': {
+      id: '/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof FinanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/currensee': {
+      id: '/currensee'
+      path: '/currensee'
+      fullPath: '/currensee'
+      preLoaderRoute: typeof CurrenseeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chronos': {
+      id: '/chronos'
+      path: '/chronos'
+      fullPath: '/chronos'
+      preLoaderRoute: typeof ChronosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChronosRoute: ChronosRoute,
+  CurrenseeRoute: CurrenseeRoute,
+  FinanceRoute: FinanceRoute,
+  GroceryRoute: GroceryRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
