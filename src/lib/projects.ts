@@ -51,6 +51,10 @@ export const projectRegistry: SkyCoProject[] = [
     description:
       "Built for travel days and cross-border shopping. Live fiat and crypto rates, clear charts, and alerts when a pair hits your number.",
     icon: "converter",
+    path: "/currensee",
+    why: "Checking a rate usually means an ad-heavy page or a search result that is already out of date.",
+    example: "Open it and USD to EUR is already on screen with a 30 day chart and a last updated stamp.",
+    account: "No account needed.",
     candidates: ["https://currensee.skyco.online/", "https://skycocurrensee.lovable.app/"],
   },
   {
@@ -58,8 +62,12 @@ export const projectRegistry: SkyCoProject[] = [
     name: "Chronos",
     tagline: "Every calendar in one place",
     description:
-      "Gregorian, Hijri, Hebrew, Chinese and Persian calendars side by side, so every date you track lines up in a single view.",
+      "Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali calendars side by side, so every date you track lines up in a single view.",
     icon: "calendar",
+    path: "/chronos",
+    why: "Families and teams that live across two or three calendar systems end up converting dates by hand.",
+    example: "Pick one day and read it as Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali at once, with that month's holidays.",
+    account: "No account needed.",
     candidates: ["https://chronos.skyco.online/", "https://stellar-chronos-spark.lovable.app/"],
   },
   {
@@ -69,6 +77,10 @@ export const projectRegistry: SkyCoProject[] = [
     description:
       "Type what you bought in plain English and it sorts your stocks and ETFs, with a preview before anything is saved.",
     icon: "wallet",
+    path: "/finance",
+    why: "Portfolio trackers ask for a spreadsheet import before they show you anything useful.",
+    example: 'Type "bought 50 shares of NVDA today at $145" and review the parsed entry before it is saved.',
+    account: "Guest mode available, or an optional account to keep your data across devices.",
     candidates: ["https://finance.skyco.online/", "https://chat-folio-pilot.lovable.app/"],
   },
   {
@@ -78,12 +90,17 @@ export const projectRegistry: SkyCoProject[] = [
     description:
       "Printable grocery packs and light meal plans, sorted by store section, with quantities for two people or a family of four.",
     icon: "grocery",
+    path: "/grocery",
+    why: "Most weeks the hard part is not cooking, it is deciding what to buy before you get to the shop.",
+    example: "Open the Easy Week starter pack and it is already sorted by store section with quantities filled in.",
+    account: "No account needed.",
     candidates: [
       "https://grocery.skyco.online/",
       "https://groceries.skyco.online/",
       "https://skyco-easy-list-hub.lovable.app/",
     ],
   },
+
   {
     slug: "budget",
     name: "Budget & Expenses",
