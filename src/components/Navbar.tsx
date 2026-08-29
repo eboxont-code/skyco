@@ -1,15 +1,28 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import badge from "@/assets/skyco-badge-96.webp";
-import { splitDirectory, type ResolvedProject } from "@/lib/projects";
+import {
+  entryHref,
+  fallbackDirectory,
+  splitDirectory,
+  type ResolvedProject,
+} from "@/lib/projects";
+import { companyLinks } from "@/lib/site-nav";
 
-export function Navbar({ directory }: { directory: ResolvedProject[] }) {
+export function Navbar({
+  directory = fallbackDirectory,
+  solid = false,
+}: {
+  directory?: ResolvedProject[];
+  solid?: boolean;
+}) {
   // SkyCo is the parent brand; these are its live projects.
   const projects = splitDirectory(directory).live.map((p) => ({
     label: p.name,
     tagline: p.tagline,
-    href: p.href,
+    href: entryHref(p),
   }));
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -17,6 +30,7 @@ export function Navbar({ directory }: { directory: ResolvedProject[] }) {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -30,17 +44,19 @@ export function Navbar({ directory }: { directory: ResolvedProject[] }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [projectsOpen]);
 
+  const opaque = solid || scrolled;
+
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-background/80 backdrop-blur-md shadow-sm border-b border-border"
-          : "bg-transparent"
+        opaque
+          ? "bg-background/85 backdrop-blur-md shadow-sm border-b border-border"
+          : "bg-transparent",
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
-        <a href="/" className="flex items-center gap-2 text-foreground" aria-label="SkyCo home">
+        <Link to="/" className="flex items-center gap-2 text-foreground" aria-label="SkyCo home">
           <img
             src={badge}
             alt=""
@@ -53,9 +69,9 @@ export function Navbar({ directory }: { directory: ResolvedProject[] }) {
           <span className="text-lg font-extrabold tracking-tight">
             Sky<span className="text-sky-bright">Co</span>
           </span>
-        </a>
+        </Link>
 
-        <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
+        <nav className="hidden md:flex items-center gap-6" aria-label="Primary">
           <div
             className="relative"
             onMouseEnter={() => setProjectsOpen(true)}
@@ -71,97 +87,105 @@ export function Navbar({ directory }: { directory: ResolvedProject[] }) {
               aria-haspopup="menu"
               className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Projects
-              <ChevronDown className={cn("h-4 w-4 transition-transform", projectsOpen && "rotate-180")} />
+              Products
+              <ChevronDown
+                className={cn("h-4 w-4 transition-transform", projectsOpen && "rotate-180")}
+              />
             </button>
             {projectsOpen && (
-              <div
-                role="menu"
-                className="absolute right-0 top-full pt-3 w-72"
-              >
+              <div role="menu" className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-72">
                 <div className="rounded-xl border border-border bg-background/95 backdrop-blur-md shadow-lg p-2">
                   {projects.map((p) => (
                     <a
                       key={p.href}
                       href={p.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       role="menuitem"
-                      className="flex items-start justify-between gap-3 rounded-lg px-3 py-2.5 hover:bg-accent transition-colors"
+                      className="block rounded-lg px-3 py-2.5 hover:bg-accent transition-colors"
                     >
-                      <span>
-                        <span className="block text-sm font-semibold text-foreground">{p.label}</span>
-                        <span className="block text-xs text-muted-foreground">{p.tagline}</span>
-                      </span>
-                      <ExternalLink className="h-3.5 w-3.5 mt-1 text-muted-foreground shrink-0" aria-hidden="true" />
+                      <span className="block text-sm font-semibold text-foreground">{p.label}</span>
+                      <span className="block text-xs text-muted-foreground">{p.tagline}</span>
                     </a>
                   ))}
                 </div>
               </div>
             )}
           </div>
-          <a
-            href="#tools"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Tools
-          </a>
-          <a
-            href="#help"
+
+          {companyLinks
+            .filter((l) => l.to !== "/faq")
+            .map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                activeProps={{ className: "text-foreground" }}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {l.label}
+              </Link>
+            ))}
+
+          <Link
+            to="/support"
             className="rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
           >
-            Get in Touch
-          </a>
+            Get in touch
+          </Link>
         </nav>
 
         <button
-          className="md:hidden p-2 text-foreground"
+          className="md:hidden rounded-md p-2 text-foreground"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md px-6 py-4 space-y-4">
+        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-md px-6 py-4 space-y-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-              Projects
+              Products
             </p>
             <div className="space-y-1">
               {projects.map((p) => (
                 <a
                   key={p.href}
                   href={p.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between rounded-md px-2 py-2 hover:bg-accent"
+                  className="block rounded-md px-2 py-2 hover:bg-accent"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span>
-                    <span className="block text-sm font-semibold text-foreground">{p.label}</span>
-                    <span className="block text-xs text-muted-foreground">{p.tagline}</span>
-                  </span>
-                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+                  <span className="block text-sm font-semibold text-foreground">{p.label}</span>
+                  <span className="block text-xs text-muted-foreground">{p.tagline}</span>
                 </a>
               ))}
             </div>
           </div>
-          <a
-            href="#tools"
-            className="block text-sm font-medium text-muted-foreground hover:text-foreground"
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+              SkyCo
+            </p>
+            <div className="grid grid-cols-2 gap-y-2">
+              {companyLinks.map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <Link
+            to="/support"
+            className="inline-block rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground"
             onClick={() => setMobileOpen(false)}
           >
-            Tools
-          </a>
-          <a
-            href="#help"
-            className="inline-block rounded-full bg-sky-deep px-5 py-2 text-sm font-medium text-primary-foreground"
-            onClick={() => setMobileOpen(false)}
-          >
-            Get in Touch
-          </a>
+            Get in touch
+          </Link>
         </div>
       )}
     </header>
