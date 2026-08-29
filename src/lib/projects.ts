@@ -25,7 +25,14 @@ export type SkyCoProject = {
   tagline: string;
   description: string;
   icon: ProjectIcon;
-  /** Candidate URLs, best first. The first one that responds becomes `href`. */
+  /** Clean SkyCo entry path, e.g. /currensee. Redirects to the live product. */
+  path?: string;
+  /** Why the product exists, in one plain sentence. */
+  why?: string;
+  /** A concrete, checkable example of the job it does. */
+  example?: string;
+  /** Whether opening the product requires an account. */
+  account?: string;
   candidates: string[];
 };
 
@@ -34,6 +41,7 @@ export type ResolvedProject = SkyCoProject & {
   href: string;
   live: boolean;
 };
+
 
 export const projectRegistry: SkyCoProject[] = [
   {
