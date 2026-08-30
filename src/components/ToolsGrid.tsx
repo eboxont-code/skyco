@@ -1,25 +1,8 @@
-import {
-  ArrowUpRight,
-  ArrowLeftRight,
-  CalendarDays,
-  Wallet,
-  ShoppingBasket,
-  NotebookPen,
-  Clock,
-  Sparkles,
-} from "lucide-react";
-import { splitDirectory, type ProjectIcon, type ResolvedProject } from "@/lib/projects";
+import { ArrowUpRight, Clock, Check } from "lucide-react";
+import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
+import { productShots } from "@/lib/product-shots";
 import { useWebMCPTools, text } from "@/lib/webmcp";
-
-const icons: Record<ProjectIcon, typeof ArrowLeftRight> = {
-  converter: ArrowLeftRight,
-  calendar: CalendarDays,
-  wallet: Wallet,
-  grocery: ShoppingBasket,
-  notes: NotebookPen,
-  default: Sparkles,
-};
 
 export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
   const { live: liveProjects, upcoming: upcomingProjects } = splitDirectory(directory);
@@ -57,67 +40,107 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
   ]);
 
   return (
-    <section id="tools" className="px-6 py-20 md:py-28 bg-gradient-to-b from-sky-ice/60 to-background">
+    <section id="tools" className="px-6 py-20 md:py-24 bg-gradient-to-b from-sky-ice/60 to-background">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">The Toolkit</p>
-            <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-              {countWord(liveProjects.length)} products live, more on{" "}
-              <span className="text-gradient-sky">the way</span>
-            </h2>
-          </div>
-          <p className="max-w-md text-base text-muted-foreground leading-relaxed">
-            Every SkyCo product starts with a problem I run into myself. Each one runs on its own
-            site and is free to open right now.
+        <div className="max-w-2xl">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">
+            Built for real daily problems
+          </p>
+          <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+            {countWord(liveProjects.length)} products.{" "}
+            <span className="text-gradient-sky">
+              {countWord(liveProjects.length)} jobs.
+            </span>{" "}
+            No unnecessary complexity.
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            Each one solves a problem I ran into myself. Open any of them right now, see the real
+            screen below before you click, and decide for yourself.
           </p>
         </div>
 
-        <h3 className="sr-only">Live projects</h3>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {liveProjects.map((project) => {
-            const Icon = icons[project.icon] ?? icons.default;
+        <h3 className="sr-only">Live products</h3>
+        <div className="mt-12 space-y-16">
+          {liveProjects.map((project, i) => {
+            const shot = productShots[project.slug];
+            const flip = i % 2 === 1;
             return (
-              <a
+              <article
                 key={project.slug}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-sky-bright/20 bg-card p-6 transition-all hover:-translate-y-1 hover:border-sky-bright hover:shadow-glow-cyan"
+                className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12"
               >
-                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-bright via-sky-azure to-sky-deep opacity-70" />
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white shadow-sm">
-                    <Icon className="h-6 w-6" />
+                <div className={flip ? "lg:order-2" : undefined}>
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-ice px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-sky-deep">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                      Live
+                    </span>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-sky-bright">
+                      {project.tagline}
+                    </span>
                   </div>
-                  <span className="rounded-full bg-sky-ice px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-sky-deep">
-                    Live
-                  </span>
+
+                  <h4 className="mt-3 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+                    {project.name}
+                  </h4>
+                  <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                    {project.description}
+                  </p>
+
+                  <ul className="mt-5 space-y-2.5">
+                    {[project.why, project.example, project.account]
+                      .filter((v): v is string => Boolean(v))
+                      .map((line) => (
+                        <li key={line} className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground">
+                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-sky-bright" aria-hidden="true" />
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                  </ul>
+
+                  <a
+                    href={entryHref(project)}
+                    className="mt-7 inline-flex items-center gap-2 rounded-full bg-sky-deep px-6 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
+                  >
+                    Try {project.name} now
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
                 </div>
 
-                <h4 className="mt-4 text-lg font-bold text-foreground">{project.name}</h4>
-                <p className="text-xs font-semibold uppercase tracking-wider text-sky-bright">
-                  {project.tagline}
-                </p>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {project.description}
-                </p>
-
-                <span className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-sky-deep px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white">
-                  <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
-                  Open {project.name}
-                </span>
-              </a>
+                {shot && (
+                  <div className={flip ? "lg:order-1" : undefined}>
+                    <a
+                      href={entryHref(project)}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg transition-all hover:-translate-y-1 hover:shadow-glow-cyan"
+                    >
+                      <img
+                        src={shot.src}
+                        alt={shot.alt}
+                        width={1280}
+                        height={800}
+                        loading="lazy"
+                        decoding="async"
+                        className="aspect-[16/10] w-full object-cover object-top"
+                      />
+                    </a>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      A real screen from {project.name}, not a mockup.
+                    </p>
+                  </div>
+                )}
+              </article>
             );
           })}
         </div>
 
         {upcomingProjects.length > 0 && (
           <>
-            <h3 className="mt-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
+            <h3 className="mt-20 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
               On the way
             </h3>
-            <div className="mt-5 grid gap-4 sm:grid-cols-3">
+            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {upcomingProjects.map((item) => (
                 <div
                   key={item.slug}
