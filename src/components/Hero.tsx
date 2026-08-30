@@ -1,19 +1,20 @@
-import { Sparkles } from "lucide-react";
+import { Sparkles, ShieldCheck, Zap, CircleDollarSign } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import badge from "@/assets/skyco-badge-512.webp";
-import { splitDirectory, type ResolvedProject } from "@/lib/projects";
-import { countWord, listNames } from "@/lib/project-copy";
+import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
+import { countWord } from "@/lib/project-copy";
 
 export function Hero({ directory }: { directory: ResolvedProject[] }) {
   const live = splitDirectory(directory).live;
-  const names = listNames(live.map((p) => p.name));
+
   return (
-    <section className="relative overflow-hidden bg-hero-gradient px-6 pt-32 pb-24 md:pt-40 md:pb-32">
+    <section className="relative overflow-hidden bg-hero-gradient px-6 pt-28 pb-16 md:pt-36 md:pb-20">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-32 -right-24 h-80 w-80 rounded-full bg-sky-bright/30 blur-3xl" />
         <div className="absolute top-1/2 -left-24 h-72 w-72 rounded-full bg-sky-azure/25 blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-14 md:grid-cols-[1.15fr_1fr]">
+      <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.15fr_1fr]">
         <div className="text-center md:text-left">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-deep ring-1 ring-sky-bright/40">
             <Sparkles className="h-3.5 w-3.5" />
@@ -25,24 +26,51 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl md:mx-0 mx-auto">
-            {countWord(live.length)} of my products {live.length === 1 ? "is" : "are"} live today:{" "}
-            {names}. Each one does a single job well, and all of them are free to open with no account
-            required.
+            A founder-led software studio. {countWord(live.length)} products are live today, each
+            doing one job well, for anyone who wants the answer without an app to manage.
           </p>
+
+          <div className="mt-7 flex flex-wrap justify-center md:justify-start gap-2">
+            {[
+              { icon: Zap, label: "Open instantly, nothing to install" },
+              { icon: CircleDollarSign, label: "Free to use" },
+              { icon: ShieldCheck, label: "No account for most products" },
+            ].map(({ icon: Icon, label }) => (
+              <span
+                key={label}
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/60 backdrop-blur px-3 py-1.5 text-xs font-semibold text-sky-deep ring-1 ring-sky-bright/25"
+              >
+                <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                {label}
+              </span>
+            ))}
+          </div>
 
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
             <a
               href="#tools"
               className="inline-flex items-center justify-center rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
             >
-              See my live tools
+              See the products
             </a>
-            <a
-              href="#mission"
+            <Link
+              to="/about"
               className="inline-flex items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 py-3 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
             >
-              How I work
-            </a>
+              Why trust SkyCo
+            </Link>
+          </div>
+
+          <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-2">
+            {live.map((p) => (
+              <a
+                key={p.slug}
+                href={entryHref(p)}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-sky-bright/25 bg-white/70 px-3 py-1.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
+              >
+                Try {p.name}
+              </a>
+            ))}
           </div>
         </div>
 
@@ -55,12 +83,10 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
             height={512}
             fetchPriority="high"
             decoding="async"
-            className="w-72 md:w-96 drop-shadow-[0_20px_40px_rgba(11,59,140,0.35)] animate-[float_6s_ease-in-out_infinite]"
+            className="w-56 sm:w-72 md:w-80 drop-shadow-2xl"
           />
         </div>
       </div>
-
-      <style>{`@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}`}</style>
     </section>
   );
 }
