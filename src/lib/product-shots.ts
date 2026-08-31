@@ -18,8 +18,9 @@ export const productShots: Record<string, { src: string; alt: string }> = {
   },
   "my-finance-friend": {
     src: finance,
-    alt: "My Finance Friend chat screen with example commands and a holdings panel",
+    alt: "My Finance Friend chat screen with example commands such as buying NVDA, next to an empty holdings panel on a fresh guest session",
   },
+
   "grocery-packs": {
     src: grocery,
     alt: "SkyCo Grocery Packs home screen with the Easy Week starter pack",
