@@ -1,4 +1,6 @@
 import { Heart, Target, Zap } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 
