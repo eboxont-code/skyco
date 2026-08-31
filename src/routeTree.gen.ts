@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SupportRouteImport } from './routes/support'
+import { Route as StatusRouteImport } from './routes/status'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -30,6 +31,11 @@ const TermsRoute = TermsRouteImport.update({
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
 }
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
 }
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
 }
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/security'
     | '/sitemap.xml'
+    | '/status'
     | '/support'
     | '/terms'
   fileRoutesByTo: FileRoutesByTo
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/security'
     | '/sitemap.xml'
+    | '/status'
     | '/support'
     | '/terms'
   id:
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/security'
     | '/sitemap.xml'
+    | '/status'
     | '/support'
     | '/terms'
   fileRoutesById: FileRoutesById
@@ -182,6 +194,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   SecurityRoute: typeof SecurityRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StatusRoute: typeof StatusRoute
   SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
 }
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/support'
       fullPath: '/support'
       preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -286,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   SecurityRoute: SecurityRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StatusRoute: StatusRoute,
   SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
 }
