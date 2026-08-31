@@ -1,4 +1,6 @@
 import { Heart, Target, Zap } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 
@@ -40,7 +42,25 @@ export function Mission({ directory }: { directory: ResolvedProject[] }) {
             {liveCount === 1 ? "is" : "are"} live, and I add a new one when a problem is worth solving
             properly.
           </p>
+          <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+            <Link to="/about" className="text-sky-deep underline underline-offset-4">
+              More about SkyCo
+            </Link>
+            <span aria-hidden="true" className="text-muted-foreground/50">
+              &middot;
+            </span>
+            <Link to="/security" className="text-sky-deep underline underline-offset-4">
+              How your data is handled
+            </Link>
+            <span aria-hidden="true" className="text-muted-foreground/50">
+              &middot;
+            </span>
+            <Link to="/status" className="text-sky-deep underline underline-offset-4">
+              Product status
+            </Link>
+          </div>
         </div>
+
 
         <div className="grid gap-5 sm:grid-cols-3">
           {pillars.map((pillar) => (
