@@ -17,6 +17,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as GroceryRouteImport } from './routes/grocery'
 import { Route as FinanceRouteImport } from './routes/finance'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as CurrenseeRouteImport } from './routes/currensee'
 import { Route as ChronosRouteImport } from './routes/chronos'
 import { Route as IndexRouteImport } from './routes/index'
@@ -61,6 +62,11 @@ const FinanceRoute = FinanceRouteImport.update({
   path: '/finance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CurrenseeRoute = CurrenseeRouteImport.update({
   id: '/currensee',
   path: '/currensee',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chronos': typeof ChronosRoute
   '/currensee': typeof CurrenseeRoute
+  '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chronos': typeof ChronosRoute
   '/currensee': typeof CurrenseeRoute
+  '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/chronos': typeof ChronosRoute
   '/currensee': typeof CurrenseeRoute
+  '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chronos'
     | '/currensee'
+    | '/faq'
     | '/finance'
     | '/grocery'
     | '/llms.txt'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chronos'
     | '/currensee'
+    | '/faq'
     | '/finance'
     | '/grocery'
     | '/llms.txt'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chronos'
     | '/currensee'
+    | '/faq'
     | '/finance'
     | '/grocery'
     | '/llms.txt'
@@ -163,6 +175,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChronosRoute: typeof ChronosRoute
   CurrenseeRoute: typeof CurrenseeRoute
+  FaqRoute: typeof FaqRoute
   FinanceRoute: typeof FinanceRoute
   GroceryRoute: typeof GroceryRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FinanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/currensee': {
       id: '/currensee'
       path: '/currensee'
@@ -259,6 +279,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChronosRoute: ChronosRoute,
   CurrenseeRoute: CurrenseeRoute,
+  FaqRoute: FaqRoute,
   FinanceRoute: FinanceRoute,
   GroceryRoute: GroceryRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
