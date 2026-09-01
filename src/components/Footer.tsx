@@ -47,7 +47,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={project.slug}>
                   <a
                     href={entryHref(project)}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {project.name}
                   </a>
@@ -63,7 +63,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {l.label}
                   </Link>
@@ -79,7 +79,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {l.label}
                   </Link>
@@ -88,7 +88,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
               <li>
                 <a
                   href={`mailto:${SUPPORT_EMAIL}`}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {SUPPORT_EMAIL}
                 </a>
@@ -98,7 +98,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                   href="https://www.instagram.com/skyco.online/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   Instagram
                 </a>
@@ -113,7 +113,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
             {trustStrip.map((l) => (
               <span key={l.to} className="flex items-center gap-2">
                 <span aria-hidden="true">&middot;</span>
-                <Link to={l.to} className="transition-colors hover:text-foreground">
+                <Link to={l.to} className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
                   {l.label}
                 </Link>
               </span>
