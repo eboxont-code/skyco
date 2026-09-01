@@ -1,7 +1,7 @@
 import { ArrowUpRight, Clock, Check } from "lucide-react";
 import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
-import { productShots } from "@/lib/product-shots";
+import { productShots, shotFreshness } from "@/lib/product-shots";
 import { useWebMCPTools, text } from "@/lib/webmcp";
 
 export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
@@ -83,12 +83,17 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                   <h4 className="mt-3 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
                     {project.name}
                   </h4>
+                  {project.demo && (
+                    <p className="mt-3 text-lg font-semibold leading-snug text-sky-deep">
+                      {project.demo}
+                    </p>
+                  )}
                   <p className="mt-3 text-base leading-relaxed text-muted-foreground">
                     {project.description}
                   </p>
 
                   <ul className="mt-5 space-y-2.5">
-                    {[project.why, project.example, project.account]
+                    {[project.why, project.account]
                       .filter((v): v is string => Boolean(v))
                       .map((line) => (
                         <li key={line} className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground">
@@ -125,7 +130,17 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                         className="aspect-[16/10] w-full object-cover object-top"
                       />
                     </a>
-                    <p className="mt-2 text-xs text-muted-foreground">
+                    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <p className="text-xs font-medium text-foreground">{shot.result}</p>
+                      <span
+                        suppressHydrationWarning
+                        className="inline-flex items-center gap-1.5 rounded-full bg-sky-ice px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sky-deep"
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                        {shotFreshness(shot.captured)}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">
                       A real screen from {project.name}, not a mockup.
                     </p>
                   </div>
