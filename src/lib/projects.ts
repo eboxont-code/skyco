@@ -31,6 +31,8 @@ export type SkyCoProject = {
   why?: string;
   /** A concrete, checkable example of the job it does. */
   example?: string;
+  /** The one killer demo, phrased as the job rather than the software. */
+  demo?: string;
   /** Whether opening the product requires an account. */
   account?: string;
   candidates: string[];
@@ -52,6 +54,7 @@ export const projectRegistry: SkyCoProject[] = [
       "Built for travel days and cross-border shopping. Live fiat and crypto rates, clear charts, and alerts when a pair hits your number.",
     icon: "converter",
     path: "/currensee",
+    demo: "Open it and USD to EUR is already on screen with a live rate and a 30 day chart.",
     why: "Checking a rate usually means an ad-heavy page or a search result that is already out of date.",
     example: "Open it and USD to EUR is already on screen with a 30 day chart and a last updated stamp.",
     account: "No account needed.",
@@ -65,6 +68,7 @@ export const projectRegistry: SkyCoProject[] = [
       "Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali calendars side by side, so every date you track lines up in a single view.",
     icon: "calendar",
     path: "/chronos",
+    demo: "Pick one day and read it in six calendars in about ten seconds.",
     why: "Families and teams that live across two or three calendar systems end up converting dates by hand.",
     example: "Pick one day and read it as Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali at once, with that month's holidays.",
     account: "No account needed.",
@@ -78,6 +82,7 @@ export const projectRegistry: SkyCoProject[] = [
       "Type what you bought in plain English and it sorts your stocks and ETFs, with a preview before anything is saved.",
     icon: "wallet",
     path: "/finance",
+    demo: "Type what you bought in plain English and check the parsed entry before it saves.",
     why: "Portfolio trackers ask for a spreadsheet import before they show you anything useful.",
     example: 'Type "bought 50 shares of NVDA today at $145" and review the parsed entry before it is saved.',
     account: "Guest mode available, or an optional account to keep your data across devices.",
@@ -91,6 +96,7 @@ export const projectRegistry: SkyCoProject[] = [
       "Printable grocery packs and light meal plans, sorted by store section, with quantities for two people or a family of four.",
     icon: "grocery",
     path: "/grocery",
+    demo: "Open a pack and the week"s shopping is already sorted by store section.",
     why: "Most weeks the hard part is not cooking, it is deciding what to buy before you get to the shop.",
     example: "Open the Easy Week starter pack and it is already sorted by store section with quantities filled in.",
     account: "No account needed.",
