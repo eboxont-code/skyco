@@ -96,7 +96,7 @@ export const projectRegistry: SkyCoProject[] = [
       "Printable grocery packs and light meal plans, sorted by store section, with quantities for two people or a family of four.",
     icon: "grocery",
     path: "/grocery",
-    demo: "Open a pack and the week"s shopping is already sorted by store section.",
+    demo: "Open a pack and the week's shopping is already sorted by store section.",
     why: "Most weeks the hard part is not cooking, it is deciding what to buy before you get to the shop.",
     example: "Open the Easy Week starter pack and it is already sorted by store section with quantities filled in.",
     account: "No account needed.",
