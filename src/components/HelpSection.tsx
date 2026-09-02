@@ -162,7 +162,7 @@ export function HelpSection() {
             </div>
             <Button
               type="submit"
-              className="w-full rounded-full bg-sky-deep text-primary-foreground hover:bg-sky-azure shadow-glow-cyan"
+              className="h-12 w-full rounded-full bg-sky-deep text-primary-foreground hover:bg-sky-azure shadow-glow-cyan"
             >
               <Send className="mr-2 h-4 w-4" />
               Send Message

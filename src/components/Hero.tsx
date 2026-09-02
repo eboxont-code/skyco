@@ -66,7 +66,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
               <a
                 key={p.slug}
                 href={entryHref(p)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-sky-bright/25 bg-white/70 px-3 py-1.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
+                className="inline-flex items-center gap-1.5 min-h-11 rounded-lg border border-sky-bright/25 bg-white/70 px-3.5 py-2.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
               >
                 Try {p.name}
               </a>

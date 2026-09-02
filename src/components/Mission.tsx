@@ -43,19 +43,19 @@ export function Mission({ directory }: { directory: ResolvedProject[] }) {
             properly.
           </p>
           <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
-            <Link to="/about" className="text-sky-deep underline underline-offset-4">
+            <Link to="/about" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4">
               More about SkyCo
             </Link>
             <span aria-hidden="true" className="text-muted-foreground/50">
               &middot;
             </span>
-            <Link to="/security" className="text-sky-deep underline underline-offset-4">
+            <Link to="/security" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4">
               How your data is handled
             </Link>
             <span aria-hidden="true" className="text-muted-foreground/50">
               &middot;
             </span>
-            <Link to="/status" className="text-sky-deep underline underline-offset-4">
+            <Link to="/status" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4">
               Product status
             </Link>
           </div>
