@@ -1,4 +1,4 @@
-import { Sparkles, ShieldCheck, Zap, CircleDollarSign } from "lucide-react";
+import { Sparkles, ShieldCheck, Zap, CircleDollarSign, ArrowUpRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import badge from "@/assets/skyco-badge-512.webp";
 import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
@@ -6,6 +6,9 @@ import { countWord } from "@/lib/project-copy";
 
 export function Hero({ directory }: { directory: ResolvedProject[] }) {
   const live = splitDirectory(directory).live;
+  const featured = live.find((p) => p.slug === "currensee");
+  const others = live.filter((p) => p.slug !== "currensee");
+
 
   return (
     <section className="relative overflow-hidden bg-hero-gradient px-6 pt-28 pb-16 md:pt-36 md:pb-20">
@@ -47,22 +50,32 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
           </div>
 
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
+            {featured && (
+              <a
+                href={entryHref(featured)}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
+              >
+                Open CurrenSee, the live currency converter
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            )}
             <a
               href="#tools"
-              className="inline-flex items-center justify-center rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
+              className="inline-flex items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 py-3 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
             >
               See the products
             </a>
-            <Link
-              to="/about"
-              className="inline-flex items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 py-3 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
-            >
-              Why trust SkyCo
-            </Link>
           </div>
 
+          <p className="mt-3 text-sm text-muted-foreground">
+            Live rates for any currency pair, plus a 30 day chart. Free, no sign up.{" "}
+            <Link to="/about" className="font-semibold text-sky-deep underline-offset-4 hover:underline">
+              Why trust SkyCo
+            </Link>
+          </p>
+
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-2">
-            {live.map((p) => (
+            {others.map((p) => (
               <a
                 key={p.slug}
                 href={entryHref(p)}
@@ -72,6 +85,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
               </a>
             ))}
           </div>
+
         </div>
 
         <div className="relative flex justify-center md:justify-end">
