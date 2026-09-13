@@ -3,6 +3,8 @@ import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects"
 import { countWord } from "@/lib/project-copy";
 import { productShots, shotFreshness } from "@/lib/product-shots";
 import { useWebMCPTools, text } from "@/lib/webmcp";
+import { WaitlistForm } from "@/components/WaitlistForm";
+
 
 export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
   const { live: liveProjects, upcoming: upcomingProjects } = splitDirectory(directory);
@@ -168,8 +170,10 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
+                  {item.slug === "budget" && <WaitlistForm productName={item.name} />}
                 </div>
               ))}
+
             </div>
           </>
         )}

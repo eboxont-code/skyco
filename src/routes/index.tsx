@@ -6,6 +6,8 @@ import { ToolsGrid } from "@/components/ToolsGrid";
 import { MotivationBand } from "@/components/MotivationBand";
 import { HelpSection } from "@/components/HelpSection";
 import { Footer } from "@/components/Footer";
+import { MobileActionBar } from "@/components/MobileActionBar";
+
 import { fallbackDirectory, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 import { listNames } from "@/lib/project-copy";
@@ -79,7 +81,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const directory = Route.useLoaderData();
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <Navbar directory={directory} />
       <main>
         <Hero directory={directory} />
@@ -89,6 +91,8 @@ function Index() {
         <HelpSection />
       </main>
       <Footer directory={directory} />
+      <MobileActionBar directory={directory} />
     </div>
+
   );
 }
