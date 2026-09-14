@@ -81,7 +81,7 @@ export const projectRegistry: SkyCoProject[] = [
     description:
       "Type what you bought in plain English and it sorts your stocks and ETFs, with a preview before anything is saved.",
     icon: "wallet",
-    path: "/finance",
+    path: "/finance-friend",
     demo: "Type what you bought in plain English and check the parsed entry before it saves.",
     why: "Portfolio trackers ask for a spreadsheet import before they show you anything useful.",
     example: 'Type "bought 50 shares of NVDA today at $145" and review the parsed entry before it is saved.',
