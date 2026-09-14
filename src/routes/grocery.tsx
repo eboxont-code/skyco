@@ -1,22 +1,65 @@
 import { createFileRoute } from "@tanstack/react-router";
-import type {} from "@tanstack/react-start";
-import { hrefForSlug } from "@/lib/projects";
+import { ProductPage } from "@/components/ProductPage";
+import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
+import { getProjectDirectory } from "@/lib/projects.functions";
 
-/**
- * Clean SkyCo entry URL. The product keeps its own hosting; this route only
- * forwards visitors so every product is shareable under skyco.online.
- */
+const TITLE = "SkyCo Grocery Packs | Ready-made shopping lists sorted by store section";
+const DESCRIPTION =
+  "Open a pack and the week's shopping is already sorted by store section, with quantities for two people or a family of four. Free to browse, no account.";
+const URL = "https://skyco.online/grocery";
+
 export const Route = createFileRoute("/grocery")({
-  server: {
-    handlers: {
-      GET: async () =>
-        new Response(null, {
-          status: 302,
-          headers: {
-            Location: hrefForSlug("grocery-packs"),
-            "Cache-Control": "public, max-age=300",
-          },
-        }),
-    },
+  loader: async (): Promise<ResolvedProject[]> => {
+    try {
+      return await getProjectDirectory();
+    } catch {
+      return fallbackDirectory;
+    }
   },
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: URL },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: URL }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "SkyCo Grocery Packs",
+          applicationCategory: "LifestyleApplication",
+          operatingSystem: "Web browser",
+          url: URL,
+          description: DESCRIPTION,
+          publisher: { "@type": "Organization", name: "SkyCo", url: "https://skyco.online" },
+        }),
+      },
+    ],
+  }),
+  component: GroceryPage,
 });
+
+function GroceryPage() {
+  return (
+    <ProductPage
+      slug="grocery-packs"
+      directory={Route.useLoaderData()}
+      headline="Open the Easy Week starter pack and the shopping is already grouped by store section, with quantities filled in. Print it or read it at the shelf."
+      points={[
+        "Lists grouped the way a shop is laid out, so you walk it once.",
+        "Quantities sized for two people or a family of four.",
+        "Light meal plans attached to the packs, not a separate app.",
+        "Printable, or readable from a phone while you shop.",
+        "Free to browse before you commit to anything.",
+        "No account needed to open a pack.",
+      ]}
+    />
+  );
+}
