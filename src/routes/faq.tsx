@@ -92,7 +92,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
       <>
         Products move onto a SkyCo address as their domains are connected. In the meantime the link
         points at wherever the product genuinely lives, and every product is reachable from
-        skyco.online through a clean path such as /finance.
+        skyco.online through a clean path such as /finance-friend.
       </>
     ),
   },

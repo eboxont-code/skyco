@@ -17,7 +17,7 @@ export const changelog: ChangeEntry[] = [
     tag: "Improvement",
     items: [
       "Added About, Privacy, Terms, Security, Support, FAQ and Status pages.",
-      "Every product now has a short SkyCo entry URL: skyco.online/currensee, /chronos, /finance and /grocery.",
+      "Every product now has a short SkyCo entry URL: skyco.online/currensee, /chronos, /finance-friend and /grocery.",
       "Homepage product sections show real screenshots captured from the live products.",
       "One shared header and footer across the whole site.",
       "Started this changelog.",
