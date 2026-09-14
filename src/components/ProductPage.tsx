@@ -1,0 +1,181 @@
+import { ArrowUpRight, Check, ArrowLeft } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { productShots, shotFreshness } from "@/lib/product-shots";
+import { splitDirectory, type ResolvedProject } from "@/lib/projects";
+
+/**
+ * One shared layout for every product page hosted on skyco.online/<product>.
+ * The hub owns the page, the SEO and the story. The button at the end hands
+ * the visitor to the running product.
+ */
+export function ProductPage({
+  slug,
+  directory,
+  headline,
+  points,
+}: {
+  slug: string;
+  directory: ResolvedProject[];
+  headline: string;
+  points: string[];
+}) {
+  const project =
+    directory.find((p) => p.slug === slug) ?? splitDirectory(directory).live[0];
+  const shot = productShots[slug];
+  const others = directory.filter((p) => p.live && p.slug !== slug);
+
+  if (!project) return null;
+
+  const openUrl = project.href;
+  const openLabel = `Open ${project.name}`;
+
+  return (
+    <div className="flex min-h-screen flex-col bg-background">
+      <Navbar directory={directory} solid />
+      <main className="flex-1 pt-20">
+        <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-14">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+            <div>
+              <Link
+                to="/"
+                className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-sky-deep"
+              >
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                All SkyCo products
+              </Link>
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-ice px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-sky-deep">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                  {project.live ? "Live" : "On the way"}
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-sky-bright">
+                  {project.tagline}
+                </span>
+              </div>
+
+              <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+                {project.name}
+              </h1>
+              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{headline}</p>
+
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <a
+                  href={openUrl}
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
+                >
+                  {openLabel}
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+                <Link
+                  to="/support"
+                  className="inline-flex min-h-12 items-center rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep"
+                >
+                  Ask a question
+                </Link>
+              </div>
+              {project.account && (
+                <p className="mt-3 text-xs text-muted-foreground">{project.account}</p>
+              )}
+            </div>
+
+            {shot && (
+              <div>
+                <a
+                  href={openUrl}
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg transition-all hover:-translate-y-1 hover:shadow-glow-cyan"
+                >
+                  <img
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={1280}
+                    height={800}
+                    decoding="async"
+                    className="aspect-[16/10] w-full object-cover object-top"
+                  />
+                </a>
+                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <p className="text-xs font-medium text-foreground">{shot.result}</p>
+                  <span
+                    suppressHydrationWarning
+                    className="inline-flex items-center gap-1.5 rounded-full bg-sky-ice px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sky-deep"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                    {shotFreshness(shot.captured)}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="px-6 py-14">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
+              What you get
+            </h2>
+            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+              {points.map((point) => (
+                <li
+                  key={point}
+                  className="flex gap-3 rounded-2xl border border-sky-bright/20 bg-card p-5 text-sm leading-relaxed text-muted-foreground"
+                >
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-sky-bright" aria-hidden="true" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+
+            {project.why && (
+              <div className="mt-10 rounded-2xl border border-sky-bright/25 bg-sky-ice/50 p-6">
+                <p className="text-sm font-bold text-foreground">Why I built it</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{project.why}</p>
+                {project.example && (
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {project.example}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className="mt-10">
+              <a
+                href={openUrl}
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
+              >
+                {openLabel}
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+
+            {others.length > 0 && (
+              <div className="mt-16 border-t border-sky-bright/15 pt-10">
+                <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                  Other SkyCo products
+                </h2>
+                <div className="mt-5 grid gap-4 sm:grid-cols-3">
+                  {others.map((p) => (
+                    <a
+                      key={p.slug}
+                      href={p.path ?? p.href}
+                      className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan"
+                    >
+                      <p className="text-sm font-bold text-foreground">{p.name}</p>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                        {p.tagline}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
+      <Footer directory={directory} />
+    </div>
+  );
+}

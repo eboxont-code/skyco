@@ -30,7 +30,7 @@ export const Route = createFileRoute("/llms.txt")({
           "",
           "## Projects",
           "",
-          ...live.map((p) => `- [${p.name}](${p.href}): ${p.description}`),
+          ...live.map((p) => `- [${p.name}](https://skyco.online${p.path ?? ""}): ${p.description}`),
           ...(upcoming.length
             ? ["", "## On the way", "", ...upcoming.map((p) => `- ${p.name}: ${p.description}`)]
             : []),

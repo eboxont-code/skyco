@@ -1,0 +1,66 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { ProductPage } from "@/components/ProductPage";
+import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
+import { getProjectDirectory } from "@/lib/projects.functions";
+
+const TITLE = "My Finance Friend | Track stocks and ETFs by typing plain English";
+const DESCRIPTION =
+  "Type what you bought in ordinary words and My Finance Friend sorts your stocks and ETFs, with a preview before anything is saved. Guest mode available.";
+const URL = "https://skyco.online/finance-friend";
+
+export const Route = createFileRoute("/finance-friend")({
+  loader: async (): Promise<ResolvedProject[]> => {
+    try {
+      return await getProjectDirectory();
+    } catch {
+      return fallbackDirectory;
+    }
+  },
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: TITLE },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: URL },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: URL }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "My Finance Friend",
+          applicationCategory: "FinanceApplication",
+          operatingSystem: "Web browser",
+          url: URL,
+          description: DESCRIPTION,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          publisher: { "@type": "Organization", name: "SkyCo", url: "https://skyco.online" },
+        }),
+      },
+    ],
+  }),
+  component: FinanceFriendPage,
+});
+
+function FinanceFriendPage() {
+  return (
+    <ProductPage
+      slug="my-finance-friend"
+      directory={Route.useLoaderData()}
+      headline='Type "bought 50 shares of NVDA today at $145" and check the parsed entry before it saves. No spreadsheet import to get started.'
+      points={[
+        "Plain English in, a structured holding out.",
+        "A preview of every entry before it is written to your portfolio.",
+        "Stocks and ETFs tracked together in one list.",
+        "Guest mode so you can try it without signing up.",
+        "An optional account when you want the same data on another device.",
+        "Built for people who gave up on portfolio spreadsheets.",
+      ]}
+    />
+  );
+}
