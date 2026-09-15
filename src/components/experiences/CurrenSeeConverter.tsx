@@ -121,11 +121,11 @@ export function CurrenSeeConverter() {
               role="img"
               aria-label={`Trend of ${from} to ${to} over the last 30 days`}
             >
-              <path d={path.area} fill="hsl(var(--sky-bright) / 0.18)" />
+              <path d={path.area} fill="color-mix(in oklab, var(--sky-bright) 22%, transparent)" />
               <path
                 d={path.line}
                 fill="none"
-                stroke="hsl(var(--sky-deep))"
+                stroke="var(--sky-deep)"
                 strokeWidth="2"
                 vectorEffect="non-scaling-stroke"
               />
