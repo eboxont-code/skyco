@@ -68,10 +68,10 @@ export function ProductPage({
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
-                  href={openUrl}
+                  href={experience ? "#use" : openUrl}
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
                 >
-                  {openLabel}
+                  {experience ? `Use ${project.name} here` : openLabel}
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                 </a>
                 <Link
@@ -81,6 +81,7 @@ export function ProductPage({
                   Ask a question
                 </Link>
               </div>
+
               {project.account && (
                 <p className="mt-3 text-xs text-muted-foreground">{project.account}</p>
               )}
