@@ -15,11 +15,16 @@ export function ProductPage({
   directory,
   headline,
   points,
+  experience,
+  experienceTitle,
 }: {
   slug: string;
   directory: ResolvedProject[];
   headline: string;
   points: string[];
+  /** The product itself, running on this page. */
+  experience?: React.ReactNode;
+  experienceTitle?: string;
 }) {
   const project =
     directory.find((p) => p.slug === slug) ?? splitDirectory(directory).live[0];
@@ -30,6 +35,7 @@ export function ProductPage({
 
   const openUrl = project.href;
   const openLabel = `Open ${project.name}`;
+
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
