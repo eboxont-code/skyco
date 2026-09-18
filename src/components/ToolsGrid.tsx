@@ -34,7 +34,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
         if (rows.length === 0) return text("No SkyCo products match that status.");
         return text(
           rows
-            .map((p) => `${p.name} (${p.live ? "live" : "on the way"}): ${p.description}${p.live ? ` ${p.href}` : ""}`)
+            .map((p) => `${p.name} (${p.live ? "live" : "on the way"}): ${p.description}${p.live ? ` https://skyco.online${p.path ?? ""}` : ""}`)
             .join("\n"),
         );
       },

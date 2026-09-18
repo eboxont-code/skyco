@@ -33,7 +33,7 @@ export function ProductPage({
 
   if (!project) return null;
 
-  const openUrl = project.href;
+  const openUrl = project.path ?? project.href;
   const openLabel = `Open ${project.name}`;
 
 

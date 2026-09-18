@@ -58,7 +58,7 @@ export const projectRegistry: SkyCoProject[] = [
     why: "Checking a rate usually means an ad-heavy page or a search result that is already out of date.",
     example: "Open it and USD to EUR is already on screen with a 30 day chart and a last updated stamp.",
     account: "No account needed.",
-    candidates: ["https://currensee.skyco.online/", "https://skycocurrensee.lovable.app/"],
+    candidates: [],
   },
   {
     slug: "chronos",
@@ -72,7 +72,7 @@ export const projectRegistry: SkyCoProject[] = [
     why: "Families and teams that live across two or three calendar systems end up converting dates by hand.",
     example: "Pick one day and read it as Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali at once, with that month's holidays.",
     account: "No account needed.",
-    candidates: ["https://chronos.skyco.online/", "https://stellar-chronos-spark.lovable.app/"],
+    candidates: [],
   },
   {
     slug: "my-finance-friend",
@@ -86,7 +86,7 @@ export const projectRegistry: SkyCoProject[] = [
     why: "Portfolio trackers ask for a spreadsheet import before they show you anything useful.",
     example: 'Type "bought 50 shares of NVDA today at $145" and review the parsed entry before it is saved.',
     account: "Guest mode available, or an optional account to keep your data across devices.",
-    candidates: ["https://finance.skyco.online/", "https://chat-folio-pilot.lovable.app/"],
+    candidates: [],
   },
   {
     slug: "grocery-packs",
@@ -100,11 +100,7 @@ export const projectRegistry: SkyCoProject[] = [
     why: "Most weeks the hard part is not cooking, it is deciding what to buy before you get to the shop.",
     example: "Open the Easy Week starter pack and it is already sorted by store section with quantities filled in.",
     account: "No account needed.",
-    candidates: [
-      "https://grocery.skyco.online/",
-      "https://groceries.skyco.online/",
-      "https://skyco-easy-list-hub.lovable.app/",
-    ],
+    candidates: [],
   },
 
   {
@@ -114,7 +110,7 @@ export const projectRegistry: SkyCoProject[] = [
     description:
       "Enter what you spent, see where it goes, and get on with your day. No spreadsheets to maintain.",
     icon: "wallet",
-    candidates: ["https://budget.skyco.online/"],
+    candidates: [],
   },
   {
     slug: "notes",
@@ -123,7 +119,7 @@ export const projectRegistry: SkyCoProject[] = [
     description:
       "Somewhere to drop a note without it turning into another app to manage.",
     icon: "notes",
-    candidates: ["https://notes.skyco.online/"],
+    candidates: [],
   },
 ];
 
@@ -131,21 +127,14 @@ export const projectRegistry: SkyCoProject[] = [
  * Status used before (or instead of) a live probe. Keep this in sync with what
  * is genuinely reachable today; the runtime probe corrects it either way.
  */
-const knownHrefs: Record<string, string> = {
-  currensee: "https://currensee.skyco.online/",
-  chronos: "https://chronos.skyco.online/",
-  "my-finance-friend": "https://chat-folio-pilot.lovable.app/",
-  "grocery-packs": "https://skyco-easy-list-hub.lovable.app/",
-};
+const SITE = "https://skyco.online";
 
-export const fallbackDirectory: ResolvedProject[] = projectRegistry.map((project) => {
-  const known = knownHrefs[project.slug];
-  return {
-    ...project,
-    href: known ?? project.candidates[0] ?? "https://skyco.online/",
-    live: Boolean(known),
-  };
-});
+export const fallbackDirectory: ResolvedProject[] = projectRegistry.map((project) => ({
+  ...project,
+  // Every shipped product is hosted on the hub itself, so its URL is a path.
+  href: project.path ? `${SITE}${project.path}` : (project.candidates[0] ?? `${SITE}/`),
+  live: Boolean(project.path),
+}));
 
 export function splitDirectory(directory: ResolvedProject[]) {
   return {
