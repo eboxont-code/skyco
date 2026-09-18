@@ -72,7 +72,7 @@ export const projectRegistry: SkyCoProject[] = [
     why: "Families and teams that live across two or three calendar systems end up converting dates by hand.",
     example: "Pick one day and read it as Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali at once, with that month's holidays.",
     account: "No account needed.",
-    candidates: ["https://chronos.skyco.online/", "https://stellar-chronos-spark.lovable.app/"],
+    candidates: [],
   },
   {
     slug: "my-finance-friend",
