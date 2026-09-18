@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
+import { GroceryPackPreview } from "@/components/experiences/GroceryPackPreview";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
@@ -51,6 +52,8 @@ function GroceryPage() {
     <ProductPage
       slug="grocery-packs"
       directory={Route.useLoaderData()}
+      experience={<GroceryPackPreview />}
+      experienceTitle="Open a pack and read the sorted list"
       headline="Open the Easy Week starter pack and the shopping is already grouped by store section, with quantities filled in. Print it or read it at the shelf."
       points={[
         "Lists grouped the way a shop is laid out, so you walk it once.",

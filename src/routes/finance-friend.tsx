@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
+import { FinanceParser } from "@/components/experiences/FinanceParser";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
@@ -52,6 +53,8 @@ function FinanceFriendPage() {
     <ProductPage
       slug="my-finance-friend"
       directory={Route.useLoaderData()}
+      experience={<FinanceParser />}
+      experienceTitle="Type a holding and check the preview"
       headline='Type "bought 50 shares of NVDA today at $145" and check the parsed entry before it saves. No spreadsheet import to get started.'
       points={[
         "Plain English in, a structured holding out.",
