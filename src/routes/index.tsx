@@ -68,7 +68,7 @@ export const Route = createFileRoute("/")({
             position: i + 1,
             name: p.name,
             description: p.tagline,
-            url: p.href,
+            url: `https://skyco.online${p.path ?? ""}`,
           })),
         }),
       },

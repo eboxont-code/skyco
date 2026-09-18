@@ -25,6 +25,8 @@ async function probe(): Promise<ResolvedProject[]> {
   return Promise.all(
     projectRegistry.map(async (project) => {
       const fallback = fallbackDirectory.find((p) => p.slug === project.slug);
+      // Hub-hosted products need no probe: they run on skyco.online itself.
+      if (project.path) return { ...project, href: `https://skyco.online${project.path}`, live: true };
       // Probe every candidate at once, then keep the best (earliest listed) hit.
       const results = await Promise.all(
         project.candidates.map(async (candidate) => ({

@@ -128,7 +128,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           subOrganization: liveProjects.map((p) => ({
             "@type": "Organization",
             name: p.name,
-            url: p.href,
+            url: `https://skyco.online${p.path ?? ""}`,
             description: p.tagline,
           })),
         }),
