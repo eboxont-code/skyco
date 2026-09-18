@@ -98,7 +98,8 @@ export function ProductPage({
                     decoding="async"
                     className="aspect-[16/10] w-full object-cover object-top"
                   />
-                </a>
+                </div>
+
                 <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                   <p className="text-xs font-medium text-foreground">{shot.result}</p>
                   <span
