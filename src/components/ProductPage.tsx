@@ -115,6 +115,20 @@ export function ProductPage({
           </div>
         </section>
 
+        {experience && (
+          <section id="use" className="scroll-mt-24 border-b border-sky-bright/15 px-6 py-14">
+            <div className="mx-auto max-w-4xl">
+              <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
+                {experienceTitle ?? `Use ${project.name}`}
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Running here on SkyCo. Nothing to install and no account needed.
+              </p>
+              <div className="mt-6">{experience}</div>
+            </div>
+          </section>
+        )}
+
         <section className="px-6 py-14">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
