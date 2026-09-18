@@ -58,7 +58,7 @@ export const projectRegistry: SkyCoProject[] = [
     why: "Checking a rate usually means an ad-heavy page or a search result that is already out of date.",
     example: "Open it and USD to EUR is already on screen with a 30 day chart and a last updated stamp.",
     account: "No account needed.",
-    candidates: ["https://currensee.skyco.online/", "https://skycocurrensee.lovable.app/"],
+    candidates: [],
   },
   {
     slug: "chronos",
