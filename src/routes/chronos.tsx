@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
+import { ChronosCalendars } from "@/components/experiences/ChronosCalendars";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
@@ -52,6 +53,8 @@ function ChronosPage() {
     <ProductPage
       slug="chronos"
       directory={Route.useLoaderData()}
+      experience={<ChronosCalendars />}
+      experienceTitle="Read one date in six calendars"
       headline="Tap one day and read it back as Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali. About ten seconds, no conversion tables."
       points={[
         "Six calendar systems lined up against the same date.",

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
+import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
@@ -52,6 +53,8 @@ function CurrenSeePage() {
     <ProductPage
       slug="currensee"
       directory={Route.useLoaderData()}
+      experience={<CurrenSeeConverter />}
+      experienceTitle="Convert a pair right here"
       headline="Open it and USD to EUR is already on screen with a live rate and a 30 day chart. Switch the pair, read the trend, set an alert, close the tab."
       points={[
         "Live fiat rates for the pairs people actually travel and shop with.",

@@ -89,12 +89,7 @@ export function ProductPage({
 
             {shot && (
               <div>
-                <a
-                  href={openUrl}
-                  tabIndex={-1}
-                  aria-hidden="true"
-                  className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg transition-all hover:-translate-y-1 hover:shadow-glow-cyan"
-                >
+                <div className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg">
                   <img
                     src={shot.src}
                     alt={shot.alt}
@@ -103,7 +98,8 @@ export function ProductPage({
                     decoding="async"
                     className="aspect-[16/10] w-full object-cover object-top"
                   />
-                </a>
+                </div>
+
                 <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                   <p className="text-xs font-medium text-foreground">{shot.result}</p>
                   <span
@@ -118,6 +114,20 @@ export function ProductPage({
             )}
           </div>
         </section>
+
+        {experience && (
+          <section id="use" className="scroll-mt-24 border-b border-sky-bright/15 px-6 py-14">
+            <div className="mx-auto max-w-4xl">
+              <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
+                {experienceTitle ?? `Use ${project.name}`}
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Running here on SkyCo. Nothing to install and no account needed.
+              </p>
+              <div className="mt-6">{experience}</div>
+            </div>
+          </section>
+        )}
 
         <section className="px-6 py-14">
           <div className="mx-auto max-w-6xl">
@@ -150,10 +160,10 @@ export function ProductPage({
 
             <div className="mt-10">
               <a
-                href={openUrl}
+                href={experience ? "#use" : openUrl}
                 className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
               >
-                {openLabel}
+                {experience ? `Use ${project.name} here` : openLabel}
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
