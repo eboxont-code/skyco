@@ -89,12 +89,7 @@ export function ProductPage({
 
             {shot && (
               <div>
-                <a
-                  href={openUrl}
-                  tabIndex={-1}
-                  aria-hidden="true"
-                  className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg transition-all hover:-translate-y-1 hover:shadow-glow-cyan"
-                >
+                <div className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg">
                   <img
                     src={shot.src}
                     alt={shot.alt}
