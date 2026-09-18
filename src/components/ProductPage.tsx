@@ -160,10 +160,10 @@ export function ProductPage({
 
             <div className="mt-10">
               <a
-                href={openUrl}
+                href={experience ? "#use" : openUrl}
                 className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
               >
-                {openLabel}
+                {experience ? `Use ${project.name} here` : openLabel}
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
