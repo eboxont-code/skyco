@@ -103,7 +103,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: badge512,
         fetchPriority: "high",
       },
-      { rel: "preconnect", href: "https://currensee.skyco.online" },
     ],
     scripts: [
       {
