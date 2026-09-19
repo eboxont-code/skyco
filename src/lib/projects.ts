@@ -70,7 +70,7 @@ export const projectRegistry: SkyCoProject[] = [
     path: "/chronos",
     demo: "Pick one day and read it in six calendars in about ten seconds.",
     why: "Families and teams that live across two or three calendar systems end up converting dates by hand.",
-    example: "Pick one day and read it as Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka at once, with that month's holidays.",
+    example: "Pick one day and read it as Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka at once.",
     account: "No account needed.",
     candidates: [],
   },
