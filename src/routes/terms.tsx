@@ -59,7 +59,7 @@ function TermsPage() {
             delayed, and are indicative rather than dealable prices.
           </li>
           <li>
-            Calendar conversions and holiday dates follow published calculation rules. Observance in
+            Calendar conversions follow published calculation rules. Observance in
             practice varies by country and by community, in particular for lunar calendars where a
             local sighting or ruling decides the date.
           </li>
