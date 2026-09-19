@@ -4,9 +4,10 @@ import { ChronosCalendars } from "@/components/experiences/ChronosCalendars";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
-const TITLE = "Chronos | Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali calendars";
+const TITLE = "Chronos | Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka calendars";
 const DESCRIPTION =
-  "Pick one date and read it in six calendar systems at once, with that month's holidays. Free, no account, built for families living across calendars.";
+  "Pick one date and read it in six calendar systems at once. Free, no account, built for families and teams living across calendars.";
+
 const URL = "https://skyco.online/chronos";
 
 export const Route = createFileRoute("/chronos")({
@@ -55,11 +56,12 @@ function ChronosPage() {
       directory={Route.useLoaderData()}
       experience={<ChronosCalendars />}
       experienceTitle="Read one date in six calendars"
-      headline="Tap one day and read it back as Gregorian, Hijri, Hebrew, Chinese, Persian and Nepali. About ten seconds, no conversion tables."
+      headline="Tap one day and read it back as Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka. About ten seconds, no conversion tables."
       points={[
         "Six calendar systems lined up against the same date.",
-        "A month view you can scroll, not a single conversion box.",
-        "Holidays for the month shown next to the dates they fall on.",
+        "Pick any date, or jump back to today with one tap.",
+        "Each system named clearly, so you know which reading is which.",
+
         "Useful for family events, religious dates and cross-border scheduling.",
         "Works the same on a phone browser as it does on a laptop.",
         "No account, no install, nothing to configure first.",

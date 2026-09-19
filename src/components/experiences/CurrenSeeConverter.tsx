@@ -86,7 +86,7 @@ export function CurrenSeeConverter() {
         {data ? (
           <>
             1 {from} = <span className="font-bold text-foreground">{format(data.rate)}</span> {to}
-            <span className="ml-2 text-xs">Reference rate for {data.asOf}</span>
+            <span className="ml-2 block text-xs sm:inline">Reference rate for {data.asOf}</span>
           </>
         ) : query.isError ? (
           <>
