@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check, ArrowLeft } from "lucide-react";
+import { ArrowUpRight, ArrowDown, Check, ArrowLeft } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -72,7 +72,12 @@ export function ProductPage({
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
                 >
                   {experience ? `Use ${project.name} here` : openLabel}
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  {experience ? (
+                    <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  )}
+
                 </a>
                 <Link
                   to="/support"
@@ -164,7 +169,12 @@ export function ProductPage({
                 className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
               >
                 {experience ? `Use ${project.name} here` : openLabel}
-                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                {experience ? (
+                  <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                )}
+
               </a>
             </div>
 

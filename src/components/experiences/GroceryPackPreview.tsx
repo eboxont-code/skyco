@@ -135,6 +135,11 @@ export function GroceryPackPreview() {
       <p className="mt-4 text-sm text-muted-foreground">
         {pack.note} {count} items, grouped the way the shop is laid out.
       </p>
+      <p className="mt-2 text-xs text-muted-foreground">
+        These two packs are sample lists I wrote myself. No shop, brand or supplier is involved,
+        and no prices are quoted.
+      </p>
+
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {pack.sections.map((section) => (
