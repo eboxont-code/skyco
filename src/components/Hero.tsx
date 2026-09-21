@@ -1,4 +1,4 @@
-import { Sparkles, ShieldCheck, Zap, CircleDollarSign, ArrowUpRight } from "lucide-react";
+import { Sparkles, ShieldCheck, Zap, CircleDollarSign, ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import badge from "@/assets/skyco-badge-512.webp";
 import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
@@ -35,7 +35,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
 
           <div className="mt-7 flex flex-wrap justify-center md:justify-start gap-2">
             {[
-              { icon: Zap, label: "Open instantly, nothing to install" },
+              { icon: Zap, label: "Use here, nothing to install" },
               { icon: CircleDollarSign, label: "Free to use" },
               { icon: ShieldCheck, label: "No account for most products" },
             ].map(({ icon: Icon, label }) => (
@@ -55,8 +55,8 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
                 href={entryHref(featured)}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
               >
-                Open CurrenSee, the live currency converter
-                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                Use CurrenSee here
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
             )}
             <a
