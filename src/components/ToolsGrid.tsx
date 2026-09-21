@@ -1,4 +1,4 @@
-import { ArrowUpRight, Clock, Check } from "lucide-react";
+import { ArrowRight, Clock, Check } from "lucide-react";
 import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 import { productShots, shotFreshness } from "@/lib/product-shots";
@@ -56,7 +56,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
             No unnecessary complexity.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Each one solves a problem I ran into myself. Open any of them right now, see the real
+            Each one solves a problem I ran into myself. Use any of them right here, see the real
             screen below before you click, and decide for yourself.
           </p>
         </div>
@@ -110,7 +110,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                     className="mt-7 inline-flex items-center gap-2 rounded-full bg-sky-deep px-6 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
                   >
                     Try {project.name} now
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </a>
                 </div>
 
