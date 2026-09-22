@@ -4,12 +4,8 @@
  * This is the single source of truth for the whole site: navbar, footer, tools
  * grid, structured data, llms.txt and the sitemap all read from here.
  *
- * To add a new SkyCo project, append one entry below. List every URL it might
- * answer on in `candidates`, best first (custom subdomain, then the fallback
- * URL). At runtime the site probes those URLs, picks the first one that
- * responds, and flips the project between "Live" and "On the way" on its own.
- * That means when a subdomain is connected later, the site switches to it
- * without another code change.
+ * Shipped products live at paths on skyco.online. The optional candidates list
+ * remains only for checking a future project before its hub route ships.
  */
 export type ProjectIcon =
   | "converter"
@@ -25,7 +21,7 @@ export type SkyCoProject = {
   tagline: string;
   description: string;
   icon: ProjectIcon;
-  /** Clean SkyCo entry path, e.g. /currensee. Redirects to the live product. */
+  /** Clean SkyCo product path, for example /currensee. */
   path?: string;
   /** Why the product exists, in one plain sentence. */
   why?: string;

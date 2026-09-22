@@ -1,4 +1,4 @@
-import { ArrowUpRight, ArrowDown, Check, ArrowLeft } from "lucide-react";
+import { ArrowDown, Check, ArrowLeft } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -7,8 +7,7 @@ import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
 /**
  * One shared layout for every product page hosted on skyco.online/<product>.
- * The hub owns the page, the SEO and the story. The button at the end hands
- * the visitor to the running product.
+ * The hub owns the page, the SEO and the product experience.
  */
 export function ProductPage({
   slug,
@@ -32,10 +31,6 @@ export function ProductPage({
   const others = directory.filter((p) => p.live && p.slug !== slug);
 
   if (!project) return null;
-
-  const openUrl = project.path ?? project.href;
-  const openLabel = `Open ${project.name}`;
-
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -68,16 +63,11 @@ export function ProductPage({
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
-                  href={experience ? "#use" : openUrl}
+                  href="#use"
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
                 >
-                  {experience ? `Use ${project.name} here` : openLabel}
-                  {experience ? (
-                    <ArrowDown className="h-4 w-4" aria-hidden="true" />
-                  ) : (
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  )}
-
+                  Use {project.name} here
+                  <ArrowDown className="h-4 w-4" aria-hidden="true" />
                 </a>
                 <Link
                   to="/support"
@@ -165,16 +155,11 @@ export function ProductPage({
 
             <div className="mt-10">
               <a
-                href={experience ? "#use" : openUrl}
+                href="#use"
                 className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
               >
-                {experience ? `Use ${project.name} here` : openLabel}
-                {experience ? (
-                  <ArrowDown className="h-4 w-4" aria-hidden="true" />
-                ) : (
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                )}
-
+                Use {project.name} here
+                <ArrowDown className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
 
