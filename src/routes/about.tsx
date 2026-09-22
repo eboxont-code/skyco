@@ -26,6 +26,9 @@ export const Route = createFileRoute("/about")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/about" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "About SkyCo | A studio for small, useful web tools" },
+      { name: "twitter:description", content: "A founder-led studio building small web tools that each do one job well." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/about" }],
   }),
@@ -91,7 +94,7 @@ function AboutPage() {
                 href={entryHref(p)}
                 className="text-xs font-bold text-sky-deep underline underline-offset-2"
               >
-                Open {p.name}
+                Use {p.name}
               </a>
             </div>
             <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">

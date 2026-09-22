@@ -17,15 +17,36 @@ export const Route = createFileRoute("/faq")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/faq" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Frequently Asked Questions | SkyCo" },
+      {
+        name: "twitter:description",
+        content: "Answers about SkyCo accounts, pricing, data storage and accuracy.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/faq" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map(({ q, text }) => ({
+            "@type": "Question",
+            name: q,
+            acceptedAnswer: { "@type": "Answer", text },
+          })),
+        }),
+      },
+    ],
   }),
   component: FaqPage,
 });
 
-const faqs: { q: string; a: React.ReactNode }[] = [
+const faqs: { q: string; text: string; a: React.ReactNode }[] = [
   {
     q: "What is SkyCo?",
+    text: "SkyCo is a small software studio building focused browser tools for converting money, lining up calendars, tracking a portfolio and planning a shop.",
     a: (
       <>
         A small software studio. I build focused web tools for jobs that come up in ordinary life:
@@ -36,10 +57,12 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Do the products cost anything?",
+    text: "No. Everything currently listed on SkyCo is free to open and use, with no trial and no card details.",
     a: <>No. Everything currently listed on SkyCo is free to open and use, with no trial and no card details.</>,
   },
   {
     q: "Do I need an account?",
+    text: "Not for CurrenSee, Chronos or Grocery Packs. My Finance Friend has a guest mode and an optional account for using your portfolio across devices.",
     a: (
       <>
         Not for CurrenSee, Chronos or Grocery Packs. My Finance Friend has a guest mode, and an
@@ -50,6 +73,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Where is my data stored?",
+    text: "Products without accounts keep preferences in your browser. My Finance Friend stores account data with a managed hosting provider when you choose an account.",
     a: (
       <>
         For products without accounts, in your own browser. For My Finance Friend with an account,
@@ -60,6 +84,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Does SkyCo connect to my bank or broker?",
+    text: "No. SkyCo asks for no banking credentials or card numbers and cannot move money.",
     a: (
       <>
         No, and it never will without being an explicit, separately announced feature. SkyCo asks
@@ -69,6 +94,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "How accurate are the exchange rates and prices?",
+    text: "Rates come from third-party market data providers and can be delayed. They are reference prices, not dealable quotes.",
     a: (
       <>
         They come from third-party market data providers and can be delayed. They are indicative
@@ -78,6 +104,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "How accurate are the calendar conversions?",
+    text: "Conversions follow published calculation rules. Real-world observance can differ, particularly for lunar calendars.",
     a: (
       <>
         Conversions follow published calculation rules for each calendar system. Real-world
@@ -87,17 +114,18 @@ const faqs: { q: string; a: React.ReactNode }[] = [
     ),
   },
   {
-    q: "Why are some products on lovable.app addresses?",
+    q: "Where do the products run?",
+    text: "Every live product runs directly on skyco.online at its own path.",
     a: (
       <>
-        Products move onto a SkyCo address as their domains are connected. In the meantime the link
-        points at wherever the product genuinely lives, and every product is reachable from
-        skyco.online through a clean path such as /finance-friend.
+        Every live product runs directly on skyco.online at its own path, such as /currensee or
+        /finance-friend. The product directory and navigation always keep you on the SkyCo hub.
       </>
     ),
   },
   {
     q: "Is there an app to install?",
+    text: "No. Everything runs in a phone or desktop browser.",
     a: (
       <>
         No. Everything runs in the browser on phone or desktop. You can add any product to your home
@@ -107,6 +135,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Who builds SkyCo?",
+    text: "SkyCo is a founder-led company, currently one person doing the design, build and support.",
     a: (
       <>
         SkyCo is a founder-led company, currently one person doing the design, build and support.
@@ -116,6 +145,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Can I request a tool?",
+    text: "Yes. Email SkyCo through the Support page. Ideas that solve a repeated chore have the best chance of being built.",
     a: (
       <>
         Yes. Email me through the <Link to="/support">Support page</Link>. Ideas that solve a
@@ -125,6 +155,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "How do I know a product is up?",
+    text: "The Status page shows which products are reachable when you load it.",
     a: (
       <>
         The <Link to="/status">Status page</Link> checks each product when you load it and shows what

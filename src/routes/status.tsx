@@ -26,6 +26,9 @@ export const Route = createFileRoute("/status")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/status" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Product Status | SkyCo" },
+      { name: "twitter:description", content: "Current reachability for every live SkyCo product." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/status" }],
   }),
@@ -84,7 +87,7 @@ function StatusPage() {
                 href={entryHref(project)}
                 className="inline-flex w-fit items-center rounded-full border-2 border-sky-deep/20 px-4 py-2 text-xs font-bold text-sky-deep transition-colors hover:border-sky-bright hover:bg-sky-ice"
               >
-                Open {project.name}
+                Use {project.name}
               </a>
             )}
           </li>

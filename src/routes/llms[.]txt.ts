@@ -22,7 +22,7 @@ export const Route = createFileRoute("/llms.txt")({
           "",
           `> SkyCo is a founder-led software studio building small web tools for everyday life. ${live.length} products are live today.`,
           "",
-          "SkyCo is the parent company for a family of focused, no-clutter web tools. Each product lives on its own site and links back here.",
+          "SkyCo is the single home for a family of focused, no-clutter web tools. Every live product runs at a path on skyco.online.",
           "",
           "## Pages",
           "",
