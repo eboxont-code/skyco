@@ -55,14 +55,14 @@ function GroceryPage() {
       slug="grocery-packs"
       directory={Route.useLoaderData()}
       experience={<GroceryPackPreview />}
-      experienceTitle="Open a pack and read the sorted list"
-      headline="Open the Easy Week starter pack and the shopping is already grouped by store section, with quantities filled in. Print it or read it at the shelf."
+      experienceTitle="Choose a sample pack and read the sorted list"
+      headline="Choose one of my sample packs and the shopping is grouped by store section, with quantities for two or four. Print it or read it at the shelf."
       points={[
         "Lists grouped the way a shop is laid out, so you walk it once.",
         "Quantities sized for two people or a family of four.",
         "Light meal plans attached to the packs, not a separate app.",
         "Printable, or readable from a phone while you shop.",
-        "Free to browse before you commit to anything.",
+        "Two clearly labelled sample packs, with no shop or supplier involved.",
         "No account needed to open a pack.",
       ]}
     />

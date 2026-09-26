@@ -47,7 +47,7 @@ export const projectRegistry: SkyCoProject[] = [
     name: "CurrenSee",
     tagline: "Live currency and crypto converter",
     description:
-      "Built for travel days and cross-border shopping. Live fiat and crypto rates, clear charts, and alerts when a pair hits your number.",
+      "Built for travel days and cross-border shopping. Current fiat and crypto reference rates with a clear 30 day chart.",
     icon: "converter",
     path: "/currensee",
     demo: "Open it and USD to EUR is already on screen with a live rate and a 30 day chart.",
@@ -81,7 +81,7 @@ export const projectRegistry: SkyCoProject[] = [
     demo: "Type what you bought in plain English and check the parsed entry before it saves.",
     why: "Portfolio trackers ask for a spreadsheet import before they show you anything useful.",
     example: 'Type "bought 50 shares of NVDA today at $145" and review the parsed entry before it is saved.',
-    account: "Guest mode available, or an optional account to keep your data across devices.",
+    account: "The in-page preview needs no account and stores nothing.",
     candidates: [],
   },
   {

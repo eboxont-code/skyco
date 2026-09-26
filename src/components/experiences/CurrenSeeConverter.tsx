@@ -8,9 +8,11 @@ import { CURRENCIES, getRate, type RateResult } from "@/lib/rates.functions";
  * The CurrenSee converter, running on skyco.online itself.
  * Opens on USD to EUR with a live rate and a 30 day chart already on screen.
  */
-export function CurrenSeeConverter() {
-  const [from, setFrom] = useState("USD");
-  const [to, setTo] = useState("EUR");
+export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: { initialFrom?: string; initialTo?: string }) {
+  const safeFrom = CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
+  const safeTo = CURRENCIES.includes(initialTo) ? initialTo : "EUR";
+  const [from, setFrom] = useState(safeFrom);
+  const [to, setTo] = useState(safeTo);
   const [amount, setAmount] = useState("100");
   const fetchRate = useServerFn(getRate);
 
@@ -75,7 +77,7 @@ export function CurrenSeeConverter() {
           <span className="text-xs font-semibold text-muted-foreground">Converted</span>
           <div className="mt-1 flex gap-2">
             <output className="flex min-h-12 w-full items-center rounded-xl border border-sky-bright/30 bg-sky-ice/40 px-3 text-base font-bold text-foreground">
-              {converted === null ? "Loading" : format(converted)}
+              {converted === null ? (query.isError ? "Unavailable" : "Loading") : format(converted)}
             </output>
             <Select value={to} onChange={setTo} label="Convert to" />
           </div>
@@ -137,12 +139,12 @@ export function CurrenSeeConverter() {
           )}
           {data && data.series.length > 1 && (
             <div className="mt-2 flex justify-between text-[11px] text-muted-foreground">
-              <span>{data.series[0]!.date}</span>
+              <span>{data.series[0]?.date}</span>
               <span>
                 {data.approximate ? "Converted through USD. " : ""}
                 {changeLabel(data.series)}
               </span>
-              <span>{data.series[data.series.length - 1]!.date}</span>
+              <span>{data.series[data.series.length - 1]?.date}</span>
             </div>
           )}
         </div>
@@ -190,8 +192,9 @@ function timeAgo(iso: string) {
 }
 
 function changeLabel(series: { value: number }[]) {
-  const first = series[0]!.value;
-  const last = series[series.length - 1]!.value;
+  const first = series[0]?.value ?? 0;
+  const last = series[series.length - 1]?.value ?? 0;
+  if (first === 0) return "Change unavailable";
   const pct = ((last - first) / first) * 100;
   const dir = pct >= 0 ? "up" : "down";
   return `${dir} ${Math.abs(pct).toFixed(2)}% over the period`;

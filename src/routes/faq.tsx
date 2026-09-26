@@ -62,22 +62,22 @@ const faqs: { q: string; text: string; a: React.ReactNode }[] = [
   },
   {
     q: "Do I need an account?",
-    text: "Not for CurrenSee, Chronos or Grocery Packs. My Finance Friend has a guest mode and an optional account for using your portfolio across devices.",
+    text: "No. The four tools currently running on SkyCo can be used without an account.",
     a: (
       <>
-        Not for CurrenSee, Chronos or Grocery Packs. My Finance Friend has a guest mode, and an
-        optional account if you want your portfolio to be there on another device. Details are in{" "}
+        No. The four tools currently running on SkyCo can be used without an account. My Finance
+        Friend currently provides a parser preview and does not save a portfolio. Details are in{" "}
         <Link to="/security">Security and data handling</Link>.
       </>
     ),
   },
   {
     q: "Where is my data stored?",
-    text: "Products without accounts keep preferences in your browser. My Finance Friend stores account data with a managed hosting provider when you choose an account.",
+    text: "The current in-page tools do not retain your entries after you leave. Support messages go through your email provider.",
     a: (
       <>
-        For products without accounts, in your own browser. For My Finance Friend with an account,
-        with a managed hosting provider under access rules that keep rows tied to your account. See{" "}
+        The current in-page tools do not retain your entries after you leave. Support messages go
+        through your own email provider. See{" "}
         <Link to="/privacy">Privacy</Link>.
       </>
     ),

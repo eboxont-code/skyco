@@ -111,9 +111,9 @@ export function ProductPage({
         </section>
 
         {experience && (
-          <section id="use" className="scroll-mt-24 border-b border-sky-bright/15 px-6 py-14">
+          <section id="use" aria-labelledby="use-heading" className="scroll-mt-24 border-b border-sky-bright/15 px-6 py-14">
             <div className="mx-auto max-w-4xl">
-              <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
+              <h2 id="use-heading" className="text-2xl font-extrabold tracking-tight text-foreground">
                 {experienceTitle ?? `Use ${project.name}`}
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -165,9 +165,10 @@ export function ProductPage({
 
             {others.length > 0 && (
               <div className="mt-16 border-t border-sky-bright/15 pt-10">
-                <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
-                  Other SkyCo products
+                <h2 className="text-xl font-extrabold text-foreground">
+                  More tools on SkyCo
                 </h2>
+                <p className="mt-2 text-sm text-muted-foreground">Every product runs here in your browser.</p>
                 <div className="mt-5 grid gap-4 sm:grid-cols-3">
                   {others.map((p) => (
                     <a
@@ -175,7 +176,7 @@ export function ProductPage({
                       href={p.path ?? p.href}
                       className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan"
                     >
-                      <p className="text-sm font-bold text-foreground">{p.name}</p>
+                      <p className="text-sm font-bold text-foreground">Use {p.name}</p>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                         {p.tagline}
                       </p>
