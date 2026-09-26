@@ -6,7 +6,7 @@ import { getProjectDirectory } from "@/lib/projects.functions";
 
 const TITLE = "My Finance Friend | Track stocks and ETFs by typing plain English";
 const DESCRIPTION =
-  "Type what you bought in ordinary words and My Finance Friend sorts your stocks and ETFs, with a preview before anything is saved. Guest mode available.";
+  "Type a stock or ETF trade in ordinary words and preview the structured entry directly on SkyCo. Nothing is stored by this demo.";
 const URL = "https://skyco.online/finance-friend";
 
 export const Route = createFileRoute("/finance-friend")({
@@ -62,8 +62,8 @@ function FinanceFriendPage() {
         "Plain English in, a structured holding out.",
         "A preview of every entry before it is written to your portfolio.",
         "Stocks and ETFs tracked together in one list.",
-        "Guest mode so you can try it without signing up.",
-        "An optional account when you want the same data on another device.",
+        "No account needed to use the parser preview.",
+        "Nothing is stored or sent from this in-page demonstration.",
         "Built for people who gave up on portfolio spreadsheets.",
       ]}
     />

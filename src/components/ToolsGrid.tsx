@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, Check } from "lucide-react";
+import { ArrowRight, Bitcoin, Clock, Check } from "lucide-react";
 import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 import { productShots, shotFreshness } from "@/lib/product-shots";
@@ -105,13 +105,24 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                       ))}
                   </ul>
 
-                  <a
-                    href={entryHref(project)}
-                    className="mt-7 inline-flex items-center gap-2 rounded-full bg-sky-deep px-6 py-3 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
-                  >
-                    Try {project.name} now
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  <div className="mt-7 flex flex-wrap items-center gap-3">
+                    <a
+                      href={entryHref(project)}
+                      className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-6 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      Use {project.name} here
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </a>
+                    {project.slug === "currensee" && (
+                      <a
+                        href="/currensee?from=BTC&to=USD#use"
+                        className="inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-bright/40 px-5 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      >
+                        <Bitcoin className="h-4 w-4" aria-hidden="true" />
+                        Check Bitcoin in USD
+                      </a>
+                    )}
+                  </div>
                 </div>
 
                 {shot && (

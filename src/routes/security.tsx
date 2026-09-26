@@ -32,28 +32,28 @@ const table = [
   {
     product: "CurrenSee",
     account: "Not required",
-    device: "Favourite pairs and alert settings",
+    device: "Current pair while the page is open",
     server: "Nothing personal",
     external: "Market data provider for fiat and crypto rates",
   },
   {
     product: "Chronos",
     account: "Not required",
-    device: "Selected date and calendar preferences",
+    device: "Selected date while the page is open",
     server: "Nothing personal",
     external: "None for the core conversion, which is calculated in the browser",
   },
   {
     product: "My Finance Friend",
-    account: "Optional, guest mode available",
-    device: "Guest session identifier",
-    server: "Email address and the portfolio entries you add, when signed in",
-    external: "Price data provider, and language processing to read your typed instruction",
+    account: "Not required for the preview",
+    device: "Typed trade while the page is open",
+    server: "Nothing from the in-page preview",
+    external: "None for the in-page parser",
   },
   {
     product: "SkyCo Grocery Packs",
     account: "Not required",
-    device: "Lists and check states you build",
+    device: "Pack and household size while the page is open",
     server: "Nothing personal",
     external: "None",
   },
@@ -115,8 +115,8 @@ function SecurityPage() {
               removes it, and SkyCo cannot read it remotely.
             </li>
             <li>
-              Where a product stores account data, it sits with a managed hosting provider with
-              access rules that restrict rows to the account that owns them.
+              The current four in-page experiences do not store account data. The finance preview
+              shows a parsed entry but does not save it.
             </li>
             <li>
               Third-party requests carry only what the request needs, for example a currency pair or
@@ -134,10 +134,7 @@ function SecurityPage() {
               Products depend on third-party data providers. If a provider is down or rate limits a
               request, the product shows an error rather than a stale number presented as current.
             </li>
-            <li>
-              Guest data in My Finance Friend is tied to the device. Clearing browser data removes
-              it and it cannot be recovered.
-            </li>
+            <li>Refreshing a product page resets the current in-page choices and entries.</li>
           </ul>
 
           <h2>Reporting a vulnerability</h2>

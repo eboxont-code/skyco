@@ -6,10 +6,14 @@ import { getProjectDirectory } from "@/lib/projects.functions";
 
 const TITLE = "CurrenSee | Live currency and crypto converter by SkyCo";
 const DESCRIPTION =
-  "Convert any currency or crypto with live rates, a 30 day chart and rate alerts. Free, no account, works on a phone browser.";
+  "Convert currencies and crypto with current reference rates and a 30 day chart. Free, no account, and usable directly on SkyCo.";
 const URL = "https://skyco.online/currensee";
 
 export const Route = createFileRoute("/currensee")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    from: typeof search.from === "string" ? search.from.toUpperCase() : "USD",
+    to: typeof search.to === "string" ? search.to.toUpperCase() : "EUR",
+  }),
   loader: async (): Promise<ResolvedProject[]> => {
     try {
       return await getProjectDirectory();
@@ -51,18 +55,19 @@ export const Route = createFileRoute("/currensee")({
 });
 
 function CurrenSeePage() {
+  const { from, to } = Route.useSearch();
   return (
     <ProductPage
       slug="currensee"
       directory={Route.useLoaderData()}
-      experience={<CurrenSeeConverter />}
+      experience={<CurrenSeeConverter initialFrom={from} initialTo={to} />}
       experienceTitle="Convert a pair right here"
-      headline="Open it and USD to EUR is already on screen with a live rate and a 30 day chart. Switch the pair, read the trend, set an alert, close the tab."
+      headline="Convert a currency or crypto pair here, check the current reference rate, and read its 30 day direction."
       points={[
         "Live fiat rates for the pairs people actually travel and shop with.",
         "Crypto alongside currencies, in the same view and the same units.",
         "A 30 day chart so you can see whether today is a good day to convert.",
-        "Rate alerts when a pair reaches the number you care about.",
+        "A clear unavailable state instead of an old rate presented as current.",
         "A last updated stamp on every rate, so you know how fresh it is.",
         "No account, no install, no ads competing with the number you came for.",
       ]}

@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-09-26",
+    title: "Clearer product actions and more honest data notes",
+    tag: "Improvement",
+    items: [
+      "Standardised product actions around using each tool directly on SkyCo.",
+      "Added a direct Bitcoin starting point for CurrenSee.",
+      "Updated privacy, security and status wording to match what the in-page tools do today.",
+      "Clarified that Grocery Packs are sample lists written by SkyCo.",
+    ],
+  },
+  {
     date: "2026-08-31",
     title: "Trust pages, product screenshots and clean product URLs",
     tag: "Improvement",

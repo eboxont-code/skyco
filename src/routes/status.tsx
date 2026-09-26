@@ -17,18 +17,18 @@ export const Route = createFileRoute("/status")({
       {
         name: "description",
         content:
-          "Live reachability of every SkyCo product, checked from the server when this page loads. See what is up before you report a problem.",
+          "Published availability for every SkyCo product, with direct links to check each browser tool yourself.",
       },
       { property: "og:title", content: "Product Status | SkyCo" },
       {
         property: "og:description",
-        content: "Live reachability of every SkyCo product, checked when this page loads.",
+        content: "Published availability for every SkyCo product, with direct links to each tool.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/status" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "Product Status | SkyCo" },
-      { name: "twitter:description", content: "Current reachability for every live SkyCo product." },
+      { name: "twitter:description", content: "Published availability and direct links for every live SkyCo product." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/status" }],
   }),
@@ -44,7 +44,7 @@ function StatusPage() {
     <PageShell
       eyebrow="Status"
       title="Product status"
-      intro="Each SkyCo product is checked from the server when this page loads. Reachable means the site answered; it does not promise every feature inside is perfect."
+      intro="This page reflects the products currently published on the SkyCo hub. Use the direct links below to check the feature you need."
       wide
     >
       <div
@@ -53,7 +53,7 @@ function StatusPage() {
         }`}
       >
         <p className="text-sm font-bold text-foreground">
-          {live.length} of {directory.length} listed products are reachable right now.
+          {live.length} of {directory.length} listed products are published now.
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
           Products still in build are listed as planned rather than down.
@@ -76,7 +76,7 @@ function StatusPage() {
                 />
                 <h2 className="text-base font-bold text-foreground">{project.name}</h2>
                 <span className="rounded-full bg-sky-ice px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sky-deep">
-                  {project.live ? "Reachable" : "Planned"}
+                  {project.live ? "Published" : "Planned"}
                 </span>
               </div>
               <p className="mt-1.5 text-sm text-muted-foreground">{project.tagline}</p>
@@ -96,15 +96,14 @@ function StatusPage() {
 
       <div className="mt-10">
         <Prose>
-          <h2>How this check works</h2>
+          <h2>What this status means</h2>
           <p>
-            When you load this page the server requests each product URL and records whether it
-            answered. Results are cached briefly so the page stays fast, so a very recent outage can
-            take a few minutes to appear here.
+            Published means the product has a working route on this hub. It is not continuous uptime
+            monitoring. If a feature is not working for you, report exactly what you saw.
           </p>
           <h2>Seeing something this page does not?</h2>
           <p>
-            If a product is marked reachable but is broken for you, that is worth an email. Tell me
+            If a product is marked published but is broken for you, that is worth an email. Tell me
             the product, your browser and what you saw on the{" "}
             <a href="/support">Support page</a>.
           </p>

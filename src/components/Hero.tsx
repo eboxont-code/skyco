@@ -53,7 +53,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
             {featured && (
               <a
                 href={entryHref(featured)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-deep px-7 py-3 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-sky-deep px-7 text-base font-semibold text-primary-foreground shadow-glow-cyan transition-all hover:bg-sky-azure focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Use CurrenSee here
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -61,7 +61,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
             )}
             <a
               href="#tools"
-              className="inline-flex items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 py-3 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               See the products
             </a>
@@ -79,7 +79,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
               <a
                 key={p.slug}
                 href={entryHref(p)}
-                className="inline-flex items-center gap-1.5 min-h-11 rounded-lg border border-sky-bright/25 bg-white/70 px-3.5 py-2.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-white"
+                className="inline-flex items-center gap-1.5 min-h-11 rounded-lg border border-sky-bright/25 bg-white/70 px-3.5 py-2.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Try {p.name}
               </a>

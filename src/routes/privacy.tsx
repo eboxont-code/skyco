@@ -66,16 +66,14 @@ function PrivacyPage() {
 
         <h3>In products without accounts</h3>
         <p>
-          CurrenSee, Chronos and SkyCo Grocery Packs do not ask you to sign in. Preferences such as
-          a saved currency pair or a favourite are stored in your own browser, on your own device,
-          and are removed when you clear your browser storage.
+          CurrenSee, Chronos and SkyCo Grocery Packs do not ask you to sign in. The in-page tools do
+          not save the currency pair, selected date, grocery pack or checked items after you leave.
         </p>
 
         <h3>In My Finance Friend</h3>
         <p>
-          This product offers a guest mode and an optional account. In guest mode your data sits in
-          a temporary account tied to that device. If you create an account, your email address and
-          the portfolio entries you add are stored so the same data is there next time you sign in.
+          The current in-page demonstration parses a trade description and shows a preview. It does
+          not create an account, save a portfolio, or send the description to a server.
         </p>
         <p>
           <strong>SkyCo never connects to your bank or brokerage.</strong> There is no account
@@ -103,8 +101,8 @@ function PrivacyPage() {
             data for products that have accounts.
           </li>
           <li>
-            <strong>Language processing</strong> is used in My Finance Friend to read a typed
-            instruction such as a trade description. Only the text you send is processed.
+            <strong>In-browser text parsing</strong> reads the trade description in My Finance
+            Friend. The current demonstration does not send that text to an outside service.
           </li>
         </ul>
         <p>
@@ -114,16 +112,14 @@ function PrivacyPage() {
 
         <h2>Cookies</h2>
         <p>
-          This website does not set advertising or analytics cookies. Products that offer accounts
-          use a session cookie or local storage entry so you stay signed in. That is functional, not
-          tracking.
+          This website does not set advertising or analytics cookies. The four in-page product
+          experiences do not require a sign-in session.
         </p>
 
         <h2>Retention and deletion</h2>
         <p>
-          Data stored in your browser stays until you clear it. Account data in My Finance Friend
-          stays until you delete it in the product or ask me to remove it. Requests to
-          support@skyco.online are actioned within 30 days.
+          The current in-page product experiences do not retain what you enter after you leave.
+          Requests sent to support@skyco.online are handled through email and actioned within 30 days.
         </p>
 
         <h2>Children</h2>

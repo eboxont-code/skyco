@@ -90,9 +90,10 @@ const PACKS: Pack[] = [
 ];
 
 export function GroceryPackPreview() {
-  const [packId, setPackId] = useState(PACKS[0]!.id);
+  const [packId, setPackId] = useState(PACKS[0]?.id ?? "easy-week");
   const [size, setSize] = useState<"two" | "four">("two");
-  const pack = PACKS.find((p) => p.id === packId)!;
+  const pack = PACKS.find((p) => p.id === packId) ?? PACKS[0];
+  if (!pack) return null;
   const count = pack.sections.reduce((n, s) => n + s.items.length, 0);
 
   return (
