@@ -30,12 +30,12 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   const path = useMemo(() => buildPath(data?.series ?? []), [data?.series]);
 
   return (
-    <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
+    <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6" aria-busy={query.isFetching}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-sm font-bold uppercase tracking-wider text-sky-deep">
           Convert now
         </h2>
-        <span className="text-xs text-muted-foreground" suppressHydrationWarning>
+        <span className="text-xs text-muted-foreground" role="status" aria-live="polite" suppressHydrationWarning>
           {query.isFetching
             ? "Refreshing rate"
             : data
@@ -53,9 +53,9 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
             <input
               inputMode="decimal"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => setAmount(e.target.value.replace(/[^\d.,]/g, ""))}
               aria-label="Amount to convert"
-              className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright"
+              className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
             <Select value={from} onChange={setFrom} label="Convert from" />
           </div>
@@ -68,7 +68,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
             setTo(from);
           }}
           aria-label="Swap currencies"
-          className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-sky-bright/30 text-sky-deep transition-colors hover:bg-sky-ice"
+          className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-sky-bright/30 text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <ArrowLeftRight className="h-4 w-4" aria-hidden="true" />
         </button>
@@ -76,7 +76,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
         <label className="block">
           <span className="text-xs font-semibold text-muted-foreground">Converted</span>
           <div className="mt-1 flex gap-2">
-            <output className="flex min-h-12 w-full items-center rounded-xl border border-sky-bright/30 bg-sky-ice/40 px-3 text-base font-bold text-foreground">
+            <output aria-live="polite" className="flex min-h-12 w-full items-center rounded-xl border border-sky-bright/30 bg-sky-ice/40 px-3 text-base font-bold text-foreground">
               {converted === null ? (query.isError ? "Unavailable" : "Loading") : format(converted)}
             </output>
             <Select value={to} onChange={setTo} label="Convert to" />
@@ -108,7 +108,8 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
           <button
             type="button"
             onClick={() => query.refetch()}
-            className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-sky-deep"
+            disabled={query.isFetching}
+            className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
           >
             <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
             Refresh
@@ -167,7 +168,7 @@ function Select({
       aria-label={label}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="min-h-12 rounded-xl border border-sky-bright/30 bg-background px-2 text-sm font-bold text-sky-deep outline-none focus:border-sky-bright"
+      className="min-h-12 rounded-xl border border-sky-bright/30 bg-background px-2 text-sm font-bold text-sky-deep outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       {CURRENCIES.map((c) => (
         <option key={c} value={c}>

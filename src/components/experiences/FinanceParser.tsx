@@ -33,7 +33,8 @@ export function FinanceParser() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="bought 50 shares of NVDA today at $145"
-          className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base text-foreground outline-none focus:border-sky-bright"
+          aria-describedby="parser-help"
+          className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         />
       </label>
 
@@ -43,16 +44,16 @@ export function FinanceParser() {
             key={e}
             type="button"
             onClick={() => setText(e)}
-            className="min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep"
+            className="min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {e}
           </button>
         ))}
       </div>
 
-      <div className="mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">
+      <div className="mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4" aria-live="polite">
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          Preview before saving
+          Parsed preview
         </p>
         {parsed ? (
           <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -82,8 +83,8 @@ export function FinanceParser() {
           </p>
         )}
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">
-        Nothing is stored here. The preview shows exactly what the tracker would record.
+      <p id="parser-help" className="mt-3 text-xs text-muted-foreground">
+        Nothing is stored or sent from this preview. Check every field yourself before relying on it.
       </p>
     </div>
   );

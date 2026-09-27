@@ -64,7 +64,7 @@ function ChronosPage() {
         "Pick any date, or jump back to today with one tap.",
         "Each system named clearly, so you know which reading is which.",
 
-        "Useful for family events, religious dates and cross-border scheduling.",
+        "Useful when one date needs to be understood across different calendar systems.",
         "Works the same on a phone browser as it does on a laptop.",
         "No account, no install, nothing to configure first.",
       ]}
