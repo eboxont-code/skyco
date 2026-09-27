@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Printer } from "lucide-react";
+import { CheckCircle2, Printer } from "lucide-react";
 
 /**
  * The Grocery Packs preview, running on skyco.online itself.
@@ -92,20 +92,24 @@ const PACKS: Pack[] = [
 export function GroceryPackPreview() {
   const [packId, setPackId] = useState(PACKS[0]?.id ?? "easy-week");
   const [size, setSize] = useState<"two" | "four">("two");
+  const [checked, setChecked] = useState<string[]>([]);
   const pack = PACKS.find((p) => p.id === packId) ?? PACKS[0];
   if (!pack) return null;
   const count = pack.sections.reduce((n, s) => n + s.items.length, 0);
 
   return (
-    <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
+    <div className="grocery-print rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
       <div className="flex flex-wrap items-center gap-2">
         {PACKS.map((p) => (
           <button
             key={p.id}
             type="button"
-            onClick={() => setPackId(p.id)}
+            onClick={() => {
+              setPackId(p.id);
+              setChecked([]);
+            }}
             aria-pressed={p.id === packId}
-            className={`min-h-11 rounded-full px-5 text-sm font-semibold transition-colors ${
+            className={`min-h-11 rounded-full px-5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
               p.id === packId
                 ? "bg-sky-deep text-primary-foreground"
                 : "border border-sky-bright/30 text-sky-deep"
@@ -121,7 +125,7 @@ export function GroceryPackPreview() {
               type="button"
               onClick={() => setSize(s)}
               aria-pressed={s === size}
-              className={`min-h-11 rounded-full px-4 text-xs font-bold uppercase tracking-wider transition-colors ${
+              className={`min-h-11 rounded-full px-4 text-xs font-bold uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                 s === size
                   ? "bg-sky-ice text-sky-deep"
                   : "border border-sky-bright/25 text-muted-foreground"
@@ -141,6 +145,11 @@ export function GroceryPackPreview() {
         and no prices are quoted.
       </p>
 
+      <p className="mt-3 flex items-center gap-2 text-xs font-semibold text-sky-deep" role="status" aria-live="polite">
+        <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+        {checked.length} of {count} items checked
+      </p>
+
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {pack.sections.map((section) => (
@@ -157,7 +166,24 @@ export function GroceryPackPreview() {
                   key={i.item}
                   className="flex items-baseline justify-between gap-3 text-sm text-foreground"
                 >
-                  <span>{i.item}</span>
+                  <label className="flex min-h-8 cursor-pointer items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={checked.includes(`${pack.id}:${i.item}`)}
+                      onChange={(event) => {
+                        const key = `${pack.id}:${i.item}`;
+                        setChecked((current) =>
+                          event.target.checked
+                            ? [...current, key]
+                            : current.filter((item) => item !== key),
+                        );
+                      }}
+                      className="h-4 w-4 accent-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    />
+                    <span className={checked.includes(`${pack.id}:${i.item}`) ? "text-muted-foreground line-through" : undefined}>
+                      {i.item}
+                    </span>
+                  </label>
                   <span className="shrink-0 font-semibold text-muted-foreground">{i[size]}</span>
                 </li>
               ))}
@@ -169,7 +195,7 @@ export function GroceryPackPreview() {
       <button
         type="button"
         onClick={() => window.print()}
-        className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep"
+        className="no-print mt-5 inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <Printer className="h-4 w-4" aria-hidden="true" />
         Print this list

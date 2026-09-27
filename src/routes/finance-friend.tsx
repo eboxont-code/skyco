@@ -57,11 +57,11 @@ function FinanceFriendPage() {
       directory={Route.useLoaderData()}
       experience={<FinanceParser />}
       experienceTitle="Type a holding and check the preview"
-      headline='Type "bought 50 shares of NVDA today at $145" and check the parsed entry before it saves. No spreadsheet import to get started.'
+      headline='Type "bought 50 shares of NVDA today at $145" and inspect how the sentence is parsed. Nothing is saved or sent from this preview.'
       points={[
         "Plain English in, a structured holding out.",
-        "A preview of every entry before it is written to your portfolio.",
-        "Stocks and ETFs tracked together in one list.",
+        "A local preview of action, quantity, ticker, price and date.",
+        "Examples for common stock and ETF trade wording.",
         "No account needed to use the parser preview.",
         "Nothing is stored or sent from this in-page demonstration.",
         "Built for people who gave up on portfolio spreadsheets.",
