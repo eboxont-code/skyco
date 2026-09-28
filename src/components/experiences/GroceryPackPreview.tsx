@@ -96,6 +96,10 @@ export function GroceryPackPreview() {
   const pack = PACKS.find((p) => p.id === packId) ?? PACKS[0];
   if (!pack) return null;
   const count = pack.sections.reduce((n, s) => n + s.items.length, 0);
+  const itemKeys = pack.sections.flatMap((section) =>
+    section.items.map((item) => `${pack.id}:${item.item}`),
+  );
+  const allChecked = checked.length === count;
 
   return (
     <div className="grocery-print rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
@@ -150,6 +154,24 @@ export function GroceryPackPreview() {
         {checked.length} of {count} items checked
       </p>
 
+      <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
+        <button
+          type="button"
+          onClick={() => setChecked(allChecked ? [] : itemKeys)}
+          className="min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          {allChecked ? "Clear all" : "Check all"}
+        </button>
+        {checked.length > 0 && !allChecked && (
+          <button
+            type="button"
+            onClick={() => setChecked([])}
+            className="min-h-11 rounded-full px-4 text-xs font-semibold text-muted-foreground underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            Reset checks
+          </button>
+        )}
+      </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {pack.sections.map((section) => (

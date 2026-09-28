@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-09-28",
+    title: "More dependable product controls",
+    tag: "Improvement",
+    items: [
+      "Added clearer amount validation and rate context to CurrenSee.",
+      "Made Finance Friend explicit when a trade price was not provided.",
+      "Added check-all and reset controls to the printable Grocery sample lists.",
+      "Improved screen-reader context across the product tools.",
+    ],
+  },
+  {
     date: "2026-09-26",
     title: "Clearer product actions and more honest data notes",
     tag: "Improvement",

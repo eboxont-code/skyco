@@ -24,8 +24,9 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   });
 
   const data = query.data;
-  const value = Number(amount.replace(/,/g, "")) || 0;
-  const converted = data ? value * data.rate : null;
+  const parsedAmount = Number(amount.replace(/,/g, ""));
+  const amountIsValid = amount.trim().length > 0 && Number.isFinite(parsedAmount) && parsedAmount >= 0;
+  const converted = data && amountIsValid ? parsedAmount * data.rate : null;
 
   const path = useMemo(() => buildPath(data?.series ?? []), [data?.series]);
 
@@ -55,6 +56,8 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
               value={amount}
               onChange={(e) => setAmount(e.target.value.replace(/[^\d.,]/g, ""))}
               aria-label="Amount to convert"
+               aria-invalid={!amountIsValid}
+               aria-describedby="amount-help"
               className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
             <Select value={from} onChange={setFrom} label="Convert from" />
@@ -77,12 +80,22 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
           <span className="text-xs font-semibold text-muted-foreground">Converted</span>
           <div className="mt-1 flex gap-2">
             <output aria-live="polite" className="flex min-h-12 w-full items-center rounded-xl border border-sky-bright/30 bg-sky-ice/40 px-3 text-base font-bold text-foreground">
-              {converted === null ? (query.isError ? "Unavailable" : "Loading") : format(converted)}
+              {!amountIsValid
+                ? "Enter an amount"
+                : converted === null
+                  ? query.isError
+                    ? "Unavailable"
+                    : "Loading"
+                  : format(converted)}
             </output>
             <Select value={to} onChange={setTo} label="Convert to" />
           </div>
         </label>
       </div>
+
+      <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
+        {!amountIsValid ? "Enter a positive number using digits, commas or a decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
+      </p>
 
       <p className="mt-4 text-sm text-muted-foreground">
         {data ? (
