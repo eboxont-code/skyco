@@ -2,7 +2,7 @@ import { useState } from "react";
 
 /**
  * The My Finance Friend entry step, running on skyco.online itself.
- * Type a holding in plain English and check the parsed preview before it is saved.
+ * Type a holding in plain English and check the parsed preview. This demo does not save it.
  */
 type Parsed = {
   action: string;
@@ -62,14 +62,14 @@ export function FinanceParser() {
             <Field label="Ticker" value={parsed.ticker} />
             <Field
               label="Price"
-              value={parsed.price === null ? "Market price" : `$${parsed.price.toFixed(2)}`}
+              value={parsed.price === null ? "Not provided" : `$${parsed.price.toFixed(2)}`}
             />
             <Field label="Date" value={parsed.when} />
             <Field
               label="Value"
               value={
                 parsed.price === null
-                  ? "Priced on save"
+                  ? "Not calculated"
                   : `$${(parsed.price * parsed.quantity).toLocaleString("en-US", {
                       maximumFractionDigits: 2,
                     })}`

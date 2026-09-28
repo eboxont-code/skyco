@@ -72,7 +72,11 @@ export function ChronosCalendars() {
         Calendar readings use your browser&apos;s standard calendar data. Holidays and observances are not included.
       </p>
 
-      <dl className="mt-3 grid gap-3 sm:grid-cols-2" aria-live="polite">
+      <dl
+        className="mt-3 grid gap-3 sm:grid-cols-2"
+        aria-live="polite"
+        aria-label={`Calendar readings for ${value}`}
+      >
         {rows.map((r) => (
           <div
             key={r.label}
