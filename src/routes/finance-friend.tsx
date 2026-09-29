@@ -64,7 +64,7 @@ function FinanceFriendPage() {
         "Examples for common stock and ETF trade wording.",
         "No account needed to use the parser preview.",
         "Nothing is stored or sent from this in-page demonstration.",
-        "Built for people who gave up on portfolio spreadsheets.",
+        "A quick way to turn one trade sentence into fields you can check.",
       ]}
     />
   );

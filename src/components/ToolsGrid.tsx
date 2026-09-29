@@ -97,8 +97,8 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                   <ul className="mt-5 space-y-2.5">
                     {[project.why, project.account]
                       .filter((v): v is string => Boolean(v))
-                      .map((line) => (
-                        <li key={line} className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground">
+                      .map((line, lineIndex) => (
+                        <li key={`${project.slug}-${lineIndex}`} className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground">
                           <Check className="mt-0.5 h-4 w-4 shrink-0 text-sky-bright" aria-hidden="true" />
                           <span>{line}</span>
                         </li>

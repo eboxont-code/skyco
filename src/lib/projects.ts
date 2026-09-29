@@ -73,7 +73,7 @@ export const projectRegistry: SkyCoProject[] = [
   {
     slug: "my-finance-friend",
     name: "My Finance Friend",
-    tagline: "Portfolio tracking by chat",
+    tagline: "Plain-English trade parser",
     description:
       "Type a stock or ETF trade in plain English and check the structured preview. This in-page demonstration does not save anything.",
     icon: "wallet",
