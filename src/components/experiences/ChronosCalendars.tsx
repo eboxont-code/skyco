@@ -15,6 +15,7 @@ const SYSTEMS: { label: string; calendar: string; locale: string }[] = [
 
 export function ChronosCalendars() {
   const [value, setValue] = useState(() => new Date().toISOString().slice(0, 10));
+  const dateIsValid = /^\d{4}-\d{2}-\d{2}$/.test(value) && !isNaN(new Date(`${value}T12:00:00Z`).getTime());
 
   const rows = useMemo(() => {
     const date = new Date(`${value}T12:00:00Z`);
@@ -52,6 +53,8 @@ export function ChronosCalendars() {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             aria-label="Date to convert"
+            aria-invalid={!dateIsValid}
+            aria-describedby="calendar-help"
             className="mt-1 block min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-56"
           />
         </label>
@@ -68,14 +71,14 @@ export function ChronosCalendars() {
         {weekday ? `${weekday}, read in six systems.` : "Choose a valid date."}
       </p>
 
-      <p className="mt-1 text-xs text-muted-foreground">
+      <p id="calendar-help" className="mt-1 text-xs text-muted-foreground">
         Calendar readings use your browser&apos;s standard calendar data. Holidays and observances are not included.
       </p>
 
       <dl
         className="mt-3 grid gap-3 sm:grid-cols-2"
         aria-live="polite"
-        aria-label={`Calendar readings for ${value}`}
+        aria-label={dateIsValid ? `Calendar readings for ${value}` : "Calendar readings"}
       >
         {rows.map((r) => (
           <div

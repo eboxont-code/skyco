@@ -12,15 +12,10 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
 
   return (
     <section className="relative overflow-hidden bg-hero-gradient px-6 pt-28 pb-16 md:pt-36 md:pb-20">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-32 -right-24 h-80 w-80 rounded-full bg-sky-bright/30 blur-3xl" />
-        <div className="absolute top-1/2 -left-24 h-72 w-72 rounded-full bg-sky-azure/25 blur-3xl" />
-      </div>
-
       <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.15fr_1fr]">
         <div className="text-center md:text-left">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-deep ring-1 ring-sky-bright/40">
-            <Sparkles className="h-3.5 w-3.5" />
+          <div className="inline-flex items-center gap-2 rounded-full bg-card/70 backdrop-blur px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-deep ring-1 ring-sky-bright/40">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             As Above, So Below
           </div>
 
@@ -41,7 +36,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
             ].map(({ icon: Icon, label }) => (
               <span
                 key={label}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/60 backdrop-blur px-3 py-1.5 text-xs font-semibold text-sky-deep ring-1 ring-sky-bright/25"
+                className="inline-flex items-center gap-1.5 rounded-full bg-card/70 backdrop-blur px-3 py-1.5 text-xs font-semibold text-sky-deep ring-1 ring-sky-bright/25"
               >
                 <Icon className="h-3.5 w-3.5" aria-hidden="true" />
                 {label}
@@ -61,7 +56,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
             )}
             <a
               href="#tools"
-                className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-sky-deep/20 bg-white/60 backdrop-blur px-7 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-sky-deep/20 bg-card/70 backdrop-blur px-7 text-base font-semibold text-sky-deep transition-all hover:border-sky-bright hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               See the products
             </a>
@@ -69,7 +64,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
 
           <p className="mt-3 text-sm text-muted-foreground">
             Live rates for any currency pair, plus a 30 day chart. Free, no sign up.{" "}
-            <Link to="/about" className="font-semibold text-sky-deep underline-offset-4 hover:underline">
+            <Link to="/about" className="rounded-sm font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Why trust SkyCo
             </Link>
           </p>
@@ -79,7 +74,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
               <a
                 key={p.slug}
                 href={entryHref(p)}
-                className="inline-flex items-center gap-1.5 min-h-11 rounded-lg border border-sky-bright/25 bg-white/70 px-3.5 py-2.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-1.5 min-h-11 rounded-lg border border-sky-bright/25 bg-card/70 px-3.5 py-2.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Try {p.name}
               </a>

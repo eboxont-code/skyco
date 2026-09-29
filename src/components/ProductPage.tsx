@@ -35,13 +35,13 @@ export function ProductPage({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar directory={directory} solid />
-      <main className="flex-1 pt-20">
+      <main id="main-content" className="flex-1 pt-20">
         <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-14">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
             <div>
               <Link
                 to="/"
-                className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-sky-deep"
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-sm text-sm font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 All SkyCo products
@@ -64,14 +64,14 @@ export function ProductPage({
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
                   href="#use"
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Use {project.name} here
                   <ArrowDown className="h-4 w-4" aria-hidden="true" />
                 </a>
                 <Link
                   to="/support"
-                  className="inline-flex min-h-12 items-center rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep"
+                  className="inline-flex min-h-12 items-center rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Ask a question
                 </Link>
@@ -156,7 +156,7 @@ export function ProductPage({
             <div className="mt-10">
               <a
                 href="#use"
-                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Use {project.name} here
                 <ArrowDown className="h-4 w-4" aria-hidden="true" />
@@ -173,8 +173,8 @@ export function ProductPage({
                   {others.map((p) => (
                     <a
                       key={p.slug}
-                      href={p.path ?? p.href}
-                      className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan"
+                      href={p.path ?? "/"}
+                      className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       <p className="text-sm font-bold text-foreground">Use {p.name}</p>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">

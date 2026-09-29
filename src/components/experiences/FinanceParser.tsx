@@ -34,6 +34,7 @@ export function FinanceParser() {
           onChange={(e) => setText(e.target.value)}
           placeholder="bought 50 shares of NVDA today at $145"
           aria-describedby="parser-help"
+          aria-invalid={text.trim().length > 0 && parsed === null}
           className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         />
       </label>
@@ -51,7 +52,7 @@ export function FinanceParser() {
         ))}
       </div>
 
-      <div className="mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4" aria-live="polite">
+      <div className="mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4" role="status" aria-live="polite" aria-atomic="true">
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Parsed preview
         </p>
