@@ -122,7 +122,7 @@ export function GroceryPackPreview() {
             {p.name}
           </button>
         ))}
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2" role="group" aria-label="Household size">
           {(["two", "four"] as const).map((s) => (
             <button
               key={s}
@@ -158,6 +158,7 @@ export function GroceryPackPreview() {
         <button
           type="button"
           onClick={() => setChecked(allChecked ? [] : itemKeys)}
+          aria-pressed={allChecked}
           className="min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           {allChecked ? "Clear all" : "Check all"}
@@ -217,11 +218,15 @@ export function GroceryPackPreview() {
       <button
         type="button"
         onClick={() => window.print()}
+        aria-describedby="sample-pack-note"
         className="no-print mt-5 inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <Printer className="h-4 w-4" aria-hidden="true" />
         Print this list
       </button>
+      <p id="sample-pack-note" className="no-print mt-2 text-xs text-muted-foreground">
+        Printing includes the selected sample pack, quantities and your checked items.
+      </p>
     </div>
   );
 }

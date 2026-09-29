@@ -24,8 +24,9 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   });
 
   const data = query.data;
-  const parsedAmount = Number(amount.replace(/,/g, ""));
-  const amountIsValid = amount.trim().length > 0 && Number.isFinite(parsedAmount) && parsedAmount >= 0;
+  const normalizedAmount = amount.replace(/,/g, "");
+  const parsedAmount = Number(normalizedAmount);
+  const amountIsValid = /^\d+(?:\.\d+)?$/.test(normalizedAmount) && Number.isFinite(parsedAmount) && parsedAmount > 0;
   const converted = data && amountIsValid ? parsedAmount * data.rate : null;
 
   const path = useMemo(() => buildPath(data?.series ?? []), [data?.series]);
@@ -56,8 +57,8 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
               value={amount}
               onChange={(e) => setAmount(e.target.value.replace(/[^\d.,]/g, ""))}
               aria-label="Amount to convert"
-               aria-invalid={!amountIsValid}
-               aria-describedby="amount-help"
+              aria-invalid={!amountIsValid}
+              aria-describedby="amount-help"
               className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
             <Select value={from} onChange={setFrom} label="Convert from" />
@@ -94,7 +95,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       </div>
 
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
-        {!amountIsValid ? "Enter a positive number using digits, commas or a decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
+        {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
       </p>
 
       <p className="mt-4 text-sm text-muted-foreground">
@@ -137,6 +138,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
               role="img"
               aria-label={`Trend of ${from} to ${to} over the last 30 days`}
             >
+              <title>{`${from} to ${to} reference-rate trend over the last 30 days`}</title>
               <path d={path.area} fill="color-mix(in oklab, var(--sky-bright) 22%, transparent)" />
               <path
                 d={path.line}
