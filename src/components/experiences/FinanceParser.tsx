@@ -33,6 +33,10 @@ export function FinanceParser() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="bought 50 shares of NVDA today at $145"
+          autoComplete="off"
+          autoCapitalize="none"
+          spellCheck={false}
+          enterKeyHint="done"
           aria-describedby="parser-help"
           aria-invalid={text.trim().length > 0 && parsed === null}
           className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"

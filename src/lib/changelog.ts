@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-09-30",
+    title: "Accessibility and contrast pass",
+    tag: "Improvement",
+    items: [
+      "Added a skip link to jump straight to the main content on every page.",
+      "Raised colour contrast on accent text and added visible keyboard focus rings.",
+      "Tightened CurrenSee amount checks and Chronos date checks with clear help text.",
+      "Stopped phone keyboards autocorrecting tickers in the Finance Friend preview.",
+    ],
+  },
+  {
     date: "2026-09-28",
     title: "More dependable product controls",
     tag: "Improvement",
