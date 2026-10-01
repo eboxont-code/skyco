@@ -101,6 +101,12 @@ function StatusPage() {
             Published means the product has a working route on this hub. It is not continuous uptime
             monitoring. If a feature is not working for you, report exactly what you saw.
           </p>
+          <h2>What each product depends on</h2>
+          <ul>
+            <li>CurrenSee needs Frankfurter for currency rates and CoinGecko for crypto prices. If either is down, the converter shows an error rather than an old rate.</li>
+            <li>Chronos, My Finance Friend and Grocery Packs run in your browser and have no outside data source.</li>
+          </ul>
+          <p>I do not publish uptime percentages because I do not run continuous monitoring.</p>
           <h2>Seeing something this page does not?</h2>
           <p>
             If a product is marked published but is broken for you, that is worth an email. Tell me
