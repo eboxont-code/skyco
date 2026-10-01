@@ -164,7 +164,7 @@ export function ProductPage({
             </div>
 
             {others.length > 0 && (
-              <div className="mt-16 border-t border-sky-bright/15 pt-10">
+              <nav aria-label="Related SkyCo products" className="mt-16 border-t border-sky-bright/15 pt-10">
                 <h2 className="text-xl font-extrabold text-foreground">
                   More tools on SkyCo
                 </h2>
@@ -183,7 +183,14 @@ export function ProductPage({
                     </a>
                   ))}
                 </div>
-              </div>
+                <Link
+                  to="/"
+                  className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-sm text-sm font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                  Back to the SkyCo hub
+                </Link>
+              </nav>
             )}
           </div>
         </section>
