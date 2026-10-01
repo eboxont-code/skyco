@@ -34,7 +34,7 @@ const table = [
     account: "Not required",
     device: "Current pair while the page is open",
     server: "Nothing personal",
-    external: "Market data provider for fiat and crypto rates",
+    external: "Frankfurter (ECB reference rates) for currencies, CoinGecko for BTC, ETH and SOL. Only the currency codes are sent.",
   },
   {
     product: "Chronos",
@@ -107,6 +107,15 @@ function SecurityPage() {
 
       <div className="mt-10">
         <Prose>
+          <h2>How each tool works with your data</h2>
+          <ul>
+            <li>CurrenSee: your amount stays in the page. The SkyCo server fetches the rate for the chosen pair and returns it; the amount itself is never sent.</li>
+            <li>Chronos: the date conversion runs entirely in your browser using its built-in calendar support. No request leaves the page.</li>
+            <li>My Finance Friend: the sentence you type is read by code in the page. It is not sent anywhere and disappears on refresh.</li>
+            <li>Grocery Packs: the sample packs ship with the page. Ticks and household size live in page memory only and reset on refresh.</li>
+            <li>Support form: it only opens an email in your own mail app. SkyCo receives nothing unless you send that email.</li>
+          </ul>
+
           <h2>How data travels</h2>
           <ul>
             <li>Every SkyCo site is served over HTTPS, so traffic is encrypted in transit.</li>

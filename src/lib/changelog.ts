@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-01",
+    title: "Better help and sharing",
+    tag: "Improvement",
+    items: [
+      "Support now has quick answers for each product and a form that opens a ready-made email.",
+      "Each product page has its own share picture taken from the real tool.",
+      "The Security page explains, tool by tool, where your input goes.",
+      "Product pages link to related tools and back to the hub.",
+    ],
+  },
+  {
     date: "2026-09-30",
     title: "Accessibility and contrast pass",
     tag: "Improvement",

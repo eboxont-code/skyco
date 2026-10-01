@@ -5,7 +5,7 @@ const groups = [
     name: "CurrenSee",
     to: "/currensee",
     faqs: [
-      ["Where do the rates come from?", "Each conversion asks a market data provider for the current pair. If the provider fails, CurrenSee shows an error instead of an old number."],
+      ["Where do the rates come from?", "Currency rates come from Frankfurter (European Central Bank reference rates) and crypto prices from CoinGecko. If the provider fails, CurrenSee shows an error instead of an old number."],
       ["Can I convert Bitcoin?", "Yes. BTC, ETH and SOL are available alongside common currencies. Choose them in the From or To list."],
       ["Why is my amount rejected?", "The amount must be a number above zero, such as 25 or 19.99."],
     ],
@@ -14,7 +14,7 @@ const groups = [
     name: "Chronos",
     to: "/chronos",
     faqs: [
-      ["Which calendars are shown?", "Gregorian, Hebrew, Islamic, Persian, Chinese and Indian Saka, calculated by your browser."],
+      ["Which calendars are shown?", "Gregorian, Hijri (Islamic), Hebrew, Chinese, Persian and Indian Saka, calculated by your browser."],
       ["Does it list festivals or holidays?", "No. Chronos shows dates only. Check observances with your community or an official source."],
       ["Is Indian Saka the same as Nepali Bikram Sambat?", "No. Chronos shows the Indian national Saka calendar, not Bikram Sambat."],
     ],
