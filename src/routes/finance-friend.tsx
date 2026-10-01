@@ -4,7 +4,7 @@ import { FinanceParser } from "@/components/experiences/FinanceParser";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
-const TITLE = "My Finance Friend | Track stocks and ETFs by typing plain English";
+const TITLE = "My Finance Friend | Turn a plain-English trade into checkable fields";
 const DESCRIPTION =
   "Type a stock or ETF trade in ordinary words and preview the structured entry directly on SkyCo. Nothing is stored by this demo.";
 const URL = "https://skyco.online/finance-friend";
@@ -25,6 +25,10 @@ export const Route = createFileRoute("/finance-friend")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: URL },
+      { property: "og:image", content: "https://skyco.online/og/finance-friend.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://skyco.online/og/finance-friend.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },

@@ -3,6 +3,8 @@ import { Mail, Bug, Lightbulb, ShieldCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { PageShell, Prose } from "@/components/PageShell";
 import { SUPPORT_EMAIL } from "@/lib/site-nav";
+import { ContactForm } from "@/components/ContactForm";
+import { ProductFaqs } from "@/components/ProductFaqs";
 
 export const Route = createFileRoute("/support")({
   head: () => ({
@@ -80,6 +82,9 @@ function SupportPage() {
           </a>
         ))}
       </div>
+
+      <ProductFaqs />
+      <ContactForm />
 
       <div className="mt-10">
         <Prose>
