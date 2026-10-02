@@ -90,11 +90,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "Page not found | SkyCo" },
       { name: "twitter:description", content: "This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." },
     ];
+    const keyOf = (m: Record<string, unknown>) => ("title" in m ? "title" : String(m.name ?? m.property ?? ""));
+    const nfKeys = new Set(nfMeta.map(keyOf));
+    const pick = <T extends Record<string, unknown>>(base: T[]) =>
+      notFound ? [...base.filter((m) => !nfKeys.has(keyOf(m))), ...nfMeta] : base;
     return {
-    meta: [
+    meta: pick([
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      ...(notFound ? nfMeta : []),
       { title: "SkyCo | Small web tools for everyday life" },
       { name: "description", content: `SkyCo is a founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. Free to open, no account required.`.slice(0, 158) },
       { name: "author", content: "SkyCo" },
@@ -105,7 +108,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "SkyCo | Small web tools for everyday life" },
       { name: "twitter:description", content: `A founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. All free to open.` },
-    ],
+    ]),
     links: [
       {
         rel: "stylesheet",
