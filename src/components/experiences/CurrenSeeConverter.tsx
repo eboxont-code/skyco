@@ -15,6 +15,17 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   const [to, setTo] = useState(safeTo);
   const [amount, setAmount] = useState("100");
   const fetchRate = useServerFn(getRate);
+  const [copied, setCopied] = useState(false);
+  const copyLink = async () => {
+    const link = `https://skyco.online/currensee?from=${from}&to=${to}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      window.prompt("Copy this link", link);
+    }
+  };
 
   const query = useQuery<RateResult>({
     queryKey: ["rate", from, to],
@@ -114,6 +125,19 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
         )}
       </p>
 
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={copyLink}
+          className="inline-flex min-h-11 items-center rounded-full border border-sky-bright/40 px-4 text-xs font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Copy link to {from} to {to}
+        </button>
+        <span role="status" aria-live="polite" className="text-xs text-muted-foreground">
+          {copied ? "Link copied" : ""}
+        </span>
+      </div>
+
       <div className="mt-5">
         <div className="flex items-center justify-between">
           <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
@@ -154,7 +178,12 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
             </p>
           )}
           {data && data.series.length > 1 && (
-            <div className="mt-2 flex justify-between text-[11px] text-muted-foreground">
+            <p className="sr-only">
+              {`From ${data.series[0]?.date} to ${data.series[data.series.length - 1]?.date}, 1 ${from} moved from ${format(data.series[0]?.value ?? 0)} to ${format(data.series[data.series.length - 1]?.value ?? 0)} ${to}, ${changeLabel(data.series)}.`}
+            </p>
+          )}
+          {data && data.series.length > 1 && (
+            <div aria-hidden="true" className="mt-2 flex justify-between text-[11px] text-muted-foreground">
               <span>{data.series[0]?.date}</span>
               <span>
                 {data.approximate ? "Converted through USD. " : ""}
