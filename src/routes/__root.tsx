@@ -16,23 +16,28 @@ import { liveProjects } from "../lib/projects";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <main id="main-content" className="flex min-h-screen items-center justify-center bg-background px-4 py-16">
+      <title>Page not found | SkyCo</title>
+      <meta name="robots" content="noindex" />
+      <meta name="description" content="This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." />
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+        <img src={badge512} alt="" width={96} height={96} className="mx-auto h-24 w-24" />
+        <p className="mt-6 text-sm font-bold uppercase tracking-[0.2em] text-sky-deep">Error 404</p>
+        <h1 className="mt-2 text-3xl font-extrabold text-foreground">Page not found</h1>
+        <p className="mt-3 text-sm text-muted-foreground">
+          That address does not match a page on SkyCo. These links all work:
         </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+        <nav aria-label="Helpful links" className="mt-6">
+          <ul className="grid gap-2 text-sm font-semibold">
+            <li><Link to="/" className="inline-flex min-h-11 items-center justify-center rounded-full bg-sky-deep px-6 text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">Back to the SkyCo hub</Link></li>
+            <li><Link to="/currensee" className="text-sky-deep underline underline-offset-4">CurrenSee</Link></li>
+            <li><Link to="/chronos" className="text-sky-deep underline underline-offset-4">Chronos</Link></li>
+            <li><Link to="/finance-friend" className="text-sky-deep underline underline-offset-4">My Finance Friend</Link></li>
+            <li><Link to="/grocery" className="text-sky-deep underline underline-offset-4">SkyCo Grocery Packs</Link></li>
+          </ul>
+        </nav>
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -87,7 +92,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: `A founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. All free to open.` },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@skyco" },
       { name: "twitter:title", content: "SkyCo | Small web tools for everyday life" },
       { name: "twitter:description", content: `A founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. All free to open.` },
     ],
