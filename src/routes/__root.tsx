@@ -17,9 +17,6 @@ import { liveProjects } from "../lib/projects";
 function NotFoundComponent() {
   return (
     <main id="main-content" className="flex min-h-screen items-center justify-center bg-background px-4 py-16">
-      <title>Page not found | SkyCo</title>
-      <meta name="robots" content="noindex" />
-      <meta name="description" content="This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." />
       <div className="max-w-md text-center">
         <img src={badge512} alt="" width={96} height={96} className="mx-auto h-24 w-24" />
         <p className="mt-6 text-sm font-bold uppercase tracking-[0.2em] text-sky-deep">Error 404</p>
@@ -80,10 +77,24 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
+  head: ({ matches }) => {
+    const notFound = matches.some(
+      (m) => m.status === "notFound" || (m as { globalNotFound?: boolean }).globalNotFound,
+    );
+    const nfMeta = [
+      { title: "Page not found | SkyCo" },
+      { name: "robots", content: "noindex" },
+      { name: "description", content: "This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." },
+      { property: "og:title", content: "Page not found | SkyCo" },
+      { property: "og:description", content: "This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." },
+      { name: "twitter:title", content: "Page not found | SkyCo" },
+      { name: "twitter:description", content: "This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." },
+    ];
+    return {
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      ...(notFound ? nfMeta : []),
       { title: "SkyCo | Small web tools for everyday life" },
       { name: "description", content: `SkyCo is a founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. Free to open, no account required.`.slice(0, 158) },
       { name: "author", content: "SkyCo" },
@@ -138,7 +149,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         }),
       },
     ],
-  }),
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
