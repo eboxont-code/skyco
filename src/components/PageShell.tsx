@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import type { ResolvedProject } from "@/lib/projects";
@@ -27,10 +28,21 @@ export function PageShell({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar directory={directory} solid />
-      <main className="flex-1 pt-20">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
         <div className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-14">
           <div className={wide ? "mx-auto max-w-5xl" : "mx-auto max-w-3xl"}>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">{eyebrow}</p>
+            <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted-foreground">
+              <ol className="flex flex-wrap items-center gap-1.5">
+                <li>
+                  <Link to="/" className="font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page">{eyebrow}</li>
+              </ol>
+            </nav>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">{eyebrow}</p>
             <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
               {title}
             </h1>

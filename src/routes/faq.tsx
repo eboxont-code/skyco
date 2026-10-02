@@ -1,3 +1,4 @@
+import { shareMeta, breadcrumbScript } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 
@@ -17,7 +18,7 @@ export const Route = createFileRoute("/faq")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/faq" },
-      { name: "twitter:card", content: "summary" },
+      ...shareMeta("faq", "SkyCo FAQ page share card"),
       { name: "twitter:title", content: "Frequently Asked Questions | SkyCo" },
       {
         name: "twitter:description",
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/faq")({
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/faq" }],
     scripts: [
+      breadcrumbScript([{ name: "FAQ", path: "/faq" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({

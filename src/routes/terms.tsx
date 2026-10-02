@@ -1,3 +1,4 @@
+import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
@@ -19,11 +20,12 @@ export const Route = createFileRoute("/terms")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/terms" },
-      { name: "twitter:card", content: "summary" },
+      ...shareMeta("terms", "SkyCo Terms page share card"),
       { name: "twitter:title", content: "Terms of Use | SkyCo" },
       { name: "twitter:description", content: "The terms that apply when you use skyco.online and SkyCo products." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/terms" }],
+    scripts: [breadcrumbScript([{ name: "Terms", path: "/terms" }]), pageScript("WebPage", "SkyCo Terms", "/terms", "Terms page for SkyCo, a founder-led studio of small web tools.")],
   }),
   component: TermsPage,
 });

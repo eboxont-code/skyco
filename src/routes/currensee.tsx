@@ -1,3 +1,4 @@
+import { breadcrumbScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
@@ -10,9 +11,9 @@ const DESCRIPTION =
 const URL = "https://skyco.online/currensee";
 
 export const Route = createFileRoute("/currensee")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    from: typeof search.from === "string" ? search.from.toUpperCase() : "USD",
-    to: typeof search.to === "string" ? search.to.toUpperCase() : "EUR",
+  validateSearch: (search: Record<string, unknown>): { from?: string; to?: string } => ({
+    from: typeof search.from === "string" ? search.from.toUpperCase() : undefined,
+    to: typeof search.to === "string" ? search.to.toUpperCase() : undefined,
   }),
   loader: async (): Promise<ResolvedProject[]> => {
     try {
@@ -33,12 +34,15 @@ export const Route = createFileRoute("/currensee")({
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:image", content: "https://skyco.online/og/currensee.jpg" },
+      { property: "og:image:alt", content: "CurrenSee running on skyco.online" },
+      { name: "twitter:image:alt", content: "CurrenSee running on skyco.online" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
     ],
     links: [{ rel: "canonical", href: URL }],
     scripts: [
+      breadcrumbScript([{ name: "Products", path: "/#tools" }, { name: "CurrenSee", path: "/currensee" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({

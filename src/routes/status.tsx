@@ -1,3 +1,4 @@
+import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose } from "@/components/PageShell";
 import { fallbackDirectory, splitDirectory, entryHref, type ResolvedProject } from "@/lib/projects";
@@ -26,11 +27,12 @@ export const Route = createFileRoute("/status")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/status" },
-      { name: "twitter:card", content: "summary" },
+      ...shareMeta("status", "SkyCo Status page share card"),
       { name: "twitter:title", content: "Product Status | SkyCo" },
       { name: "twitter:description", content: "Published availability and direct links for every live SkyCo product." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/status" }],
+    scripts: [breadcrumbScript([{ name: "Status", path: "/status" }]), pageScript("WebPage", "SkyCo Status", "/status", "Status page for SkyCo, a founder-led studio of small web tools.")],
   }),
   component: StatusPage,
 });
