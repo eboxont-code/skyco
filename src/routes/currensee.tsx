@@ -10,9 +10,9 @@ const DESCRIPTION =
 const URL = "https://skyco.online/currensee";
 
 export const Route = createFileRoute("/currensee")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    from: typeof search.from === "string" ? search.from.toUpperCase() : "USD",
-    to: typeof search.to === "string" ? search.to.toUpperCase() : "EUR",
+  validateSearch: (search: Record<string, unknown>): { from?: string; to?: string } => ({
+    from: typeof search.from === "string" ? search.from.toUpperCase() : undefined,
+    to: typeof search.to === "string" ? search.to.toUpperCase() : undefined,
   }),
   loader: async (): Promise<ResolvedProject[]> => {
     try {
