@@ -12,6 +12,18 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-02",
+    title: "Clearer wayfinding and share pictures",
+    tag: "Improvement",
+    items: [
+      "skyco.online/currensee now opens directly on USD to EUR without a redirect.",
+      "CurrenSee has a Copy link button for the pair you chose, and a spoken summary of the 30 day chart.",
+      "Every page shows a breadcrumb so you can see where you are and get back home.",
+      "The home page and each info page have their own share picture.",
+      "The not-found page now has its own title and links to all four tools.",
+    ],
+  },
+  {
     date: "2026-10-01",
     title: "Better help and sharing",
     tag: "Improvement",
