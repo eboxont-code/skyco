@@ -1,3 +1,4 @@
+import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
@@ -19,11 +20,12 @@ export const Route = createFileRoute("/security")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/security" },
-      { name: "twitter:card", content: "summary" },
+      ...shareMeta("security", "SkyCo Security page share card"),
       { name: "twitter:title", content: "Security and Data Handling | SkyCo" },
       { name: "twitter:description", content: "What stays on your device, what is stored, and how to report a vulnerability." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/security" }],
+    scripts: [breadcrumbScript([{ name: "Security", path: "/security" }]), pageScript("WebPage", "SkyCo Security", "/security", "Security page for SkyCo, a founder-led studio of small web tools.")],
   }),
   component: SecurityPage,
 });

@@ -1,3 +1,4 @@
+import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Bug, Lightbulb, ShieldCheck } from "lucide-react";
 import { Link } from "@tanstack/react-router";
@@ -22,11 +23,12 @@ export const Route = createFileRoute("/support")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/support" },
-      { name: "twitter:card", content: "summary" },
+      ...shareMeta("support", "SkyCo Support page share card"),
       { name: "twitter:title", content: "Support and Contact | SkyCo" },
       { name: "twitter:description", content: "Get help with a SkyCo product, report a bug or ask a privacy question." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/support" }],
+    scripts: [breadcrumbScript([{ name: "Support", path: "/support" }]), pageScript("ContactPage", "SkyCo Support", "/support", "Support page for SkyCo, a founder-led studio of small web tools.")],
   }),
   component: SupportPage,
 });

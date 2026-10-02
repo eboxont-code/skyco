@@ -1,3 +1,4 @@
+import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { changelog, formatDate } from "@/lib/changelog";
@@ -18,11 +19,12 @@ export const Route = createFileRoute("/changelog")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/changelog" },
-      { name: "twitter:card", content: "summary" },
+      ...shareMeta("changelog", "SkyCo Changelog page share card"),
       { name: "twitter:title", content: "What's New | SkyCo" },
       { name: "twitter:description", content: "Releases, improvements and fixes across SkyCo, with the date they shipped." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/changelog" }],
+    scripts: [breadcrumbScript([{ name: "Changelog", path: "/changelog" }]), pageScript("WebPage", "SkyCo Changelog", "/changelog", "Changelog page for SkyCo, a founder-led studio of small web tools.")],
   }),
   component: ChangelogPage,
 });
