@@ -1,4 +1,4 @@
-import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
+import { shareMeta, breadcrumbScript } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 

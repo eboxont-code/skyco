@@ -1,3 +1,4 @@
+import { breadcrumbScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
 import { GroceryPackPreview } from "@/components/experiences/GroceryPackPreview";
@@ -29,12 +30,15 @@ export const Route = createFileRoute("/grocery")({
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:image", content: "https://skyco.online/og/grocery.jpg" },
+      { property: "og:image:alt", content: "SkyCo Grocery Packs running on skyco.online" },
+      { name: "twitter:image:alt", content: "SkyCo Grocery Packs running on skyco.online" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
     ],
     links: [{ rel: "canonical", href: URL }],
     scripts: [
+      breadcrumbScript([{ name: "Products", path: "/#tools" }, { name: "SkyCo Grocery Packs", path: "/grocery" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -42,6 +46,7 @@ export const Route = createFileRoute("/grocery")({
           "@type": "SoftwareApplication",
           name: "SkyCo Grocery Packs",
           applicationCategory: "LifestyleApplication",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           operatingSystem: "Web browser",
           url: URL,
           description: DESCRIPTION,

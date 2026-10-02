@@ -39,13 +39,20 @@ export function ProductPage({
         <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-14">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
             <div>
-              <Link
-                to="/"
-                className="inline-flex min-h-11 items-center gap-1.5 rounded-sm text-sm font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                All SkyCo products
-              </Link>
+              <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
+                <ol className="flex flex-wrap items-center gap-1.5">
+                  <li>
+                    <Link to="/" className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                      <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                      Home
+                    </Link>
+                  </li>
+                  <li aria-hidden="true">/</li>
+                  <li>Products</li>
+                  <li aria-hidden="true">/</li>
+                  <li aria-current="page">{project.name}</li>
+                </ol>
+              </nav>
               <div className="mt-2 flex flex-wrap items-center gap-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-ice px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-sky-deep">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />

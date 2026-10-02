@@ -1,3 +1,4 @@
+import { breadcrumbScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
 import { ChronosCalendars } from "@/components/experiences/ChronosCalendars";
@@ -30,12 +31,15 @@ export const Route = createFileRoute("/chronos")({
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:image", content: "https://skyco.online/og/chronos.jpg" },
+      { property: "og:image:alt", content: "Chronos running on skyco.online" },
+      { name: "twitter:image:alt", content: "Chronos running on skyco.online" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
     ],
     links: [{ rel: "canonical", href: URL }],
     scripts: [
+      breadcrumbScript([{ name: "Products", path: "/#tools" }, { name: "Chronos", path: "/chronos" }]),
       {
         type: "application/ld+json",
         children: JSON.stringify({
