@@ -15,6 +15,13 @@ const SYSTEMS: { label: string; calendar: string; locale: string }[] = [
 
 export function ChronosCalendars() {
   const [value, setValue] = useState(() => new Date().toISOString().slice(0, 10));
+  const [copyStatus, setCopyStatus] = useState("");
+  const shiftDay = (offset: number) => {
+    const date = new Date(`${value}T12:00:00Z`);
+    if (isNaN(date.getTime())) return;
+    date.setUTCDate(date.getUTCDate() + offset);
+    setValue(date.toISOString().slice(0, 10));
+  };
   const dateIsValid = /^\d{4}-\d{2}-\d{2}$/.test(value) && !isNaN(new Date(`${value}T12:00:00Z`).getTime());
 
   const rows = useMemo(() => {
@@ -46,18 +53,19 @@ export function ChronosCalendars() {
   return (
     <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <label className="block">
-          <span className="text-xs font-semibold text-muted-foreground">Pick a date</span>
+        <div className="block"><label htmlFor="chronos-date" className="text-xs font-semibold text-muted-foreground">Pick a date</label>
           <input
             type="date"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            aria-label="Date to convert"
+            id="chronos-date"
             aria-invalid={!dateIsValid}
             aria-describedby="calendar-help"
             className="mt-1 block min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-56"
           />
-        </label>
+        </div>
+        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(-1)} className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Previous day</button>
+        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(1)} className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Next day</button>
         <button
           type="button"
           onClick={() => setValue(new Date().toISOString().slice(0, 10))}
@@ -75,9 +83,11 @@ export function ChronosCalendars() {
         Calendar readings use your browser&apos;s standard calendar data. Holidays and observances are not included.
       </p>
 
+      <p className="sr-only" role="status">{dateIsValid ? `Readings updated for ${weekday}, ${value}` : "Choose a valid date."}</p>
+      <button type="button" disabled={!dateIsValid} onClick={async () => { try { await navigator.clipboard.writeText(rows.map(r => `${r.label}: ${r.text}`).join("\n")); setCopyStatus("Copied"); } catch { setCopyStatus("Copy unavailable. Select the readings to copy them."); } }} className="mt-3 min-h-11 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy readings</button>
+      <span role="status" className="ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <dl
         className="mt-3 grid gap-3 sm:grid-cols-2"
-        aria-live="polite"
         aria-label={dateIsValid ? `Calendar readings for ${value}` : "Calendar readings"}
       >
         {rows.map((r) => (
