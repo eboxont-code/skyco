@@ -71,13 +71,13 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
 
           <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-2">
             {others.map((p) => (
-              <a
+              <Link
                 key={p.slug}
-                href={entryHref(p)}
+                to={p.path ?? "/"}
                 className="inline-flex items-center gap-1.5 min-h-11 rounded-lg border border-sky-bright/25 bg-card/70 px-3.5 py-2.5 text-xs font-bold text-sky-deep transition-all hover:border-sky-bright hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Try {p.name}
-              </a>
+              </Link>
             ))}
           </div>
 

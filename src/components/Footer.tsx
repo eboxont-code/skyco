@@ -2,7 +2,6 @@ import { Heart } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import badge from "@/assets/skyco-badge-96.webp";
 import {
-  entryHref,
   fallbackDirectory,
   splitDirectory,
   type ResolvedProject,
@@ -45,12 +44,12 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
             <ul className="mt-3 space-y-2">
               {liveProjects.map((project) => (
                 <li key={project.slug}>
-                  <a
-                    href={entryHref(project)}
-                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  <Link
+                    to={project.path ?? "/"}
+                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {project.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -63,7 +62,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {l.label}
                   </Link>
@@ -79,7 +78,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {l.label}
                   </Link>
@@ -88,7 +87,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
               <li>
                 <a
                   href={`mailto:${SUPPORT_EMAIL}`}
-                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {SUPPORT_EMAIL}
                 </a>
@@ -98,7 +97,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                   href="https://www.instagram.com/skyco.online/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   Instagram
                 </a>
@@ -113,7 +112,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
             {trustStrip.map((l) => (
               <span key={l.to} className="flex items-center gap-2">
                 <span aria-hidden="true">&middot;</span>
-                <Link to={l.to} className="inline-flex min-h-11 items-center transition-colors hover:text-foreground">
+                <Link to={l.to} className="inline-flex min-h-11 items-center transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   {l.label}
                 </Link>
               </span>
@@ -121,7 +120,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           </p>
           <p className="flex items-center gap-1 text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} SkyCo. Made with
-            <Heart className="h-3 w-3 fill-sky-bright text-sky-bright" aria-label="love" />
+            <Heart className="h-3 w-3 fill-sky-bright text-sky-bright" aria-hidden="true" /><span className="sr-only">love</span>
           </p>
         </div>
       </div>

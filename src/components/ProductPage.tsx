@@ -182,16 +182,16 @@ export function ProductPage({
                 <p className="mt-2 text-sm text-muted-foreground">Every product runs here in your browser.</p>
                 <div className="mt-5 grid gap-4 sm:grid-cols-3">
                   {others.map((p) => (
-                    <a
+                    <Link
                       key={p.slug}
                       to={p.path ?? "/"}
                       className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       <p className="text-sm font-bold text-foreground">Use {p.name}</p>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                        {p.tagline}
+                        {p.demo ?? p.tagline}
                       </p>
-                    </a>
+                    </Link>
                   ))}
                 </div>
                 <Link
