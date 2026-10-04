@@ -74,9 +74,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   const directory = Route.useLoaderData();
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
+    <div className="min-h-screen bg-background pb-24 md:pb-0">
       <Navbar directory={directory} />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <Hero directory={directory} />
         <Mission directory={directory} />
         <ToolsGrid directory={directory} />

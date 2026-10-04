@@ -61,7 +61,6 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
           </p>
         </div>
 
-        <h3 className="sr-only">Live products</h3>
         <div className="mt-12 space-y-16">
           {liveProjects.map((project, i) => {
             const shot = productShots[project.slug];
@@ -82,15 +81,15 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                     </span>
                   </div>
 
-                  <h4 className="mt-3 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+                  <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
                     {project.name}
-                  </h4>
+                  </h3>
                   {project.demo && (
                     <p className="mt-3 text-lg font-semibold leading-snug text-sky-deep">
                       {project.demo}
                     </p>
                   )}
-                  <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                  <p id={`description-${project.slug}`} className="mt-3 text-base leading-relaxed text-muted-foreground">
                     {project.description}
                   </p>
 

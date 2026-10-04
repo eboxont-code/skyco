@@ -35,7 +35,7 @@ export function ProductPage({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar directory={directory} solid />
-      <main id="main-content" className="flex-1 pt-20">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
         <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-14">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
             <div>
@@ -48,7 +48,7 @@ export function ProductPage({
                     </Link>
                   </li>
                   <li aria-hidden="true">/</li>
-                  <li>Products</li>
+                  <li><Link to="/" hash="tools" className="inline-flex min-h-11 items-center text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Products</Link></li>
                   <li aria-hidden="true">/</li>
                   <li aria-current="page">{project.name}</li>
                 </ol>
@@ -71,6 +71,7 @@ export function ProductPage({
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
                   href="#use"
+                   onClick={() => requestAnimationFrame(() => document.getElementById("use")?.focus())}
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Use {project.name} here
@@ -98,6 +99,8 @@ export function ProductPage({
                     width={1280}
                     height={800}
                     decoding="async"
+                    loading="eager"
+                    fetchPriority="high"
                     className="aspect-[16/10] w-full object-cover object-top"
                   />
                 </div>
@@ -118,7 +121,7 @@ export function ProductPage({
         </section>
 
         {experience && (
-          <section id="use" aria-labelledby="use-heading" className="scroll-mt-24 border-b border-sky-bright/15 px-6 py-14">
+          <section id="use" tabIndex={-1} aria-labelledby="use-heading" className="focus:outline-none scroll-mt-24 border-b border-sky-bright/15 px-6 py-14">
             <div className="mx-auto max-w-4xl">
               <h2 id="use-heading" className="text-2xl font-extrabold tracking-tight text-foreground">
                 {experienceTitle ?? `Use ${project.name}`}
@@ -163,6 +166,7 @@ export function ProductPage({
             <div className="mt-10">
               <a
                 href="#use"
+                   onClick={() => requestAnimationFrame(() => document.getElementById("use")?.focus())}
                 className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Use {project.name} here
@@ -180,7 +184,7 @@ export function ProductPage({
                   {others.map((p) => (
                     <a
                       key={p.slug}
-                      href={p.path ?? "/"}
+                      to={p.path ?? "/"}
                       className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       <p className="text-sm font-bold text-foreground">Use {p.name}</p>
