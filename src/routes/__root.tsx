@@ -108,6 +108,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "SkyCo | Small web tools for everyday life" },
       { name: "description", content: `SkyCo is a founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. Free to open, no account required.`.slice(0, 158) },
       { name: "author", content: "SkyCo" },
+      { name: "theme-color", content: "#124666" },
+      { name: "apple-mobile-web-app-title", content: "SkyCo" },
+      { name: "color-scheme", content: "light" },
       { property: "og:site_name", content: "SkyCo" },
       { property: "og:image", content: "https://skyco.online/og/home.jpg" },
       { property: "og:image:width", content: "1200" },
@@ -128,6 +131,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "manifest", href: "/site.webmanifest" },
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
       {
         rel: "preload",
         as: "image",
