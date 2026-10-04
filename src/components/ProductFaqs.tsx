@@ -34,7 +34,7 @@ const groups = [
     faqs: [
       ["Are these real shop prices?", "No. The packs are labelled samples with quantities only. There are no prices, shops or suppliers involved."],
       ["How do I print a list?", "Pick a pack and household size, then use Print this list. Only the list is printed."],
-      ["Are my ticks saved?", "No. Ticks reset when you refresh the page."],
+      ["Are my ticks saved?", "Ticks are saved for each pack in this browser when browser storage is available."],
     ],
   },
 ];
@@ -48,7 +48,7 @@ export function ProductFaqs() {
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         {groups.map((g) => (
           <div key={g.name} className="rounded-2xl border border-sky-bright/20 bg-card p-6">
-            <h3 className="text-lg font-bold text-foreground">
+            <h3 id={`faq-${g.to.slice(1)}`} className="text-lg font-bold text-foreground">
               <Link to={g.to} className="rounded-sm text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 {g.name}
               </Link>
