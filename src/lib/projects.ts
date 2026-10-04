@@ -22,7 +22,7 @@ export type SkyCoProject = {
   description: string;
   icon: ProjectIcon;
   /** Clean SkyCo product path, for example /currensee. */
-  path?: string;
+  path?: "/currensee" | "/chronos" | "/finance-friend" | "/grocery";
   /** Why the product exists, in one plain sentence. */
   why?: string;
   /** A concrete, checkable example of the job it does. */

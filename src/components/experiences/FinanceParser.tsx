@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 /**
  * The My Finance Friend entry step, running on skyco.online itself.
@@ -19,17 +19,20 @@ const EXAMPLES = [
 ];
 
 export function FinanceParser() {
-  const [text, setText] = useState(EXAMPLES[0]!);
+  const [text, setText] = useState(EXAMPLES[0] ?? "");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [copyStatus, setCopyStatus] = useState("");
   const parsed = parseHolding(text);
 
   return (
     <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
-      <h2 className="text-sm font-bold uppercase tracking-wider text-sky-deep">
+      <label htmlFor="ff-input" className="text-sm font-bold uppercase tracking-wider text-sky-deep">
         Type a holding
-      </h2>
-      <label className="mt-3 block">
-        <span className="sr-only">Describe a trade in plain English</span>
+      </label>
+      <div className="mt-3 block">
         <input
+          id="ff-input"
+          ref={inputRef}
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="bought 50 shares of NVDA today at $145"
@@ -41,14 +44,16 @@ export function FinanceParser() {
           aria-invalid={text.trim().length > 0 && parsed === null}
           className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         />
-      </label>
+      </div>
 
+      <button type="button" onClick={() => { setText(""); inputRef.current?.focus(); }} className="mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Clear</button>
       <div className="mt-3 flex flex-wrap gap-2">
         {EXAMPLES.map((e) => (
           <button
             key={e}
             type="button"
             onClick={() => setText(e)}
+            aria-pressed={text === e}
             className="min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {e}
@@ -56,7 +61,8 @@ export function FinanceParser() {
         ))}
       </div>
 
-      <div className="mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4" role="status" aria-live="polite" aria-atomic="true">
+      <p className="sr-only" role="status">{parsed ? `${parsed.action} ${parsed.quantity} ${parsed.ticker}${parsed.price === null ? ", price not provided" : ` at $${parsed.price.toFixed(2)}`}, ${parsed.when.toLowerCase()}` : text.trim() ? "Trade not recognised" : "Field cleared"}</p>
+      <div className="mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Parsed preview
         </p>
@@ -88,6 +94,12 @@ export function FinanceParser() {
           </p>
         )}
       </div>
+      <button type="button" disabled={!parsed} onClick={async () => {
+        if (!parsed) return;
+        const csv = `action,quantity,ticker,price,date,value\n${parsed.action},${parsed.quantity},${parsed.ticker},${parsed.price ?? ""},${parsed.when},${parsed.price === null ? "" : parsed.price * parsed.quantity}`;
+        try { await navigator.clipboard.writeText(csv); setCopyStatus("CSV copied"); } catch { setCopyStatus("Copy unavailable in this browser"); }
+      }} className="mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60">Copy as CSV</button>
+      <span role="status" className="ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <p id="parser-help" className="mt-3 text-xs text-muted-foreground">
         Nothing is stored or sent from this preview. Check every field yourself before relying on it.
       </p>
@@ -125,7 +137,7 @@ export function parseHolding(input: string): Parsed | null {
   if (!ticker) return null;
 
   const priceMatch = text.match(/(?:at|@|for)\s*\$?\s*(\d+(?:[.,]\d+)?)/i);
-  const price = priceMatch ? Number(priceMatch[1]!.replace(",", "")) : null;
+  const price = priceMatch ? Number((priceMatch[1] ?? "").replace(",", "")) : null;
 
   const when = /yesterday/i.test(text)
     ? "Yesterday"

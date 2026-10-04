@@ -11,3 +11,6 @@
 
 - Keep all shipped products on first-party `skyco.online/<product>` routes; this preserves one trusted hub and prevents duplicate product homes.
 - Describe only behavior implemented by the current in-page experiences; this keeps privacy, security, status, and product claims verifiable.
+
+- Keep product paths typed as the four hub route literals so shared navigation uses type-safe TanStack links.
+- Grocery check persistence uses versioned browser storage with per-pack keys and validation; lists must remain usable when storage is unavailable.

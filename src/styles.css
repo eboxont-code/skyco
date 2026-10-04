@@ -195,6 +195,10 @@
     box-shadow: none;
   }
 
+  header, footer, body > a[href="#main-content"], .mobile-action-bar { display: none !important; }
+  .grocery-print, .grocery-print * { color: black !important; background: white !important; }
+  .grocery-section { break-inside: avoid; }
+  .grocery-print input[type="checkbox"] { appearance: auto; print-color-adjust: exact; }
   .no-print {
     display: none !important;
   }
