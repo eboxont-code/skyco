@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckCircle2, Printer } from "lucide-react";
 
 /**
@@ -92,7 +92,27 @@ const PACKS: Pack[] = [
 export function GroceryPackPreview() {
   const [packId, setPackId] = useState(PACKS[0]?.id ?? "easy-week");
   const [size, setSize] = useState<"two" | "four">("two");
-  const [checked, setChecked] = useState<string[]>([]);
+  const [checks, setChecks] = useState<Record<string, string[]>>({});
+  const [storageReady, setStorageReady] = useState(false);
+  const [copyStatus, setCopyStatus] = useState("");
+  const checked = checks[packId] ?? [];
+  const setChecked = (next: string[] | ((current: string[]) => string[])) => setChecks(current => ({ ...current, [packId]: typeof next === "function" ? next(current[packId] ?? []) : next }));
+  useEffect(() => {
+    try {
+      const saved: unknown = JSON.parse(localStorage.getItem("skyco.grocery.v1") ?? "{}");
+      if (saved && typeof saved === "object" && !Array.isArray(saved)) {
+        const valid: Record<string, string[]> = {};
+        for (const pack of PACKS) {
+          const keys = pack.sections.flatMap(s => s.items.map(i => `${pack.id}:${i.item}`));
+          const entries = (saved as Record<string, unknown>)[pack.id];
+          if (Array.isArray(entries)) valid[pack.id] = [...new Set(entries.filter((key): key is string => typeof key === "string" && keys.includes(key)))];
+        }
+        setChecks(valid);
+      }
+    } catch { /* Storage is optional. */ }
+    setStorageReady(true);
+  }, []);
+  useEffect(() => { if (storageReady) { try { localStorage.setItem("skyco.grocery.v1", JSON.stringify(checks)); } catch { /* Keep the list usable without storage. */ } } }, [checks, storageReady]);
   const pack = PACKS.find((p) => p.id === packId) ?? PACKS[0];
   if (!pack) return null;
   const count = pack.sections.reduce((n, s) => n + s.items.length, 0);
@@ -103,14 +123,14 @@ export function GroceryPackPreview() {
 
   return (
     <div className="grocery-print rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="no-print flex flex-wrap items-center gap-2" role="group" aria-label="Choose a pack">
         {PACKS.map((p) => (
           <button
             key={p.id}
             type="button"
             onClick={() => {
               setPackId(p.id);
-              setChecked([]);
+
             }}
             aria-pressed={p.id === packId}
             className={`min-h-11 rounded-full px-5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
@@ -154,6 +174,12 @@ export function GroceryPackPreview() {
         {checked.length} of {count} items checked
       </p>
 
+      <p className="mt-2 text-xs text-muted-foreground">Checked items stay in this browser until you reset them or clear site data.</p>
+      <button type="button" onClick={async () => {
+        const text = `${pack.name} (sample), for ${size === "two" ? 2 : 4}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${i[size]}`).join("\n")).join("\n\n");
+        try { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } catch { setCopyStatus("Copy unavailable in this browser"); }
+      }} className="no-print mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy list</button>
+      <span role="status" className="no-print ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
         <button
           type="button"
@@ -178,12 +204,12 @@ export function GroceryPackPreview() {
         {pack.sections.map((section) => (
           <div
             key={section.name}
-            className="rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4"
+            className="grocery-section rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4"
           >
-            <h3 className="text-[11px] font-bold uppercase tracking-wider text-sky-deep">
+            <h3 id={`grocery-${pack.id}-${section.name.replace(/\s+/g, "-")}`} className="text-[11px] font-bold uppercase tracking-wider text-sky-deep">
               {section.name}
             </h3>
-            <ul className="mt-2 space-y-1.5">
+            <ul aria-labelledby={`grocery-${pack.id}-${section.name.replace(/\s+/g, "-")}`} className="mt-2 space-y-1.5">
               {section.items.map((i) => (
                 <li
                   key={i.item}
