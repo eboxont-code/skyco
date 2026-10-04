@@ -15,6 +15,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   const [to, setTo] = useState(safeTo);
   const [amount, setAmount] = useState("100");
   const fetchRate = useServerFn(getRate);
+  const [swapStatus, setSwapStatus] = useState("");
   const [copied, setCopied] = useState(false);
   const copyLink = async () => {
     const link = `https://skyco.online/currensee?from=${from}&to=${to}`;
@@ -60,27 +61,28 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-end">
-        <label className="block">
-          <span className="text-xs font-semibold text-muted-foreground">Amount</span>
-          <div className="mt-1 flex gap-2">
+        <div className="grid grid-cols-1 gap-2 min-[400px]:grid-cols-2">
+          <div><label htmlFor="cs-amount" className="text-xs font-semibold text-muted-foreground">Amount</label>
+          <div className="mt-1">
             <input
               inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value.replace(/[^\d.,]/g, ""))}
-              aria-label="Amount to convert"
+              id="cs-amount"
               aria-invalid={!amountIsValid}
               aria-describedby="amount-help"
               className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             />
-            <Select value={from} onChange={setFrom} label="Convert from" />
-          </div>
-        </label>
+          </div></div>
+          <div><label htmlFor="cs-from" className="text-xs font-semibold text-muted-foreground">From</label><Select id="cs-from" value={from} onChange={setFrom} /></div>
+        </div>
 
         <button
           type="button"
           onClick={() => {
             setFrom(to);
             setTo(from);
+            setSwapStatus(`Now converting ${to} to ${from}`);
           }}
           aria-label="Swap currencies"
           className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-sky-bright/30 text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -88,10 +90,10 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
           <ArrowLeftRight className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        <label className="block">
-          <span className="text-xs font-semibold text-muted-foreground">Converted</span>
-          <div className="mt-1 flex gap-2">
-            <output aria-live="polite" className="flex min-h-12 w-full items-center rounded-xl border border-sky-bright/30 bg-sky-ice/40 px-3 text-base font-bold text-foreground">
+        <div className="grid grid-cols-1 gap-2 min-[400px]:grid-cols-2">
+          <div><span id="cs-converted-label" className="text-xs font-semibold text-muted-foreground">Converted amount</span>
+          <div className="mt-1">
+            <output aria-labelledby="cs-converted-label" aria-live="polite" className="flex min-h-12 w-full items-center rounded-xl border border-sky-bright/30 bg-sky-ice/40 px-3 text-base font-bold text-foreground">
               {!amountIsValid
                 ? "Enter an amount"
                 : converted === null
@@ -100,11 +102,12 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
                     : "Loading"
                   : format(converted)}
             </output>
-            <Select value={to} onChange={setTo} label="Convert to" />
-          </div>
-        </label>
+          </div></div>
+          <div><label htmlFor="cs-to" className="text-xs font-semibold text-muted-foreground">To</label><Select id="cs-to" value={to} onChange={setTo} /></div>
+        </div>
       </div>
 
+      <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
         {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
       </p>
@@ -193,6 +196,12 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
             </div>
           )}
         </div>
+        {data && data.series.length > 0 && (<>
+          <p className="mt-3 text-xs text-muted-foreground">Period high: {format(Math.max(...data.series.map(p => p.value)))} {to}. Low: {format(Math.min(...data.series.map(p => p.value)))} {to}. Average: {format(data.series.reduce((sum, p) => sum + p.value, 0) / data.series.length)} {to}.</p>
+          <details className="mt-3 text-sm text-foreground"><summary className="min-h-11 cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Show the 30 day data as a table</summary>
+            <table className="mt-2 w-full text-left"><caption className="text-left text-xs text-muted-foreground">Reference rates for 1 {from} in {to}</caption><thead><tr><th scope="col">Date</th><th scope="col">Rate</th></tr></thead><tbody>{data.series.map(p => <tr key={p.date}><th scope="row" className="py-1 font-normal">{p.date}</th><td>{format(p.value)}</td></tr>)}</tbody></table>
+          </details>
+        </>)}
       </div>
     </div>
   );
@@ -201,18 +210,18 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
 function Select({
   value,
   onChange,
-  label,
+  id,
 }: {
   value: string;
   onChange: (v: string) => void;
-  label: string;
+  id: string;
 }) {
   return (
     <select
-      aria-label={label}
+      id={id}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="min-h-12 rounded-xl border border-sky-bright/30 bg-background px-2 text-sm font-bold text-sky-deep outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      className="mt-1 min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-2 text-sm font-bold text-sky-deep outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       {CURRENCIES.map((c) => (
         <option key={c} value={c}>
