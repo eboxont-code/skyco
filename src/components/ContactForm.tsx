@@ -40,23 +40,23 @@ export function ContactForm() {
       </p>
       <form onSubmit={onSubmit} aria-describedby="contact-note" noValidate className="mt-5 grid gap-4 sm:grid-cols-2">
         <div className="text-sm font-semibold text-foreground">
-          <label htmlFor="contact-topic">Topic</div>
+          <label htmlFor="contact-topic">Topic</label>
           <select id="contact-topic" name="topic" className={field}>
             {topics.map((t) => <option key={t}>{t}</option>)}
           </select>
         </div>
         <div className="text-sm font-semibold text-foreground">
-          <label htmlFor="contact-product">Product</div>
+          <label htmlFor="contact-product">Product</label>
           <select id="contact-product" name="product" className={field}>
             {products.map((t) => <option key={t}>{t}</option>)}
           </select>
         </div>
         <div className="text-sm font-semibold text-foreground sm:col-span-2">
-          <label htmlFor="contact-name">Your name (optional)</div>
+          <label htmlFor="contact-name">Your name (optional)</label>
           <input id="contact-name" name="name" autoComplete="name" className={field} />
         </div>
         <div className="text-sm font-semibold text-foreground sm:col-span-2">
-          <label htmlFor="contact-message">Message</div>
+          <label htmlFor="contact-message">Message</label>
           <textarea
             id="contact-message" name="message"
             ref={messageRef}
