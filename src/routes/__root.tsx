@@ -89,6 +89,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." },
       { name: "twitter:title", content: "Page not found | SkyCo" },
       { name: "twitter:description", content: "This SkyCo page does not exist. Use the links to get back to the hub or one of the four tools." },
+      { property: "og:image", content: "https://skyco.online/og/not-found.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "SkyCo page not found" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://skyco.online/og/not-found.jpg" },
+      { name: "twitter:image:alt", content: "SkyCo page not found" },
     ];
     const keyOf = (m: Record<string, unknown>) => ("title" in m ? "title" : String(m.name ?? m.property ?? ""));
     const nfKeys = new Set(nfMeta.map(keyOf));
@@ -102,6 +109,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: `SkyCo is a founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. Free to open, no account required.`.slice(0, 158) },
       { name: "author", content: "SkyCo" },
       { property: "og:site_name", content: "SkyCo" },
+      { property: "og:image", content: "https://skyco.online/og/home.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "SkyCo small web tools for everyday life" },
+      { name: "twitter:image", content: "https://skyco.online/og/home.jpg" },
+      { name: "twitter:image:alt", content: "SkyCo small web tools for everyday life" },
       { property: "og:title", content: "SkyCo | Small web tools for everyday life" },
       { property: "og:description", content: `A founder-led studio building focused web tools: ${liveProjects.map((p) => p.name).join(", ")}. All free to open.` },
       { property: "og:type", content: "website" },
