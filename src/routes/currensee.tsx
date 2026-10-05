@@ -70,6 +70,7 @@ function CurrenSeePage() {
       directory={Route.useLoaderData()}
       experience={<CurrenSeeConverter initialFrom={from} initialTo={to} />}
       experienceTitle="Convert a pair right here"
+      intro="Convert a currency or crypto amount using current reference rates."
       headline="Convert a currency or crypto pair here, check the current reference rate, and read its 30 day direction."
       points={[
         "Live fiat rates for the pairs people actually travel and shop with.",

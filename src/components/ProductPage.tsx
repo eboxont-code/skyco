@@ -13,6 +13,7 @@ export function ProductPage({
   slug,
   directory,
   headline,
+  intro,
   points,
   experience,
   experienceTitle,
@@ -20,6 +21,7 @@ export function ProductPage({
   slug: string;
   directory: ResolvedProject[];
   headline: string;
+  intro: string;
   points: string[];
   /** The product itself, running on this page. */
   experience?: React.ReactNode;
@@ -58,7 +60,7 @@ export function ProductPage({
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
                   {project.live ? "Live" : "On the way"}
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-wider text-sky-bright">
+                <span className="text-xs font-semibold uppercase tracking-wider text-sky-deep">
                   {project.tagline}
                 </span>
               </div>
@@ -66,7 +68,8 @@ export function ProductPage({
               <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
                 {project.name}
               </h1>
-              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{headline}</p>
+              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{intro}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{headline}</p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
