@@ -149,6 +149,7 @@ export const getRate = createServerFn({ method: "GET" })
       series: series.slice(-31),
       approximate,
     };
+    for (const [oldKey, entry] of pairCache) if (entry.expires <= Date.now()) pairCache.delete(oldKey);
     pairCache.set(key, { expires: Date.now() + 60_000, result });
     return result;
   });

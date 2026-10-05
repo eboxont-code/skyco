@@ -28,11 +28,11 @@ const pillars = [
 export function Mission({ directory }: { directory: ResolvedProject[] }) {
   const liveCount = splitDirectory(directory).live.length;
   return (
-    <section id="mission" className="relative px-6 py-20 md:py-28">
+    <section id="mission" aria-labelledby="mission-heading" className="relative px-6 py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-[1fr_1.4fr] md:items-center">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">How I work</p>
-          <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+          <h2 id="mission-heading" className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             A founder-led studio for <span className="text-gradient-sky">practical software</span>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
