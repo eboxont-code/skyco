@@ -33,6 +33,7 @@ function NotFoundComponent() {
             <li><Link to="/grocery" className="text-sky-deep underline underline-offset-4">SkyCo Grocery Packs</Link></li>
           </ul>
         </nav>
+        <nav aria-label="More SkyCo pages" className="mt-4 flex justify-center gap-4">{(["/about", "/faq", "/support"] as const).map(to => <Link key={to} to={to} className="inline-flex min-h-11 items-center text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">{to.slice(1)}</Link>)}</nav>
       </div>
     </main>
   );
@@ -46,13 +47,14 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <main id="main-content" tabIndex={-1} className="flex min-h-screen items-center justify-center bg-background px-4 py-16 focus:outline-none">
       <div className="max-w-md text-center">
+        <img src={badge512} alt="" width={96} height={96} className="mx-auto mb-6 h-24 w-24" />
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
           This page didn't load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Something went wrong loading this page. You can try refreshing or head back home.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -72,7 +74,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           </a>
         </div>
       </div>
-    </div>
+        <nav aria-label="SkyCo tools" className="mt-6 grid gap-2">{liveProjects.map(p => <Link key={p.slug} to={p.path ?? "/"} className="min-h-11 text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">{p.name}</Link>)}</nav>
+    </main>
   );
 }
 
@@ -81,6 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     const notFound = matches.some(
       (m) => m.status === "notFound" || (m as { globalNotFound?: boolean }).globalNotFound,
     );
+    const hasError = matches.some(m => m.status === "error");
     const nfMeta = [
       { title: "Page not found | SkyCo" },
       { name: "robots", content: "noindex" },
@@ -100,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     const keyOf = (m: Record<string, unknown>) => ("title" in m ? "title" : String(m.name ?? m.property ?? ""));
     const nfKeys = new Set(nfMeta.map(keyOf));
     const pick = <T extends Record<string, unknown>>(base: T[]) =>
-      notFound ? [...base.filter((m) => !nfKeys.has(keyOf(m))), ...nfMeta] : base;
+      notFound ? [...base.filter((m) => !nfKeys.has(keyOf(m))), ...nfMeta] : hasError ? [...base, { name: "robots", content: "noindex" }] : base;
     return {
     meta: pick([
       { charSet: "utf-8" },

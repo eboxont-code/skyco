@@ -65,6 +65,7 @@ function GroceryPage() {
       directory={Route.useLoaderData()}
       experience={<GroceryPackPreview />}
       experienceTitle="Choose a sample pack and read the sorted list"
+      intro="Choose and print a sample shopping list for two or four people."
       headline="Choose one of my sample packs and the shopping is grouped by store section, with quantities for two or four. Print it or read it at the shelf."
       points={[
         "Lists grouped the way a shop is laid out, so you walk it once.",

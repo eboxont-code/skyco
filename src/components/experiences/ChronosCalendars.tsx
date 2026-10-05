@@ -13,8 +13,8 @@ const SYSTEMS: { label: string; calendar: string; locale: string }[] = [
   { label: "Indian Saka", calendar: "indian", locale: "en-GB" },
 ];
 
-export function ChronosCalendars() {
-  const [value, setValue] = useState(() => new Date().toISOString().slice(0, 10));
+export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
+  const [value, setValue] = useState(() => initialDate ?? new Date().toISOString().slice(0, 10));
   const [copyStatus, setCopyStatus] = useState("");
   const shiftDay = (offset: number) => {
     const date = new Date(`${value}T12:00:00Z`);
@@ -52,8 +52,8 @@ export function ChronosCalendars() {
 
   return (
     <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div className="block"><label htmlFor="chronos-date" className="text-xs font-semibold text-muted-foreground">Pick a date</label>
+      <div className="flex flex-wrap items-end justify-between gap-3 max-[399px]:flex-col max-[399px]:items-stretch">
+        <div className="block max-[399px]:w-full"><label htmlFor="chronos-date" className="text-xs font-semibold text-muted-foreground">Pick a date</label>
           <input
             type="date"
             value={value}
@@ -100,10 +100,20 @@ export function ChronosCalendars() {
             </dt>
             <dd className="mt-0.5 text-sm font-semibold text-foreground" suppressHydrationWarning>
               {r.text}
+              {r.label === "Gregorian" && dateIsValid && <span className="mt-1 block text-xs text-muted-foreground">{ordinalSummary(value)}</span>}
             </dd>
           </div>
         ))}
       </dl>
     </div>
   );
+}
+
+function ordinalSummary(value: string) {
+  const date = new Date(`${value}T12:00:00Z`);
+  const day = Math.floor((date.getTime() - Date.UTC(date.getUTCFullYear(), 0, 1)) / 86400000) + 1;
+  const thursday = new Date(date);
+  thursday.setUTCDate(thursday.getUTCDate() + 4 - (thursday.getUTCDay() || 7));
+  const week = Math.ceil(((thursday.getTime() - Date.UTC(thursday.getUTCFullYear(), 0, 1)) / 86400000 + 1) / 7);
+  return `Day ${day} of the year. ISO week ${week}.`;
 }

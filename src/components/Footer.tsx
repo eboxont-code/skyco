@@ -31,7 +31,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 Sky<span className="text-sky-bright">Co</span>
               </span>
             </div>
-            <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-sky-deep/70">
+            <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-sky-deep">
               As Above, So Below
             </p>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">
@@ -40,7 +40,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           </div>
 
           <nav aria-label="SkyCo products">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Products</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Products</p>
             <ul className="mt-3 space-y-2">
               {liveProjects.map((project) => (
                 <li key={project.slug}>
@@ -56,7 +56,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           </nav>
 
           <nav aria-label="Company">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Company</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Company</p>
             <ul className="mt-3 space-y-2">
               {companyLinks.map((l) => (
                 <li key={l.to}>
@@ -72,7 +72,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           </nav>
 
           <nav aria-label="Legal and contact">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Legal</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Legal</p>
             <ul className="mt-3 space-y-2">
               {legalLinks.map((l) => (
                 <li key={l.to}>

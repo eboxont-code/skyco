@@ -65,6 +65,7 @@ function FinanceFriendPage() {
       directory={Route.useLoaderData()}
       experience={<FinanceParser />}
       experienceTitle="Type a holding and check the preview"
+      intro="Turn a plain-English trade into fields you can check."
       headline='Type "bought 50 shares of NVDA today at $145" and inspect how the sentence is parsed. Nothing is saved or sent from this preview.'
       points={[
         "Plain English in, a structured holding out.",

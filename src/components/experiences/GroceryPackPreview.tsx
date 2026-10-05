@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { CheckCircle2, Printer } from "lucide-react";
 
 /**
@@ -94,6 +95,7 @@ export function GroceryPackPreview() {
   const [size, setSize] = useState<"two" | "four">("two");
   const [checks, setChecks] = useState<Record<string, string[]>>({});
   const [storageReady, setStorageReady] = useState(false);
+  const [hideTicked, setHideTicked] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
   const checked = checks[packId] ?? [];
   const setChecked = (next: string[] | ((current: string[]) => string[])) => setChecks(current => ({ ...current, [packId]: typeof next === "function" ? next(current[packId] ?? []) : next }));
@@ -181,6 +183,7 @@ export function GroceryPackPreview() {
       }} className="no-print mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy list</button>
       <span role="status" className="no-print ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
+        <Button variant="outline" aria-pressed={hideTicked} onClick={() => setHideTicked(v => !v)}>Hide ticked items</Button>
         <button
           type="button"
           onClick={() => setChecked(allChecked ? [] : itemKeys)}
@@ -207,10 +210,10 @@ export function GroceryPackPreview() {
             className="grocery-section rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4"
           >
             <h3 id={`grocery-${pack.id}-${section.name.replace(/\s+/g, "-")}`} className="text-[11px] font-bold uppercase tracking-wider text-sky-deep">
-              {section.name}
+              {section.name}, {section.items.length} items
             </h3>
             <ul aria-labelledby={`grocery-${pack.id}-${section.name.replace(/\s+/g, "-")}`} className="mt-2 space-y-1.5">
-              {section.items.map((i) => (
+              {section.items.filter(i => !hideTicked || !checked.includes(`${pack.id}:${i.item}`)).map((i) => (
                 <li
                   key={i.item}
                   className="flex items-baseline justify-between gap-3 text-sm text-foreground"

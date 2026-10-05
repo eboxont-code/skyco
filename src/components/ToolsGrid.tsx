@@ -1,5 +1,6 @@
 import { ArrowRight, Bitcoin, Clock, Check } from "lucide-react";
-import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
+import { Link } from "@tanstack/react-router";
+import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 import { productShots, shotFreshness } from "@/lib/product-shots";
 import { useWebMCPTools, text } from "@/lib/webmcp";
@@ -45,7 +46,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
     <section id="tools" className="px-6 py-20 md:py-24 bg-gradient-to-b from-sky-ice/60 to-background">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">
             Built for real daily problems
           </p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
@@ -76,7 +77,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
                       Live
                     </span>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-sky-bright">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-sky-deep">
                       {project.tagline}
                     </span>
                   </div>
@@ -98,36 +99,36 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                       .filter((v): v is string => Boolean(v))
                       .map((line, lineIndex) => (
                         <li key={`${project.slug}-${lineIndex}`} className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground">
-                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-sky-bright" aria-hidden="true" />
+                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-sky-deep" aria-hidden="true" />
                           <span>{line}</span>
                         </li>
                       ))}
                   </ul>
 
                   <div className="mt-7 flex flex-wrap items-center gap-3">
-                    <a
-                      href={entryHref(project)}
+                    <Link
+                      to={project.path ?? "/"}
                       className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-6 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       Use {project.name} here
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </a>
+                    </Link>
                     {project.slug === "currensee" && (
-                      <a
-                        href="/currensee?from=BTC&to=USD#use"
+                      <Link
+                        to="/currensee" search={{ from: "BTC", to: "USD" }} hash="use"
                         className="inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-bright/40 px-5 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       >
                         <Bitcoin className="h-4 w-4" aria-hidden="true" />
                         Check Bitcoin in USD
-                      </a>
+                      </Link>
                     )}
                   </div>
                 </div>
 
                 {shot && (
                   <div className={flip ? "lg:order-1" : undefined}>
-                    <a
-                      href={entryHref(project)}
+                    <Link
+                      to={project.path ?? "/"}
                       tabIndex={-1}
                       aria-hidden="true"
                       className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg transition-all hover:-translate-y-1 hover:shadow-glow-cyan"
@@ -138,10 +139,11 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                         width={1280}
                         height={800}
                         loading="lazy"
+                        fetchPriority="low"
                         decoding="async"
                         className="aspect-[16/10] w-full object-cover object-top"
                       />
-                    </a>
+                    </Link>
                     <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                       <p className="text-xs font-medium text-foreground">{shot.result}</p>
                       <span

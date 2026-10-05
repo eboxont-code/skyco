@@ -1,7 +1,7 @@
 import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
-import { fallbackDirectory, splitDirectory, entryHref, type ResolvedProject } from "@/lib/projects";
+import { fallbackDirectory, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
 export const Route = createFileRoute("/about")({
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
-  const live = splitDirectory(Route.useLoaderData()).live;
+  const { live, upcoming } = splitDirectory(Route.useLoaderData());
 
   return (
     <PageShell
@@ -92,12 +92,12 @@ function AboutPage() {
           <li key={p.slug} className="rounded-2xl border border-sky-bright/20 bg-card p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="text-base font-bold text-foreground">{p.name}</h3>
-              <a
-                href={entryHref(p)}
+              <Link
+                to={p.path ?? "/"}
                 className="text-xs font-bold text-sky-deep underline underline-offset-2"
               >
                 Use {p.name}
-              </a>
+              </Link>
             </div>
             <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
               {p.why ?? p.description}
@@ -105,6 +105,11 @@ function AboutPage() {
           </li>
         ))}
       </ul>
+
+      <section aria-labelledby="upcoming-heading" className="mt-10">
+        <h2 id="upcoming-heading" className="text-2xl font-bold text-foreground">On the way</h2>
+        <ul className="mt-4 space-y-3">{upcoming.map(p => <li key={p.slug}><h3 className="font-semibold text-foreground">{p.name}</h3><p className="text-sm text-muted-foreground">{p.description}</p></li>)}</ul>
+      </section>
 
       <div className="mt-10">
         <Prose>

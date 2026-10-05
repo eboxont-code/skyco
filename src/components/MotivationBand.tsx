@@ -12,12 +12,12 @@ const tiles = [
 
 export function MotivationBand() {
   return (
-    <section id="motivation" className="px-6 py-20 md:py-24 bg-motivation-band">
+    <section id="motivation" aria-labelledby="motivation-heading" className="px-6 py-20 md:py-24 bg-motivation-band">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/80">On Instagram</p>
-            <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h2 id="motivation-heading" className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
               Follow my build log on{" "}
               <a
                 href={PROFILE_URL}

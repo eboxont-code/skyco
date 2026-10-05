@@ -36,6 +36,7 @@ export type RateResult = {
   from: string;
   to: string;
   rate: number;
+  source: "Frankfurter" | "CoinGecko";
   asOf: string;
   fetchedAt: string;
   series: { date: string; value: number }[];
@@ -66,7 +67,7 @@ async function cryptoUsd(codes: string[]): Promise<Record<string, number>> {
   if (!res.ok) throw new Error("crypto source unavailable");
   const json = (await res.json()) as Record<string, { usd: number }>;
   const out: Record<string, number> = {};
-  for (const code of codes) out[code] = json[CRYPTO[code]!]?.usd ?? 0;
+  for (const code of codes) out[code] = json[CRYPTO[code] ?? ""]?.usd ?? 0;
   return out;
 }
 
@@ -95,6 +96,10 @@ async function cryptoSeries(code: string, multiplier: number) {
   }));
 }
 
+const pairCache = new Map<string, { expires: number; result: RateResult }>();
+
+export const CURRENCY_NAMES: Record<string, string> = { USD: "US dollar", EUR: "Euro", GBP: "British pound", JPY: "Japanese yen", INR: "Indian rupee", AUD: "Australian dollar", CAD: "Canadian dollar", CHF: "Swiss franc", CNY: "Chinese yuan", SGD: "Singapore dollar", SEK: "Swedish krona", NOK: "Norwegian krone", NZD: "New Zealand dollar", BRL: "Brazilian real", ZAR: "South African rand", BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana" };
+
 export const getRate = createServerFn({ method: "GET" })
   .inputValidator((data: { from: string; to: string }) => {
     const from = String(data?.from ?? "USD").toUpperCase();
@@ -106,12 +111,15 @@ export const getRate = createServerFn({ method: "GET" })
   })
   .handler(async ({ data }): Promise<RateResult> => {
     const { from, to } = data;
+    const key = `${from}:${to}`;
+    const cached = pairCache.get(key);
+    if (cached && cached.expires > Date.now()) return cached.result;
     const fiat = await fiatUsdTable();
     const asOf = (fiat as unknown as { date: string }).date ?? new Date().toISOString().slice(0, 10);
     const cryptoCodes = [from, to].filter((c) => c in CRYPTO);
     const crypto = await cryptoUsd([...new Set(cryptoCodes)]);
 
-    const usdPer = (code: string) => (code in CRYPTO ? crypto[code]! : fiat[code]!);
+    const usdPer = (code: string) => (code in CRYPTO ? crypto[code] ?? 0 : fiat[code] ?? 0);
     const rate = usdPer(from) / usdPer(to);
 
     let series: { date: string; value: number }[] = [];
@@ -131,7 +139,8 @@ export const getRate = createServerFn({ method: "GET" })
       series = [];
     }
 
-    return {
+    const result: RateResult = {
+      source: cryptoCodes.length ? "CoinGecko" : "Frankfurter",
       from,
       to,
       rate,
@@ -140,4 +149,7 @@ export const getRate = createServerFn({ method: "GET" })
       series: series.slice(-31),
       approximate,
     };
+    for (const [oldKey, entry] of pairCache) if (entry.expires <= Date.now()) pairCache.delete(oldKey);
+    pairCache.set(key, { expires: Date.now() + 60_000, result });
+    return result;
   });

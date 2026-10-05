@@ -11,6 +11,7 @@ export type ChangeEntry = {
  * not pad it and do not backdate.
  */
 export const changelog: ChangeEntry[] = [
+  { date: "2026-10-05", title: "Product help and clearer wayfinding", tag: "Improvement", items: ["Product help answers have visible keyboard focus rings.", "Product pages link directly to their support answers, and FAQ answers link to the relevant tools.", "About lists the tools on the way alongside the live products.", "Changelog entries have individual anchors and publication dates.", "Status and Security share the same product data source list.", "CurrenSee adds a one-minute rate cache, source names, quick amounts, recent pairs and retry controls.", "Chronos adds day and week numbers and shareable starting dates.", "Finance Friend reads comma-separated prices and explains assumed dates.", "Grocery lists show section counts and can hide checked items.", "Product introductions, quieter motion and clearer labels improve reading and navigation."] },
   {
     date: "2026-10-02",
     title: "Clearer wayfinding and share pictures",

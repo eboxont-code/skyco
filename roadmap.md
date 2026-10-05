@@ -1,8 +1,6 @@
-# SkyCo requested controls
-- [x] 0: Branded missing-page sharing
-- [x] A-D: Currency labels/table, calendar navigation/copy, trade clear/CSV, grocery persistence/copy/print
-- [x] E-H: Keyboard navigation, product/home structure, icons and manifest
-- [x] 1: Waitlist labels and errors
-- [x] 2-6: Footer links, heart label, active nav, quick links, contact labels/count/focus
-- [ ] 7-48: Remaining requested follow-on controls and content (credit budget exhausted)
-- [ ] Verify current changes and publish
+# SkyCo October 5 continuation
+- [x] 0 and A-H: Publication, FAQ focus, help links, upcoming tools, changelog, shared sources, cache, quick amounts, recent pairs
+- [x] 1-19: Requested converter, calendar, parser, grocery, introduction, labels, motion, navigation, error pages and machine-readable page links
+- [x] 27,29,30: Enter preview focus, screenshot dimensions/priority
+- [ ] 20-26,28,31-47: Remaining follow-on work, blocked by credit budget
+- [x] Preview checks passed and publication scheduled

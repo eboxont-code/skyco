@@ -2,6 +2,8 @@ import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
+import { liveProjects } from "@/lib/projects";
+
 const UPDATED = "29 August 2026";
 
 export const Route = createFileRoute("/security")({
@@ -100,7 +102,7 @@ function SecurityPage() {
                 <td className="px-4 py-3">{row.account}</td>
                 <td className="px-4 py-3">{row.device}</td>
                 <td className="px-4 py-3">{row.server}</td>
-                <td className="px-4 py-3">{row.external}</td>
+                <td className="px-4 py-3">{liveProjects.find(p => p.name === row.product)?.dataSources?.length ? liveProjects.find(p => p.name === row.product)?.dataSources?.join(" and ") : "None, runs in your browser"}</td>
               </tr>
             ))}
           </tbody>
@@ -114,7 +116,7 @@ function SecurityPage() {
             <li>CurrenSee: your amount stays in the page. The SkyCo server fetches the rate for the chosen pair and returns it; the amount itself is never sent.</li>
             <li>Chronos: the date conversion runs entirely in your browser using its built-in calendar support. No request leaves the page.</li>
             <li>My Finance Friend: the sentence you type is read by code in the page. It is not sent anywhere and disappears on refresh.</li>
-            <li>Grocery Packs: the sample packs ship with the page. Ticks and household size live in page memory only and reset on refresh.</li>
+            <li>Grocery Packs: the sample packs ship with the page. Ticks are saved per pack in this browser when storage is available. Household size resets on refresh.</li>
             <li>Support form: it only opens an email in your own mail app. SkyCo receives nothing unless you send that email.</li>
           </ul>
 
@@ -145,7 +147,7 @@ function SecurityPage() {
               Products depend on third-party data providers. If a provider is down or rate limits a
               request, the product shows an error rather than a stale number presented as current.
             </li>
-            <li>Refreshing a product page resets the current in-page choices and entries.</li>
+            <li>Refreshing resets unsaved entries. Grocery ticks and recent currency pairs remain in browser storage when available.</li>
           </ul>
 
           <h2>Reporting a vulnerability</h2>

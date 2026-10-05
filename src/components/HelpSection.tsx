@@ -63,14 +63,14 @@ export function HelpSection() {
   ]);
 
   return (
-    <section id="help" className="px-6 py-20 md:py-28">
+    <section id="help" aria-labelledby="help-heading" className="px-6 py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-2 md:items-start">
         <div>
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white">
             <MessageCircleHeart className="h-5 w-5" />
           </div>
           <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">Contact SkyCo</p>
-          <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+          <h2 id="help-heading" className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             Get in <span className="text-gradient-sky">touch</span>
           </h2>
           <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
