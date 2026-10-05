@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { companyLinks, legalLinks } from "@/lib/site-nav";
 import { fallbackDirectory, splitDirectory } from "@/lib/projects";
 
 export const Route = createFileRoute("/llms.txt")({
@@ -27,6 +28,8 @@ export const Route = createFileRoute("/llms.txt")({
           "## Pages",
           "",
           "- [Home](https://skyco.online/): Overview of SkyCo, its live products, how the company works, and how to get in touch.",
+          "",
+          ...[...companyLinks, ...legalLinks].map(p => `- [${p.label}](https://skyco.online${p.to}): ${p.description ?? p.label + " information for SkyCo."}`),
           "",
           "## Projects",
           "",

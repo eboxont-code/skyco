@@ -1,6 +1,6 @@
 # SkyCo October 5 continuation
-- [x] 0: Publish existing work; product FAQ focus rings; FAQ schema only on FAQ
-- [x] A-D: Product support links, FAQ product links, upcoming products, dated anchored changelog
-- [ ] E-H: Shared sources, rate cache/source, quick amounts, recent pairs
-- [ ] 1-47: Follow-on requested changes
+- [x] 0 and A-H: Publication, FAQ focus, help links, upcoming tools, changelog, shared sources, cache, quick amounts, recent pairs
+- [x] 1-19: Requested converter, calendar, parser, grocery, introduction, labels, motion, navigation, error pages and machine-readable page links
+- [x] 27,29,30: Enter preview focus, screenshot dimensions/priority
+- [ ] 20-26,28,31-47: Remaining follow-on work, blocked by credit budget
 - [ ] Verify and publish this continuation
