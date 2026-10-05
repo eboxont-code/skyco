@@ -20,6 +20,7 @@ const EXAMPLES = [
 
 export function FinanceParser() {
   const [text, setText] = useState(EXAMPLES[0] ?? "");
+  const previewRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [copyStatus, setCopyStatus] = useState("");
   const parsed = parseHolding(text);
@@ -40,6 +41,7 @@ export function FinanceParser() {
           autoCapitalize="none"
           spellCheck={false}
           enterKeyHint="done"
+          onKeyDown={e => { if (e.key === "Enter") previewRef.current?.focus(); }}
           aria-describedby="parser-help"
           aria-invalid={text.trim().length > 0 && parsed === null}
           className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -62,7 +64,7 @@ export function FinanceParser() {
       </div>
 
       <p className="sr-only" role="status">{parsed ? `${parsed.action} ${parsed.quantity} ${parsed.ticker}${parsed.price === null ? ", price not provided" : ` at $${parsed.price.toFixed(2)}`}, ${parsed.when.toLowerCase()}` : text.trim() ? "Trade not recognised" : "Field cleared"}</p>
-      <div className="mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">
+      <div ref={previewRef} tabIndex={-1} aria-label="Parsed preview" className="focus:outline-none mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Parsed preview
         </p>
@@ -75,7 +77,7 @@ export function FinanceParser() {
               label="Price"
               value={parsed.price === null ? "Not provided" : `$${parsed.price.toFixed(2)}`}
             />
-            <Field label="Date" value={parsed.when} />
+            <div><Field label="Date" value={parsed.when} />{parsed.when === "Today (assumed)" && <p className="mt-1 text-xs text-muted-foreground">Date assumed to be today</p>}</div>
             <Field
               label="Value"
               value={
@@ -136,8 +138,8 @@ export function parseHolding(input: string): Parsed | null {
   const ticker = tickerMatch?.[1]?.toUpperCase();
   if (!ticker) return null;
 
-  const priceMatch = text.match(/(?:at|@|for)\s*\$?\s*(\d+(?:[.,]\d+)?)/i);
-  const price = priceMatch ? Number((priceMatch[1] ?? "").replace(",", "")) : null;
+  const priceMatch = text.match(/(?:\bat\b|@|\bfor\b)\s*\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/i);
+  const price = priceMatch ? Number((priceMatch[1] ?? "").replace(/,/g, "")) : null;
 
   const when = /yesterday/i.test(text)
     ? "Yesterday"

@@ -12,6 +12,10 @@ const DESCRIPTION =
 const URL = "https://skyco.online/chronos";
 
 export const Route = createFileRoute("/chronos")({
+  validateSearch: (search: Record<string, unknown>): { date?: string } => {
+    const date = typeof search.date === "string" ? search.date : "";
+    return /^\d{4}-\d{2}-\d{2}$/.test(date) && new Date(`${date}T12:00:00Z`).toISOString().slice(0, 10) === date ? { date } : {};
+  },
   loader: async (): Promise<ResolvedProject[]> => {
     try {
       return await getProjectDirectory();
@@ -64,7 +68,7 @@ function ChronosPage() {
     <ProductPage
       slug="chronos"
       directory={Route.useLoaderData()}
-      experience={<ChronosCalendars />}
+      experience={<ChronosCalendars initialDate={Route.useSearch().date} />}
       experienceTitle="Read one date in six calendars"
       headline="Tap one day and read it back as Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka. About ten seconds, no conversion tables."
       points={[
