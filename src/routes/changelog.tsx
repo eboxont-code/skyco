@@ -48,6 +48,7 @@ function ChangelogPage() {
             key={entry.date + entry.title}
             className="rounded-2xl border border-sky-bright/20 bg-card p-6"
           >
+            <article id={`change-${entry.date}`} className="scroll-mt-24">
             <div className="flex flex-wrap items-center gap-3">
               <span
                 className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
@@ -66,6 +67,7 @@ function ChangelogPage() {
                 <li key={item}>{item}</li>
               ))}
             </ul>
+            </article>
           </li>
         ))}
       </ol>

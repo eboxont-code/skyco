@@ -151,6 +151,8 @@ export function ProductPage({
               ))}
             </ul>
 
+            <Link to="/support" hash={`faq-${project.path?.slice(1) ?? slug}`} className="mt-5 inline-flex min-h-11 items-center rounded-sm font-semibold text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Questions about {project.name}</Link>
+
             {project.why && (
               <div className="mt-10 rounded-2xl border border-sky-bright/25 bg-sky-ice/50 p-6">
                 <p className="text-sm font-bold text-foreground">Why I built it</p>

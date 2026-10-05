@@ -69,7 +69,7 @@ const faqs: { q: string; text: string; a: React.ReactNode }[] = [
       <>
         No. The four tools currently running on SkyCo can be used without an account. My Finance
         Friend currently provides a parser preview and does not save a portfolio. Details are in{" "}
-        <Link to="/security">Security and data handling</Link>.
+        <Link to="/security">Security and data handling</Link>. <Link to="/finance-friend">Use My Finance Friend</Link>.
       </>
     ),
   },
@@ -100,7 +100,7 @@ const faqs: { q: string; text: string; a: React.ReactNode }[] = [
     a: (
       <>
         They come from third-party market data providers and can be delayed. They are indicative
-        reference prices, not dealable quotes, and should not be the only source for a transaction.
+        reference prices, not dealable quotes, and should not be the only source for a transaction. <Link to="/currensee">Use CurrenSee</Link>.
       </>
     ),
   },
@@ -111,7 +111,7 @@ const faqs: { q: string; text: string; a: React.ReactNode }[] = [
       <>
         Conversions follow published calculation rules for each calendar system. Real-world
         observance can differ, particularly for lunar calendars where a local sighting or ruling
-        sets the date. Treat the result as a reference, not a religious ruling.
+        sets the date. Treat the result as a reference, not a religious ruling. <Link to="/chronos">Use Chronos</Link>.
       </>
     ),
   },
