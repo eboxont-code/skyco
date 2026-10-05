@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, RefreshCw } from "lucide-react";
-import { CURRENCIES, getRate, type RateResult } from "@/lib/rates.functions";
+import { CURRENCIES, CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rates.functions";
 
 /**
  * The CurrenSee converter, running on skyco.online itself.
@@ -16,6 +17,23 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   const [amount, setAmount] = useState("100");
   const fetchRate = useServerFn(getRate);
   const [swapStatus, setSwapStatus] = useState("");
+  const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
+  const [storageReady, setStorageReady] = useState(false);
+  useEffect(() => {
+    try {
+      const saved: unknown = JSON.parse(localStorage.getItem("skyco.currensee.recent") ?? "[]");
+      if (Array.isArray(saved)) setRecent(saved.filter((p): p is { from: string; to: string } => p && typeof p.from === "string" && typeof p.to === "string" && CURRENCIES.includes(p.from) && CURRENCIES.includes(p.to)).slice(0, 5));
+    } catch { /* Storage is optional. */ }
+    setStorageReady(true);
+  }, []);
+  useEffect(() => {
+    if (!storageReady) return;
+    setRecent(previous => {
+      const next = [{ from, to }, ...previous.filter(p => p.from !== from || p.to !== to)].slice(0, 5);
+      try { localStorage.setItem("skyco.currensee.recent", JSON.stringify(next)); } catch { /* Storage is optional. */ }
+      return next;
+    });
+  }, [from, to, storageReady]);
   const [copied, setCopied] = useState(false);
   const copyLink = async () => {
     const link = `https://skyco.online/currensee?from=${from}&to=${to}`;
@@ -107,6 +125,8 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
         </div>
       </div>
 
+      <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
+      {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
       <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
         {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
@@ -116,12 +136,13 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
         {data ? (
           <>
             1 {from} = <span className="font-bold text-foreground">{format(data.rate)}</span> {to}
-            <span className="ml-2 block text-xs sm:inline">Reference rate for {data.asOf}</span>
+            <span className="ml-2 block text-xs sm:inline">Reference rate for {data.asOf}. Source: {data.source}</span>
           </>
         ) : query.isError ? (
           <>
             I could not reach the rate service just now. The numbers stay blank rather than show
-            you something stale. Try refreshing in a moment.
+            you something stale.
+            <Button variant="outline" className="ml-2" onClick={() => { void query.refetch(); }}>Retry</Button>
           </>
         ) : (
           <>Fetching the current rate</>
@@ -225,7 +246,7 @@ function Select({
     >
       {CURRENCIES.map((c) => (
         <option key={c} value={c}>
-          {c}
+          {c}, {CURRENCY_NAMES[c]}
         </option>
       ))}
     </select>

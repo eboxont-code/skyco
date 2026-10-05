@@ -105,8 +105,7 @@ function StatusPage() {
           </p>
           <h2>What each product depends on</h2>
           <ul>
-            <li>CurrenSee needs Frankfurter for currency rates and CoinGecko for crypto prices. If either is down, the converter shows an error rather than an old rate.</li>
-            <li>Chronos, My Finance Friend and Grocery Packs run in your browser and have no outside data source.</li>
+            {live.map(p => <li key={p.slug}>{p.name}: {p.dataSources?.length ? p.dataSources.join(" and ") : "None, runs in your browser"}.</li>)}
           </ul>
           <p>I do not publish uptime percentages because I do not run continuous monitoring.</p>
           <h2>Seeing something this page does not?</h2>
