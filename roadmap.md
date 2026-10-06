@@ -1,6 +1,10 @@
-# SkyCo October 5 continuation
-- [x] 0 and A-H: Publication, FAQ focus, help links, upcoming tools, changelog, shared sources, cache, quick amounts, recent pairs
-- [x] 1-19: Requested converter, calendar, parser, grocery, introduction, labels, motion, navigation, error pages and machine-readable page links
-- [x] 27,29,30: Enter preview focus, screenshot dimensions/priority
-- [ ] 20-26,28,31-47: Remaining follow-on work, blocked by credit budget
-- [x] Preview checks passed and publication scheduled
+# SkyCo October 6 continuation
+- [x] 0: Publish baseline and add release entry
+- [x] A-D: Shared application metadata, section navigation and breadcrumbs
+- [x] E-H: WebMCP, print header and currency formatting
+- [x] 1-7: Directory, mobile bar, support selection, footer groups, hero label, release links and shortcuts
+- [x] 8-16: Copy results, amount checks, date differences, sharing, session holdings, FAQ groups, support guidance, About metadata and back-to-top links
+- [x] 17-19: Status release date, rate explanation and existing amount-preserving swap
+- [ ] 20-43: Ordered follow-on requests
+- [x] Preview pages return 200; date difference and support selection verified without browser errors
+- [x] Final publication scheduled for skyco.online after green compilation

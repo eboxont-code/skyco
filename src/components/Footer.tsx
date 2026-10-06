@@ -6,7 +6,7 @@ import {
   splitDirectory,
   type ResolvedProject,
 } from "@/lib/projects";
-import { companyLinks, legalLinks, trustStrip, SUPPORT_EMAIL } from "@/lib/site-nav";
+import { footerCompanyLinks, footerHelpLinks, trustStrip, SUPPORT_EMAIL } from "@/lib/site-nav";
 
 export function Footer({ directory = fallbackDirectory }: { directory?: ResolvedProject[] }) {
   const liveProjects = splitDirectory(directory).live;
@@ -58,7 +58,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           <nav aria-label="Company">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Company</p>
             <ul className="mt-3 space-y-2">
-              {companyLinks.map((l) => (
+              {footerCompanyLinks.map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}
@@ -71,10 +71,10 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
             </ul>
           </nav>
 
-          <nav aria-label="Legal and contact">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Legal</p>
+          <nav aria-label="Help">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Help</p>
             <ul className="mt-3 space-y-2">
-              {legalLinks.map((l) => (
+              {footerHelpLinks.map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}

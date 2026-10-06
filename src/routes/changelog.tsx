@@ -42,6 +42,7 @@ function ChangelogPage() {
       title="What's new"
       intro="Everything listed here shipped on the date shown. This log starts with the site rebuild, so earlier product launches are not backdated into it."
     >
+      <nav aria-label="Jump to release" className="mb-8"><p className="font-semibold text-foreground">Jump to</p><ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2">{changelog.map(entry => <li key={entry.date + entry.title}><a href={`#change-${entry.date}`} className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{formatDate(entry.date)}</a></li>)}</ul></nav>
       <ol className="space-y-6">
         {changelog.map((entry) => (
           <li

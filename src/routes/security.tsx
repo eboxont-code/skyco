@@ -72,13 +72,14 @@ function SecurityPage() {
       updated={UPDATED}
       wide
     >
+      <nav aria-label="On this page" className="mb-8"><p className="font-semibold text-foreground">On this page</p><ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2"><li><a href="#what-each-product-stores" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">What each product stores</a></li><li><a href="#how-each-tool-works-with-your-data" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">How each tool works with your data</a></li><li><a href="#how-data-travels" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">How data travels</a></li><li><a href="#limitations-i-will-not-hide" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Limitations I will not hide</a></li><li><a href="#reporting-a-vulnerability" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Reporting a vulnerability</a></li><li><a href="#related" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Related</a></li></ul></nav>
       <Prose>
         <Callout title="The one line that matters">
           SkyCo never connects to a bank or brokerage account, never asks for card details, and
           never collects credentials to a financial institution. Nothing on SkyCo can move money.
         </Callout>
 
-        <h2>What each product stores</h2>
+        <h2 id="what-each-product-stores" className="scroll-mt-24">What each product stores</h2>
       </Prose>
 
       <div className="mt-6 overflow-x-auto rounded-2xl border border-sky-bright/20">
@@ -111,7 +112,7 @@ function SecurityPage() {
 
       <div className="mt-10">
         <Prose>
-          <h2>How each tool works with your data</h2>
+          <h2 id="how-each-tool-works-with-your-data" className="scroll-mt-24">How each tool works with your data</h2>
           <ul>
             <li>CurrenSee: your amount stays in the page. The SkyCo server fetches the rate for the chosen pair and returns it; the amount itself is never sent.</li>
             <li>Chronos: the date conversion runs entirely in your browser using its built-in calendar support. No request leaves the page.</li>
@@ -120,7 +121,7 @@ function SecurityPage() {
             <li>Support form: it only opens an email in your own mail app. SkyCo receives nothing unless you send that email.</li>
           </ul>
 
-          <h2>How data travels</h2>
+          <h2 id="how-data-travels" className="scroll-mt-24">How data travels</h2>
           <ul>
             <li>Every SkyCo site is served over HTTPS, so traffic is encrypted in transit.</li>
             <li>
@@ -137,7 +138,7 @@ function SecurityPage() {
             </li>
           </ul>
 
-          <h2>Limitations I will not hide</h2>
+          <h2 id="limitations-i-will-not-hide" className="scroll-mt-24">Limitations I will not hide</h2>
           <ul>
             <li>
               SkyCo is a one-person studio. There is no 24/7 on-call rota and no external security
@@ -150,7 +151,7 @@ function SecurityPage() {
             <li>Refreshing resets unsaved entries. Grocery ticks and recent currency pairs remain in browser storage when available.</li>
           </ul>
 
-          <h2>Reporting a vulnerability</h2>
+          <h2 id="reporting-a-vulnerability" className="scroll-mt-24">Reporting a vulnerability</h2>
           <p>
             If you find a security problem, email{" "}
             <a href="mailto:support@skyco.online">support@skyco.online</a> with the steps to
@@ -159,7 +160,7 @@ function SecurityPage() {
             like that.
           </p>
 
-          <h2>Related</h2>
+          <h2 id="related" className="scroll-mt-24">Related</h2>
           <p>
             See the <a href="/privacy">Privacy Policy</a> for what is collected and the{" "}
             <a href="/status">Status page</a> for current product reachability.

@@ -82,6 +82,7 @@ export function ProductPage({
                 </a>
                 <Link
                   to="/support"
+                  search={{ product: project.name }}
                   className="inline-flex min-h-12 items-center rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Ask a question

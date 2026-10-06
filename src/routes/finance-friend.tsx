@@ -1,4 +1,4 @@
-import { breadcrumbScript } from "@/lib/seo";
+import { breadcrumbScript, productAppScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
 import { FinanceParser } from "@/components/experiences/FinanceParser";
@@ -39,20 +39,7 @@ export const Route = createFileRoute("/finance-friend")({
     links: [{ rel: "canonical", href: URL }],
     scripts: [
       breadcrumbScript([{ name: "Products", path: "/#tools" }, { name: "My Finance Friend", path: "/finance-friend" }]),
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          name: "My Finance Friend",
-          applicationCategory: "FinanceApplication",
-          operatingSystem: "Web browser",
-          url: URL,
-          description: DESCRIPTION,
-          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          publisher: { "@type": "Organization", name: "SkyCo", url: "https://skyco.online" },
-        }),
-      },
+      productAppScript("My Finance Friend", "/finance-friend", DESCRIPTION, "FinanceApplication"),
     ],
   }),
   component: FinanceFriendPage,

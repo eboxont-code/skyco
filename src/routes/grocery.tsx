@@ -1,4 +1,4 @@
-import { breadcrumbScript } from "@/lib/seo";
+import { breadcrumbScript, productAppScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
 import { GroceryPackPreview } from "@/components/experiences/GroceryPackPreview";
@@ -39,20 +39,7 @@ export const Route = createFileRoute("/grocery")({
     links: [{ rel: "canonical", href: URL }],
     scripts: [
       breadcrumbScript([{ name: "Products", path: "/#tools" }, { name: "SkyCo Grocery Packs", path: "/grocery" }]),
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          name: "SkyCo Grocery Packs",
-          applicationCategory: "LifestyleApplication",
-          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          operatingSystem: "Web browser",
-          url: URL,
-          description: DESCRIPTION,
-          publisher: { "@type": "Organization", name: "SkyCo", url: "https://skyco.online" },
-        }),
-      },
+      productAppScript("SkyCo Grocery Packs", "/grocery", DESCRIPTION, "LifestyleApplication"),
     ],
   }),
   component: GroceryPage,

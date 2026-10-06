@@ -38,6 +38,7 @@ function PrivacyPage() {
       intro="SkyCo is a small studio. The short version: I collect as little as possible, and no SkyCo product sells or shares your data with advertisers."
       updated={UPDATED}
     >
+      <nav aria-label="On this page" className="mb-8"><p className="font-semibold text-foreground">On this page</p><ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2"><li><a href="#who-this-covers" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Who this covers</a></li><li><a href="#what-i-collect" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">What I collect</a></li><li><a href="#what-i-do-not-do" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">What I do not do</a></li><li><a href="#third-party-services" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Third-party services</a></li><li><a href="#cookies" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Cookies</a></li><li><a href="#retention-and-deletion" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Retention and deletion</a></li><li><a href="#children" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Children</a></li><li><a href="#changes" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Changes</a></li><li><a href="#contact" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Contact</a></li></ul></nav>
       <Prose>
         <Callout title="The short version">
           <ul className="mt-2 list-disc space-y-1 pl-5">
@@ -48,13 +49,13 @@ function PrivacyPage() {
           </ul>
         </Callout>
 
-        <h2>Who this covers</h2>
+        <h2 id="who-this-covers" className="scroll-mt-24">Who this covers</h2>
         <p>
           This policy applies to skyco.online and the SkyCo products linked from it: CurrenSee,
           Chronos, My Finance Friend and SkyCo Grocery Packs.
         </p>
 
-        <h2>What I collect</h2>
+        <h2 id="what-i-collect" className="scroll-mt-24">What I collect</h2>
         <h3>On this website</h3>
         <p>
           Nothing you type. There is no signup and no contact form that posts to a server. The
@@ -83,14 +84,14 @@ function PrivacyPage() {
           anywhere on SkyCo.
         </p>
 
-        <h2>What I do not do</h2>
+        <h2 id="what-i-do-not-do" className="scroll-mt-24">What I do not do</h2>
         <ul>
           <li>No selling or renting of personal data.</li>
           <li>No advertising networks and no behavioural ad tracking.</li>
           <li>No collecting of bank credentials, card numbers or government identifiers.</li>
         </ul>
 
-        <h2>Third-party services</h2>
+        <h2 id="third-party-services" className="scroll-mt-24">Third-party services</h2>
         <p>Products call outside services to do their job. In broad terms:</p>
         <ul>
           <li>
@@ -112,28 +113,28 @@ function PrivacyPage() {
           what that product currently uses.
         </p>
 
-        <h2>Cookies</h2>
+        <h2 id="cookies" className="scroll-mt-24">Cookies</h2>
         <p>
           This website does not set advertising or analytics cookies. The four in-page product
           experiences do not require a sign-in session.
         </p>
 
-        <h2>Retention and deletion</h2>
+        <h2 id="retention-and-deletion" className="scroll-mt-24">Retention and deletion</h2>
         <p>
           The current in-page product experiences do not retain what you enter after you leave.
           Requests sent to support@skyco.online are handled through email and actioned within 30 days.
         </p>
 
-        <h2>Children</h2>
+        <h2 id="children" className="scroll-mt-24">Children</h2>
         <p>SkyCo products are not directed at children under 13 and I do not knowingly collect their data.</p>
 
-        <h2>Changes</h2>
+        <h2 id="changes" className="scroll-mt-24">Changes</h2>
         <p>
           If this policy changes in a way that affects you, the updated date at the top of this page
           changes and the change is listed on the <a href="/changelog">What&rsquo;s new</a> page.
         </p>
 
-        <h2>Contact</h2>
+        <h2 id="contact" className="scroll-mt-24">Contact</h2>
         <p>
           Privacy questions, access requests and deletion requests all go to{" "}
           <a href="mailto:support@skyco.online">support@skyco.online</a>.

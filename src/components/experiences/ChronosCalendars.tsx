@@ -1,3 +1,4 @@
+import { useWebMCPTools, text } from "@/lib/webmcp";
 import { useMemo, useState } from "react";
 
 /**
@@ -14,7 +15,9 @@ const SYSTEMS: { label: string; calendar: string; locale: string }[] = [
 ];
 
 export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
+  useWebMCPTools([{ name: "read_date_in_calendars", description: "Read a date in Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka calendars.", inputSchema: { type: "object", properties: { date: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}$" } }, required: ["date"], additionalProperties: false }, execute: async args => { const value = String(args.date ?? ""); const date = new Date(`${value}T12:00:00Z`); if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== value) return text("Choose a valid YYYY-MM-DD date."); return text(SYSTEMS.map(s => { try { return `${s.label}: ${new Intl.DateTimeFormat(`${s.locale}-u-ca-${s.calendar}`, { day: "numeric", month: "long", year: "numeric", era: s.calendar === "gregory" ? undefined : "short", timeZone: "UTC" }).format(date)}`; } catch { return `${s.label}: Not available in this browser`; } }).join("\n")); } }]);
   const [value, setValue] = useState(() => initialDate ?? new Date().toISOString().slice(0, 10));
+  const [endDate, setEndDate] = useState("");
   const [copyStatus, setCopyStatus] = useState("");
   const shiftDay = (offset: number) => {
     const date = new Date(`${value}T12:00:00Z`);
@@ -79,6 +82,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
         {weekday ? `${weekday}, read in six systems.` : "Choose a valid date."}
       </p>
 
+      <div className="mt-4"><label htmlFor="chronos-end-date" className="text-sm font-semibold text-foreground">Days between</label><input id="chronos-end-date" type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="mt-1 block min-h-11 rounded-lg border border-input bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring" /><p role="status" className="mt-2 text-sm text-muted-foreground">{dateIsValid && /^\d{4}-\d{2}-\d{2}$/.test(endDate) && Number.isFinite(new Date(`${endDate}T12:00:00Z`).getTime()) ? `${Math.round((new Date(`${endDate}T12:00:00Z`).getTime() - new Date(`${value}T12:00:00Z`).getTime()) / 86400000)} days from ${value} to ${endDate}` : "Choose a second date."}</p></div>
       <p id="calendar-help" className="mt-1 text-xs text-muted-foreground">
         Calendar readings use your browser&apos;s standard calendar data. Holidays and observances are not included.
       </p>

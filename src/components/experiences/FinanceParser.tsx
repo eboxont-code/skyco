@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 
 /**
@@ -23,6 +24,7 @@ export function FinanceParser() {
   const previewRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [copyStatus, setCopyStatus] = useState("");
+  const [history, setHistory] = useState<Parsed[]>([]);
   const parsed = parseHolding(text);
 
   return (
@@ -102,8 +104,10 @@ export function FinanceParser() {
         try { await navigator.clipboard.writeText(csv); setCopyStatus("CSV copied"); } catch { setCopyStatus("Copy unavailable in this browser"); }
       }} className="mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60">Copy as CSV</button>
       <span role="status" className="ml-3 text-xs text-muted-foreground">{copyStatus}</span>
+      <Button variant="outline" className="mt-3" disabled={!parsed} onClick={() => { if (parsed) setHistory(previous => [parsed, ...previous].slice(0, 5)); }}>Keep in this session</Button>
+      {history.length > 0 && <section aria-labelledby="history-heading" className="mt-4"><h3 id="history-heading" className="font-semibold text-foreground">Recent holdings</h3><ul>{history.map((holding, index) => <li key={index} className="flex flex-wrap items-center justify-between gap-2 text-sm text-foreground"><span>{holding.action} {holding.quantity} {holding.ticker}{holding.price === null ? "" : ` at $${holding.price}`}</span><Button variant="ghost" aria-label={`Remove ${holding.quantity} ${holding.ticker} holding`} onClick={() => setHistory(previous => previous.filter((_, i) => i !== index))}>Remove</Button></li>)}</ul></section>}
       <p id="parser-help" className="mt-3 text-xs text-muted-foreground">
-        Nothing is stored or sent from this preview. Check every field yourself before relying on it.
+        Holdings kept here last only while this page is open. Nothing is sent or saved after leaving. Check every field yourself before relying on it.
       </p>
     </div>
   );

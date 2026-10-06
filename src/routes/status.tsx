@@ -1,3 +1,4 @@
+import { changelog, formatDate } from "@/lib/changelog";
 import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose } from "@/components/PageShell";
@@ -49,6 +50,7 @@ function StatusPage() {
       intro="This page reflects the products currently published on the SkyCo hub. Use the direct links below to check the feature you need."
       wide
     >
+      {changelog[0] && <p className="mb-4 text-sm text-muted-foreground">Last updated <time dateTime={changelog[0].date}>{formatDate(changelog[0].date)}</time></p>}
       <div
         className={`rounded-2xl border p-5 ${
           allUp ? "border-sky-bright/30 bg-sky-ice/50" : "border-destructive/30 bg-destructive/5"

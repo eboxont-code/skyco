@@ -116,6 +116,15 @@ export function GroceryPackPreview() {
   }, []);
   useEffect(() => { if (storageReady) { try { localStorage.setItem("skyco.grocery.v1", JSON.stringify(checks)); } catch { /* Keep the list usable without storage. */ } } }, [checks, storageReady]);
   const pack = PACKS.find((p) => p.id === packId) ?? PACKS[0];
+  const [printDate, setPrintDate] = useState("");
+  useEffect(() => {
+    let originalTitle: string | undefined;
+    const before = () => { if (originalTitle === undefined) originalTitle = document.title; document.title = pack?.name ?? "Grocery list"; setPrintDate(new Intl.DateTimeFormat("en-GB", { dateStyle: "long" }).format(new Date())); };
+    const after = () => { if (originalTitle !== undefined) document.title = originalTitle; originalTitle = undefined; };
+    setPrintDate(new Intl.DateTimeFormat("en-GB", { dateStyle: "long" }).format(new Date()));
+    window.addEventListener("beforeprint", before); window.addEventListener("afterprint", after);
+    return () => { after(); window.removeEventListener("beforeprint", before); window.removeEventListener("afterprint", after); };
+  }, [pack?.name]);
   if (!pack) return null;
   const count = pack.sections.reduce((n, s) => n + s.items.length, 0);
   const itemKeys = pack.sections.flatMap((section) =>
@@ -125,6 +134,7 @@ export function GroceryPackPreview() {
 
   return (
     <div className="grocery-print rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
+      <header className="hidden print:block"><h2 className="text-xl font-bold">{pack.name}</h2><p>Household: {size === "two" ? 2 : 4} people. {printDate}</p></header>
       <div className="no-print flex flex-wrap items-center gap-2" role="group" aria-label="Choose a pack">
         {PACKS.map((p) => (
           <button
@@ -181,6 +191,7 @@ export function GroceryPackPreview() {
         const text = `${pack.name} (sample), for ${size === "two" ? 2 : 4}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${i[size]}`).join("\n")).join("\n\n");
         try { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } catch { setCopyStatus("Copy unavailable in this browser"); }
       }} className="no-print mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy list</button>
+      <Button variant="outline" className="no-print ml-3" onClick={async () => { const text = `${pack.name} (sample), for ${size === "two" ? 2 : 4}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${i[size]}`).join("\n")).join("\n\n"); try { if (navigator.share) { await navigator.share({ title: pack.name, text }); setCopyStatus("List shared"); } else { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } } catch (error) { setCopyStatus(error instanceof Error && error.name === "AbortError" ? "Sharing cancelled" : "Sharing unavailable in this browser"); } }}>Share list</Button>
       <span role="status" className="no-print ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
         <Button variant="outline" aria-pressed={hideTicked} onClick={() => setHideTicked(v => !v)}>Hide ticked items</Button>

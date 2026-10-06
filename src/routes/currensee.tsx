@@ -1,4 +1,4 @@
-import { breadcrumbScript } from "@/lib/seo";
+import { breadcrumbScript, productAppScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
@@ -43,20 +43,7 @@ export const Route = createFileRoute("/currensee")({
     links: [{ rel: "canonical", href: URL }],
     scripts: [
       breadcrumbScript([{ name: "Products", path: "/#tools" }, { name: "CurrenSee", path: "/currensee" }]),
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          name: "CurrenSee",
-          applicationCategory: "FinanceApplication",
-          operatingSystem: "Web browser",
-          url: URL,
-          description: DESCRIPTION,
-          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          publisher: { "@type": "Organization", name: "SkyCo", url: "https://skyco.online" },
-        }),
-      },
+      productAppScript("CurrenSee", "/currensee", DESCRIPTION, "FinanceApplication"),
     ],
   }),
   component: CurrenSeePage,
@@ -68,7 +55,7 @@ function CurrenSeePage() {
     <ProductPage
       slug="currensee"
       directory={Route.useLoaderData()}
-      experience={<CurrenSeeConverter initialFrom={from} initialTo={to} />}
+      experience={<><CurrenSeeConverter initialFrom={from} initialTo={to} /><section className="mt-8" aria-labelledby="rate-method"><h2 id="rate-method" className="text-xl font-bold text-foreground">How the rate is worked out</h2><p className="mt-2 text-sm text-muted-foreground">Fiat rates come from Frankfurter. Crypto rates come from CoinGecko. Both are reference rates, not trading prices.</p></section></>}
       experienceTitle="Convert a pair right here"
       intro="Convert a currency or crypto amount using current reference rates."
       headline="Convert a currency or crypto pair here, check the current reference rate, and read its 30 day direction."

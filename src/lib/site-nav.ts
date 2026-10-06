@@ -26,3 +26,6 @@ export const trustStrip: NavLink[] = [
 
 export const SUPPORT_EMAIL = "support@skyco.online";
 export const SITE_URL = "https://skyco.online";
+
+export const footerCompanyLinks = companyLinks.filter(link => ["/about", "/changelog"].includes(link.to));
+export const footerHelpLinks = [...companyLinks.filter(link => !["/about", "/changelog"].includes(link.to)), ...legalLinks];
