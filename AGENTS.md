@@ -18,3 +18,5 @@
 - Product data sources live in the project registry and drive trust pages to prevent duplicated provider claims.
 - Rate results use a bounded per-pair 60-second server cache to reduce repeated provider requests.
 - Recent currency pairs use validated optional browser storage so unavailable storage never blocks conversion.
+
+- Product SoftwareApplication metadata uses the shared productAppScript helper so free access and publisher details stay consistent.

@@ -1,6 +1,6 @@
-# SkyCo October 5 continuation
-- [x] 0 and A-H: Publication, FAQ focus, help links, upcoming tools, changelog, shared sources, cache, quick amounts, recent pairs
-- [x] 1-19: Requested converter, calendar, parser, grocery, introduction, labels, motion, navigation, error pages and machine-readable page links
-- [x] 27,29,30: Enter preview focus, screenshot dimensions/priority
-- [ ] 20-26,28,31-47: Remaining follow-on work, blocked by credit budget
-- [x] Preview checks passed and publication scheduled
+# SkyCo October 6 continuation
+- [x] 0: Publish baseline and add release entry
+- [x] A-D: Shared application metadata, section navigation and breadcrumbs
+- [ ] E-H: WebMCP, print header and currency formatting
+- [ ] 1-43: Ordered follow-on requests
+- [ ] Verify and publish this continuation
