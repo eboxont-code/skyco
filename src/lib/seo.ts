@@ -16,6 +16,24 @@ export function shareMeta(slug: string, alt: string) {
 
 type Crumb = { name: string; path: string };
 
+export function productAppScript(name: string, path: string, description: string, category: string) {
+  return {
+    type: "application/ld+json",
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name,
+      url: `${SITE}${path}`,
+      description,
+      applicationCategory: category,
+      operatingSystem: "Web browser",
+      isAccessibleForFree: true,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      publisher: { "@type": "Organization", name: "SkyCo", url: SITE },
+    }),
+  };
+}
+
 export function breadcrumbScript(crumbs: Crumb[]) {
   return {
     type: "application/ld+json",
