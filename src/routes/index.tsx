@@ -1,5 +1,5 @@
 import { shareMeta } from "@/lib/seo";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Mission } from "@/components/Mission";
@@ -82,6 +82,7 @@ function Index() {
         <ToolsGrid directory={directory} />
         <MotivationBand />
         <HelpSection />
+        <section aria-labelledby="directory-heading" className="px-6 py-12"><div className="mx-auto max-w-6xl"><h2 id="directory-heading" className="text-2xl font-bold text-foreground">All four tools</h2><ul className="mt-5 grid gap-6 sm:grid-cols-2">{splitDirectory(directory).live.map(p => <li key={p.slug}><Link to={p.path ?? "/"} className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{p.name}</Link><p className="text-sm text-muted-foreground">{p.demo}</p></li>)}</ul></div></section>
       </main>
       <Footer directory={directory} />
       <MobileActionBar directory={directory} />

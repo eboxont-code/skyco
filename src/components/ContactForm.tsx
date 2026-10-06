@@ -8,7 +8,7 @@ const field =
   "mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 /** Builds an email in the visitor's own mail app. Nothing is sent to or stored by SkyCo from this form. */
-export function ContactForm() {
+export function ContactForm({ initialProduct }: { initialProduct?: string }) {
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const [messageLength, setMessageLength] = useState(0);
   const [error, setError] = useState("");
@@ -47,7 +47,7 @@ export function ContactForm() {
         </div>
         <div className="text-sm font-semibold text-foreground">
           <label htmlFor="contact-product">Product</label>
-          <select id="contact-product" name="product" className={field}>
+          <select id="contact-product" name="product" defaultValue={products.includes(initialProduct ?? "") ? initialProduct : products[0]} className={field}>
             {products.map((t) => <option key={t}>{t}</option>)}
           </select>
         </div>

@@ -11,7 +11,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
 
 
   return (
-    <section className="relative overflow-hidden bg-hero-gradient px-6 pt-28 pb-16 md:pt-36 md:pb-20">
+    <section aria-labelledby="home-heading" className="relative overflow-hidden bg-hero-gradient px-6 pt-28 pb-16 md:pt-36 md:pb-20">
       <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.15fr_1fr]">
         <div className="text-center md:text-left">
           <div className="inline-flex items-center gap-2 rounded-full bg-card/70 backdrop-blur px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-deep ring-1 ring-sky-bright/40">
@@ -19,7 +19,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
             As Above, So Below
           </div>
 
-          <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+          <h1 id="home-heading" className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
             <span className="text-gradient-sky">SkyCo</span> builds small tools for everyday life.
           </h1>
 

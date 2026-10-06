@@ -8,6 +8,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { ProductFaqs } from "@/components/ProductFaqs";
 
 export const Route = createFileRoute("/support")({
+  validateSearch: (search: Record<string, unknown>): { product?: string } => ({ product: typeof search.product === "string" ? search.product : undefined }),
   head: () => ({
     meta: [
       { title: "Support and Contact | SkyCo" },
@@ -86,7 +87,7 @@ function SupportPage() {
       </div>
 
       <ProductFaqs />
-      <ContactForm />
+      <ContactForm key={Route.useSearch().product} initialProduct={Route.useSearch().product} />
 
       <div className="mt-10">
         <Prose>
