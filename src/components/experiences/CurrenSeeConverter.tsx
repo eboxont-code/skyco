@@ -36,6 +36,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       return next;
     });
   }, [from, to, storageReady]);
+  const [resultStatus, setResultStatus] = useState("");
   const [copied, setCopied] = useState(false);
   const copyLink = async () => {
     const link = `https://skyco.online/currensee?from=${from}&to=${to}`;
@@ -87,7 +88,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
             <input
               inputMode="decimal"
               value={amount}
-              onChange={(e) => setAmount(e.target.value.replace(/[^\d.,]/g, ""))}
+              onChange={(e) => setAmount(e.target.value)}
               id="cs-amount"
               aria-invalid={!amountIsValid}
               aria-describedby="amount-help"
@@ -152,6 +153,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       </p>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
+        <Button variant="outline" disabled={!data || converted === null} onClick={async () => { if (!data || converted === null) return; try { await navigator.clipboard.writeText(`${amount} ${from} = ${currencyFormat(converted, to)}, reference rate for ${data.asOf}`); setResultStatus("Result copied"); } catch { setResultStatus("Copy unavailable in this browser"); } }}>Copy result</Button><span role="status" className="text-xs text-muted-foreground">{resultStatus}</span>
         <button
           type="button"
           onClick={copyLink}

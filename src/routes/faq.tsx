@@ -174,16 +174,8 @@ function FaqPage() {
       title="Frequently asked questions"
       intro="The questions I get most, answered plainly. If yours is not here, email me and I will add it."
     >
-      <dl className="divide-y divide-sky-bright/15 rounded-2xl border border-sky-bright/20 bg-card">
-        {faqs.map(({ q, a }) => (
-          <div key={q} className="p-6">
-            <dt className="text-base font-bold text-foreground">{q}</dt>
-            <dd className="mt-2 text-sm leading-relaxed text-muted-foreground [&_a]:font-semibold [&_a]:text-sky-deep [&_a]:underline [&_a]:underline-offset-2">
-              {a}
-            </dd>
-          </div>
-        ))}
-      </dl>
+      <nav aria-label="On this page" className="mb-8"><p className="font-semibold text-foreground">On this page</p><ul className="flex flex-wrap gap-5">{["General", "Privacy and data", "Products"].map(name => <li key={name}><a href={`#${name.toLowerCase().replaceAll(" ", "-")}`} className="inline-flex min-h-11 items-center text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">{name}</a></li>)}</ul></nav>
+      {[{ name: "General", indices: [0, 1, 9, 10, 11] }, { name: "Privacy and data", indices: [2, 3, 4] }, { name: "Products", indices: [5, 6, 7, 8] }].map(group => <section key={group.name} className="mb-8"><h2 id={group.name.toLowerCase().replaceAll(" ", "-")} className="scroll-mt-24 text-xl font-bold text-foreground">{group.name}</h2><dl className="mt-4 divide-y divide-border">{group.indices.map(index => { const faq = faqs[index]; return faq ? <div key={faq.q} className="py-5"><dt className="font-bold text-foreground">{faq.q}</dt><dd className="mt-2 text-sm text-muted-foreground [&_a]:text-sky-deep [&_a]:underline">{faq.a}</dd></div> : null; })}</dl></section>)}
 
       <p className="mt-8 text-sm text-muted-foreground">
         Still stuck?{" "}

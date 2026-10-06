@@ -63,3 +63,5 @@ export function pageScript(type: string, name: string, path: string, description
     }),
   };
 }
+
+export function aboutScript() { return { type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "AboutPage", name: "About SkyCo", url: `${SITE}/about`, mainEntity: { "@type": "Organization", name: "SkyCo", url: SITE, logo: `${SITE}/icons/icon-512.png` } }) }; }

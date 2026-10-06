@@ -58,7 +58,7 @@ export function PageShell({
         </div>
 
         <div className="px-6 py-12">
-          <div className={wide ? "mx-auto max-w-5xl" : "mx-auto max-w-3xl"}>{children}</div>
+          <div className={wide ? "mx-auto max-w-5xl" : "mx-auto max-w-3xl"}>{children}<a href="#main-content" className="mt-8 inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Back to top</a></div>
         </div>
       </main>
       <Footer directory={directory} />
