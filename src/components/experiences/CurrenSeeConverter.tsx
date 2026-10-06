@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { useWebMCPTools, text } from "@/lib/webmcp";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, RefreshCw } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rates.functions";
@@ -16,6 +17,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   const [to, setTo] = useState(safeTo);
   const [amount, setAmount] = useState("100");
   const fetchRate = useServerFn(getRate);
+  useWebMCPTools([{ name: "get_currency_rate", description: "Get the current reference rate for a supported currency pair.", inputSchema: { type: "object", properties: { from: { type: "string", enum: CURRENCIES }, to: { type: "string", enum: CURRENCIES } }, required: ["from", "to"], additionalProperties: false }, execute: async args => { const from = String(args.from ?? "").toUpperCase(); const to = String(args.to ?? "").toUpperCase(); if (!CURRENCIES.includes(from) || !CURRENCIES.includes(to)) return text("Choose two supported currency codes."); try { const result = await fetchRate({ data: { from, to } }); return text(`1 ${from} = ${currencyFormat(result.rate, to, true)}, reference rate for ${result.asOf}. Source: ${result.source}`); } catch { return text("Rate service unavailable. No current rate could be retrieved."); } } }]);
   const [swapStatus, setSwapStatus] = useState("");
   const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
   const [storageReady, setStorageReady] = useState(false);
@@ -118,7 +120,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
                   ? query.isError
                     ? "Unavailable"
                     : "Loading"
-                  : format(converted)}
+                  : currencyFormat(converted, to)}
             </output>
           </div></div>
           <div><label htmlFor="cs-to" className="text-xs font-semibold text-muted-foreground">To</label><Select id="cs-to" value={to} onChange={setTo} /></div>
@@ -135,7 +137,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       <p className="mt-4 text-sm text-muted-foreground">
         {data ? (
           <>
-            1 {from} = <span className="font-bold text-foreground">{format(data.rate)}</span> {to}
+            1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
             <span className="ml-2 block text-xs sm:inline">Reference rate for {data.asOf}. Source: {data.source}</span>
           </>
         ) : query.isError ? (
@@ -290,4 +292,9 @@ function buildPath(series: { value: number }[]) {
     line: `M ${pts.join(" L ")}`,
     area: `M 0,80 L ${pts.join(" L ")} L 300,80 Z`,
   };
+}
+
+function currencyFormat(value: number, code: string, rate = false) {
+  if (["BTC", "ETH", "SOL"].includes(code)) return new Intl.NumberFormat("en-US", { maximumFractionDigits: 8 }).format(value);
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: code, currencyDisplay: "code", ...(rate ? { minimumFractionDigits: 2, maximumFractionDigits: 6 } : {}) }).format(value);
 }
