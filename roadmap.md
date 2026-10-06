@@ -7,4 +7,4 @@
 - [x] 17-19: Status release date, rate explanation and existing amount-preserving swap
 - [ ] 20-43: Ordered follow-on requests
 - [x] Preview pages return 200; date difference and support selection verified without browser errors
-- [ ] Final publication requested after compilation check
+- [x] Final publication scheduled for skyco.online after green compilation
