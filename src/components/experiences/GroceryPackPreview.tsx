@@ -195,6 +195,7 @@ export function GroceryPackPreview() {
       <span role="status" className="no-print ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
         <Button variant="outline" aria-pressed={hideTicked} onClick={() => setHideTicked(v => !v)}>Hide ticked items</Button>
+        <Button variant="outline" disabled={checked.length === 0} onClick={() => { setChecked([]); setCopyStatus("All items unticked"); }}>Untick all</Button>
         <button
           type="button"
           onClick={() => setChecked(allChecked ? [] : itemKeys)}

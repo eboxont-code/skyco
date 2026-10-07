@@ -64,7 +64,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
 
           <p className="mt-3 text-sm text-muted-foreground">
             Live rates for any currency pair, plus a 30 day chart. Free, no sign up.{" "}
-            <Link to="/about" className="rounded-sm font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+            <Link to="/" hash="mission" className="rounded-sm font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Why trust SkyCo
             </Link>
           </p>

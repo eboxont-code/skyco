@@ -50,7 +50,7 @@ function FinanceFriendPage() {
     <ProductPage
       slug="my-finance-friend"
       directory={Route.useLoaderData()}
-      experience={<FinanceParser />}
+      experience={<><FinanceParser /><section className="mt-8" aria-labelledby="how-it-works"><h2 id="how-it-works" className="text-xl font-bold text-foreground">How it works</h2><ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground"><li>Type a trade in plain words, or tap an example.</li><li>Check the ticker, quantity and price it found.</li><li>Keep it for this session or copy it as CSV.</li></ol></section></>}
       experienceTitle="Type a holding and check the preview"
       intro="Turn a plain-English trade into fields you can check."
       headline='Type "bought 50 shares of NVDA today at $145" and inspect how the sentence is parsed. Nothing is saved or sent from this preview.'

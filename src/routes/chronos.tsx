@@ -55,7 +55,7 @@ function ChronosPage() {
     <ProductPage
       slug="chronos"
       directory={Route.useLoaderData()}
-      experience={<ChronosCalendars initialDate={Route.useSearch().date} />}
+      experience={<><ChronosCalendars initialDate={Route.useSearch().date} /><section className="mt-8" aria-labelledby="how-it-works"><h2 id="how-it-works" className="text-xl font-bold text-foreground">How it works</h2><ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground"><li>Pick a date, or use Previous day, Next day or Today.</li><li>Read the same day in six calendar systems.</li><li>Copy the readings or compare two dates.</li></ol></section></>}
       experienceTitle="Read one date in six calendars"
       intro="Read one date in six calendar systems."
       headline="Tap one day and read it back as Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka. About ten seconds, no conversion tables."
