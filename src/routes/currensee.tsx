@@ -40,7 +40,7 @@ export const Route = createFileRoute("/currensee")({
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
     ],
-    links: [{ rel: "canonical", href: URL }],
+    links: [{ rel: "canonical", href: URL }, { rel: "preconnect", href: "https://api.frankfurter.dev" }, { rel: "preconnect", href: "https://api.coingecko.com" }],
     scripts: [
       breadcrumbScript([{ name: "Products", path: "/#tools" }, { name: "CurrenSee", path: "/currensee" }]),
       productAppScript("CurrenSee", "/currensee", DESCRIPTION, "FinanceApplication"),
