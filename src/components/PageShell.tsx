@@ -51,7 +51,7 @@ export function PageShell({
             )}
             {updated && (
               <p className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Last updated {updated}
+                Last updated <time dateTime={toIsoDate(updated)}>{updated}</time>
               </p>
             )}
           </div>
@@ -89,4 +89,9 @@ export function Callout({ title, children }: { title: string; children: ReactNod
       <div className="mt-2 text-sm leading-relaxed text-muted-foreground">{children}</div>
     </aside>
   );
+}
+
+function toIsoDate(value: string) {
+  const d = new Date(`${value} 12:00 UTC`);
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
 }
