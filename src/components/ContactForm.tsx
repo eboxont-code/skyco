@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SUPPORT_EMAIL } from "@/lib/site-nav";
 
 const topics = ["Bug report", "Feature idea", "Privacy or security question", "Something else"];
@@ -12,13 +12,23 @@ export function ContactForm({ initialProduct }: { initialProduct?: string }) {
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const [messageLength, setMessageLength] = useState(0);
   const [error, setError] = useState("");
+  const [sent, setSent] = useState(false);
+  const sentRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    try {
+      const draft = sessionStorage.getItem("skyco.contact.draft");
+      if (draft && messageRef.current) { messageRef.current.value = draft; setMessageLength(draft.length); }
+    } catch { /* Drafts are optional. */ }
+  }, []);
+  useEffect(() => { if (sent) sentRef.current?.focus(); }, [sent]);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const d = new FormData(e.currentTarget);
+    if (String(d.get("website") ?? "") !== "") return;
     const message = String(d.get("message") ?? "").trim();
-    if (message.length < 10) {
-      setError("Please write a few words so I know what happened.");
+    if (message.length < 20 || message.length > 2000) {
+      setError(message.length < 20 ? "Please write at least 20 characters so I know what happened." : "Please keep the message under 2000 characters.");
       messageRef.current?.focus();
       return;
     }
@@ -26,6 +36,8 @@ export function ContactForm({ initialProduct }: { initialProduct?: string }) {
     const subject = `${d.get("topic")}: ${d.get("product")}`;
     const name = String(d.get("name") ?? "").trim();
     const body = `${message}\n\n${name ? `From: ${name}\n` : ""}Browser: ${navigator.userAgent}`;
+    try { sessionStorage.removeItem("skyco.contact.draft"); } catch { /* Drafts are optional. */ }
+    setSent(true);
     window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
@@ -38,7 +50,7 @@ export function ContactForm({ initialProduct }: { initialProduct?: string }) {
         This form opens a ready-made email in your own mail app. Nothing is sent or stored until you
         press send there.
       </p>
-      <form onSubmit={onSubmit} aria-describedby="contact-note" noValidate className="mt-5 grid gap-4 sm:grid-cols-2">
+      <form onSubmit={onSubmit} aria-describedby="contact-note" noValidate className="relative mt-5 grid gap-4 sm:grid-cols-2">
         <div className="text-sm font-semibold text-foreground">
           <label htmlFor="contact-topic">Topic</label>
           <select id="contact-topic" name="topic" className={field}>
@@ -60,15 +72,17 @@ export function ContactForm({ initialProduct }: { initialProduct?: string }) {
           <textarea
             id="contact-message" name="message"
             ref={messageRef}
-            onChange={event => setMessageLength(event.target.value.length)}
+            onChange={event => { setMessageLength(event.target.value.length); try { sessionStorage.setItem("skyco.contact.draft", event.target.value); } catch { /* Drafts are optional. */ } }}
+            maxLength={2000}
             rows={5}
             required
             aria-invalid={error ? true : undefined}
-            aria-describedby="contact-error"
+            aria-describedby="contact-count contact-error"
             className={field}
           />
         </div>
-        {messageLength > 10 && <p role="status" className="text-xs text-muted-foreground sm:col-span-2">{messageLength} characters</p>}
+        <p id="contact-count" aria-live="polite" className="text-xs text-muted-foreground sm:col-span-2">{messageLength} of 2000 characters, at least 20</p>
+        <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden"><label htmlFor="contact-website">Leave this empty</label><input id="contact-website" name="website" tabIndex={-1} autoComplete="off" /></div>
         <p id="contact-error" role="alert" className="text-sm font-medium text-destructive sm:col-span-2">
           {error}
         </p>
@@ -79,6 +93,8 @@ export function ContactForm({ initialProduct }: { initialProduct?: string }) {
           Open my email app
         </button>
       </form>
+      {sent && <div ref={sentRef} tabIndex={-1} role="status" className="mt-5 rounded-xl border border-sky-bright/30 bg-background p-4 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Your email app should now be open with the message ready. Press send there to deliver it.</div>}
+      <p className="mt-4 text-sm text-muted-foreground">What happens next: any reply comes to the email address you send from.</p>
     </section>
   );
 }
