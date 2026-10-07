@@ -37,6 +37,8 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
     });
   }, [from, to, storageReady]);
   const [resultStatus, setResultStatus] = useState("");
+  const [, setTick] = useState(0);
+  useEffect(() => { const id = window.setInterval(() => setTick(t => t + 1), 60_000); return () => window.clearInterval(id); }, []);
   const [copied, setCopied] = useState(false);
   const copyLink = async () => {
     const link = `https://skyco.online/currensee?from=${from}&to=${to}`;
@@ -265,9 +267,11 @@ function format(n: number) {
 
 function timeAgo(iso: string) {
   const s = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 1000));
-  if (s < 60) return `${s}s ago`;
-  if (s < 3600) return `${Math.round(s / 60)} min ago`;
-  return `${Math.round(s / 3600)} h ago`;
+  const m = Math.floor(s / 60);
+  if (m < 1) return "less than a minute ago";
+  if (m < 60) return `${m} minute${m === 1 ? "" : "s"} ago`;
+  const h = Math.floor(m / 60);
+  return `${h} hour${h === 1 ? "" : "s"} ago`;
 }
 
 function changeLabel(series: { value: number }[]) {

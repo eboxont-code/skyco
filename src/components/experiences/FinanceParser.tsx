@@ -92,7 +92,7 @@ export function FinanceParser() {
             />
           </dl>
         ) : (
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p role="alert" className="mt-2 text-sm text-muted-foreground">
             I could not read a trade from that line yet. Include an action, a quantity and a
             ticker, for example: bought 50 shares of NVDA today at $145.
           </p>

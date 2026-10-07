@@ -67,11 +67,11 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
             className="mt-1 block min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-56"
           />
         </div>
-        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(-1)} className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Previous day</button>
-        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(1)} className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Next day</button>
+        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(-1)} aria-label="Move the chosen date back one day" className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Previous day</button>
+        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(1)} aria-label="Move the chosen date forward one day" className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Next day</button>
         <button
           type="button"
-          onClick={() => setValue(new Date().toISOString().slice(0, 10))}
+          onClick={() => { setValue(new Date().toISOString().slice(0, 10)); setCopyStatus("Date reset to today"); }}
           className="inline-flex min-h-12 items-center rounded-full border border-sky-bright/40 px-5 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           Today
