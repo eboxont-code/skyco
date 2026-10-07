@@ -50,7 +50,7 @@ function GroceryPage() {
     <ProductPage
       slug="grocery-packs"
       directory={Route.useLoaderData()}
-      experience={<GroceryPackPreview />}
+      experience={<><GroceryPackPreview /><section className="mt-8" aria-labelledby="how-it-works"><h2 id="how-it-works" className="text-xl font-bold text-foreground">How it works</h2><ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground"><li>Choose a sample pack and household size.</li><li>Tick items off as you shop.</li><li>Print or share the list when you need it.</li></ol></section></>}
       experienceTitle="Choose a sample pack and read the sorted list"
       intro="Choose and print a sample shopping list for two or four people."
       headline="Choose one of my sample packs and the shopping is grouped by store section, with quantities for two or four. Print it or read it at the shelf."
