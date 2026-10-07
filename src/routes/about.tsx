@@ -55,6 +55,7 @@ function AboutPage() {
         </p>
 
         <h2>How I build</h2>
+        <p>Every tool is free to use. Most need no account. Your data stays in your browser, except the rate lookups CurrenSee makes to Frankfurter and CoinGecko.</p>
         <ul>
           <li>
             <strong>Browser first.</strong> Nothing to install, works on a phone, shareable as a
