@@ -158,7 +158,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
         {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
       </p>
 
-      <p className="mt-4 text-sm text-muted-foreground">
+      <p role={query.isError && !data ? "alert" : undefined} className="mt-4 text-sm text-muted-foreground">
         {data ? (
           <>
             1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
@@ -168,7 +168,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
           <>
             I could not reach the rate service just now. The numbers stay blank rather than show
             you something stale.
-            <Button variant="outline" className="ml-2" onClick={() => { void query.refetch(); }}>Retry</Button>
+            <Button variant="outline" className="ml-2" onClick={() => { void query.refetch(); }}>Try again</Button>
           </>
         ) : (
           <>Fetching the current rate</>
