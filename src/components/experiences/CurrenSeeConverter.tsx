@@ -151,6 +151,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
       </div>
 
       <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
+      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}>{base} → {quote}</Button> : null)}</div>
       {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
       <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
