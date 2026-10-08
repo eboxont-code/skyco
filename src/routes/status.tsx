@@ -1,8 +1,8 @@
 import { changelog, formatDate } from "@/lib/changelog";
 import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Prose } from "@/components/PageShell";
-import { fallbackDirectory, splitDirectory, entryHref, type ResolvedProject } from "@/lib/projects";
+import { fallbackDirectory, splitDirectory, liveProjects, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
 export const Route = createFileRoute("/status")({
@@ -65,7 +65,7 @@ function StatusPage() {
       </div>
 
       <ul className="mt-6 space-y-3">
-        {directory.map((project) => (
+        {liveProjects.map((project) => (
           <li
             key={project.slug}
             className="flex flex-col gap-3 rounded-2xl border border-sky-bright/20 bg-card p-5 sm:flex-row sm:items-center sm:justify-between"
@@ -84,15 +84,16 @@ function StatusPage() {
                 </span>
               </div>
               <p className="mt-1.5 text-sm text-muted-foreground">{project.tagline}</p>
+              <p className="mt-1 text-sm text-muted-foreground">Data sources: {project.dataSources?.length ? project.dataSources.join(" and ") : "None, runs in your browser"}.</p>
             </div>
 
-            {project.live && (
-              <a
-                href={entryHref(project)}
+            {project.path && (
+              <Link
+                to={project.path}
                 className="inline-flex w-fit items-center rounded-full border-2 border-sky-deep/20 px-4 py-2 text-xs font-bold text-sky-deep transition-colors hover:border-sky-bright hover:bg-sky-ice"
               >
                 Use {project.name}
-              </a>
+              </Link>
             )}
           </li>
         ))}
