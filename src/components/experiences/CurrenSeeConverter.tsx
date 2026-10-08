@@ -10,9 +10,9 @@ import { CURRENCIES, CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rate
  * The CurrenSee converter, running on skyco.online itself.
  * Opens on USD to EUR with a live rate and a 30 day chart already on screen.
  */
-export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: { initialFrom?: string; initialTo?: string }) {
-  const safeFrom = CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
-  const safeTo = CURRENCIES.includes(initialTo) ? initialTo : "EUR";
+export function CurrenSeeConverter({ initialFrom, initialTo }: { initialFrom?: string; initialTo?: string }) {
+  const safeFrom = initialFrom && CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
+  const safeTo = initialTo && CURRENCIES.includes(initialTo) ? initialTo : "EUR";
   const [from, setFrom] = useState(safeFrom);
   const [to, setTo] = useState(safeTo);
   const [amount, setAmount] = useState("100");
@@ -22,6 +22,14 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
   const [storageReady, setStorageReady] = useState(false);
   useEffect(() => {
+    try {
+      const last: unknown = JSON.parse(localStorage.getItem("skyco.currensee.last") ?? "null");
+      if (last && typeof last === "object" && "from" in last && "to" in last && "amount" in last && typeof last.from === "string" && typeof last.to === "string" && typeof last.amount === "string" && CURRENCIES.includes(last.from) && CURRENCIES.includes(last.to) && /^\d+(?:\.\d+)?$/.test(last.amount) && last.amount.length <= 30 && Number.isFinite(Number(last.amount)) && Number(last.amount) > 0) {
+        if (!initialFrom) setFrom(last.from);
+        if (!initialTo) setTo(last.to);
+        setAmount(last.amount);
+      }
+    } catch { /* Storage is optional. */ }
     try {
       const saved: unknown = JSON.parse(localStorage.getItem("skyco.currensee.recent") ?? "[]");
       if (Array.isArray(saved)) setRecent(saved.filter((p): p is { from: string; to: string } => p && typeof p.from === "string" && typeof p.to === "string" && CURRENCIES.includes(p.from) && CURRENCIES.includes(p.to)).slice(0, 5));
@@ -36,6 +44,12 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       return next;
     });
   }, [from, to, storageReady]);
+  useEffect(() => {
+    if (!storageReady) return;
+    const normalized = amount.replace(/,/g, "");
+    if (!/^\d+(?:\.\d+)?$/.test(normalized) || normalized.length > 30 || !Number.isFinite(Number(normalized)) || Number(normalized) <= 0) return;
+    try { localStorage.setItem("skyco.currensee.last", JSON.stringify({ from, to, amount: normalized })); } catch { /* Storage is optional. */ }
+  }, [from, to, amount, storageReady]);
   const [resultStatus, setResultStatus] = useState("");
   const [, setTick] = useState(0);
   useEffect(() => { const id = window.setInterval(() => setTick(t => t + 1), 60_000); return () => window.clearInterval(id); }, []);
