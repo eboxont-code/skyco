@@ -92,7 +92,7 @@ const PACKS: Pack[] = [
 
 export function GroceryPackPreview() {
   const [packId, setPackId] = useState(PACKS[0]?.id ?? "easy-week");
-  const [size, setSize] = useState<"two" | "four">("two");
+  const [size, setSize] = useState<1 | 2 | 4 | 6>(2);
   const [checks, setChecks] = useState<Record<string, string[]>>({});
   const [storageReady, setStorageReady] = useState(false);
   const [hideTicked, setHideTicked] = useState(false);
@@ -100,6 +100,10 @@ export function GroceryPackPreview() {
   const checked = checks[packId] ?? [];
   const setChecked = (next: string[] | ((current: string[]) => string[])) => setChecks(current => ({ ...current, [packId]: typeof next === "function" ? next(current[packId] ?? []) : next }));
   useEffect(() => {
+    try {
+      const household = Number(localStorage.getItem("skyco.grocery.household"));
+      if (household === 1 || household === 2 || household === 4 || household === 6) setSize(household);
+    } catch { /* Household storage is optional. */ }
     try {
       const saved: unknown = JSON.parse(localStorage.getItem("skyco.grocery.v1") ?? "{}");
       if (saved && typeof saved === "object" && !Array.isArray(saved)) {
@@ -115,6 +119,18 @@ export function GroceryPackPreview() {
     setStorageReady(true);
   }, []);
   useEffect(() => { if (storageReady) { try { localStorage.setItem("skyco.grocery.v1", JSON.stringify(checks)); } catch { /* Keep the list usable without storage. */ } } }, [checks, storageReady]);
+  useEffect(() => { if (storageReady) { try { localStorage.setItem("skyco.grocery.household", String(size)); } catch { /* Storage is optional. */ } } }, [size, storageReady]);
+  const quantity = (item: Pack["sections"][number]["items"][number]) => {
+    if (size === 2) return item.two;
+    if (size === 4) return item.four;
+    const base = size === 1 ? item.two : item.four;
+    const match = /^(\d+(?:\.\d+)?)(.*)$/.exec(base);
+    if (!match) return base;
+    const value = Number(match[1]) * (size === 1 ? 0.5 : 1.5);
+    const unit = match[2] ?? "";
+    const scaled = unit.trim() === "" || /tin|block|bottle/.test(unit) ? Math.ceil(value) : value;
+    return `${new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 }).format(scaled)}${unit}`;
+  };
   const pack = PACKS.find((p) => p.id === packId) ?? PACKS[0];
   const [printDate, setPrintDate] = useState("");
   useEffect(() => {
@@ -134,7 +150,7 @@ export function GroceryPackPreview() {
 
   return (
     <div className="grocery-print rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
-      <header className="hidden print:block"><h2 className="text-xl font-bold">{pack.name}</h2><p>Household: {size === "two" ? 2 : 4} people. {printDate}</p></header>
+      <header className="hidden print:block"><h2 className="text-xl font-bold">{pack.name}</h2><p>Household: {size} people. {printDate}</p></header>
       <div className="no-print flex flex-wrap items-center gap-2" role="group" aria-label="Choose a pack">
         {PACKS.map((p) => (
           <button
@@ -154,23 +170,12 @@ export function GroceryPackPreview() {
             {p.name}
           </button>
         ))}
-        <div className="ml-auto flex items-center gap-2" role="group" aria-label="Household size">
-          {(["two", "four"] as const).map((s) => (
-            <button
-              key={s}
-              type="button"
-              onClick={() => setSize(s)}
-              aria-pressed={s === size}
-              className={`min-h-11 rounded-full px-4 text-xs font-bold uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-                s === size
-                  ? "bg-sky-ice text-sky-deep"
-                  : "border border-sky-bright/25 text-muted-foreground"
-              }`}
-            >
-              {s === "two" ? "For 2" : "For 4"}
-            </button>
-          ))}
-        </div>
+        <label className="ml-auto flex items-center gap-2 text-sm font-semibold text-foreground">
+          Household size
+          <select aria-label="Household size" value={size} onChange={event => { const value = Number(event.target.value); if (value === 1 || value === 2 || value === 4 || value === 6) setSize(value); }} className="min-h-11 rounded-lg border border-border bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring">
+            {[1, 2, 4, 6].map(value => <option key={value} value={value}>{value} {value === 1 ? "person" : "people"}</option>)}
+          </select>
+        </label>
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground">
@@ -188,10 +193,10 @@ export function GroceryPackPreview() {
 
       <p className="mt-2 text-xs text-muted-foreground">Checked items stay in this browser until you reset them or clear site data.</p>
       <button type="button" onClick={async () => {
-        const text = `${pack.name} (sample), for ${size === "two" ? 2 : 4}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${i[size]}`).join("\n")).join("\n\n");
+        const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${quantity(i)}`).join("\n")).join("\n\n");
         try { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } catch { setCopyStatus("Copy unavailable in this browser"); }
       }} className="no-print mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy list</button>
-      <Button variant="outline" className="no-print ml-3" onClick={async () => { const text = `${pack.name} (sample), for ${size === "two" ? 2 : 4}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${i[size]}`).join("\n")).join("\n\n"); try { if (navigator.share) { await navigator.share({ title: pack.name, text }); setCopyStatus("List shared"); } else { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } } catch (error) { setCopyStatus(error instanceof Error && error.name === "AbortError" ? "Sharing cancelled" : "Sharing unavailable in this browser"); } }}>Share list</Button>
+      <Button variant="outline" className="no-print ml-3" onClick={async () => { const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${quantity(i)}`).join("\n")).join("\n\n"); try { if (navigator.share) { await navigator.share({ title: pack.name, text }); setCopyStatus("List shared"); } else { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } } catch (error) { setCopyStatus(error instanceof Error && error.name === "AbortError" ? "Sharing cancelled" : "Sharing unavailable in this browser"); } }}>Share list</Button>
       <span role="status" className="no-print ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
         <Button variant="outline" aria-pressed={hideTicked} onClick={() => setHideTicked(v => !v)}>Hide ticked items</Button>
@@ -248,7 +253,7 @@ export function GroceryPackPreview() {
                       {i.item}
                     </span>
                   </label>
-                  <span className="shrink-0 font-semibold text-muted-foreground">{i[size]}</span>
+                  <span className="shrink-0 font-semibold text-muted-foreground">{quantity(i)}</span>
                 </li>
               ))}
             </ul>

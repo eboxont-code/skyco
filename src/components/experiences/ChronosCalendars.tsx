@@ -1,5 +1,6 @@
 import { useWebMCPTools, text } from "@/lib/webmcp";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 /**
  * The Chronos reading, running on skyco.online itself.
@@ -15,6 +16,7 @@ const SYSTEMS: { label: string; calendar: string; locale: string }[] = [
 ];
 
 export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
+  const navigate = useNavigate({ from: "/chronos" });
   useWebMCPTools([{ name: "read_date_in_calendars", description: "Read a date in Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka calendars.", inputSchema: { type: "object", properties: { date: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}$" } }, required: ["date"], additionalProperties: false }, execute: async args => { const value = String(args.date ?? ""); const date = new Date(`${value}T12:00:00Z`); if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== value) return text("Choose a valid YYYY-MM-DD date."); return text(SYSTEMS.map(s => { try { return `${s.label}: ${new Intl.DateTimeFormat(`${s.locale}-u-ca-${s.calendar}`, { day: "numeric", month: "long", year: "numeric", era: s.calendar === "gregory" ? undefined : "short", timeZone: "UTC" }).format(date)}`; } catch { return `${s.label}: Not available in this browser`; } }).join("\n")); } }]);
   const [value, setValue] = useState(() => initialDate ?? new Date().toISOString().slice(0, 10));
   const [endDate, setEndDate] = useState("");
@@ -26,6 +28,11 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
     setValue(date.toISOString().slice(0, 10));
   };
   const dateIsValid = /^\d{4}-\d{2}-\d{2}$/.test(value) && !isNaN(new Date(`${value}T12:00:00Z`).getTime());
+  useEffect(() => {
+    if (!dateIsValid || new Date(`${value}T12:00:00Z`).toISOString().slice(0, 10) !== value) return;
+    if (new URLSearchParams(window.location.search).get("date") === value) return;
+    void navigate({ search: { date: value }, replace: true, resetScroll: false });
+  }, [value, dateIsValid, navigate]);
 
   const rows = useMemo(() => {
     const date = new Date(`${value}T12:00:00Z`);

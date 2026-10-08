@@ -4,7 +4,6 @@ import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 import { productShots, shotFreshness } from "@/lib/product-shots";
 import { useWebMCPTools, text } from "@/lib/webmcp";
-import { WaitlistForm } from "@/components/WaitlistForm";
 
 
 export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
@@ -173,7 +172,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
               {upcomingProjects.map((item) => (
                 <div
                   key={item.slug}
-                  className="rounded-xl border border-dashed border-sky-bright/30 bg-card/50 p-5"
+                  className="rounded-lg border border-border bg-card p-5"
                 >
                   <div className="flex items-center gap-2">
                     <Clock className="h-3.5 w-3.5 text-sky-deep" aria-hidden="true" />
@@ -182,7 +181,6 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
-                  {item.slug === "budget" && <WaitlistForm productName={item.name} />}
                 </div>
               ))}
 

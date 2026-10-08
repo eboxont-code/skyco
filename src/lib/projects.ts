@@ -32,6 +32,7 @@ export type SkyCoProject = {
   /** Whether opening the product requires an account. */
   account?: string;
   dataSources?: string[];
+  job?: string;
   candidates: string[];
 };
 
@@ -45,6 +46,7 @@ export type ResolvedProject = SkyCoProject & {
 export const projectRegistry: SkyCoProject[] = [
   {
     slug: "currensee",
+    job: "Convert a currency or crypto amount using current reference rates.",
     name: "CurrenSee",
     tagline: "Live currency and crypto converter",
     description:
@@ -60,6 +62,7 @@ export const projectRegistry: SkyCoProject[] = [
   },
   {
     slug: "chronos",
+    job: "Read one date in six calendar systems.",
     name: "Chronos",
     tagline: "Every calendar in one place",
     description:
@@ -75,6 +78,7 @@ export const projectRegistry: SkyCoProject[] = [
   },
   {
     slug: "my-finance-friend",
+    job: "Parse a plain-English trade into a structured preview.",
     name: "My Finance Friend",
     tagline: "Plain-English trade parser",
     description:
@@ -90,6 +94,7 @@ export const projectRegistry: SkyCoProject[] = [
   },
   {
     slug: "grocery-packs",
+    job: "Choose a sample shopping list sorted by store section.",
     name: "SkyCo Grocery Packs",
     tagline: "Ready-to-use grocery lists",
     description:

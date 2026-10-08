@@ -150,6 +150,10 @@ export const getRate = createServerFn({ method: "GET" })
       approximate,
     };
     for (const [oldKey, entry] of pairCache) if (entry.expires <= Date.now()) pairCache.delete(oldKey);
+    if (pairCache.size >= CURRENCIES.length ** 2) {
+      const oldest = pairCache.keys().next().value;
+      if (oldest !== undefined) pairCache.delete(oldest);
+    }
     pairCache.set(key, { expires: Date.now() + 60_000, result });
     return result;
   });

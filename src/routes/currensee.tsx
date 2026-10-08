@@ -4,6 +4,7 @@ import { ProductPage } from "@/components/ProductPage";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
+import { CURRENCIES } from "@/lib/rates.functions";
 
 const TITLE = "CurrenSee | Live currency and crypto converter by SkyCo";
 const DESCRIPTION =
@@ -11,9 +12,10 @@ const DESCRIPTION =
 const URL = "https://skyco.online/currensee";
 
 export const Route = createFileRoute("/currensee")({
-  validateSearch: (search: Record<string, unknown>): { from?: string; to?: string } => ({
-    from: typeof search.from === "string" ? search.from.toUpperCase() : undefined,
-    to: typeof search.to === "string" ? search.to.toUpperCase() : undefined,
+  validateSearch: (search: Record<string, unknown>): { from?: string; to?: string; amount?: string } => ({
+    from: typeof search.from === "string" && CURRENCIES.includes(search.from.toUpperCase()) ? search.from.toUpperCase() : undefined,
+    to: typeof search.to === "string" && CURRENCIES.includes(search.to.toUpperCase()) ? search.to.toUpperCase() : undefined,
+    amount: (typeof search.amount === "string" || typeof search.amount === "number") && String(search.amount).length <= 30 && /^\d+(?:\.\d+)?$/.test(String(search.amount)) && Number.isFinite(Number(search.amount)) && Number(search.amount) > 0 ? String(search.amount) : undefined,
   }),
   loader: async (): Promise<ResolvedProject[]> => {
     try {
@@ -50,12 +52,13 @@ export const Route = createFileRoute("/currensee")({
 });
 
 function CurrenSeePage() {
-  const { from, to } = Route.useSearch();
+  const { from, to, amount } = Route.useSearch();
+  const navigate = Route.useNavigate();
   return (
     <ProductPage
       slug="currensee"
       directory={Route.useLoaderData()}
-      experience={<><CurrenSeeConverter initialFrom={from} initialTo={to} /><section className="mt-8" aria-labelledby="rate-method"><h2 id="rate-method" className="text-xl font-bold text-foreground">How the rate is worked out</h2><p className="mt-2 text-sm text-muted-foreground">Fiat rates come from Frankfurter. Crypto rates come from CoinGecko. Both are reference rates, not trading prices.</p></section></>}
+      experience={<><CurrenSeeConverter initialFrom={from} initialTo={to} initialAmount={amount} onConversionChange={values => { void navigate({ search: values, replace: true, resetScroll: false }); }} /><section className="mt-8" aria-labelledby="rate-method"><h2 id="rate-method" className="text-xl font-bold text-foreground">How the rate is worked out</h2><p className="mt-2 text-sm text-muted-foreground">Fiat rates come from Frankfurter. Crypto rates come from CoinGecko. Both are reference rates, not trading prices.</p></section></>}
       experienceTitle="Convert a pair right here"
       intro="Convert a currency or crypto amount using current reference rates."
       headline="Convert a currency or crypto pair here, check the current reference rate, and read its 30 day direction."

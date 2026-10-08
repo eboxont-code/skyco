@@ -16,6 +16,7 @@
 - Grocery check persistence uses versioned browser storage with per-pack keys and validation; lists must remain usable when storage is unavailable.
 
 - Product data sources live in the project registry and drive trust pages to prevent duplicated provider claims.
+- Product single-job descriptions live in the registry so machine-readable product listings stay consistent.
 - Rate results use a bounded per-pair 60-second server cache to reduce repeated provider requests.
 - Recent currency pairs use validated optional browser storage so unavailable storage never blocks conversion.
 

@@ -36,6 +36,7 @@ const tagStyle: Record<string, string> = {
 };
 
 function ChangelogPage() {
+  const months = [...new Set(changelog.map(entry => entry.date.slice(0, 7)))];
   return (
     <PageShell
       eyebrow="Changelog"
@@ -43,8 +44,10 @@ function ChangelogPage() {
       intro="Everything listed here shipped on the date shown. This log starts with the site rebuild, so earlier product launches are not backdated into it."
     >
       <nav aria-label="Jump to release" className="mb-8"><p className="font-semibold text-foreground">Jump to</p><ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2">{changelog.map(entry => <li key={entry.date + entry.title}><a href={`#change-${entry.date}`} className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{formatDate(entry.date)}</a></li>)}</ul></nav>
+      {months.map(month => <section key={month} aria-labelledby={`month-${month}`} className="mb-8">
+      <h2 id={`month-${month}`} className="mb-4 scroll-mt-24 text-2xl font-bold text-foreground">{new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${month}-01T00:00:00Z`))}</h2>
       <ol className="space-y-6">
-        {changelog.map((entry) => (
+        {changelog.filter(entry => entry.date.startsWith(month)).map((entry) => (
           <li
             key={entry.date + entry.title}
             className="rounded-2xl border border-sky-bright/20 bg-card p-6"
@@ -72,6 +75,7 @@ function ChangelogPage() {
           </li>
         ))}
       </ol>
+      </section>)}
 
       <p className="mt-8 text-sm text-muted-foreground">
         Want something added to a product?{" "}

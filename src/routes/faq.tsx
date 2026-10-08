@@ -1,6 +1,7 @@
 import { shareMeta, breadcrumbScript } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { useState } from "react";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -168,14 +169,20 @@ const faqs: { q: string; text: string; a: React.ReactNode }[] = [
 ];
 
 function FaqPage() {
+  const [query, setQuery] = useState("");
+  const matches = (faq: typeof faqs[number]) => `${faq.q} ${faq.text}`.toLowerCase().includes(query.trim().toLowerCase());
+  const matchCount = faqs.filter(matches).length;
   return (
     <PageShell
       eyebrow="Answers"
       title="Frequently asked questions"
       intro="The questions I get most, answered plainly. If yours is not here, email me and I will add it."
     >
+      <label htmlFor="faq-search" className="block font-semibold text-foreground">Search questions</label>
+      <input id="faq-search" type="search" value={query} maxLength={200} onChange={event => setQuery(event.target.value)} className="mt-2 min-h-11 w-full rounded-lg border border-border bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring" />
+      <p role="status" aria-live="polite" className="mb-6 mt-2 text-sm text-muted-foreground">{matchCount} {matchCount === 1 ? "question matches" : "questions match"}{query.trim() ? " your search" : ""}.</p>
       <nav aria-label="On this page" className="mb-8"><p className="font-semibold text-foreground">On this page</p><ul className="flex flex-wrap gap-5">{["General", "Privacy and data", "Products"].map(name => <li key={name}><a href={`#${name.toLowerCase().replaceAll(" ", "-")}`} className="inline-flex min-h-11 items-center text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">{name}</a></li>)}</ul></nav>
-      {[{ name: "General", indices: [0, 1, 9, 10, 11] }, { name: "Privacy and data", indices: [2, 3, 4] }, { name: "Products", indices: [5, 6, 7, 8] }].map(group => <section key={group.name} className="mb-8"><h2 id={group.name.toLowerCase().replaceAll(" ", "-")} className="scroll-mt-24 text-xl font-bold text-foreground">{group.name}</h2><dl className="mt-4 divide-y divide-border">{group.indices.map(index => { const faq = faqs[index]; return faq ? <div key={faq.q} className="py-5"><dt className="font-bold text-foreground">{faq.q}</dt><dd className="mt-2 text-sm text-muted-foreground [&_a]:text-sky-deep [&_a]:underline">{faq.a}</dd></div> : null; })}</dl></section>)}
+      {[{ name: "General", indices: [0, 1, 9, 10, 11] }, { name: "Privacy and data", indices: [2, 3, 4] }, { name: "Products", indices: [5, 6, 7, 8] }].map(group => <section key={group.name} className="mb-8"><h2 id={group.name.toLowerCase().replaceAll(" ", "-")} className="scroll-mt-24 text-xl font-bold text-foreground">{group.name}</h2><dl className="mt-4 divide-y divide-border">{group.indices.map(index => { const faq = faqs[index]; return faq && matches(faq) ? <div key={faq.q} className="py-5"><dt className="font-bold text-foreground">{faq.q}</dt><dd className="mt-2 text-sm text-muted-foreground [&_a]:text-sky-deep [&_a]:underline">{faq.a}</dd></div> : null; })}</dl></section>)}
 
       <p className="mt-8 text-sm text-muted-foreground">
         Still stuck?{" "}

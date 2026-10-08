@@ -10,18 +10,26 @@ import { CURRENCIES, CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rate
  * The CurrenSee converter, running on skyco.online itself.
  * Opens on USD to EUR with a live rate and a 30 day chart already on screen.
  */
-export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: { initialFrom?: string; initialTo?: string }) {
-  const safeFrom = CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
-  const safeTo = CURRENCIES.includes(initialTo) ? initialTo : "EUR";
+export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onConversionChange }: { initialFrom?: string; initialTo?: string; initialAmount?: string; onConversionChange?: (values: { from: string; to: string; amount: string }) => void }) {
+  const safeFrom = initialFrom && CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
+  const safeTo = initialTo && CURRENCIES.includes(initialTo) ? initialTo : "EUR";
   const [from, setFrom] = useState(safeFrom);
   const [to, setTo] = useState(safeTo);
-  const [amount, setAmount] = useState("100");
+  const [amount, setAmount] = useState(initialAmount ?? "100");
   const fetchRate = useServerFn(getRate);
   useWebMCPTools([{ name: "get_currency_rate", description: "Get the current reference rate for a supported currency pair.", inputSchema: { type: "object", properties: { from: { type: "string", enum: CURRENCIES }, to: { type: "string", enum: CURRENCIES } }, required: ["from", "to"], additionalProperties: false }, execute: async args => { const from = String(args.from ?? "").toUpperCase(); const to = String(args.to ?? "").toUpperCase(); if (!CURRENCIES.includes(from) || !CURRENCIES.includes(to)) return text("Choose two supported currency codes."); try { const result = await fetchRate({ data: { from, to } }); return text(`1 ${from} = ${currencyFormat(result.rate, to, true)}, reference rate for ${result.asOf}. Source: ${result.source}`); } catch { return text("Rate service unavailable. No current rate could be retrieved."); } } }]);
   const [swapStatus, setSwapStatus] = useState("");
   const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
   const [storageReady, setStorageReady] = useState(false);
   useEffect(() => {
+    try {
+      const last: unknown = JSON.parse(localStorage.getItem("skyco.currensee.last") ?? "null");
+      if (last && typeof last === "object" && "from" in last && "to" in last && "amount" in last && typeof last.from === "string" && typeof last.to === "string" && typeof last.amount === "string" && CURRENCIES.includes(last.from) && CURRENCIES.includes(last.to) && /^\d+(?:\.\d+)?$/.test(last.amount) && last.amount.length <= 30 && Number.isFinite(Number(last.amount)) && Number(last.amount) > 0) {
+        if (!initialFrom) setFrom(last.from);
+        if (!initialTo) setTo(last.to);
+        if (!initialAmount) setAmount(last.amount);
+      }
+    } catch { /* Storage is optional. */ }
     try {
       const saved: unknown = JSON.parse(localStorage.getItem("skyco.currensee.recent") ?? "[]");
       if (Array.isArray(saved)) setRecent(saved.filter((p): p is { from: string; to: string } => p && typeof p.from === "string" && typeof p.to === "string" && CURRENCIES.includes(p.from) && CURRENCIES.includes(p.to)).slice(0, 5));
@@ -36,12 +44,18 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       return next;
     });
   }, [from, to, storageReady]);
+  useEffect(() => {
+    if (!storageReady) return;
+    const normalized = amount.replace(/,/g, "");
+    if (!/^\d+(?:\.\d+)?$/.test(normalized) || normalized.length > 30 || !Number.isFinite(Number(normalized)) || Number(normalized) <= 0) return;
+    try { localStorage.setItem("skyco.currensee.last", JSON.stringify({ from, to, amount: normalized })); } catch { /* Storage is optional. */ }
+  }, [from, to, amount, storageReady]);
   const [resultStatus, setResultStatus] = useState("");
   const [, setTick] = useState(0);
   useEffect(() => { const id = window.setInterval(() => setTick(t => t + 1), 60_000); return () => window.clearInterval(id); }, []);
   const [copied, setCopied] = useState(false);
   const copyLink = async () => {
-    const link = `https://skyco.online/currensee?from=${from}&to=${to}`;
+    const link = `https://skyco.online/currensee?${new URLSearchParams({ from, to, amount: amount.replace(/,/g, "") })}`;
     try {
       await navigator.clipboard.writeText(link);
       setCopied(true);
@@ -63,6 +77,12 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
   const parsedAmount = Number(normalizedAmount);
   const amountIsValid = /^\d+(?:\.\d+)?$/.test(normalizedAmount) && Number.isFinite(parsedAmount) && parsedAmount > 0;
   const converted = data && amountIsValid ? parsedAmount * data.rate : null;
+  useEffect(() => {
+    if (!storageReady || !amountIsValid) return;
+    const current = new URLSearchParams(window.location.search);
+    if (current.get("from") === from && current.get("to") === to && current.get("amount") === normalizedAmount) return;
+    onConversionChange?.({ from, to, amount: normalizedAmount });
+  }, [from, to, normalizedAmount, amountIsValid, storageReady, onConversionChange]);
 
   const path = useMemo(() => buildPath(data?.series ?? []), [data?.series]);
 
@@ -131,13 +151,14 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
       </div>
 
       <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
+      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}>{base} → {quote}</Button> : null)}</div>
       {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
       <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
         {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
       </p>
 
-      <p className="mt-4 text-sm text-muted-foreground">
+      <p role={query.isError && !data ? "alert" : undefined} className="mt-4 text-sm text-muted-foreground">
         {data ? (
           <>
             1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
@@ -147,7 +168,7 @@ export function CurrenSeeConverter({ initialFrom = "USD", initialTo = "EUR" }: {
           <>
             I could not reach the rate service just now. The numbers stay blank rather than show
             you something stale.
-            <Button variant="outline" className="ml-2" onClick={() => { void query.refetch(); }}>Retry</Button>
+            <Button variant="outline" className="ml-2" onClick={() => { void query.refetch(); }}>Try again</Button>
           </>
         ) : (
           <>Fetching the current rate</>
