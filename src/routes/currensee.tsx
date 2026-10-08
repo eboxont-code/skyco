@@ -15,7 +15,7 @@ export const Route = createFileRoute("/currensee")({
   validateSearch: (search: Record<string, unknown>): { from?: string; to?: string; amount?: string } => ({
     from: typeof search.from === "string" && CURRENCIES.includes(search.from.toUpperCase()) ? search.from.toUpperCase() : undefined,
     to: typeof search.to === "string" && CURRENCIES.includes(search.to.toUpperCase()) ? search.to.toUpperCase() : undefined,
-    amount: typeof search.amount === "string" && search.amount.length <= 30 && /^\d+(?:\.\d+)?$/.test(search.amount) && Number.isFinite(Number(search.amount)) && Number(search.amount) > 0 ? search.amount : undefined,
+    amount: (typeof search.amount === "string" || typeof search.amount === "number") && String(search.amount).length <= 30 && /^\d+(?:\.\d+)?$/.test(String(search.amount)) && Number.isFinite(Number(search.amount)) && Number(search.amount) > 0 ? String(search.amount) : undefined,
   }),
   loader: async (): Promise<ResolvedProject[]> => {
     try {
