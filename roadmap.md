@@ -9,7 +9,8 @@
 - [x] G: Remember conversion
 - [x] H: Shareable conversion parameters
 - [x] 1-2: Popular pairs and unavailable-rate alert with retry
-- [ ] 3-43: Ordered follow-on requests
+- [x] 3-4: Bounded one-minute server rate cache and calendar date URL replacement
+- [ ] 5-43: Ordered follow-on requests
 - [x] 0: Publish baseline and add release entry
 - [x] A-D: Shared application metadata, section navigation and breadcrumbs
 - [x] E-H: WebMCP, print header and currency formatting
