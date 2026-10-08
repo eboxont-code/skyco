@@ -1,4 +1,14 @@
-# SkyCo October 6 continuation
+# SkyCo October 8 continuation
+- [x] 0: Dated release entry
+- [ ] A: Household sizes
+- [ ] B: FAQ search
+- [ ] C: Product status rows
+- [ ] D: Monthly changelog groups
+- [ ] E: Upcoming tool cards
+- [ ] F: Product jobs in llms.txt
+- [ ] G: Remember conversion
+- [ ] H: Shareable conversion parameters
+- [ ] 1-43: Ordered follow-on requests
 - [x] 0: Publish baseline and add release entry
 - [x] A-D: Shared application metadata, section navigation and breadcrumbs
 - [x] E-H: WebMCP, print header and currency formatting
