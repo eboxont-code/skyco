@@ -10,12 +10,12 @@ import { CURRENCIES, CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rate
  * The CurrenSee converter, running on skyco.online itself.
  * Opens on USD to EUR with a live rate and a 30 day chart already on screen.
  */
-export function CurrenSeeConverter({ initialFrom, initialTo }: { initialFrom?: string; initialTo?: string }) {
+export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onConversionChange }: { initialFrom?: string; initialTo?: string; initialAmount?: string; onConversionChange?: (values: { from: string; to: string; amount: string }) => void }) {
   const safeFrom = initialFrom && CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
   const safeTo = initialTo && CURRENCIES.includes(initialTo) ? initialTo : "EUR";
   const [from, setFrom] = useState(safeFrom);
   const [to, setTo] = useState(safeTo);
-  const [amount, setAmount] = useState("100");
+  const [amount, setAmount] = useState(initialAmount ?? "100");
   const fetchRate = useServerFn(getRate);
   useWebMCPTools([{ name: "get_currency_rate", description: "Get the current reference rate for a supported currency pair.", inputSchema: { type: "object", properties: { from: { type: "string", enum: CURRENCIES }, to: { type: "string", enum: CURRENCIES } }, required: ["from", "to"], additionalProperties: false }, execute: async args => { const from = String(args.from ?? "").toUpperCase(); const to = String(args.to ?? "").toUpperCase(); if (!CURRENCIES.includes(from) || !CURRENCIES.includes(to)) return text("Choose two supported currency codes."); try { const result = await fetchRate({ data: { from, to } }); return text(`1 ${from} = ${currencyFormat(result.rate, to, true)}, reference rate for ${result.asOf}. Source: ${result.source}`); } catch { return text("Rate service unavailable. No current rate could be retrieved."); } } }]);
   const [swapStatus, setSwapStatus] = useState("");
@@ -27,7 +27,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo }: { initialFrom?: s
       if (last && typeof last === "object" && "from" in last && "to" in last && "amount" in last && typeof last.from === "string" && typeof last.to === "string" && typeof last.amount === "string" && CURRENCIES.includes(last.from) && CURRENCIES.includes(last.to) && /^\d+(?:\.\d+)?$/.test(last.amount) && last.amount.length <= 30 && Number.isFinite(Number(last.amount)) && Number(last.amount) > 0) {
         if (!initialFrom) setFrom(last.from);
         if (!initialTo) setTo(last.to);
-        setAmount(last.amount);
+        if (!initialAmount) setAmount(last.amount);
       }
     } catch { /* Storage is optional. */ }
     try {
@@ -55,7 +55,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo }: { initialFrom?: s
   useEffect(() => { const id = window.setInterval(() => setTick(t => t + 1), 60_000); return () => window.clearInterval(id); }, []);
   const [copied, setCopied] = useState(false);
   const copyLink = async () => {
-    const link = `https://skyco.online/currensee?from=${from}&to=${to}`;
+    const link = `https://skyco.online/currensee?${new URLSearchParams({ from, to, amount: amount.replace(/,/g, "") })}`;
     try {
       await navigator.clipboard.writeText(link);
       setCopied(true);
@@ -77,6 +77,12 @@ export function CurrenSeeConverter({ initialFrom, initialTo }: { initialFrom?: s
   const parsedAmount = Number(normalizedAmount);
   const amountIsValid = /^\d+(?:\.\d+)?$/.test(normalizedAmount) && Number.isFinite(parsedAmount) && parsedAmount > 0;
   const converted = data && amountIsValid ? parsedAmount * data.rate : null;
+  useEffect(() => {
+    if (!storageReady || !amountIsValid) return;
+    const current = new URLSearchParams(window.location.search);
+    if (current.get("from") === from && current.get("to") === to && current.get("amount") === normalizedAmount) return;
+    onConversionChange?.({ from, to, amount: normalizedAmount });
+  }, [from, to, normalizedAmount, amountIsValid, storageReady, onConversionChange]);
 
   const path = useMemo(() => buildPath(data?.series ?? []), [data?.series]);
 
