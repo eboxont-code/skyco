@@ -4,6 +4,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Prose } from "@/components/PageShell";
 import { fallbackDirectory, splitDirectory, liveProjects, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
+import { useState } from "react";
+import { getRate } from "@/lib/rates.functions";
 
 export const Route = createFileRoute("/status")({
   loader: async (): Promise<ResolvedProject[]> => {
@@ -64,6 +66,7 @@ function StatusPage() {
         </p>
       </div>
 
+      <RateCheck />
       <ul className="mt-6 space-y-3">
         {liveProjects.map((project) => (
           <li
@@ -120,5 +123,28 @@ function StatusPage() {
         </Prose>
       </div>
     </PageShell>
+  );
+}
+
+function RateCheck() {
+  const [message, setMessage] = useState("");
+  const [busy, setBusy] = useState(false);
+  const check = async () => {
+    setBusy(true);
+    setMessage("Checking USD to EUR...");
+    try {
+      const result = await getRate({ data: { from: "USD", to: "EUR" } });
+      setMessage(`Rates are answering: 1 USD = ${new Intl.NumberFormat("en-GB", { maximumFractionDigits: 4 }).format(result.rate)} EUR from ${result.source}, reference date ${result.asOf}.`);
+    } catch {
+      setMessage("The rate check did not get an answer just now. Try again in a minute.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="mt-6 rounded-2xl border border-sky-bright/20 bg-card p-5">
+      <button type="button" onClick={check} disabled={busy} className="min-h-11 rounded-full bg-sky-deep px-5 text-sm font-bold text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60">Check rates now</button>
+      <p role="status" className="mt-3 text-sm text-muted-foreground">{message}</p>
+    </div>
   );
 }
