@@ -46,7 +46,7 @@ export const Route = createFileRoute("/faq")({
   component: FaqPage,
 });
 
-const faqs: { q: string; text: string; a: React.ReactNode }[] = [
+export const faqs: { q: string; text: string; a: React.ReactNode }[] = [
   {
     q: "What is SkyCo?",
     text: "SkyCo is a small software studio building focused browser tools for converting money, lining up calendars, tracking a portfolio and planning a shop.",
