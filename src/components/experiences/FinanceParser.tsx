@@ -25,6 +25,7 @@ export function FinanceParser() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [copyStatus, setCopyStatus] = useState("");
   const [history, setHistory] = useState<Parsed[]>([]);
+  const [savedStatus, setSavedStatus] = useState("");
   const parsed = parseHolding(text);
 
   return (
@@ -72,7 +73,7 @@ export function FinanceParser() {
         </p>
         {parsed ? (
           <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <Field label="Action" value={parsed.action} />
+            <Field label="Side" value={parsed.action} />
             <Field label="Quantity" value={String(parsed.quantity)} />
             <Field label="Ticker" value={parsed.ticker} />
             <Field
@@ -105,7 +106,8 @@ export function FinanceParser() {
       }} className="mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60">Copy as CSV</button>
       <span role="status" className="ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <Button variant="outline" className="mt-3" disabled={!parsed} onClick={() => { if (parsed) setHistory(previous => [parsed, ...previous].slice(0, 5)); }}>Keep in this session</Button>
-      {history.length > 0 && <section aria-labelledby="history-heading" className="mt-4"><h3 id="history-heading" className="font-semibold text-foreground">Recent holdings</h3><ul>{history.map((holding, index) => <li key={index} className="flex flex-wrap items-center justify-between gap-2 text-sm text-foreground"><span>{holding.action} {holding.quantity} {holding.ticker}{holding.price === null ? "" : ` at $${holding.price}`}</span><Button variant="ghost" aria-label={`Remove ${holding.quantity} ${holding.ticker} holding`} onClick={() => setHistory(previous => previous.filter((_, i) => i !== index))}>Remove</Button></li>)}</ul></section>}
+      {history.length > 0 && <div className="mt-3"><button type="button" onClick={async () => { const csv = ["ticker,quantity,price,side", ...history.map(h => `${h.ticker},${h.quantity},${h.price ?? ""},${h.action}`)].join("\n"); try { await navigator.clipboard.writeText(csv); setSavedStatus(`Copied ${history.length} saved ${history.length === 1 ? "holding" : "holdings"} as CSV`); } catch { setSavedStatus("Copy unavailable in this browser"); } }} className="min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy saved as CSV</button><span role="status" className="ml-3 text-xs text-muted-foreground">{savedStatus}</span></div>}
+      {history.length > 0 && <section aria-labelledby="history-heading" className="mt-4"><h3 id="history-heading" className="font-semibold text-foreground">Recent holdings</h3><ul>{history.map((holding, index) => <li key={index} className="flex flex-wrap items-center justify-between gap-2 text-sm text-foreground"><span><span className={`mr-2 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${holding.action === "Sell" ? "bg-muted text-foreground" : "bg-sky-ice text-sky-deep"}`}>{holding.action}</span>{holding.quantity} {holding.ticker}{holding.price === null ? "" : ` at $${holding.price}`}</span><Button variant="ghost" aria-label={`Remove ${holding.quantity} ${holding.ticker} holding`} onClick={() => setHistory(previous => previous.filter((_, i) => i !== index))}>Remove</Button></li>)}</ul></section>}
       <p id="parser-help" className="mt-3 text-xs text-muted-foreground">
         Holdings kept here last only while this page is open. Nothing is sent or saved after leaving. Check every field yourself before relying on it.
       </p>

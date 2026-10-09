@@ -183,7 +183,7 @@ export function ProductPage({
             {others.length > 0 && (
               <nav aria-label="Related SkyCo products" className="mt-16 border-t border-sky-bright/15 pt-10">
                 <h2 className="text-xl font-extrabold text-foreground">
-                  More tools on SkyCo
+                  Other SkyCo tools
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">Every product runs here in your browser.</p>
                 <div className="mt-5 grid gap-4 sm:grid-cols-3">

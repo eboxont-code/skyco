@@ -1,7 +1,7 @@
 import { breadcrumbScript, productAppScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductPage } from "@/components/ProductPage";
-import { GroceryPackPreview } from "@/components/experiences/GroceryPackPreview";
+import { GroceryPackPreview, GROCERY_PACK_IDS } from "@/components/experiences/GroceryPackPreview";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
@@ -11,6 +11,7 @@ const DESCRIPTION =
 const URL = "https://skyco.online/grocery";
 
 export const Route = createFileRoute("/grocery")({
+  validateSearch: (search: Record<string, unknown>): { pack?: string } => (typeof search.pack === "string" && GROCERY_PACK_IDS.includes(search.pack) ? { pack: search.pack } : {}),
   loader: async (): Promise<ResolvedProject[]> => {
     try {
       return await getProjectDirectory();
@@ -50,7 +51,7 @@ function GroceryPage() {
     <ProductPage
       slug="grocery-packs"
       directory={Route.useLoaderData()}
-      experience={<><GroceryPackPreview /><section className="mt-8" aria-labelledby="how-it-works"><h2 id="how-it-works" className="text-xl font-bold text-foreground">How it works</h2><ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground"><li>Choose a sample pack and household size.</li><li>Tick items off as you shop.</li><li>Print or share the list when you need it.</li></ol></section></>}
+      experience={<><GroceryPackPreview initialPack={Route.useSearch().pack} /><section className="mt-8" aria-labelledby="how-it-works"><h2 id="how-it-works" className="text-xl font-bold text-foreground">How it works</h2><ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground"><li>Choose a sample pack and household size.</li><li>Tick items off as you shop.</li><li>Print or share the list when you need it.</li></ol></section></>}
       experienceTitle="Choose a sample pack and read the sorted list"
       intro="Choose and print a sample shopping list for two or four people."
       headline="Choose one of my sample packs and the shopping is grouped by store section, with quantities for two or four. Print it or read it at the shelf."

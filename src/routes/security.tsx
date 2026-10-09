@@ -160,6 +160,13 @@ function SecurityPage() {
             like that.
           </p>
 
+          <h2 id="report-a-problem" className="scroll-mt-24">Report a problem</h2>
+          <p>
+            Use the <a href="/support?product=security">Support page</a> for security reports. It helps
+            to include the page address, what you did, what you expected, what happened instead, and
+            your browser and device. Screenshots are welcome. Leave out passwords and private data.
+          </p>
+
           <h2 id="related" className="scroll-mt-24">Related</h2>
           <p>
             See the <a href="/privacy">Privacy Policy</a> for what is collected and the{" "}
