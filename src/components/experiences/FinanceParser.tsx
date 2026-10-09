@@ -25,6 +25,7 @@ export function FinanceParser() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [copyStatus, setCopyStatus] = useState("");
   const [history, setHistory] = useState<Parsed[]>([]);
+  const [savedStatus, setSavedStatus] = useState("");
   const parsed = parseHolding(text);
 
   return (
@@ -72,7 +73,7 @@ export function FinanceParser() {
         </p>
         {parsed ? (
           <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <Field label="Action" value={parsed.action} />
+            <Field label="Side" value={parsed.action} />
             <Field label="Quantity" value={String(parsed.quantity)} />
             <Field label="Ticker" value={parsed.ticker} />
             <Field
