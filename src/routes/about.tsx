@@ -55,7 +55,7 @@ function AboutPage() {
         </p>
 
         <h2>How I build</h2>
-        <p>Every tool is free to use. Most need no account. Your data stays in your browser, except the rate lookups CurrenSee makes to Frankfurter and CoinGecko.</p>
+        <p>Every tool is free to use. Most need no account. Your data stays in your browser, except the rate lookups <Link to="/currensee">CurrenSee</Link> makes to Frankfurter and CoinGecko.</p>
         <ul>
           <li>
             <strong>Browser first.</strong> Nothing to install, works on a phone, shareable as a
@@ -92,7 +92,7 @@ function AboutPage() {
         {live.map((p) => (
           <li key={p.slug} className="rounded-2xl border border-sky-bright/20 bg-card p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h3 className="text-base font-bold text-foreground">{p.name}</h3>
+              <h3 className="text-base font-bold text-foreground"><Link to={p.path ?? "/"} className="underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{p.name}</Link></h3>
               <Link
                 to={p.path ?? "/"}
                 className="text-xs font-bold text-sky-deep underline underline-offset-2"
