@@ -1,4 +1,10 @@
-# SkyCo October 8 continuation
+# SkyCo October 10 ordered updates
+- [x] 0: October 10 release entry
+- [ ] A-J: Ordered lettered updates, each verified before continuing
+- [ ] 1-43: Ordered numbered updates
+- [ ] Publish green changes
+
+## Prior work
 - [x] 0: Dated release entry
 - [x] A: Household sizes
 - [x] B: FAQ search
