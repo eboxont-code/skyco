@@ -1,4 +1,11 @@
-# SkyCo October 8 continuation
+# SkyCo October 10 ordered updates
+- [x] 0: October 10 release entry
+- [x] A-H: Current menu links, dated footer link, trade patterns, calendar explanations, single-link cards, info print styles, About product links, inverse rate
+- [ ] I-J: Enter conversion and chart period toggle
+- [ ] 1-43: Ordered numbered updates
+- [x] Publish green changes through H
+
+## Prior work
 - [x] 0: Dated release entry
 - [x] A: Household sizes
 - [x] B: FAQ search

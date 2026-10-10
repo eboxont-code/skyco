@@ -163,6 +163,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
           <>
             1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
             <span className="ml-2 block text-xs sm:inline">Reference rate for {data.asOf}. Source: {data.source}</span>
+            {Number.isFinite(data.rate) && data.rate > 0 && <span className="mt-1 block text-sm">1 {to} = {new Intl.NumberFormat("en-GB", { maximumFractionDigits: 8 }).format(1 / data.rate)} {from}</span>}
           </>
         ) : query.isError ? (
           <>

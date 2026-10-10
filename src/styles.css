@@ -187,6 +187,17 @@
     visibility: visible;
   }
 
+  .info-print, .info-print * { visibility: visible; }
+  .info-print { padding-top: 0; }
+  .info-print nav, .info-print a[href^="#"] { display: none; }
+  .info-print a[href]:not([href^="#"])::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+  .info-print a[href^="/"]:not([href^="#"])::after { content: " (https://skyco.online" attr(href) ")"; }
+  .info-print h1, .info-print h2, .info-print h3 { break-after: avoid; }
+
   .grocery-print {
     position: absolute;
     inset: 0;

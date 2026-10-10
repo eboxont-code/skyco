@@ -1,4 +1,5 @@
 import { Heart } from "lucide-react";
+import { changelog, formatDate } from "@/lib/changelog";
 import { Link } from "@tanstack/react-router";
 import badge from "@/assets/skyco-badge-96.webp";
 import {
@@ -58,6 +59,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           <nav aria-label="Company">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Company</p>
             <ul className="mt-3 space-y-2">
+              {changelog[0] && <li><Link to="/changelog" className="inline-flex min-h-11 flex-wrap items-center gap-2 text-sm text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring">What's new <time dateTime={changelog[0].date} className="text-xs">{formatDate(changelog[0].date)}</time></Link></li>}
               {footerCompanyLinks.map((l) => (
                 <li key={l.to}>
                   <Link

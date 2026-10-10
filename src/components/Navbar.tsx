@@ -81,7 +81,7 @@ export function Navbar({
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
-        <Link to="/" className="flex items-center gap-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label="SkyCo home">
+        <Link to="/" aria-current={pathname === "/" ? "page" : undefined} className="flex items-center gap-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label="SkyCo home">
           <img
             src={badge}
             alt=""
@@ -131,6 +131,7 @@ export function Navbar({
                     <Link
                       key={p.href}
                       to={p.href}
+                      aria-current={pathname === p.href ? "page" : undefined}
                       role="menuitem"
                       className="block rounded-lg px-3 py-2.5 hover:bg-accent transition-colors focus-visible:ring-2 focus-visible:ring-ring"
                     >
@@ -158,6 +159,7 @@ export function Navbar({
 
           <Link
             to="/support"
+            aria-current={pathname === "/support" ? "page" : undefined}
             className="rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Get in touch
@@ -187,6 +189,7 @@ export function Navbar({
                 <Link
                   key={p.href}
                   to={p.href}
+                  aria-current={pathname === p.href ? "page" : undefined}
                   className="block rounded-md px-2 py-2 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -205,6 +208,7 @@ export function Navbar({
                 <Link
                   key={l.to}
                   to={l.to}
+                  aria-current={pathname === l.to ? "page" : undefined}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -215,6 +219,7 @@ export function Navbar({
           </div>
           <Link
             to="/support"
+            aria-current={pathname === "/support" ? "page" : undefined}
             className="inline-block rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground"
             onClick={() => setMobileOpen(false)}
           >
