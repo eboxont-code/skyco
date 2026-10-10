@@ -1,4 +1,4 @@
-import { ArrowRight, Bitcoin, Clock, Check } from "lucide-react";
+import { ArrowRight, Clock, Check } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
@@ -66,9 +66,11 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
             const shot = productShots[project.slug];
             const flip = i % 2 === 1;
             return (
-              <article
+              <Link
                 key={project.slug}
-                className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12"
+                to={project.path ?? "/"}
+                aria-labelledby={`tool-name-${project.slug}`}
+                className="grid items-center gap-8 rounded-lg lg:grid-cols-2 lg:gap-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
               >
                 <div className={flip ? "lg:order-2" : undefined}>
                   <div className="flex items-center gap-3">
@@ -81,7 +83,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                     </span>
                   </div>
 
-                  <h3 className="mt-3 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+                  <h3 id={`tool-name-${project.slug}`} className="mt-3 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
                     {project.name}
                   </h3>
                   {project.demo && (
@@ -105,31 +107,18 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                   </ul>
 
                   <div className="mt-7 flex flex-wrap items-center gap-3">
-                    <Link
-                      to={project.path ?? "/"}
+                    <span
                       className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-6 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       Use {project.name} here
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </Link>
-                    {project.slug === "currensee" && (
-                      <Link
-                        to="/currensee" search={{ from: "BTC", to: "USD" }} hash="use"
-                        className="inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-bright/40 px-5 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      >
-                        <Bitcoin className="h-4 w-4" aria-hidden="true" />
-                        Check Bitcoin in USD
-                      </Link>
-                    )}
+                    </span>
                   </div>
                 </div>
 
                 {shot && (
                   <div className={flip ? "lg:order-1" : undefined}>
-                    <Link
-                      to={project.path ?? "/"}
-                      tabIndex={-1}
-                      aria-hidden="true"
+                    <div
                       className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg transition-all hover:-translate-y-1 hover:shadow-glow-cyan"
                     >
                       <img
@@ -142,7 +131,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                         decoding="async"
                         className="aspect-[16/10] w-full object-cover object-top"
                       />
-                    </Link>
+                    </div>
                     <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                       <p className="text-xs font-medium text-foreground">{shot.result}</p>
                       <span
@@ -158,7 +147,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
                     </p>
                   </div>
                 )}
-              </article>
+              </Link>
             );
           })}
         </div>
