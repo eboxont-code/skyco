@@ -195,7 +195,7 @@
     font-size: 0.85em;
     overflow-wrap: anywhere;
   }
-  .info-print a[href^="/"]::after { content: " (https://skyco.online" attr(href) ")"; }
+  .info-print a[href^="/"]:not([href^="#"])::after { content: " (https://skyco.online" attr(href) ")"; }
   .info-print h1, .info-print h2, .info-print h3 { break-after: avoid; }
 
   .grocery-print {
