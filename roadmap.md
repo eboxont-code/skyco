@@ -1,8 +1,9 @@
 # SkyCo October 10 ordered updates
 - [x] 0: October 10 release entry
-- [ ] A-J: Ordered lettered updates, each verified before continuing
+- [x] A-H: Current menu links, dated footer link, trade patterns, calendar explanations, single-link cards, info print styles, About product links, inverse rate
+- [ ] I-J: Enter conversion and chart period toggle
 - [ ] 1-43: Ordered numbered updates
-- [ ] Publish green changes
+- [x] Publish green changes through H
 
 ## Prior work
 - [x] 0: Dated release entry
