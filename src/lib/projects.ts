@@ -53,7 +53,7 @@ export const projectRegistry: SkyCoProject[] = [
       "Built for travel days and cross-border shopping. Current fiat and crypto reference rates with a clear 30 day chart.",
     icon: "converter",
     path: "/currensee",
-    dataSources: ["Frankfurter", "CoinGecko"],
+    dataSources: ["Frankfurter", "CoinGecko", "Nepal Rastra Bank"],
     demo: "Open it and USD to EUR is already on screen with a live rate and a 30 day chart.",
     why: "Checking a rate usually means an ad-heavy page or a search result that is already out of date.",
     example: "Open it and USD to EUR is already on screen with a 30 day chart and a last updated stamp.",

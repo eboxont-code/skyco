@@ -4,10 +4,8 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Mission } from "@/components/Mission";
 import { ToolsGrid } from "@/components/ToolsGrid";
-import { MotivationBand } from "@/components/MotivationBand";
 import { HelpSection } from "@/components/HelpSection";
 import { Footer } from "@/components/Footer";
-import { MobileActionBar } from "@/components/MobileActionBar";
 
 import { fallbackDirectory, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
@@ -74,19 +72,16 @@ export const Route = createFileRoute("/")({
 function Index() {
   const directory = Route.useLoaderData();
   return (
-    <div className="min-h-screen bg-background pb-24 md:pb-0">
+    <div className="min-h-screen bg-background">
       <Navbar directory={directory} />
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <Hero directory={directory} />
-        <Mission directory={directory} />
         <ToolsGrid directory={directory} />
-        <MotivationBand />
-        <HelpSection />
-        <section aria-labelledby="directory-heading" className="px-6 py-12"><div className="mx-auto max-w-6xl"><h2 id="directory-heading" className="text-2xl font-bold text-foreground">All four tools</h2><ul className="mt-5 grid gap-6 sm:grid-cols-2">{splitDirectory(directory).live.map(p => <li key={p.slug}><Link to={p.path ?? "/"} className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{p.name}</Link><p className="text-sm text-muted-foreground">{p.demo}</p></li>)}</ul></div></section>
+        <Mission directory={directory} />
         <section aria-labelledby="common-questions-heading" className="px-6 py-12"><div className="mx-auto max-w-3xl"><h2 id="common-questions-heading" className="text-2xl font-bold text-foreground">Common questions</h2><dl className="mt-5 space-y-4">{[["What is SkyCo?", "SkyCo is a small software studio building focused browser tools for converting money, lining up calendars, tracking a portfolio and planning a shop."], ["Do the products cost anything?", "No. Everything currently listed on SkyCo is free to open and use, with no trial and no card details."], ["Do I need an account?", "No. The four tools currently running on SkyCo can be used without an account."]].map(([q, a]) => <div key={q}><dt className="font-semibold text-foreground">{q}</dt><dd className="mt-1 text-sm text-muted-foreground">{a}</dd></div>)}</dl><Link to="/faq" className="mt-5 inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">Read all questions</Link></div></section>
+        <HelpSection />
       </main>
       <Footer directory={directory} />
-      <MobileActionBar directory={directory} />
     </div>
 
   );

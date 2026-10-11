@@ -12,10 +12,10 @@ const DESCRIPTION =
 const URL = "https://skyco.online/currensee";
 
 export const Route = createFileRoute("/currensee")({
-  validateSearch: (search: Record<string, unknown>): { from?: string; to?: string; amount?: string } => ({
+  validateSearch: (search: Record<string, unknown>): { from?: string; to?: string; amount?: number } => ({
     from: typeof search.from === "string" && CURRENCIES.includes(search.from.toUpperCase()) ? search.from.toUpperCase() : undefined,
     to: typeof search.to === "string" && CURRENCIES.includes(search.to.toUpperCase()) ? search.to.toUpperCase() : undefined,
-    amount: (typeof search.amount === "string" || typeof search.amount === "number") && String(search.amount).length <= 30 && /^\d+(?:\.\d+)?$/.test(String(search.amount)) && Number.isFinite(Number(search.amount)) && Number(search.amount) > 0 ? String(search.amount) : undefined,
+    amount: (typeof search.amount === "string" || typeof search.amount === "number") && String(search.amount).length <= 30 && /^\d+(?:\.\d+)?$/.test(String(search.amount)) && Number.isFinite(Number(search.amount)) && Number(search.amount) > 0 ? Number(search.amount) : undefined,
   }),
   loader: async (): Promise<ResolvedProject[]> => {
     try {
@@ -58,7 +58,7 @@ function CurrenSeePage() {
     <ProductPage
       slug="currensee"
       directory={Route.useLoaderData()}
-      experience={<><CurrenSeeConverter initialFrom={from} initialTo={to} initialAmount={amount} onConversionChange={values => { void navigate({ search: values, replace: true, resetScroll: false }); }} /><section className="mt-8" aria-labelledby="rate-method"><h2 id="rate-method" className="text-xl font-bold text-foreground">How the rate is worked out</h2><p className="mt-2 text-sm text-muted-foreground">Fiat rates come from Frankfurter. Crypto rates come from CoinGecko. Both are reference rates, not trading prices.</p></section></>}
+      experience={<><CurrenSeeConverter initialFrom={from} initialTo={to} initialAmount={amount === undefined ? undefined : String(amount)} onConversionChange={values => { void navigate({ search: { ...values, amount: Number(values.amount) }, replace: true, resetScroll: false }); }} /><section className="mt-8" aria-labelledby="rate-method"><h2 id="rate-method" className="text-xl font-bold text-foreground">How the rate is worked out</h2><p className="mt-2 text-sm text-muted-foreground">Fiat rates come from Frankfurter. Crypto rates come from CoinGecko. Both are reference rates, not trading prices. Nepalese rupee, Qatari riyal, UAE dirham and Saudi riyal rates come from the daily Nepal Rastra Bank reference rates, using the midpoint of buy and sell.</p></section></>}
       experienceTitle="Convert a pair right here"
       intro="Convert a currency or crypto amount using current reference rates."
       headline="Convert a currency or crypto pair here, check the current reference rate, and read its 30 day direction."

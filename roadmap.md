@@ -1,4 +1,12 @@
-# SkyCo October 10 ordered updates
+# SkyCo October 11 ordered updates
+- [x] 0: October 11 release entry
+- [x] C0a-C0f: Ordered mobile cleanup, green compilation and desktop/mobile checks
+- [x] T1: Nepal and Gulf reference-rate support
+- [ ] T2-T12: Pair pages, rates page and Nepal guide
+- [ ] C0g-C0h: Calendar layout and consistency
+- [ ] 1-48: Ordered follow-on requests
+ 
+## October 10
 - [x] 0: October 10 release entry
 - [x] A-H: Current menu links, dated footer link, trade patterns, calendar explanations, single-link cards, info print styles, About product links, inverse rate
 - [ ] I-J: Enter conversion and chart period toggle
