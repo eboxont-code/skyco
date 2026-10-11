@@ -42,13 +42,13 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
   ]);
 
   return (
-    <section id="tools" className="px-6 py-20 md:py-24 bg-gradient-to-b from-sky-ice/60 to-background">
+    <section id="tools" aria-labelledby="tools-heading" className="px-6 py-10 md:py-16 bg-gradient-to-b from-sky-ice/60 to-background">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">
             Built for real daily problems
           </p>
-          <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+          <h2 id="tools-heading" className="mt-3 text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             {countWord(liveProjects.length)} products.{" "}
             <span className="text-gradient-sky">
               {countWord(liveProjects.length)} jobs.
@@ -152,30 +152,8 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
           })}
         </div>
 
-        {upcomingProjects.length > 0 && (
-          <>
-            <h3 className="mt-20 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
-              On the way
-            </h3>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {upcomingProjects.map((item) => (
-                <div
-                  key={item.slug}
-                  className="rounded-lg border border-border bg-card p-5"
-                >
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-3.5 w-3.5 text-sky-deep" aria-hidden="true" />
-                    <h4 className="text-sm font-bold text-foreground">{item.name}</h4>
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
+        {upcomingProjects.length > 0 && <p className="mt-6 text-sm text-muted-foreground">On the way: {upcomingProjects.map(p => p.name).join(", ")}.</p>}
 
-            </div>
-          </>
-        )}
       </div>
     </section>
   );
