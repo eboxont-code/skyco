@@ -1,7 +1,8 @@
 # SkyCo October 11 ordered updates
 - [x] 0: October 11 release entry
 - [x] C0a-C0f: Ordered mobile cleanup, green compilation and desktop/mobile checks
-- [ ] T1-T12: Reference rates, pair pages, rates page and Nepal guide
+- [x] T1: Nepal and Gulf reference-rate support
+- [ ] T2-T12: Pair pages, rates page and Nepal guide
 - [ ] C0g-C0h: Calendar layout and consistency
 - [ ] 1-48: Ordered follow-on requests
  

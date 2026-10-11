@@ -22,3 +22,5 @@
 
 - Product SoftwareApplication metadata uses the shared productAppScript helper so free access and publisher details stay consistent.
 - Mount mobile actions only in ProductPage and derive them from its project, so home and unrelated tools never share a sticky action.
+
+- Reuse an hourly Nepal Rastra Bank payload cache for supported rates; reject invalid values and label NPR peg fallback explicitly to avoid invented rates.
