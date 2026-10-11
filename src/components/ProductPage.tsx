@@ -2,6 +2,7 @@ import { ArrowDown, Check, ArrowLeft } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { MobileActionBar } from "@/components/MobileActionBar";
 import { productShots, shotFreshness } from "@/lib/product-shots";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
@@ -73,6 +74,7 @@ export function ProductPage({
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
+                  id="product-hero-action"
                   href="#use"
                    onClick={() => requestAnimationFrame(() => document.getElementById("use")?.focus())}
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -213,6 +215,7 @@ export function ProductPage({
         </section>
       </main>
       <Footer directory={directory} />
+      <MobileActionBar project={project} />
     </div>
   );
 }

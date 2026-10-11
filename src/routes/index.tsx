@@ -7,7 +7,6 @@ import { ToolsGrid } from "@/components/ToolsGrid";
 import { MotivationBand } from "@/components/MotivationBand";
 import { HelpSection } from "@/components/HelpSection";
 import { Footer } from "@/components/Footer";
-import { MobileActionBar } from "@/components/MobileActionBar";
 
 import { fallbackDirectory, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
@@ -86,7 +85,6 @@ function Index() {
         <section aria-labelledby="common-questions-heading" className="px-6 py-12"><div className="mx-auto max-w-3xl"><h2 id="common-questions-heading" className="text-2xl font-bold text-foreground">Common questions</h2><dl className="mt-5 space-y-4">{[["What is SkyCo?", "SkyCo is a small software studio building focused browser tools for converting money, lining up calendars, tracking a portfolio and planning a shop."], ["Do the products cost anything?", "No. Everything currently listed on SkyCo is free to open and use, with no trial and no card details."], ["Do I need an account?", "No. The four tools currently running on SkyCo can be used without an account."]].map(([q, a]) => <div key={q}><dt className="font-semibold text-foreground">{q}</dt><dd className="mt-1 text-sm text-muted-foreground">{a}</dd></div>)}</dl><Link to="/faq" className="mt-5 inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">Read all questions</Link></div></section>
       </main>
       <Footer directory={directory} />
-      <MobileActionBar directory={directory} />
     </div>
 
   );

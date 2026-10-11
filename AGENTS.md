@@ -21,3 +21,4 @@
 - Recent currency pairs use validated optional browser storage so unavailable storage never blocks conversion.
 
 - Product SoftwareApplication metadata uses the shared productAppScript helper so free access and publisher details stay consistent.
+- Mount mobile actions only in ProductPage and derive them from its project, so home and unrelated tools never share a sticky action.
