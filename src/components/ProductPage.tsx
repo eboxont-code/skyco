@@ -3,7 +3,6 @@ import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MobileActionBar } from "@/components/MobileActionBar";
-import { productShots, shotFreshness } from "@/lib/product-shots";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
 /**
@@ -30,7 +29,6 @@ export function ProductPage({
 }) {
   const project =
     directory.find((p) => p.slug === slug) ?? splitDirectory(directory).live[0];
-  const shot = productShots[slug];
   const others = directory.filter((p) => p.live && p.slug !== slug);
 
   if (!project) return null;
@@ -39,8 +37,8 @@ export function ProductPage({
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar directory={directory} solid />
       <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
-        <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-14">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+        <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-8 sm:py-12">
+          <div className="mx-auto max-w-4xl">
             <div>
               <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
                 <ol className="flex flex-wrap items-center gap-1.5">
@@ -69,10 +67,9 @@ export function ProductPage({
               <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
                 {project.name}
               </h1>
-              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{intro}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{headline}</p>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">{project.tagline}</p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-3">
+              <div className="mt-5 hidden flex-wrap items-center gap-3 sm:flex">
                 <a
                   id="product-hero-action"
                   href="#use"
@@ -96,51 +93,20 @@ export function ProductPage({
               )}
             </div>
 
-            {shot && (
-              <div>
-                <div className="block overflow-hidden rounded-2xl border border-sky-bright/25 bg-card shadow-lg">
-                  <img
-                    src={shot.src}
-                    alt={shot.alt}
-                    width={1280}
-                    height={800}
-                    decoding="async"
-                    loading="eager"
-                    fetchPriority="high"
-                    className="aspect-[16/10] w-full object-cover object-top"
-                  />
-                </div>
 
-                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <p className="text-xs font-medium text-foreground">{shot.result}</p>
-                  <span
-                    suppressHydrationWarning
-                    className="inline-flex items-center gap-1.5 rounded-full bg-sky-ice px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sky-deep"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
-                    {shotFreshness(shot.captured)}
-                  </span>
-                </div>
-              </div>
-            )}
           </div>
         </section>
 
         {experience && (
-          <section id="use" tabIndex={-1} aria-labelledby="use-heading" className="focus:outline-none scroll-mt-24 border-b border-sky-bright/15 px-6 py-14">
+          <section id="use" tabIndex={-1} aria-labelledby="use-heading" className="focus:outline-none scroll-mt-24 border-b border-sky-bright/15 px-6 py-8 sm:py-12">
             <div className="mx-auto max-w-4xl">
-              <h2 id="use-heading" className="text-2xl font-extrabold tracking-tight text-foreground">
-                {experienceTitle ?? `Use ${project.name}`}
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Running here on SkyCo. Nothing to install and no account needed.
-              </p>
-              <div className="mt-6">{experience}</div>
+              <h2 id="use-heading" className="sr-only">{experienceTitle ?? `Use ${project.name}`}</h2>
+              <div>{experience}</div>
             </div>
           </section>
         )}
 
-        <section className="px-6 py-14">
+        <section className="px-6 py-8 sm:py-12">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
               What you get
@@ -171,16 +137,7 @@ export function ProductPage({
               </div>
             )}
 
-            <div className="mt-10">
-              <a
-                href="#use"
-                   onClick={() => requestAnimationFrame(() => document.getElementById("use")?.focus())}
-                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-sky-deep px-7 text-sm font-bold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                Use {project.name} here
-                <ArrowDown className="h-4 w-4" aria-hidden="true" />
-              </a>
-            </div>
+
 
             {others.length > 0 && (
               <nav aria-label="Related SkyCo products" className="mt-16 border-t border-sky-bright/15 pt-10">
