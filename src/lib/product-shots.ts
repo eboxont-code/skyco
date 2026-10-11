@@ -21,26 +21,26 @@ export const productShots: Record<string, ProductShot> = {
   currensee: {
     src: currensee,
     alt: "CurrenSee showing the USD to EUR rate with a 30 day chart and a last updated stamp",
-    captured: "2026-09-01",
+    captured: "2026-10-11",
     result: "The rate and the chart are on screen before you touch anything.",
   },
   chronos: {
     src: chronos,
-    alt: "Chronos showing one date read as Gregorian and Hijri side by side with a month calendar",
-    captured: "2026-09-01",
+    alt: "Chronos showing the chosen date in six calendar systems",
+    captured: "2026-10-11",
     result: "One tapped day, read back in six calendar systems.",
   },
   "my-finance-friend": {
     src: finance,
-    alt: "My Finance Friend chat screen with example commands such as buying NVDA, next to an empty holdings panel on a fresh guest session",
-    captured: "2026-09-01",
+    alt: "My Finance Friend trade input and structured preview",
+    captured: "2026-10-11",
     result: "A plain English holding, parsed into a preview before it saves.",
   },
 
   "grocery-packs": {
     src: grocery,
-    alt: "SkyCo Grocery Packs home screen with the Easy Week starter pack",
-    captured: "2026-09-01",
+    alt: "SkyCo Grocery Packs selected shopping list sorted by store section",
+    captured: "2026-10-11",
     result: "A week of shopping, already grouped by store section.",
   },
 };

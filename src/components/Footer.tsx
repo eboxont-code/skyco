@@ -60,7 +60,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Company</p>
             <ul className="mt-3 space-y-2">
               {changelog[0] && <li><Link to="/changelog" className="inline-flex min-h-11 flex-wrap items-center gap-2 text-sm text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring">What's new <time dateTime={changelog[0].date} className="text-xs">{formatDate(changelog[0].date)}</time></Link></li>}
-              {footerCompanyLinks.map((l) => (
+              {footerCompanyLinks.filter(l => l.to !== "/changelog").map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}
@@ -76,7 +76,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           <nav aria-label="Help">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Help</p>
             <ul className="mt-3 space-y-2">
-              {footerHelpLinks.map((l) => (
+              {footerHelpLinks.filter(l => !["/privacy", "/terms", "/security", "/status"].includes(l.to)).map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}
@@ -111,7 +111,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
         <div className="mt-10 flex flex-col gap-3 border-t border-sky-bright/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
             <span className="font-semibold text-foreground">SkyCo</span>
-            {trustStrip.map((l) => (
+            {trustStrip.filter(l => l.to !== "/support").map((l) => (
               <span key={l.to} className="flex items-center gap-2">
                 <span aria-hidden="true">&middot;</span>
                 <Link to={l.to} className="inline-flex min-h-11 items-center transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
