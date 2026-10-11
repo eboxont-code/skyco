@@ -21,7 +21,7 @@ export const FIAT = [
   "NOK",
   "NZD",
   "BRL",
-  "ZAR",
+  "ZAR", "NPR", "QAR", "AED", "SAR", "MYR", "KRW",
 ] as const;
 
 export const CRYPTO: Record<string, string> = {
@@ -36,15 +36,38 @@ export type RateResult = {
   from: string;
   to: string;
   rate: number;
-  source: "Frankfurter" | "CoinGecko";
+  source: "Frankfurter" | "CoinGecko" | "Nepal Rastra Bank" | "Derived from INR at the official 1.6 peg";
   asOf: string;
   fetchedAt: string;
   series: { date: string; value: number }[];
   approximate: boolean;
 };
 
+type NrbDay = { date: string; rates: { currency: { iso3: string; unit: number }; buy: string; sell: string }[] };
+let nrbCache: { expires: number; days: NrbDay[] } | undefined;
+async function nrbDays(): Promise<NrbDay[]> {
+  if (nrbCache && nrbCache.expires > Date.now()) return nrbCache.days;
+  const to = new Date().toISOString().slice(0, 10);
+  const from = new Date(Date.now() - 35 * 86400000).toISOString().slice(0, 10);
+  const response = await fetch(`https://www.nrb.org.np/api/forex/v1/rates?page=1&per_page=100&from=${from}&to=${to}`, { signal: AbortSignal.timeout(5000) });
+  if (!response.ok) throw new Error("Reference rates unavailable");
+  const json = await response.json() as { data?: { payload?: NrbDay[] } };
+  const days = json.data?.payload;
+  if (!Array.isArray(days) || !days.length) throw new Error("Reference rates unavailable");
+  nrbCache = { expires: Date.now() + 3600000, days };
+  return days;
+}
+function nprTable(day: NrbDay): Record<string, number> {
+  const table: Record<string, number> = { NPR: 1 };
+  for (const row of day.rates) {
+    const buy = Number(row.buy), sell = Number(row.sell), unit = Number(row.currency.unit);
+    if (Number.isFinite(buy) && Number.isFinite(sell) && buy > 0 && sell > 0 && unit > 0) table[row.currency.iso3] = (buy + sell) / 2 / unit;
+  }
+  return table;
+}
+
 async function fiatUsdTable(): Promise<Record<string, number>> {
-  const symbols = FIAT.filter((c) => c !== "USD").join(",");
+  const symbols = FIAT.filter((c) => c !== "USD" && !["NPR", "QAR", "AED", "SAR"].includes(c)).join(",");
   const res = await fetch(
     `https://api.frankfurter.dev/v1/latest?base=USD&symbols=${symbols}`,
   );
@@ -98,7 +121,7 @@ async function cryptoSeries(code: string, multiplier: number) {
 
 const pairCache = new Map<string, { expires: number; result: RateResult }>();
 
-export const CURRENCY_NAMES: Record<string, string> = { USD: "US dollar", EUR: "Euro", GBP: "British pound", JPY: "Japanese yen", INR: "Indian rupee", AUD: "Australian dollar", CAD: "Canadian dollar", CHF: "Swiss franc", CNY: "Chinese yuan", SGD: "Singapore dollar", SEK: "Swedish krona", NOK: "Norwegian krone", NZD: "New Zealand dollar", BRL: "Brazilian real", ZAR: "South African rand", BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana" };
+export const CURRENCY_NAMES: Record<string, string> = { NPR: "Nepalese rupee", QAR: "Qatari riyal", AED: "UAE dirham", SAR: "Saudi riyal", MYR: "Malaysian ringgit", KRW: "South Korean won", USD: "US dollar", EUR: "Euro", GBP: "British pound", JPY: "Japanese yen", INR: "Indian rupee", AUD: "Australian dollar", CAD: "Canadian dollar", CHF: "Swiss franc", CNY: "Chinese yuan", SGD: "Singapore dollar", SEK: "Swedish krona", NOK: "Norwegian krone", NZD: "New Zealand dollar", BRL: "Brazilian real", ZAR: "South African rand", BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana" };
 
 export const getRate = createServerFn({ method: "GET" })
   .inputValidator((data: { from: string; to: string }) => {
@@ -115,17 +138,43 @@ export const getRate = createServerFn({ method: "GET" })
     const cached = pairCache.get(key);
     if (cached && cached.expires > Date.now()) return cached.result;
     const fiat = await fiatUsdTable();
-    const asOf = (fiat as unknown as { date: string }).date ?? new Date().toISOString().slice(0, 10);
+    let asOf = (fiat as unknown as { date: string }).date ?? new Date().toISOString().slice(0, 10);
+    const needsNrb = [from, to].some(c => ["NPR", "QAR", "AED", "SAR"].includes(c));
+    let nrb: NrbDay[] = [];
+    let nrbSource: RateResult["source"] = "Nepal Rastra Bank";
+    if (needsNrb) {
+      try {
+        nrb = await nrbDays();
+        const latest = nrb[nrb.length - 1];
+        if (!latest) throw new Error("Reference rates unavailable");
+        const table = nprTable(latest);
+        const usd = table.USD;
+        if (!usd) throw new Error("Reference rates unavailable");
+        for (const code of ["NPR", "QAR", "AED", "SAR"]) if (table[code]) fiat[code] = table[code] / usd;
+        asOf = latest.date;
+      } catch {
+        if ([from, to].some(c => ["QAR", "AED", "SAR"].includes(c))) throw new Error("Reference rates unavailable");
+        fiat.NPR = (fiat.INR ?? 0) / 1.6;
+        nrbSource = "Derived from INR at the official 1.6 peg";
+      }
+    }
     const cryptoCodes = [from, to].filter((c) => c in CRYPTO);
     const crypto = await cryptoUsd([...new Set(cryptoCodes)]);
 
     const usdPer = (code: string) => (code in CRYPTO ? crypto[code] ?? 0 : fiat[code] ?? 0);
     const rate = usdPer(from) / usdPer(to);
 
+    if (!Number.isFinite(rate) || rate <= 0) throw new Error("Reference rates unavailable");
     let series: { date: string; value: number }[] = [];
     let approximate = false;
     try {
-      if (cryptoCodes.length === 0) {
+      if (needsNrb) {
+        series = nrb.flatMap(day => {
+          const table = nprTable(day);
+          const a = table[from], b = table[to];
+          return a && b ? [{ date: day.date, value: a / b }] : [];
+        }).sort((a,b) => a.date.localeCompare(b.date));
+      } else if (cryptoCodes.length === 0) {
         series = await fiatSeries(from, to);
       } else if (from in CRYPTO) {
         series = await cryptoSeries(from, 1 / usdPer(to));
@@ -140,7 +189,7 @@ export const getRate = createServerFn({ method: "GET" })
     }
 
     const result: RateResult = {
-      source: cryptoCodes.length ? "CoinGecko" : "Frankfurter",
+      source: needsNrb ? nrbSource : cryptoCodes.length ? "CoinGecko" : "Frankfurter",
       from,
       to,
       rate,
