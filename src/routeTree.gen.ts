@@ -16,6 +16,7 @@ import { Route as SecurityRouteImport } from './routes/security'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as GroceryRouteImport } from './routes/grocery'
+import { Route as FloatRouteImport } from './routes/float'
 import { Route as FinanceFriendRouteImport } from './routes/finance-friend'
 import { Route as FinanceRouteImport } from './routes/finance'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -58,6 +59,11 @@ const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
 const GroceryRoute = GroceryRouteImport.update({
   id: '/grocery',
   path: '/grocery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FloatRoute = FloatRouteImport.update({
+  id: '/float',
+  path: '/float',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FinanceFriendRoute = FinanceFriendRouteImport.update({
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/finance-friend': typeof FinanceFriendRoute
+  '/float': typeof FloatRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/privacy': typeof PrivacyRoute
@@ -127,6 +134,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/finance-friend': typeof FinanceFriendRoute
+  '/float': typeof FloatRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/privacy': typeof PrivacyRoute
@@ -145,6 +153,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/finance-friend': typeof FinanceFriendRoute
+  '/float': typeof FloatRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/privacy': typeof PrivacyRoute
@@ -164,6 +173,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/finance'
     | '/finance-friend'
+    | '/float'
     | '/grocery'
     | '/llms.txt'
     | '/privacy'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/finance'
     | '/finance-friend'
+    | '/float'
     | '/grocery'
     | '/llms.txt'
     | '/privacy'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/finance'
     | '/finance-friend'
+    | '/float'
     | '/grocery'
     | '/llms.txt'
     | '/privacy'
@@ -216,6 +228,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   FinanceRoute: typeof FinanceRoute
   FinanceFriendRoute: typeof FinanceFriendRoute
+  FloatRoute: typeof FloatRoute
   GroceryRoute: typeof GroceryRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -274,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/grocery'
       fullPath: '/grocery'
       preLoaderRoute: typeof GroceryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/float': {
+      id: '/float'
+      path: '/float'
+      fullPath: '/float'
+      preLoaderRoute: typeof FloatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/finance-friend': {
@@ -344,6 +364,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   FinanceRoute: FinanceRoute,
   FinanceFriendRoute: FinanceFriendRoute,
+  FloatRoute: FloatRoute,
   GroceryRoute: GroceryRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   PrivacyRoute: PrivacyRoute,
