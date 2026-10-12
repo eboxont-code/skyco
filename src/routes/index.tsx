@@ -42,7 +42,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/" },
-      ...shareMeta("home", "SkyCo share card listing CurrenSee, Chronos, My Finance Friend and SkyCo Grocery Packs"),
+      ...shareMeta("home", "SkyCo share card listing CurrenSee, Chronos, My Finance Friend, SkyCo Grocery Packs and Float"),
       { name: "twitter:title", content: "SkyCo | Small web tools for everyday life" },
       { name: "twitter:description", content: `Live products from SkyCo: ${names}.` },
     ],
@@ -78,7 +78,7 @@ function Index() {
         <Hero directory={directory} />
         <ToolsGrid directory={directory} />
         <Mission directory={directory} />
-        <section aria-labelledby="common-questions-heading" className="px-6 py-12"><div className="mx-auto max-w-3xl"><h2 id="common-questions-heading" className="text-2xl font-bold text-foreground">Common questions</h2><dl className="mt-5 space-y-4">{[["What is SkyCo?", "SkyCo is a small software studio building focused browser tools for converting money, lining up calendars, tracking a portfolio and planning a shop."], ["Do the products cost anything?", "No. Everything currently listed on SkyCo is free to open and use, with no trial and no card details."], ["Do I need an account?", "No. The four tools currently running on SkyCo can be used without an account."]].map(([q, a]) => <div key={q}><dt className="font-semibold text-foreground">{q}</dt><dd className="mt-1 text-sm text-muted-foreground">{a}</dd></div>)}</dl><Link to="/faq" className="mt-5 inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">Read all questions</Link></div></section>
+        <section aria-labelledby="common-questions-heading" className="px-6 py-12"><div className="mx-auto max-w-3xl"><h2 id="common-questions-heading" className="text-2xl font-bold text-foreground">Common questions</h2><dl className="mt-5 space-y-4">{[["What is SkyCo?", "SkyCo is a small software studio building focused browser tools for converting money, lining up calendars, tracking a portfolio, planning a shop and working out what is left to spend."], ["Do the products cost anything?", "No. Everything currently listed on SkyCo is free to open and use, with no trial and no card details."], ["Do I need an account?", "No. Every tool currently running on SkyCo can be used without an account."]].map(([q, a]) => <div key={q}><dt className="font-semibold text-foreground">{q}</dt><dd className="mt-1 text-sm text-muted-foreground">{a}</dd></div>)}</dl><Link to="/faq" className="mt-5 inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">Read all questions</Link></div></section>
         <HelpSection />
       </main>
       <Footer directory={directory} />

@@ -22,7 +22,7 @@ export type SkyCoProject = {
   description: string;
   icon: ProjectIcon;
   /** Clean SkyCo product path, for example /currensee. */
-  path?: "/currensee" | "/chronos" | "/finance-friend" | "/grocery";
+  path?: "/currensee" | "/chronos" | "/finance-friend" | "/grocery" | "/float";
   /** Why the product exists, in one plain sentence. */
   why?: string;
   /** A concrete, checkable example of the job it does. */
@@ -106,6 +106,22 @@ export const projectRegistry: SkyCoProject[] = [
     why: "Most weeks the hard part is not cooking, it is deciding what to buy before you get to the shop.",
     example: "Open the Easy Week starter pack and it is already sorted by store section with quantities filled in.",
     account: "No account needed.",
+    candidates: [],
+  },
+  {
+    slug: "float",
+    job: "Work out what is left to spend after pay, bills and BNPL instalments.",
+    name: "Float",
+    tagline: "Know what you can spend this week",
+    description:
+      "Add your pay, bills and Afterpay or BNPL instalments and see what is left to spend this week, fortnight or month, in Australian dollars.",
+    icon: "wallet",
+    path: "/float",
+    dataSources: [],
+    demo: "Open it and a sample week is already worked out: pay in, bills and BNPL out, and what is left.",
+    why: "Pay, bills and Afterpay instalments land on different days, so the bank balance rarely tells you what is safe to spend this week.",
+    example: "Add a fortnightly pay, weekly rent and an Afterpay instalment, and Float shows what is left for this week in Australian dollars.",
+    account: "No account needed. Guest mode keeps your numbers in this browser only.",
     candidates: [],
   },
 
