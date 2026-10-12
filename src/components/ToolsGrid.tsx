@@ -64,7 +64,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
         <div className="mt-6 grid gap-6">
           {liveProjects.map(project => {
             const shot = productShots[project.slug];
-            return <Link key={project.slug} to={project.path ?? "/"} aria-labelledby={`tool-name-${project.slug}`} className="grid overflow-hidden rounded-lg border border-border bg-card sm:grid-cols-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4">
+            return <Link key={project.slug} to={project.path ?? "/"} aria-labelledby={`tool-name-${project.slug}`} className="grid overflow-hidden rounded-lg border border-border bg-card grid-cols-1 md:grid-cols-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4">
               {shot && <img src={shot.src} alt={shot.alt} width={1280} height={800} loading="lazy" decoding="async" className="aspect-[16/10] h-full w-full object-cover object-top" />}
               <div className="p-6">
                 <span className="text-xs font-bold uppercase text-sky-deep">Live</span>
