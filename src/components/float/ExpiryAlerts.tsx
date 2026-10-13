@@ -10,7 +10,7 @@ export function ExpiryAlerts({ items }: { items: Entry[] }) {
     .sort((a, b) => a.days - b.days);
   if (ending.length === 0) return null;
   return (
-    <section className="rounded-2xl border border-destructive/30 bg-destructive/5 p-5">
+    <section className="min-w-0 rounded-2xl border border-destructive/30 bg-destructive/5 p-4 sm:p-5">
       <h3 className="flex items-center gap-2 text-sm font-semibold text-destructive">
         <AlarmClock className="size-4" aria-hidden="true" />
         {ending.length === 1 ? "1 deal ends soon" : `${ending.length} deals end soon`}
