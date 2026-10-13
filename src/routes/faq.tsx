@@ -65,10 +65,10 @@ const faqs: { q: string; text: string; a: React.ReactNode }[] = [
   },
   {
     q: "Do I need an account?",
-    text: "No. The four tools currently running on SkyCo can be used without an account.",
+    text: "No. The five tools currently running on SkyCo can be used without an account.",
     a: (
       <>
-        No. The four tools currently running on SkyCo can be used without an account. My Finance
+        No. The five tools currently running on SkyCo can be used without an account. My Finance
         Friend currently provides a parser preview and does not save a portfolio. Details are in{" "}
         <Link to="/security">Security and data handling</Link>. <Link to="/finance-friend">Use My Finance Friend</Link>.
       </>

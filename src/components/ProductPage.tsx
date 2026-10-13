@@ -17,7 +17,9 @@ export function ProductPage({
   points,
   experience,
   experienceTitle,
+  after,
 }: {
+  after?: React.ReactNode;
   slug: string;
   directory: ResolvedProject[];
   headline: string;
@@ -106,6 +108,7 @@ export function ProductPage({
           </section>
         )}
 
+        {after}
         <section className="px-6 py-8 sm:py-12">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-2xl font-extrabold tracking-tight text-foreground">

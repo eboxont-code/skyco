@@ -115,7 +115,7 @@ function PrivacyPage() {
 
         <h2 id="cookies" className="scroll-mt-24">Cookies</h2>
         <p>
-          This website does not set advertising or analytics cookies. The four in-page product
+          This website does not set advertising or analytics cookies. The five in-page product
           experiences do not require a sign-in session.
         </p>
 
