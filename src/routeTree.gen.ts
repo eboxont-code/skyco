@@ -25,6 +25,7 @@ import { Route as ChronosRouteImport } from './routes/chronos'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CurrenseePairRouteImport } from './routes/currensee_.$pair'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -106,6 +107,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CurrenseePairRoute = CurrenseePairRouteImport.update({
+  id: '/currensee_/$pair',
+  path: '/currensee/$pair',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
+  '/currensee/$pair': typeof CurrenseePairRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
+  '/currensee/$pair': typeof CurrenseePairRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
+  '/currensee_/$pair': typeof CurrenseePairRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/status'
     | '/support'
     | '/terms'
+    | '/currensee/$pair'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/status'
     | '/support'
     | '/terms'
+    | '/currensee/$pair'
   id:
     | '__root__'
     | '/'
@@ -217,6 +228,7 @@ export interface FileRouteTypes {
     | '/status'
     | '/support'
     | '/terms'
+    | '/currensee_/$pair'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -236,6 +248,7 @@ export interface RootRouteChildren {
   StatusRoute: typeof StatusRoute
   SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
+  CurrenseePairRoute: typeof CurrenseePairRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/currensee_/$pair': {
+      id: '/currensee_/$pair'
+      path: '/currensee/$pair'
+      fullPath: '/currensee/$pair'
+      preLoaderRoute: typeof CurrenseePairRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -372,6 +392,7 @@ const rootRouteChildren: RootRouteChildren = {
   StatusRoute: StatusRoute,
   SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
+  CurrenseePairRoute: CurrenseePairRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

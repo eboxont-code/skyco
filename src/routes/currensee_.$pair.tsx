@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
 import { breadcrumbScript, shareMeta } from "@/lib/seo";
-import { pairBySlug, pairPath, relatedPairs, type CurrencyPair } from "@/lib/currency-pairs";
+import { pairBySlug, relatedPairs, type CurrencyPair } from "@/lib/currency-pairs";
 import { CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rates.functions";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
@@ -168,7 +168,6 @@ function PairPage() {
               </li>
             ))}
             <li><Link to="/currensee" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">All currencies in CurrenSee</Link></li>
-            <li><Link to="/currensee/rates" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">All NPR rates today</Link></li>
           </ul>
         </nav>
 
@@ -178,4 +177,3 @@ function PairPage() {
   );
 }
 
-export { pairPath };
