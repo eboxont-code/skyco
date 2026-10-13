@@ -27,7 +27,7 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
 
   return (
     <form
-      className="grid gap-3 rounded-xl border border-sky-bright/20 bg-sky-ice/40 p-3 sm:grid-cols-2"
+      className="grid min-w-0 gap-3 rounded-xl border border-sky-bright/20 bg-sky-ice/40 p-3 sm:grid-cols-2"
       onSubmit={(event) => {
         event.preventDefault();
         const value = Number.parseFloat(amount);
@@ -43,19 +43,19 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
         });
       }}
     >
-      <div className="grid gap-1.5">
+      <div className="grid min-w-0 gap-1.5">
         <Label className="text-xs text-muted-foreground">{nameLabel}</Label>
         <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={namePlaceholder} required />
       </div>
-      <div className="grid gap-1.5">
+      <div className="grid min-w-0 gap-1.5">
         <Label className="text-xs text-muted-foreground">Amount (AUD)</Label>
         <Input value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" required />
       </div>
-      <div className="grid gap-1.5">
+      <div className="grid min-w-0 gap-1.5">
         <Label className="text-xs text-muted-foreground">{dateLabel}</Label>
         <Input value={date} onChange={(e) => setDate(e.target.value)} type="date" required />
       </div>
-      <div className="grid gap-1.5">
+      <div className="grid min-w-0 gap-1.5">
         <Label className="text-xs text-muted-foreground">Repeats</Label>
         <Select value={frequency} onValueChange={(v) => setFrequency(v as Frequency)}>
           <SelectTrigger><SelectValue /></SelectTrigger>
@@ -68,19 +68,19 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
       </div>
       {showDealFields ? (
         <>
-          <div className="grid gap-1.5">
+          <div className="grid min-w-0 gap-1.5">
             <Label className="text-xs text-muted-foreground">Original price (optional)</Label>
             <Input value={originalAmount} onChange={(e) => setOriginalAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" />
           </div>
-          <div className="grid gap-1.5">
+          <div className="grid min-w-0 gap-1.5">
             <Label className="text-xs text-muted-foreground">Deal ends (optional)</Label>
             <Input value={dealEndsOn} onChange={(e) => setDealEndsOn(e.target.value)} type="date" />
           </div>
         </>
       ) : null}
-      <div className="flex gap-2 sm:col-span-2">
+      <div className="flex flex-col gap-2 sm:col-span-2 sm:flex-row">
         <Button type="submit" className="min-h-11"><Check className="size-4" aria-hidden="true" /> {submitLabel}</Button>
-        <Button type="button" variant="ghost" className="min-h-11" onClick={onCancel}><X className="size-4" aria-hidden="true" /> Cancel</Button>
+        <Button type="button" variant="ghost" className="min-h-11 w-full sm:w-auto" onClick={onCancel}><X className="size-4" aria-hidden="true" /> Cancel</Button>
       </div>
     </form>
   );
@@ -103,13 +103,13 @@ export function EntrySection({ title, subtitle, emptyText, total, tone, entries,
   const [editingId, setEditingId] = useState<string | null>(null);
 
   return (
-    <section className="rounded-2xl border border-sky-bright/20 bg-card p-5">
+    <section className="min-w-0 max-w-full overflow-hidden rounded-2xl border border-sky-bright/20 bg-card p-4 sm:p-5">
       <header className="flex flex-wrap items-baseline justify-between gap-2">
-        <div>
+        <div className="min-w-0 break-words">
           <h3 className="text-lg font-bold text-foreground">{title}</h3>
           <p className="text-sm text-muted-foreground">{subtitle}</p>
         </div>
-        <p className={`tabular-nums text-base font-semibold ${tone === "positive" ? "text-emerald-700" : "text-foreground"}`}>
+        <p className={`shrink-0 tabular-nums text-base font-semibold ${tone === "positive" ? "text-emerald-700" : "text-foreground"}`}>
           {tone === "positive" ? "+" : "-"}{formatAud(total)}
         </p>
       </header>
@@ -134,9 +134,9 @@ export function EntrySection({ title, subtitle, emptyText, total, tone, entries,
             );
           }
           return (
-            <li key={`${entry.id}-${entry.date}`} className="flex items-center justify-between gap-3 py-3">
-              <div className="min-w-0">
-                <p className="truncate font-medium text-foreground">{entry.name}</p>
+            <li key={`${entry.id}-${entry.date}`} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 py-3">
+              <div className="min-w-0 flex-1 basis-40">
+                <p className="break-words font-medium text-foreground">{entry.name}</p>
                 <p className="text-sm text-muted-foreground">{formatDayShort(entry.date)}, {FREQUENCY_LABELS[entry.frequency].toLowerCase()}</p>
                 {endsIn !== null ? (
                   <p className={`mt-1 text-xs ${endsIn <= 7 ? "font-medium text-destructive" : "text-muted-foreground"}`}>
@@ -144,8 +144,8 @@ export function EntrySection({ title, subtitle, emptyText, total, tone, entries,
                   </p>
                 ) : null}
               </div>
-              <div className="flex items-center gap-1">
-                <span className="mr-1 text-right">
+              <div className="ml-auto flex min-w-0 items-center gap-1">
+                <span className="mr-1 min-w-0 text-right">
                   <span className="block font-semibold tabular-nums">{formatAud(entry.amount)}</span>
                   {saved > 0 ? (
                     <span className="block text-xs tabular-nums text-muted-foreground"><s>{formatAud(entry.originalAmount ?? 0)}</s> save {formatAud(saved)}</span>
@@ -168,7 +168,7 @@ export function EntrySection({ title, subtitle, emptyText, total, tone, entries,
             onCancel={() => setAdding(false)}
           />
         ) : (
-          <Button variant="secondary" className="min-h-11 w-full sm:w-auto" onClick={() => setAdding(true)}><Plus className="size-4" aria-hidden="true" /> Add {title.toLowerCase()}</Button>
+          <Button variant="secondary" className="min-h-11 w-full whitespace-normal break-words sm:w-auto" onClick={() => setAdding(true)}><Plus className="size-4" aria-hidden="true" /> Add {title.toLowerCase()}</Button>
         )}
       </div>
     </section>

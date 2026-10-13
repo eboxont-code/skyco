@@ -10,14 +10,14 @@ export function ExpiryAlerts({ items }: { items: Entry[] }) {
     .sort((a, b) => a.days - b.days);
   if (ending.length === 0) return null;
   return (
-    <section className="rounded-2xl border border-destructive/30 bg-destructive/5 p-5">
+    <section className="min-w-0 rounded-2xl border border-destructive/30 bg-destructive/5 p-4 sm:p-5">
       <h3 className="flex items-center gap-2 text-sm font-semibold text-destructive">
         <AlarmClock className="size-4" aria-hidden="true" />
         {ending.length === 1 ? "1 deal ends soon" : `${ending.length} deals end soon`}
       </h3>
       <ul className="mt-3 grid gap-2">
         {ending.map(({ item, days }) => (
-          <li key={`${item.id}-${item.dealEndsOn}`} className="flex justify-between gap-3 text-sm">
+          <li key={`${item.id}-${item.dealEndsOn}`} className="flex flex-wrap justify-between gap-x-3 break-words text-sm">
             <span className="min-w-0 truncate text-foreground">
               {item.name}
               <span className="text-muted-foreground">

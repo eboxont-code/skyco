@@ -37,6 +37,15 @@ const groups = [
       ["Are my ticks saved?", "Ticks are saved for each pack in this browser when browser storage is available."],
     ],
   },
+  {
+    name: "Float",
+    to: "/float",
+    faqs: [
+      ["Do I need an account to use Float?", "No. Float works without an account. Guest mode keeps your numbers in this browser only."],
+      ["Does Float connect to my bank or Afterpay?", "No. Float never asks for bank or BNPL logins. You type in your pay, bills and instalments yourself."],
+      ["How is the spend number worked out?", "Float adds the pay landing in the chosen window, then takes away the bills and BNPL instalments due in it."],
+    ],
+  },
 ];
 
 export function ProductFaqs() {

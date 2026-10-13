@@ -129,7 +129,7 @@ function SecurityPage() {
               removes it, and SkyCo cannot read it remotely.
             </li>
             <li>
-              The current four in-page experiences do not store account data. The finance preview
+              The current five in-page experiences do not store account data. The finance preview
               shows a parsed entry but does not save it.
             </li>
             <li>

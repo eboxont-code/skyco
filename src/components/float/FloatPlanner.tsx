@@ -128,17 +128,17 @@ export function FloatPlanner({ shared }: { shared?: string }) {
   const deals = [...store.bills, ...store.bnpl];
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
+    <div className="mx-auto w-full min-w-0 max-w-2xl overflow-x-hidden">
       <div className="flex flex-col gap-3 rounded-xl border border-sky-bright/20 bg-sky-ice/50 px-4 py-3 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p role="status">
+        <p role="status" className="min-w-0 break-words">
           {guest
             ? "Guest mode: your numbers are kept in this browser only. Nothing is sent to SkyCo."
             : "Sneak peek: sample numbers you can change. Nothing is saved unless you turn on guest mode."}
         </p>
         {guest ? (
-          <Button variant="ghost" className="min-h-11 shrink-0" onClick={stopGuest}>Clear my numbers</Button>
+          <Button variant="ghost" className="min-h-11 w-full whitespace-normal sm:w-auto sm:shrink-0" onClick={stopGuest}>Clear my numbers</Button>
         ) : (
-          <Button variant="secondary" className="min-h-11 shrink-0" onClick={startGuest}>Keep my numbers as a guest</Button>
+          <Button variant="secondary" className="min-h-11 w-full whitespace-normal sm:w-auto sm:shrink-0" onClick={startGuest}>Keep my numbers as a guest</Button>
         )}
       </div>
 
@@ -146,7 +146,7 @@ export function FloatPlanner({ shared }: { shared?: string }) {
 
       <section className="mt-6 text-center" aria-live="polite">
         <p className="text-sm uppercase tracking-widest text-muted-foreground">{windowLabel}</p>
-        <p className={`mt-3 text-5xl font-extrabold tabular-nums sm:text-6xl ${spendable < 0 ? "text-destructive" : "text-sky-deep"}`}>{formatAud(spendable)}</p>
+        <p className={`mt-3 break-words text-4xl font-extrabold tabular-nums sm:text-6xl ${spendable < 0 ? "text-destructive" : "text-sky-deep"}`}>{formatAud(spendable)}</p>
         <p className="mt-3 text-sm tabular-nums text-muted-foreground">
           {formatAud(incomeTotal)} in, minus {formatAud(billsTotal)} bills and {formatAud(bnplTotal)} BNPL
         </p>
@@ -157,7 +157,7 @@ export function FloatPlanner({ shared }: { shared?: string }) {
         {shareState === "failed" ? <p className="text-xs text-destructive" role="alert">The link could not be copied. Please try again.</p> : null}
       </section>
 
-      <div className="mt-6 grid gap-5">
+      <div className="mt-6 grid min-w-0 grid-cols-1 gap-5">
         {!guest && edits >= NUDGE_AFTER ? (
           <div className="rounded-2xl border border-sky-bright/25 bg-sky-ice/50 p-5 text-center">
             <p className="font-semibold text-foreground">Keep these numbers?</p>
@@ -170,7 +170,7 @@ export function FloatPlanner({ shared }: { shared?: string }) {
         <EntrySection title="Income" subtitle="Pay landing in this window" nameLabel="Source" namePlaceholder="Wages" dateLabel="Pay date" emptyText="Add a pay to see your number." tone="positive" total={incomeTotal} entries={income} defaultDate={today} defaultFrequency="fortnightly" {...handlers("income")} />
         <EntrySection title="Bills due" subtitle="Biggest first" nameLabel="Bill" namePlaceholder="Mobile plan" dateLabel="Due date" emptyText="Add a bill such as rent, power or internet." tone="outgoing" total={billsTotal} entries={bills} defaultDate={today} defaultFrequency="monthly" showDealFields {...handlers("bills")} />
         <EntrySection title="Afterpay and BNPL" subtitle="Instalments and plans" nameLabel="Provider or plan" namePlaceholder="Afterpay" dateLabel="Due date" emptyText="Add an instalment to include it." tone="outgoing" total={bnplTotal} entries={bnpl} defaultDate={today} defaultFrequency="fortnightly" showDealFields {...handlers("bnpl")} />
-        <div className="rounded-2xl border border-sky-bright/20 bg-card p-5">
+        <div className="min-w-0 rounded-2xl border border-sky-bright/20 bg-card p-4 sm:p-5">
           <p className="text-xs font-bold uppercase tracking-wider text-sky-deep">Coming soon</p>
           <p className="mt-1 font-semibold text-foreground">Float accounts and sync across your devices</p>
           <p className="mt-1 text-sm text-muted-foreground">Everything above is free to use now. Saving to an account is not available yet. Join the waitlist and I will email you when it opens.</p>

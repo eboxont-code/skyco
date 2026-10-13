@@ -13,10 +13,10 @@ export function OutgoingsChart({ income, bills, bnpl, periodLabel }: { income: n
     { name: "BNPL", value: bnpl, fill: "var(--color-muted-foreground)" },
   ];
   return (
-    <section className="rounded-2xl border border-sky-bright/20 bg-card p-5">
+    <section className="min-w-0 max-w-full overflow-hidden rounded-2xl border border-sky-bright/20 bg-card p-4 sm:p-5">
       <h3 className="text-lg font-bold text-foreground">Where it goes</h3>
       <p className="text-sm text-muted-foreground">{periodLabel}</p>
-      <ChartContainer config={config} className="mt-4 h-48 w-full">
+      <ChartContainer config={config} className="mt-4 h-48 w-full max-w-full overflow-hidden">
         <BarChart data={data} margin={{ left: 4, right: 4, top: 8 }}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" />
           <XAxis dataKey="name" tickLine={false} axisLine={false} />
