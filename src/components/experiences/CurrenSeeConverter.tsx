@@ -169,7 +169,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
           <>
             I could not reach the rate service just now. The numbers stay blank rather than show
             you something stale.
-            <Button variant="outline" className="min-h-11" className="ml-2" onClick={() => { void query.refetch(); }}>Try again</Button>
+            <Button variant="outline" className="ml-2 min-h-11" onClick={() => { void query.refetch(); }}>Try again</Button>
           </>
         ) : (
           <>Fetching the current rate</>
