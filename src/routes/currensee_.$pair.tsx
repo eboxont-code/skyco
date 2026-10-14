@@ -69,7 +69,6 @@ export const Route = createFileRoute("/currensee_/$pair")({
       links: [{ rel: "canonical", href: url }],
       scripts: [
         breadcrumbScript([
-          { name: "Products", path: "/#tools" },
           { name: "CurrenSee", path: "/currensee" },
           { name: `${from} to ${to}`, path: `/currensee/${slug}` },
         ]),
@@ -115,7 +114,7 @@ function PairPage() {
   const list = faqs(pair, rate);
   const card = "rounded-2xl border border-sky-bright/20 bg-card p-4 sm:p-5";
   return (
-    <PageShell eyebrow="CurrenSee" title={`${from} to ${to} today`} directory={directory}>
+    <PageShell eyebrow="CurrenSee" title={`${from} to ${to} today`} parent={{ label: "CurrenSee", to: "/currensee" }} crumb={`${from} to ${to}`} directory={directory}>
       <div className="space-y-8">
         <section aria-label="Today's rate" className={card}>
           {rate ? (
@@ -160,7 +159,7 @@ function PairPage() {
         <nav aria-labelledby="related-heading">
           <h2 id="related-heading" className="text-2xl font-extrabold tracking-tight text-foreground">Related conversions</h2>
           <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {relatedPairs(pair).map((p) => (
+            {relatedPairs(pair).filter((p) => p.slug !== pair.slug).map((p) => (
               <li key={p.slug}>
                 <Link to="/currensee/$pair" params={{ pair: p.slug }} className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">
                   {p.from} to {p.to}

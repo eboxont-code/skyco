@@ -40,4 +40,4 @@ export const PAIR_GROUPS: { name: string; pairs: CurrencyPair[] }[] = [
   { name: "Nepal", pairs: PAIRS.filter(hasNpr) },
   { name: "Australia", pairs: PAIRS.filter((p) => !hasNpr(p) && (p.from === "AUD" || p.to === "AUD")) },
   { name: "Other", pairs: PAIRS.filter((p) => !hasNpr(p) && p.from !== "AUD" && p.to !== "AUD") },
-];
+].filter((g) => g.pairs.length > 0);

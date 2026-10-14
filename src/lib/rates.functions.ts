@@ -43,7 +43,7 @@ export type RateResult = {
   approximate: boolean;
 };
 
-type NrbDay = { date: string; rates: { currency: { iso3: string; unit: number }; buy: string; sell: string }[] };
+type NrbDay = { date: string; rates: { currency: { iso3: string; name?: string; unit: number }; buy: string; sell: string }[] };
 let nrbCache: { expires: number; days: NrbDay[] } | undefined;
 async function nrbDays(): Promise<NrbDay[]> {
   if (nrbCache && nrbCache.expires > Date.now()) return nrbCache.days;
@@ -206,3 +206,24 @@ export const getRate = createServerFn({ method: "GET" })
     pairCache.set(key, { expires: Date.now() + 60_000, result });
     return result;
   });
+
+export type NprRateRow = { iso3: string; name: string; unit: number; buy: number; sell: number; midpoint: number; perOne: number };
+export type NprRatesDay = { date: string; rows: NprRateRow[] } | null;
+
+/** Latest Nepal Rastra Bank day, reusing the hourly NRB cache. Null when NRB is unavailable. */
+export const getNprRates = createServerFn({ method: "GET" }).handler(async (): Promise<NprRatesDay> => {
+  try {
+    const days = await nrbDays();
+    const latest = days[days.length - 1];
+    const rows: NprRateRow[] = [];
+    for (const r of latest.rates) {
+      const buy = Number(r.buy), sell = Number(r.sell), unit = Number(r.currency.unit);
+      if (!(Number.isFinite(buy) && Number.isFinite(sell) && buy > 0 && sell > 0 && unit > 0)) continue;
+      const midpoint = (buy + sell) / 2;
+      rows.push({ iso3: r.currency.iso3, name: CURRENCY_NAMES[r.currency.iso3] ?? r.currency.name ?? r.currency.iso3, unit, buy, sell, midpoint, perOne: midpoint / unit });
+    }
+    return rows.length ? { date: latest.date, rows } : null;
+  } catch {
+    return null;
+  }
+});

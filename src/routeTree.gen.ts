@@ -25,6 +25,8 @@ import { Route as ChronosRouteImport } from './routes/chronos'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GuidesSendingMoneyToNepalFromAustraliaRouteImport } from './routes/guides.sending-money-to-nepal-from-australia'
+import { Route as CurrenseeRatesRouteImport } from './routes/currensee_.rates'
 import { Route as CurrenseePairRouteImport } from './routes/currensee_.$pair'
 
 const TermsRoute = TermsRouteImport.update({
@@ -107,6 +109,17 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesSendingMoneyToNepalFromAustraliaRoute =
+  GuidesSendingMoneyToNepalFromAustraliaRouteImport.update({
+    id: '/guides/sending-money-to-nepal-from-australia',
+    path: '/guides/sending-money-to-nepal-from-australia',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CurrenseeRatesRoute = CurrenseeRatesRouteImport.update({
+  id: '/currensee_/rates',
+  path: '/currensee/rates',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CurrenseePairRoute = CurrenseePairRouteImport.update({
   id: '/currensee_/$pair',
   path: '/currensee/$pair',
@@ -131,6 +144,8 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/currensee/$pair': typeof CurrenseePairRoute
+  '/currensee/rates': typeof CurrenseeRatesRoute
+  '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -150,6 +165,8 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/currensee/$pair': typeof CurrenseePairRoute
+  '/currensee/rates': typeof CurrenseeRatesRoute
+  '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -170,6 +187,8 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/currensee_/$pair': typeof CurrenseePairRoute
+  '/currensee_/rates': typeof CurrenseeRatesRoute
+  '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -191,6 +210,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms'
     | '/currensee/$pair'
+    | '/currensee/rates'
+    | '/guides/sending-money-to-nepal-from-australia'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -210,6 +231,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms'
     | '/currensee/$pair'
+    | '/currensee/rates'
+    | '/guides/sending-money-to-nepal-from-australia'
   id:
     | '__root__'
     | '/'
@@ -229,6 +252,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/terms'
     | '/currensee_/$pair'
+    | '/currensee_/rates'
+    | '/guides/sending-money-to-nepal-from-australia'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -249,6 +274,8 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
   CurrenseePairRoute: typeof CurrenseePairRoute
+  CurrenseeRatesRoute: typeof CurrenseeRatesRoute
+  GuidesSendingMoneyToNepalFromAustraliaRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -365,6 +392,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/sending-money-to-nepal-from-australia': {
+      id: '/guides/sending-money-to-nepal-from-australia'
+      path: '/guides/sending-money-to-nepal-from-australia'
+      fullPath: '/guides/sending-money-to-nepal-from-australia'
+      preLoaderRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/currensee_/rates': {
+      id: '/currensee_/rates'
+      path: '/currensee/rates'
+      fullPath: '/currensee/rates'
+      preLoaderRoute: typeof CurrenseeRatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/currensee_/$pair': {
       id: '/currensee_/$pair'
       path: '/currensee/$pair'
@@ -393,6 +434,9 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
   CurrenseePairRoute: CurrenseePairRoute,
+  CurrenseeRatesRoute: CurrenseeRatesRoute,
+  GuidesSendingMoneyToNepalFromAustraliaRoute:
+    GuidesSendingMoneyToNepalFromAustraliaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
