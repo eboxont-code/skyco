@@ -150,9 +150,9 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
         </div>
       </div>
 
-      <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
-      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}>{base} → {quote}</Button> : null)}</div>
-      {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
+      <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" className="min-h-11" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
+      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["AUD", "NPR"], ["USD", "NPR"], ["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" className="min-h-11" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}>{base} → {quote}</Button> : null)}</div>
+      {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
       <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
         {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
@@ -169,7 +169,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
           <>
             I could not reach the rate service just now. The numbers stay blank rather than show
             you something stale.
-            <Button variant="outline" className="ml-2" onClick={() => { void query.refetch(); }}>Try again</Button>
+            <Button variant="outline" className="min-h-11" className="ml-2" onClick={() => { void query.refetch(); }}>Try again</Button>
           </>
         ) : (
           <>Fetching the current rate</>
@@ -177,7 +177,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
       </p>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <Button variant="outline" disabled={!data || converted === null} onClick={async () => { if (!data || converted === null) return; try { await navigator.clipboard.writeText(`${amount} ${from} = ${currencyFormat(converted, to)}, reference rate for ${data.asOf}`); setResultStatus("Result copied"); } catch { setResultStatus("Copy unavailable in this browser"); } }}>Copy result</Button><span role="status" className="text-xs text-muted-foreground">{resultStatus}</span>
+        <Button variant="outline" className="min-h-11" disabled={!data || converted === null} onClick={async () => { if (!data || converted === null) return; try { await navigator.clipboard.writeText(`${amount} ${from} = ${currencyFormat(converted, to)}, reference rate for ${data.asOf}`); setResultStatus("Result copied"); } catch { setResultStatus("Copy unavailable in this browser"); } }}>Copy result</Button><span role="status" className="text-xs text-muted-foreground">{resultStatus}</span>
         <button
           type="button"
           onClick={copyLink}
