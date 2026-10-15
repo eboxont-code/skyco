@@ -1,0 +1,3 @@
+CREATE TABLE public.waitlist_submissions (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), product text NOT NULL CHECK (char_length(product) BETWEEN 1 AND 100), name text NOT NULL DEFAULT '' CHECK (char_length(name) <= 100), email text NOT NULL CHECK (char_length(email) <= 255), created_at timestamptz NOT NULL DEFAULT now());
+GRANT ALL ON public.waitlist_submissions TO service_role;
+ALTER TABLE public.waitlist_submissions ENABLE ROW LEVEL SECURITY;
