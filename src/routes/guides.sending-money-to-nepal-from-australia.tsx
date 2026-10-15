@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Prose } from "@/components/PageShell";
-import { breadcrumbScript, pageScript, shareMeta } from "@/lib/seo";
+import { breadcrumbScript, shareMeta } from "@/lib/seo";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
