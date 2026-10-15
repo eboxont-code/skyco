@@ -70,7 +70,7 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
   --background: oklch(0.97 0.01 240);
   --foreground: oklch(0.25 0.04 250);
   --card: oklch(1 0 0);
@@ -175,6 +175,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+  input, select, textarea { min-width: 0; max-width: 100%; }
+  :focus-visible { outline-offset: 3px; }
 }
 
 @media print {

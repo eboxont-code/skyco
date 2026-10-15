@@ -24,3 +24,6 @@
 - Mount mobile actions only in ProductPage and derive them from its project, so home and unrelated tools never share a sticky action.
 
 - Reuse an hourly Nepal Rastra Bank payload cache for supported rates; reject invalid values and label NPR peg fallback explicitly to avoid invented rates.
+- Use one NRB day's unit-adjusted midpoints for both sides of NRB conversions so tables, history and converters agree.
+- Compare related pairs by slug, not object identity, because loader data crosses serialization boundaries.
+- Initialize pair converters with their loader rate and render deterministic update text until hydration to keep the first result stable.
