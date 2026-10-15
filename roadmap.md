@@ -1,4 +1,12 @@
-# SkyCo October 11 ordered updates
+# SkyCo October 15 ordered updates
+- [x] 0: October 14 release entry
+- [ ] A1-A2: Pair hydration and NRB consistency
+- [ ] C0g-C0h: Calendar layout and shared presentation
+- [ ] F2-F4: Uploaded share pictures, Float preview and stored waitlist
+- [ ] A3-A11, A13-A20: Guide, accessibility and metadata
+- [ ] 1-48: Ordered follow-on requests
+
+## Previous updates
 - [x] 0: October 11 release entry
 - [x] C0a-C0f: Ordered mobile cleanup, green compilation and desktop/mobile checks
 - [x] T1: Nepal and Gulf reference-rate support
