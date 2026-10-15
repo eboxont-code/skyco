@@ -14,7 +14,7 @@ const FAQS: [string, string][] = [
   ["Does Float connect to my bank or Afterpay?", "No. Float never asks for bank or BNPL logins. You type in your pay, bills and instalments yourself."],
   ["How is the spend number worked out?", "Float adds the pay landing in the chosen week, fortnight or month, then takes away the bills and BNPL instalments due in that same window."],
 ];
-const IMAGE = "https://skyco.online/og/home.jpg";
+const IMAGE = "https://skyco.online/og/float.jpg";
 
 export const Route = createFileRoute("/float")({
   validateSearch: (search: Record<string, unknown>): { d?: string } => (typeof search.d === "string" && search.d ? { d: search.d } : {}),

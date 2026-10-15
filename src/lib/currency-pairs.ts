@@ -31,7 +31,7 @@ const hasNpr = (p: CurrencyPair) => p.from === "NPR" || p.to === "NPR";
 export function relatedPairs(p: CurrencyPair): CurrencyPair[] {
   const reverse = PAIRS.find((x) => x.from === p.to && x.to === p.from);
   const others = PAIRS.filter(
-    (x) => x !== p && x !== reverse && [x.from, x.to].some((c) => c === p.from || c === p.to),
+    (x) => x.slug !== p.slug && x.slug !== reverse?.slug && [x.from, x.to].some((c) => c === p.from || c === p.to),
   ).sort((a, b) => Number(hasNpr(b)) - Number(hasNpr(a)));
   return [...(reverse ? [reverse] : []), ...others.slice(0, 4)];
 }

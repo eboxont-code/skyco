@@ -62,7 +62,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        ...shareMeta("currensee", `CurrenSee ${from} to ${to} converter`),
+        ...shareMeta("pair-template", `CurrenSee ${from} to ${to} converter`),
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: description },
       ],
@@ -127,7 +127,7 @@ function PairPage() {
           )}
         </section>
 
-        <CurrenSeeConverter initialFrom={from} initialTo={to} />
+        <CurrenSeeConverter initialFrom={from} initialTo={to} initialRate={rate ?? undefined} />
 
         {rate && (
           <section aria-labelledby="ref-heading">

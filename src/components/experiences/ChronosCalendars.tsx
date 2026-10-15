@@ -1,6 +1,8 @@
 import { useWebMCPTools, text } from "@/lib/webmcp";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 /**
  * The Chronos reading, running on skyco.online itself.
@@ -27,7 +29,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
     date.setUTCDate(date.getUTCDate() + offset);
     setValue(date.toISOString().slice(0, 10));
   };
-  const dateIsValid = /^\d{4}-\d{2}-\d{2}$/.test(value) && !isNaN(new Date(`${value}T12:00:00Z`).getTime());
+  const dateIsValid = /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(new Date(`${value}T12:00:00Z`).getTime()) && new Date(`${value}T12:00:00Z`).toISOString().slice(0, 10) === value;
   useEffect(() => {
     if (!dateIsValid || new Date(`${value}T12:00:00Z`).toISOString().slice(0, 10) !== value) return;
     if (new URLSearchParams(window.location.search).get("date") === value) return;
@@ -36,7 +38,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
 
   const rows = useMemo(() => {
     const date = new Date(`${value}T12:00:00Z`);
-    if (isNaN(date.getTime())) return [];
+    if (!dateIsValid) return [];
     return SYSTEMS.map((s) => {
       let text = "Not available in this browser";
       try {
@@ -52,7 +54,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
       }
       return { label: s.label, text };
     });
-  }, [value]);
+  }, [value, dateIsValid]);
 
   const weekday = useMemo(() => {
     const date = new Date(`${value}T12:00:00Z`);
@@ -61,9 +63,9 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
   }, [value]);
 
   return (
-    <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
-      <div className="flex flex-wrap items-end justify-between gap-3 max-[399px]:flex-col max-[399px]:items-stretch">
-        <div className="block max-[399px]:w-full"><label htmlFor="chronos-date" className="text-xs font-semibold text-muted-foreground">Pick a date</label>
+    <div className="min-w-0 space-y-4">
+      <div className="flex flex-wrap items-end gap-3">
+        <div className="w-full sm:w-auto"><label htmlFor="chronos-date" className="text-xs font-semibold text-muted-foreground">Pick a date</label>
           <input
             type="date"
             value={value}
@@ -74,15 +76,15 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
             className="mt-1 block min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base font-semibold text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:w-56"
           />
         </div>
-        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(-1)} aria-label="Move the chosen date back one day" className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Previous day</button>
-        <button type="button" disabled={!dateIsValid} onClick={() => shiftDay(1)} aria-label="Move the chosen date forward one day" className="min-h-12 rounded-full border border-sky-bright/40 px-4 text-sm text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Next day</button>
-        <button
+        <Button variant="outline" size="icon" disabled={!dateIsValid} onClick={() => shiftDay(-1)} aria-label="Previous day" title="Previous day" className="min-h-12 min-w-12"><ChevronLeft aria-hidden="true" /></Button>
+        <Button variant="outline" size="icon" disabled={!dateIsValid} onClick={() => shiftDay(1)} aria-label="Next day" title="Next day" className="min-h-12 min-w-12"><ChevronRight aria-hidden="true" /></Button>
+        <Button variant="outline"
           type="button"
           onClick={() => { setValue(new Date().toISOString().slice(0, 10)); setCopyStatus("Date reset to today"); }}
           className="inline-flex min-h-12 items-center rounded-full border border-sky-bright/40 px-5 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           Today
-        </button>
+        </Button>
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground" suppressHydrationWarning>
@@ -104,7 +106,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
         {rows.map((r) => (
           <div
             key={r.label}
-            className="rounded-xl border border-sky-bright/20 bg-sky-ice/30 px-4 py-3"
+            className="min-w-0 rounded-lg border border-border bg-card px-4 py-3"
           >
             <dt className="text-[11px] font-bold uppercase tracking-wider text-sky-deep">
               {r.label}
