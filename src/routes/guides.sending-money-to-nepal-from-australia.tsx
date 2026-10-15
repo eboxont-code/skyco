@@ -20,7 +20,7 @@ export const Route = createFileRoute("/guides/sending-money-to-nepal-from-austra
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "article" },
       { property: "og:url", content: URL },
-      ...shareMeta("currensee", "Sending money to Nepal from Australia"),
+      ...shareMeta("guide-nepal", "Sending money to Nepal from Australia"),
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },

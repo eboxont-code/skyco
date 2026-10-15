@@ -62,7 +62,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        ...shareMeta("currensee", `CurrenSee ${from} to ${to} converter`),
+        ...shareMeta("pair-template", `CurrenSee ${from} to ${to} converter`),
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: description },
       ],
