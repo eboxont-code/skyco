@@ -27,7 +27,7 @@ export const Route = createFileRoute("/guides/sending-money-to-nepal-from-austra
     ],
     links: [{ rel: "canonical", href: URL }],
     scripts: [
-      pageScript("Article", "Sending money to Nepal from Australia", PATH, DESCRIPTION),
+      { type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: "Sending money to Nepal from Australia", description: DESCRIPTION, mainEntityOfPage: URL, dateModified: "2026-10-15", author: { "@type": "Organization", name: "SkyCo", url: "https://skyco.online" }, publisher: { "@type": "Organization", name: "SkyCo", url: "https://skyco.online" }, image: "https://skyco.online/og/guide-nepal.jpg" }) },
       breadcrumbScript([{ name: "Sending money to Nepal from Australia", path: PATH }]),
     ],
   }),
@@ -38,13 +38,14 @@ function GuidePage() {
   return (
     <PageShell eyebrow="Guide" title="Sending money to Nepal from Australia" directory={Route.useLoaderData()}>
       <Prose>
+        <p>Updated <time dateTime="2026-10-15">15 October 2026</time>.</p>
         <section>
           <h2>Compare the rupees received, not the fee alone</h2>
           <p>A low or zero fee can hide a weaker exchange rate. Ask each service how many Nepalese rupees will arrive for the same amount of Australian dollars, and compare that final number.</p>
         </section>
         <section>
           <h2>Check the offered rate against today's reference rate</h2>
-          <p>Look up today's reference rate on <Link to="/currensee/$pair" params={{ pair: "aud-to-npr" }}>AUD to NPR</Link> before you send. The rate you are offered will usually be a little lower. The gap shows you how much the service keeps. The <Link to="/currensee/rates">full list of NPR rates today</Link> covers other currencies too.</p>
+          <p>Look up today's reference rate on <Link to="/currensee/$pair" params={{ pair: "aud-to-npr" }}>AUD to NPR</Link> before you send. This is the midpoint of Nepal Rastra Bank's published buy and sell rates, adjusted for the currency unit, not a transfer quote. The difference from a provider's quote does not show its profit or the full cost by itself. The <Link to="/currensee/rates">full list of NPR rates today</Link> shows the published buy, sell and midpoint values.</p>
         </section>
         <section>
           <h2>Ask what both ends charge and how the money arrives</h2>
@@ -57,6 +58,10 @@ function GuidePage() {
         <section>
           <h2>Expect identity checks and keep your receipts</h2>
           <p>Licensed services are required to verify who you are, so have your ID ready. Keep every receipt and reference number until the money has arrived.</p>
+        </section>
+        <section>
+          <h2>Compare quotes on the same basis</h2>
+          <p>Use the same total AUD payment, delivery method and quote time. Confirm the final NPR received, any receiving charges and the expected arrival date before accepting. Check the reference date too: a daily bank reference can lag the current market.</p>
         </section>
       </Prose>
     </PageShell>

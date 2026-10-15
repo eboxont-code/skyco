@@ -1,8 +1,11 @@
 # SkyCo October 15 ordered updates
 - [x] 0: October 14 release entry
-- [ ] A1-A2: Pair hydration and NRB consistency
-- [ ] C0g-C0h: Calendar layout and shared presentation
-- [ ] F2-F4: Uploaded share pictures, Float preview and stored waitlist
+- [x] A1-A2: Pair hydration and NRB consistency
+- [x] C0g-C0h: Calendar controls and shared radius, input and focus presentation
+- [x] F2: Six uploaded share pictures and pair/Float/guide metadata
+- [x] F3: Float guest preview preserved
+- [x] F4: Stored shared waitlist, tested through Float and test row removed
+- [ ] Owner waitlist email: needs verified sending domain; submissions available in Cloud > Database > waitlist_submissions
 - [ ] A3-A11, A13-A20: Guide, accessibility and metadata
 - [ ] 1-48: Ordered follow-on requests
 
