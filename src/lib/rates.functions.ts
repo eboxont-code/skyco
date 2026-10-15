@@ -54,14 +54,16 @@ async function nrbDays(): Promise<NrbDay[]> {
   const json = await response.json() as { data?: { payload?: NrbDay[] } };
   const days = json.data?.payload;
   if (!Array.isArray(days) || !days.length) throw new Error("Reference rates unavailable");
-  nrbCache = { expires: Date.now() + 3600000, days };
-  return days;
+  const validDays = days.filter(day => /^\d{4}-\d{2}-\d{2}$/.test(day.date) && Array.isArray(day.rates)).sort((a, b) => a.date.localeCompare(b.date));
+  if (!validDays.length) throw new Error("Reference rates unavailable");
+  nrbCache = { expires: Date.now() + 3600000, days: validDays };
+  return validDays;
 }
 function nprTable(day: NrbDay): Record<string, number> {
   const table: Record<string, number> = { NPR: 1 };
   for (const row of day.rates) {
     const buy = Number(row.buy), sell = Number(row.sell), unit = Number(row.currency.unit);
-    if (Number.isFinite(buy) && Number.isFinite(sell) && buy > 0 && sell > 0 && unit > 0) table[row.currency.iso3] = (buy + sell) / 2 / unit;
+    if (Number.isFinite(buy) && Number.isFinite(sell) && Number.isFinite(unit) && buy > 0 && sell > 0 && unit > 0) table[row.currency.iso3] = (buy + sell) / 2 / unit;
   }
   return table;
 }
@@ -137,8 +139,8 @@ export const getRate = createServerFn({ method: "GET" })
     const key = `${from}:${to}`;
     const cached = pairCache.get(key);
     if (cached && cached.expires > Date.now()) return cached.result;
-    const fiat = await fiatUsdTable();
-    let asOf = (fiat as unknown as { date: string }).date ?? new Date().toISOString().slice(0, 10);
+    let fiat: Record<string, number> = {};
+    let asOf = "";
     const needsNrb = [from, to].some(c => ["NPR", "QAR", "AED", "SAR"].includes(c));
     let nrb: NrbDay[] = [];
     let nrbSource: RateResult["source"] = "Nepal Rastra Bank";
@@ -150,13 +152,20 @@ export const getRate = createServerFn({ method: "GET" })
         const table = nprTable(latest);
         const usd = table.USD;
         if (!usd) throw new Error("Reference rates unavailable");
-        for (const code of ["NPR", "QAR", "AED", "SAR"]) if (table[code]) fiat[code] = table[code] / usd;
+        for (const [code, perNpr] of Object.entries(table)) fiat[code] = perNpr / usd;
+        if (!(from in CRYPTO) && !fiat[from] || !(to in CRYPTO) && !fiat[to]) throw new Error("Reference rates unavailable");
         asOf = latest.date;
       } catch {
         if ([from, to].some(c => ["QAR", "AED", "SAR"].includes(c))) throw new Error("Reference rates unavailable");
+        fiat = await fiatUsdTable();
+        asOf = (fiat as unknown as { date: string }).date;
         fiat.NPR = (fiat.INR ?? 0) / 1.6;
         nrbSource = "Derived from INR at the official 1.6 peg";
       }
+    }
+    if (!needsNrb) {
+      fiat = await fiatUsdTable();
+      asOf = (fiat as unknown as { date: string }).date;
     }
     const cryptoCodes = [from, to].filter((c) => c in CRYPTO);
     const crypto = await cryptoUsd([...new Set(cryptoCodes)]);
@@ -215,10 +224,11 @@ export const getNprRates = createServerFn({ method: "GET" }).handler(async (): P
   try {
     const days = await nrbDays();
     const latest = days[days.length - 1];
+    if (!latest) return null;
     const rows: NprRateRow[] = [];
     for (const r of latest.rates) {
       const buy = Number(r.buy), sell = Number(r.sell), unit = Number(r.currency.unit);
-      if (!(Number.isFinite(buy) && Number.isFinite(sell) && buy > 0 && sell > 0 && unit > 0)) continue;
+      if (!(Number.isFinite(buy) && Number.isFinite(sell) && Number.isFinite(unit) && buy > 0 && sell > 0 && unit > 0)) continue;
       const midpoint = (buy + sell) / 2;
       rows.push({ iso3: r.currency.iso3, name: CURRENCY_NAMES[r.currency.iso3] ?? r.currency.name ?? r.currency.iso3, unit, buy, sell, midpoint, perOne: midpoint / unit });
     }
