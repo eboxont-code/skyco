@@ -127,7 +127,7 @@ function PairPage() {
           )}
         </section>
 
-        <CurrenSeeConverter initialFrom={from} initialTo={to} />
+        <CurrenSeeConverter initialFrom={from} initialTo={to} initialRate={rate ?? undefined} />
 
         {rate && (
           <section aria-labelledby="ref-heading">

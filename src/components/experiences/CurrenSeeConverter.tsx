@@ -10,7 +10,7 @@ import { CURRENCIES, CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rate
  * The CurrenSee converter, running on skyco.online itself.
  * Opens on USD to EUR with a live rate and a 30 day chart already on screen.
  */
-export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onConversionChange }: { initialFrom?: string; initialTo?: string; initialAmount?: string; onConversionChange?: (values: { from: string; to: string; amount: string }) => void }) {
+export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, initialRate, onConversionChange }: { initialFrom?: string; initialTo?: string; initialAmount?: string; initialRate?: RateResult; onConversionChange?: (values: { from: string; to: string; amount: string }) => void }) {
   const safeFrom = initialFrom && CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
   const safeTo = initialTo && CURRENCIES.includes(initialTo) ? initialTo : "EUR";
   const [from, setFrom] = useState(safeFrom);
@@ -21,7 +21,9 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
   const [swapStatus, setSwapStatus] = useState("");
   const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
   const [storageReady, setStorageReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
+    setMounted(true);
     try {
       const last: unknown = JSON.parse(localStorage.getItem("skyco.currensee.last") ?? "null");
       if (last && typeof last === "object" && "from" in last && "to" in last && "amount" in last && typeof last.from === "string" && typeof last.to === "string" && typeof last.amount === "string" && CURRENCIES.includes(last.from) && CURRENCIES.includes(last.to) && /^\d+(?:\.\d+)?$/.test(last.amount) && last.amount.length <= 30 && Number.isFinite(Number(last.amount)) && Number(last.amount) > 0) {
@@ -68,6 +70,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
   const query = useQuery<RateResult>({
     queryKey: ["rate", from, to],
     queryFn: () => fetchRate({ data: { from, to } }),
+    initialData: from === initialRate?.from && to === initialRate?.to ? initialRate : undefined,
     staleTime: 60_000,
     refetchInterval: 120_000,
   });
@@ -92,8 +95,10 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, onCo
         <h2 className="text-sm font-bold uppercase tracking-wider text-sky-deep">
           Convert now
         </h2>
-        <span className="text-xs text-muted-foreground" role="status" aria-live="polite" suppressHydrationWarning>
-          {query.isFetching
+        <span className="text-xs text-muted-foreground" role="status" aria-live="polite">
+          {!mounted
+            ? data ? `Reference rate for ${data.asOf}` : "Loading rate"
+            : query.isFetching
             ? "Refreshing rate"
             : data
               ? `Updated ${timeAgo(data.fetchedAt)}`
