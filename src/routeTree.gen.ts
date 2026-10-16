@@ -9,94 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as SupportRouteImport } from './routes/support'
-import { Route as StatusRouteImport } from './routes/status'
-import { Route as SecurityRouteImport } from './routes/security'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
-import { Route as GroceryRouteImport } from './routes/grocery'
-import { Route as FloatRouteImport } from './routes/float'
-import { Route as FinanceFriendRouteImport } from './routes/finance-friend'
-import { Route as FinanceRouteImport } from './routes/finance'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as CurrenseeRouteImport } from './routes/currensee'
-import { Route as ChronosRouteImport } from './routes/chronos'
-import { Route as ChangelogRouteImport } from './routes/changelog'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as GuidesSendingMoneyToNepalFromAustraliaRouteImport } from './routes/guides.sending-money-to-nepal-from-australia'
-import { Route as CurrenseeRatesRouteImport } from './routes/currensee_.rates'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as ChronosRouteImport } from './routes/chronos'
+import { Route as CurrenseeRouteImport } from './routes/currensee'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FinanceRouteImport } from './routes/finance'
+import { Route as FinanceFriendRouteImport } from './routes/finance-friend'
+import { Route as FloatRouteImport } from './routes/float'
+import { Route as GroceryRouteImport } from './routes/grocery'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SecurityRouteImport } from './routes/security'
+import { Route as StatusRouteImport } from './routes/status'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as CurrenseePairRouteImport } from './routes/currensee_.$pair'
+import { Route as CurrenseeRatesRouteImport } from './routes/currensee_.rates'
+import { Route as GuidesSendingMoneyToNepalFromAustraliaRouteImport } from './routes/guides.sending-money-to-nepal-from-australia'
 
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SupportRoute = SupportRouteImport.update({
-  id: '/support',
-  path: '/support',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StatusRoute = StatusRouteImport.update({
-  id: '/status',
-  path: '/status',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SecurityRoute = SecurityRouteImport.update({
-  id: '/security',
-  path: '/security',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
-  id: '/llms.txt',
-  path: '/llms.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GroceryRoute = GroceryRouteImport.update({
-  id: '/grocery',
-  path: '/grocery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FloatRoute = FloatRouteImport.update({
-  id: '/float',
-  path: '/float',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FinanceFriendRoute = FinanceFriendRouteImport.update({
-  id: '/finance-friend',
-  path: '/finance-friend',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FinanceRoute = FinanceRouteImport.update({
-  id: '/finance',
-  path: '/finance',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CurrenseeRoute = CurrenseeRouteImport.update({
-  id: '/currensee',
-  path: '/currensee',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChronosRoute = ChronosRouteImport.update({
-  id: '/chronos',
-  path: '/chronos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChangelogRoute = ChangelogRouteImport.update({
-  id: '/changelog',
-  path: '/changelog',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -104,9 +39,84 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChronosRoute = ChronosRouteImport.update({
+  id: '/chronos',
+  path: '/chronos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CurrenseeRoute = CurrenseeRouteImport.update({
+  id: '/currensee',
+  path: '/currensee',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceRoute = FinanceRouteImport.update({
+  id: '/finance',
+  path: '/finance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanceFriendRoute = FinanceFriendRouteImport.update({
+  id: '/finance-friend',
+  path: '/finance-friend',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FloatRoute = FloatRouteImport.update({
+  id: '/float',
+  path: '/float',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GroceryRoute = GroceryRouteImport.update({
+  id: '/grocery',
+  path: '/grocery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CurrenseePairRoute = CurrenseePairRouteImport.update({
+  id: '/currensee_/$pair',
+  path: '/currensee/$pair',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CurrenseeRatesRoute = CurrenseeRatesRouteImport.update({
+  id: '/currensee_/rates',
+  path: '/currensee/rates',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesSendingMoneyToNepalFromAustraliaRoute =
@@ -115,16 +125,6 @@ const GuidesSendingMoneyToNepalFromAustraliaRoute =
     path: '/guides/sending-money-to-nepal-from-australia',
     getParentRoute: () => rootRouteImport,
   } as any)
-const CurrenseeRatesRoute = CurrenseeRatesRouteImport.update({
-  id: '/currensee_/rates',
-  path: '/currensee/rates',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CurrenseePairRoute = CurrenseePairRouteImport.update({
-  id: '/currensee_/$pair',
-  path: '/currensee/$pair',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -280,102 +280,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/support': {
-      id: '/support'
-      path: '/support'
-      fullPath: '/support'
-      preLoaderRoute: typeof SupportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/status': {
-      id: '/status'
-      path: '/status'
-      fullPath: '/status'
-      preLoaderRoute: typeof StatusRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/security': {
-      id: '/security'
-      path: '/security'
-      fullPath: '/security'
-      preLoaderRoute: typeof SecurityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/llms.txt': {
-      id: '/llms.txt'
-      path: '/llms.txt'
-      fullPath: '/llms.txt'
-      preLoaderRoute: typeof LlmsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/grocery': {
-      id: '/grocery'
-      path: '/grocery'
-      fullPath: '/grocery'
-      preLoaderRoute: typeof GroceryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/float': {
-      id: '/float'
-      path: '/float'
-      fullPath: '/float'
-      preLoaderRoute: typeof FloatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/finance-friend': {
-      id: '/finance-friend'
-      path: '/finance-friend'
-      fullPath: '/finance-friend'
-      preLoaderRoute: typeof FinanceFriendRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/finance': {
-      id: '/finance'
-      path: '/finance'
-      fullPath: '/finance'
-      preLoaderRoute: typeof FinanceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/currensee': {
-      id: '/currensee'
-      path: '/currensee'
-      fullPath: '/currensee'
-      preLoaderRoute: typeof CurrenseeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/chronos': {
-      id: '/chronos'
-      path: '/chronos'
-      fullPath: '/chronos'
-      preLoaderRoute: typeof ChronosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/changelog': {
-      id: '/changelog'
-      path: '/changelog'
-      fullPath: '/changelog'
-      preLoaderRoute: typeof ChangelogRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -385,18 +294,109 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guides/sending-money-to-nepal-from-australia': {
-      id: '/guides/sending-money-to-nepal-from-australia'
-      path: '/guides/sending-money-to-nepal-from-australia'
-      fullPath: '/guides/sending-money-to-nepal-from-australia'
-      preLoaderRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRouteImport
+    '/chronos': {
+      id: '/chronos'
+      path: '/chronos'
+      fullPath: '/chronos'
+      preLoaderRoute: typeof ChronosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/currensee': {
+      id: '/currensee'
+      path: '/currensee'
+      fullPath: '/currensee'
+      preLoaderRoute: typeof CurrenseeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance': {
+      id: '/finance'
+      path: '/finance'
+      fullPath: '/finance'
+      preLoaderRoute: typeof FinanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finance-friend': {
+      id: '/finance-friend'
+      path: '/finance-friend'
+      fullPath: '/finance-friend'
+      preLoaderRoute: typeof FinanceFriendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/float': {
+      id: '/float'
+      path: '/float'
+      fullPath: '/float'
+      preLoaderRoute: typeof FloatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grocery': {
+      id: '/grocery'
+      path: '/grocery'
+      fullPath: '/grocery'
+      preLoaderRoute: typeof GroceryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/currensee_/$pair': {
+      id: '/currensee_/$pair'
+      path: '/currensee/$pair'
+      fullPath: '/currensee/$pair'
+      preLoaderRoute: typeof CurrenseePairRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/currensee_/rates': {
@@ -406,11 +406,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CurrenseeRatesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/currensee_/$pair': {
-      id: '/currensee_/$pair'
-      path: '/currensee/$pair'
-      fullPath: '/currensee/$pair'
-      preLoaderRoute: typeof CurrenseePairRouteImport
+    '/guides/sending-money-to-nepal-from-australia': {
+      id: '/guides/sending-money-to-nepal-from-australia'
+      path: '/guides/sending-money-to-nepal-from-australia'
+      fullPath: '/guides/sending-money-to-nepal-from-australia'
+      preLoaderRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
