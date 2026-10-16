@@ -1,7 +1,7 @@
 # SkyCo October 16 ordered updates
 - [x] 0: October 15 changelog entry, green build and publication requested
 - [x] R1: NPR pair pages and their converter refresh use the existing NRB table; AUD server HTML matches 105.17 NPR on 2026-10-16
-- [ ] D1: Compatible security dependency update
+- [ ] D1: Requested Start release installed at 1.168.60 with compatible router/plugin versions; all existing URLs return 200 and unknown pair returns 404; final build check pending
 - [ ] S1, A12, F3b, C0h-rest, A3-A11, A13-A20, 1-48: Follow in the requested order
 
 ## October 15
