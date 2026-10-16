@@ -3,7 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
 import { breadcrumbScript, shareMeta } from "@/lib/seo";
 import { pairBySlug, relatedPairs, type CurrencyPair } from "@/lib/currency-pairs";
-import { CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rates.functions";
+import { CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
@@ -42,7 +42,14 @@ export const Route = createFileRoute("/currensee_/$pair")({
     const pair = pairBySlug(params.pair);
     if (!pair) throw notFound();
     const [rate, directory] = await Promise.all([
-      getRate({ data: { from: pair.from, to: pair.to } }).catch(() => null),
+      pair.to === "NPR" || pair.from === "NPR"
+        ? getNprRates().then((day): RateResult | null => {
+            const code = pair.to === "NPR" ? pair.from : pair.to;
+            const row = day?.rows.find(r => r.iso3 === code);
+            if (!day || !row) return null;
+            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false };
+          }).catch(() => null)
+        : getRate({ data: { from: pair.from, to: pair.to } }).catch(() => null),
       getProjectDirectory().catch(() => fallbackDirectory as ResolvedProject[]),
     ]);
     return { pair, rate, directory };
@@ -123,7 +130,7 @@ function PairPage() {
               <p className="mt-1 text-sm text-muted-foreground">Reference rate for {rate.asOf}. Source: {rate.source}</p>
             </>
           ) : (
-            <p className="text-sm text-muted-foreground">Today's rate is unavailable right now. Please try again in a few minutes.</p>
+            <p className="text-sm text-muted-foreground">Today's reference rate is unavailable. For NPR pairs, I only show a currency when it appears in the Nepal Rastra Bank feed. Please try again later.</p>
           )}
         </section>
 

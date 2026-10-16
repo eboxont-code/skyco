@@ -27,4 +27,5 @@
 - Use one NRB day's unit-adjusted midpoints for both sides of NRB conversions so tables, history and converters agree.
 - Compare related pairs by slug, not object identity, because loader data crosses serialization boundaries.
 - Initialize pair converters with their loader rate and render deterministic update text until hydration to keep the first result stable.
+- NPR pair page loaders consume getNprRates rows directly and never display peg-derived fallback rates, so their published reference matches the rates table.
 - Waitlist submissions use a validated public server function with insert-only privileged access; visitors cannot read submission rows.

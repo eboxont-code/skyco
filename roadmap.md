@@ -1,4 +1,10 @@
-# SkyCo October 15 ordered updates
+# SkyCo October 16 ordered updates
+- [x] 0: October 15 changelog entry, green build and publication requested
+- [ ] R1: NPR pair pages consume the existing NRB table without peg fallback; verify matching server HTML
+- [ ] D1: Compatible security dependency update
+- [ ] S1, A12, F3b, C0h-rest, A3-A11, A13-A20, 1-48: Follow in the requested order
+
+## October 15
 - [x] 0: October 14 release entry
 - [x] A1-A2: Pair hydration and NRB consistency
 - [x] C0g-C0h: Calendar controls and shared radius, input and focus presentation
