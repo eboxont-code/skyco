@@ -11,6 +11,17 @@ export type ChangeEntry = {
  * not pad it and do not backdate.
  */
 export const changelog: ChangeEntry[] = [
+  {
+    date: "2026-10-15",
+    title: "Share pictures, calendar readings and the Float waitlist",
+    tag: "Improvement",
+    items: [
+      "Every product page has a share picture, including Float.",
+      "Currency pair pages and /currensee/rates use the same Nepal Rastra Bank reference rates, adjusted for each currency's unit.",
+      "Chronos puts the six calendar readings directly below the date picker.",
+      "The Float waitlist now saves your email when you join.",
+    ],
+  },
   { date: "2026-10-14", title: "Currency references and the Nepal transfer guide", tag: "Launch", items: ["CurrenSee now has 20 currency pair pages, including /currensee/aud-to-npr, with reference amounts and related conversions.", "The /currensee/rates page lists today's Nepal Rastra Bank buy, sell and midpoint reference rates, with the rate date shown.", "The guide at /guides/sending-money-to-nepal-from-australia explains how to compare a transfer quote with the AUD to NPR reference rate."] },
   { date: "2026-10-12", title: "Float and currency pair pages", tag: "Launch", items: ["Float now has its own page at /float for working out what is left to spend after bills and BNPL instalments.", "CurrenSee has its first pair pages, such as /currensee/aud-to-npr, with today's reference rate, quick reference tables and related pairs.", "Pair page breadcrumbs now read Home, CurrenSee and the pair, and a page no longer links to itself."] },
   { date: "2026-10-11", title: "Mobile layout updates", tag: "Improvement", items: ["Home no longer has a sticky product action. Product pages show only their own action after its opening button scrolls away, and hide it during typing, menus and printing.", "Home puts the products before How I work, removes repeated sections, and uses two opening actions.", "Product cards share one layout and current tool screenshots without extra captions.", "Footer links appear once, with legal links grouped at the bottom.", "Product pages put the real tool below one introduction, remove mockups and repeated actions, and share CurrenSee amounts without quotes.", "CurrenSee adds Nepal, Gulf, Malaysian and South Korean currencies with Nepal Rastra Bank reference data and a labelled INR-peg fallback for NPR."] },

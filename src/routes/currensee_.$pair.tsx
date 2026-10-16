@@ -3,7 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
 import { breadcrumbScript, shareMeta } from "@/lib/seo";
 import { pairBySlug, relatedPairs, type CurrencyPair } from "@/lib/currency-pairs";
-import { CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rates.functions";
+import { CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
@@ -42,7 +42,14 @@ export const Route = createFileRoute("/currensee_/$pair")({
     const pair = pairBySlug(params.pair);
     if (!pair) throw notFound();
     const [rate, directory] = await Promise.all([
-      getRate({ data: { from: pair.from, to: pair.to } }).catch(() => null),
+      pair.to === "NPR" || pair.from === "NPR"
+        ? getNprRates().then((day): RateResult | null => {
+            const code = pair.to === "NPR" ? pair.from : pair.to;
+            const row = day?.rows.find(r => r.iso3 === code);
+            if (!day || !row) return null;
+            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false };
+          }).catch(() => null)
+        : getRate({ data: { from: pair.from, to: pair.to } }).catch(() => null),
       getProjectDirectory().catch(() => fallbackDirectory as ResolvedProject[]),
     ]);
     return { pair, rate, directory };
@@ -52,7 +59,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
     const { pair, rate } = loaderData;
     const { from, to, slug } = pair;
     const title = `${from} to ${to} today: live rate and converter | CurrenSee`;
-    const description = `Convert ${from} (${CURRENCY_NAMES[from]}) to ${to} (${CURRENCY_NAMES[to]}) with today's reference rate, a quick reference table both ways and a 30 day chart. Free, no account.`.slice(0, 159);
+    const description = `Convert ${from} (${CURRENCY_NAMES[from]}) to ${to} (${CURRENCY_NAMES[to]}) with today's reference rate, a quick reference table both ways and a 30 day chart. Free, no account.`.slice(0, 154);
     const url = `https://skyco.online/currensee/${slug}`;
     return {
       meta: [
@@ -86,7 +93,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
   component: PairPage,
 });
 
-function RefTable({ from, to, rate }: { from: string; to: string; rate: number }) {
+function RefTable({ from, to, rate, amounts = AMOUNTS }: { from: string; to: string; rate: number; amounts?: number[] }) {
   return (
     <table className="w-full min-w-0 text-sm">
       <caption className="mb-2 text-left font-semibold text-foreground">{from} to {to}</caption>
@@ -97,7 +104,7 @@ function RefTable({ from, to, rate }: { from: string; to: string; rate: number }
         </tr>
       </thead>
       <tbody>
-        {AMOUNTS.map((a) => (
+        {amounts.map((a) => (
           <tr key={a} className="border-b border-sky-bright/10">
             <td className="py-2 tabular-nums">{fmt(a)}</td>
             <td className="py-2 text-right tabular-nums">{fmt(a * rate)}</td>
@@ -123,7 +130,7 @@ function PairPage() {
               <p className="mt-1 text-sm text-muted-foreground">Reference rate for {rate.asOf}. Source: {rate.source}</p>
             </>
           ) : (
-            <p className="text-sm text-muted-foreground">Today's rate is unavailable right now. Please try again in a few minutes.</p>
+            <p className="text-sm text-muted-foreground">Today's reference rate is unavailable. For NPR pairs, I only show a currency when it appears in the Nepal Rastra Bank feed. Please try again later.</p>
           )}
         </section>
 
@@ -133,7 +140,7 @@ function PairPage() {
           <section aria-labelledby="ref-heading">
             <h2 id="ref-heading" className="text-2xl font-extrabold tracking-tight text-foreground">Quick reference</h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className={card}><RefTable from={from} to={to} rate={rate.rate} /></div>
+              <div className={card}><RefTable from={from} to={to} rate={rate.rate} amounts={pair.amounts} /></div>
               <div className={card}><RefTable from={to} to={from} rate={1 / rate.rate} /></div>
             </div>
           </section>
@@ -166,6 +173,7 @@ function PairPage() {
                 </Link>
               </li>
             ))}
+            <li><Link to="/currensee/rates" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">Nepal Rastra Bank rates</Link></li>
             <li><Link to="/currensee" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">All currencies in CurrenSee</Link></li>
           </ul>
         </nav>

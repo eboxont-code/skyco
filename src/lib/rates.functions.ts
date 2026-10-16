@@ -126,7 +126,7 @@ const pairCache = new Map<string, { expires: number; result: RateResult }>();
 export const CURRENCY_NAMES: Record<string, string> = { NPR: "Nepalese rupee", QAR: "Qatari riyal", AED: "UAE dirham", SAR: "Saudi riyal", MYR: "Malaysian ringgit", KRW: "South Korean won", USD: "US dollar", EUR: "Euro", GBP: "British pound", JPY: "Japanese yen", INR: "Indian rupee", AUD: "Australian dollar", CAD: "Canadian dollar", CHF: "Swiss franc", CNY: "Chinese yuan", SGD: "Singapore dollar", SEK: "Swedish krona", NOK: "Norwegian krone", NZD: "New Zealand dollar", BRL: "Brazilian real", ZAR: "South African rand", BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana" };
 
 export const getRate = createServerFn({ method: "GET" })
-  .inputValidator((data: { from: string; to: string }) => {
+  .validator((data: { from: string; to: string }) => {
     const from = String(data?.from ?? "USD").toUpperCase();
     const to = String(data?.to ?? "EUR").toUpperCase();
     if (!CURRENCIES.includes(from) || !CURRENCIES.includes(to)) {

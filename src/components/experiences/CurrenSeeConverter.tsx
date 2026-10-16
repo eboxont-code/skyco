@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useWebMCPTools, text } from "@/lib/webmcp";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, RefreshCw } from "lucide-react";
-import { CURRENCIES, CURRENCY_NAMES, getRate, type RateResult } from "@/lib/rates.functions";
+import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 
 /**
  * The CurrenSee converter, running on skyco.online itself.
@@ -17,6 +17,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
   const [to, setTo] = useState(safeTo);
   const [amount, setAmount] = useState(initialAmount ?? "100");
   const fetchRate = useServerFn(getRate);
+  const fetchNprRates = useServerFn(getNprRates);
   useWebMCPTools([{ name: "get_currency_rate", description: "Get the current reference rate for a supported currency pair.", inputSchema: { type: "object", properties: { from: { type: "string", enum: CURRENCIES }, to: { type: "string", enum: CURRENCIES } }, required: ["from", "to"], additionalProperties: false }, execute: async args => { const from = String(args.from ?? "").toUpperCase(); const to = String(args.to ?? "").toUpperCase(); if (!CURRENCIES.includes(from) || !CURRENCIES.includes(to)) return text("Choose two supported currency codes."); try { const result = await fetchRate({ data: { from, to } }); return text(`1 ${from} = ${currencyFormat(result.rate, to, true)}, reference rate for ${result.asOf}. Source: ${result.source}`); } catch { return text("Rate service unavailable. No current rate could be retrieved."); } } }]);
   const [swapStatus, setSwapStatus] = useState("");
   const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
@@ -69,7 +70,13 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
 
   const query = useQuery<RateResult>({
     queryKey: ["rate", from, to],
-    queryFn: () => fetchRate({ data: { from, to } }),
+    queryFn: async () => {
+      if (initialTo !== "NPR" && initialFrom !== "NPR" || from !== "NPR" && to !== "NPR") return fetchRate({ data: { from, to } });
+      const day = await fetchNprRates();
+      const row = day?.rows.find(r => r.iso3 === (to === "NPR" ? from : to));
+      if (!day || !row) throw new Error("Nepal Rastra Bank reference unavailable");
+      return { from, to, rate: to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: new Date().toISOString(), series: [], approximate: false };
+    },
     initialData: from === initialRate?.from && to === initialRate?.to ? initialRate : undefined,
     staleTime: 60_000,
     refetchInterval: 120_000,
