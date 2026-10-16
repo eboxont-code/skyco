@@ -3,6 +3,7 @@
 - [x] R1: NPR pair pages and their converter refresh use the existing NRB table; AUD server HTML matches 105.17 NPR on 2026-10-16
 - [x] D1: Start 1.168.60 with matching router 1.170.41 and plugin 1.168.42; validator API compatibility rename only; build green and existing pages render
 - [ ] S1, A12, F3b, C0h-rest, A3-A11, A13-A20, 1-48: Follow in the requested order
+- [ ] S1 partial: Five feed-backed config entries, related links, KWD reference amounts and sitemap URLs build and return 200 with NRB rates; buy/sell box, new-currency converter selection and mobile checks remain open
 
 ## October 15
 - [x] 0: October 14 release entry
