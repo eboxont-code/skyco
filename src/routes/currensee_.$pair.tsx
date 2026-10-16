@@ -59,7 +59,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
     const { pair, rate } = loaderData;
     const { from, to, slug } = pair;
     const title = `${from} to ${to} today: live rate and converter | CurrenSee`;
-    const description = `Convert ${from} (${CURRENCY_NAMES[from]}) to ${to} (${CURRENCY_NAMES[to]}) with today's reference rate, a quick reference table both ways and a 30 day chart. Free, no account.`.slice(0, 159);
+    const description = `Convert ${from} (${CURRENCY_NAMES[from]}) to ${to} (${CURRENCY_NAMES[to]}) with today's reference rate, a quick reference table both ways and a 30 day chart. Free, no account.`.slice(0, 154);
     const url = `https://skyco.online/currensee/${slug}`;
     return {
       meta: [
@@ -93,7 +93,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
   component: PairPage,
 });
 
-function RefTable({ from, to, rate }: { from: string; to: string; rate: number }) {
+function RefTable({ from, to, rate, amounts = AMOUNTS }: { from: string; to: string; rate: number; amounts?: number[] }) {
   return (
     <table className="w-full min-w-0 text-sm">
       <caption className="mb-2 text-left font-semibold text-foreground">{from} to {to}</caption>
@@ -104,7 +104,7 @@ function RefTable({ from, to, rate }: { from: string; to: string; rate: number }
         </tr>
       </thead>
       <tbody>
-        {AMOUNTS.map((a) => (
+        {amounts.map((a) => (
           <tr key={a} className="border-b border-sky-bright/10">
             <td className="py-2 tabular-nums">{fmt(a)}</td>
             <td className="py-2 text-right tabular-nums">{fmt(a * rate)}</td>
@@ -140,7 +140,7 @@ function PairPage() {
           <section aria-labelledby="ref-heading">
             <h2 id="ref-heading" className="text-2xl font-extrabold tracking-tight text-foreground">Quick reference</h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className={card}><RefTable from={from} to={to} rate={rate.rate} /></div>
+              <div className={card}><RefTable from={from} to={to} rate={rate.rate} amounts={pair.amounts} /></div>
               <div className={card}><RefTable from={to} to={from} rate={1 / rate.rate} /></div>
             </div>
           </section>
@@ -173,6 +173,7 @@ function PairPage() {
                 </Link>
               </li>
             ))}
+            <li><Link to="/currensee/rates" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">Nepal Rastra Bank rates</Link></li>
             <li><Link to="/currensee" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">All currencies in CurrenSee</Link></li>
           </ul>
         </nav>

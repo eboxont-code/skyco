@@ -1,6 +1,11 @@
-export type CurrencyPair = { slug: string; from: string; to: string; explanation: string };
+export type CurrencyPair = { slug: string; from: string; to: string; explanation: string; related?: string[]; amounts?: number[] };
 
 export const PAIRS: CurrencyPair[] = [
+  {"slug": "cad-to-npr", "from": "CAD", "to": "NPR", "explanation": "This reference shows the Nepalese rupee value of one CAD. It uses the daily Nepal Rastra Bank buy and sell midpoint, adjusted for the published unit. It is not a transfer quote.", "related": ["usd-to-npr", "aud-to-npr"]},
+  {"slug": "sgd-to-npr", "from": "SGD", "to": "NPR", "explanation": "This reference shows the Nepalese rupee value of one SGD. It uses the daily Nepal Rastra Bank buy and sell midpoint, adjusted for the published unit. It is not a transfer quote.", "related": ["myr-to-npr", "hkd-to-npr"]},
+  {"slug": "kwd-to-npr", "from": "KWD", "to": "NPR", "explanation": "This reference shows the Nepalese rupee value of one KWD. It uses the daily Nepal Rastra Bank buy and sell midpoint, adjusted for the published unit. It is not a transfer quote.", "related": ["qar-to-npr", "aed-to-npr", "sar-to-npr", "bhd-to-npr"], "amounts": [50, 100, 250, 500, 1000]},
+  {"slug": "bhd-to-npr", "from": "BHD", "to": "NPR", "explanation": "This reference shows the Nepalese rupee value of one BHD. It uses the daily Nepal Rastra Bank buy and sell midpoint, adjusted for the published unit. It is not a transfer quote.", "related": ["kwd-to-npr", "qar-to-npr"]},
+  {"slug": "hkd-to-npr", "from": "HKD", "to": "NPR", "explanation": "This reference shows the Nepalese rupee value of one HKD. It uses the daily Nepal Rastra Bank buy and sell midpoint, adjusted for the published unit. It is not a transfer quote.", "related": ["sgd-to-npr", "usd-to-npr"]},
   { slug: "aud-to-npr", from: "AUD", to: "NPR", explanation: "This rate tells you how many Nepalese rupees one Australian dollar buys today. It matters most when you send money to family in Nepal or plan a trip home. The rupee is pegged to the Indian rupee, so this rate mostly moves with the Australian dollar against the Indian rupee." },
   { slug: "npr-to-aud", from: "NPR", to: "AUD", explanation: "This rate shows what Nepalese rupees are worth in Australian dollars. It helps when you bring savings from Nepal to Australia or compare prices between the two countries. It moves mostly with the Australian dollar against the Indian rupee." },
   { slug: "usd-to-npr", from: "USD", to: "NPR", explanation: "This rate tells you how many Nepalese rupees one US dollar buys. Many remittances and overseas salaries are paid in US dollars, so it is one of the most watched rates in Nepal. Because of the peg, it follows the US dollar against the Indian rupee." },
@@ -29,6 +34,7 @@ export const pairPath = (p: CurrencyPair) => `/currensee/${p.slug}`;
 const hasNpr = (p: CurrencyPair) => p.from === "NPR" || p.to === "NPR";
 
 export function relatedPairs(p: CurrencyPair): CurrencyPair[] {
+  if (p.related) return p.related.flatMap(slug => { const pair = pairBySlug(slug); return pair ? [pair] : []; });
   const reverse = PAIRS.find((x) => x.from === p.to && x.to === p.from);
   const others = PAIRS.filter(
     (x) => x.slug !== p.slug && x.slug !== reverse?.slug && [x.from, x.to].some((c) => c === p.from || c === p.to),
