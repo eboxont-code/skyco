@@ -2,7 +2,7 @@
 - [x] 0: October 16 release entry; green build, phone check and publication requested
 - [x] S1-rest: NRB buy/sell/unit line, five selected converter currencies and all NPR conversion links; five SSR and 390px conversions verified, unknown pair 404, green build
 - [x] A12: Last modification dates for the existing 41 sitemap URLs; valid XML and identical URL list verified
-- [ ] P6: OMR config, live NRB reference, FAQ, salary amounts and sitemap; verification pending
+- [x] P6: OMR config, live NRB reference, FAQ, salary amounts and sitemap; SSR, mobile conversion, tests and green build verified
 - [ ] P7-P10: Remaining four currency config entries
 - [ ] F0, F12-F14: Config-driven Float pages
 - [ ] F3b, C0h-rest, A3-A11, A13-A20, 1-48: Remaining ordered presentation updates
