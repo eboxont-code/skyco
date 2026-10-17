@@ -22,6 +22,11 @@ function fmt(n: number) {
 
 function faqs(pair: CurrencyPair, rate: RateResult | null): { id: string; q: string; a: string }[] {
   const { from, to } = pair;
+  if (pair.slug === "aud-to-sgd") return [
+    ...(rate ? [{ id: "rate-today", q: "How much is 1 AUD in SGD today?", a: `1 AUD is about ${fmt(rate.rate)} SGD on the reference rate for ${rate.asOf}.` }] : []),
+    { id: "rate-source", q: "Where does this rate come from?", a: "I use Frankfurter, which publishes reference rates from the European Central Bank on working days." },
+    { id: "bank-rate", q: "Why does my bank show a different rate?", a: "Banks and card providers add a margin to the reference rate and some charge a fee on top, so the rate you get is usually lower." },
+  ];
   if (pair.slug === "omr-to-npr") return [
     ...(rate ? [{ id: "rate-today", q: "How much is 1 OMR in NPR today?", a: `1 OMR is about ${fmt(rate.rate)} NPR on the Nepal Rastra Bank reference rate for ${rate.asOf}. Banks and transfer services usually give you less than this.` }] : []),
     { id: "rate-source", q: "Where does this rate come from?", a: "It comes from the daily exchange rate list published by Nepal Rastra Bank, the central bank of Nepal. I show the midpoint of its buying and selling rates, adjusted for the published unit." },
