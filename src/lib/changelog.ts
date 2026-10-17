@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-16",
+    title: "Five more Nepal currency pairs and a security update",
+    tag: "Improvement",
+    items: [
+      "CAD, SGD, KWD, BHD and HKD to NPR now have their own currency pair pages.",
+      "Every NPR pair page shows the Nepal Rastra Bank reference rate and its date instead of an estimate from the Indian rupee peg.",
+      "The framework was updated to address a security issue.",
+    ],
+  },
+  {
     date: "2026-10-15",
     title: "Share pictures, calendar readings and the Float waitlist",
     tag: "Improvement",
