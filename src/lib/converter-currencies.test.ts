@@ -14,3 +14,9 @@ test("OMR uses NRB and the requested five salary amounts", () => {
   assert.deepEqual(pair?.amounts, [50, 100, 250, 500, 1000]);
   assert.ok(converterCurrencies([]).includes("OMR"));
 });
+
+test("AUD to SGD uses Frankfurter and requested amounts", () => {
+  const pair = pairBySlug("aud-to-sgd");
+  assert.equal(pair?.source, "frankfurter");
+  assert.deepEqual(pair?.amounts, [50, 100, 500, 1000, 5000]);
+});
