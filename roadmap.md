@@ -1,4 +1,13 @@
-# SkyCo October 16 ordered updates
+# SkyCo October 17 ordered updates
+- [x] 0: October 16 release entry; green build, phone check and publication requested
+- [x] S1-rest: NRB buy/sell/unit line, five selected converter currencies and all NPR conversion links; five SSR and 390px conversions verified, unknown pair 404, green build
+- [x] A12: Last modification dates for the existing 41 sitemap URLs; valid XML and identical URL list verified
+- [x] P6: OMR config, live NRB reference, FAQ, salary amounts and sitemap; SSR, mobile conversion, tests and green build verified
+- [x] P7: AUD to SGD config, Frankfurter converter, chart, FAQs and sitemap; live SSR, mobile conversion, chart, tests and green build verified
+- [x] P8: AUD to CAD config, live converter, chart and sitemap; SSR, mobile conversion, chart, tests and green build verified
+- [ ] P9-P10: Crypto currency config entries
+- [ ] F0, F12-F14: Config-driven Float pages
+- [ ] F3b, C0h-rest, A3-A11, A13-A20, 1-48: Remaining ordered presentation updates
 - [x] 0: October 15 changelog entry, green build and publication requested
 - [x] R1: NPR pair pages and their converter refresh use the existing NRB table; AUD server HTML matches 105.17 NPR on 2026-10-16
 - [x] D1: Start 1.168.60 with matching router 1.170.41 and plugin 1.168.42; validator API compatibility rename only; build green and existing pages render

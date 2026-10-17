@@ -6,6 +6,9 @@ import { pairBySlug, relatedPairs, type CurrencyPair } from "@/lib/currency-pair
 import { CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
+import { ADDITIONAL_NRB_CURRENCIES } from "@/lib/converter-currencies";
+
+type PairRate = RateResult & { nrbReference?: { buy: number; sell: number; unit: number; code: string } };
 
 const AMOUNTS = [1, 5, 10, 50, 100, 500, 1000];
 
@@ -19,6 +22,22 @@ function fmt(n: number) {
 
 function faqs(pair: CurrencyPair, rate: RateResult | null): { id: string; q: string; a: string }[] {
   const { from, to } = pair;
+  if (pair.slug === "aud-to-cad") return [
+    ...(rate ? [{ id: "rate-today", q: "How much is 1 AUD in CAD today?", a: `1 AUD is about ${fmt(rate.rate)} CAD on the reference rate for ${rate.asOf}.` }] : []),
+    { id: "rate-updates", q: "How often does this rate update?", a: "Frankfurter publishes new reference rates on working days, so weekends show the last working day's rate." },
+    { id: "offered-rate", q: "Is this the rate I will get?", a: "Probably not exactly. Banks and transfer services add a margin and sometimes a fee, so the rate you are offered is usually lower." },
+  ];
+  if (pair.slug === "aud-to-sgd") return [
+    ...(rate ? [{ id: "rate-today", q: "How much is 1 AUD in SGD today?", a: `1 AUD is about ${fmt(rate.rate)} SGD on the reference rate for ${rate.asOf}.` }] : []),
+    { id: "rate-source", q: "Where does this rate come from?", a: "I use Frankfurter, which publishes reference rates from the European Central Bank on working days." },
+    { id: "bank-rate", q: "Why does my bank show a different rate?", a: "Banks and card providers add a margin to the reference rate and some charge a fee on top, so the rate you get is usually lower." },
+  ];
+  if (pair.slug === "omr-to-npr") return [
+    ...(rate ? [{ id: "rate-today", q: "How much is 1 OMR in NPR today?", a: `1 OMR is about ${fmt(rate.rate)} NPR on the Nepal Rastra Bank reference rate for ${rate.asOf}. Banks and transfer services usually give you less than this.` }] : []),
+    { id: "rate-source", q: "Where does this rate come from?", a: "It comes from the daily exchange rate list published by Nepal Rastra Bank, the central bank of Nepal. I show the midpoint of its buying and selling rates, adjusted for the published unit." },
+    { id: "quote-lower", q: "Why is my remittance quote lower?", a: "Each service starts from a market rate, then adds its own margin and any fee. Compare the amount that will arrive in Nepal, not just the headline rate." },
+    { id: "rate-updates", q: "When does the rate change?", a: "Nepal Rastra Bank publishes a new list once a day. This page uses the latest available list when its reference data refreshes." },
+  ];
   const list: { id: string; q: string; a: string }[] = [];
   if (rate) {
     list.push({
@@ -43,13 +62,13 @@ export const Route = createFileRoute("/currensee_/$pair")({
     if (!pair) throw notFound();
     const [rate, directory] = await Promise.all([
       pair.to === "NPR" || pair.from === "NPR"
-        ? getNprRates().then((day): RateResult | null => {
+        ? getNprRates().then((day): PairRate | null => {
             const code = pair.to === "NPR" ? pair.from : pair.to;
             const row = day?.rows.find(r => r.iso3 === code);
             if (!day || !row) return null;
-            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false };
+            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false, nrbReference: { buy: row.buy, sell: row.sell, unit: row.unit, code: row.iso3 } };
           }).catch(() => null)
-        : getRate({ data: { from: pair.from, to: pair.to } }).catch(() => null),
+        : getRate({ data: { from: pair.from, to: pair.to } }).then((value): PairRate => value).catch(() => null),
       getProjectDirectory().catch(() => fallbackDirectory as ResolvedProject[]),
     ]);
     return { pair, rate, directory };
@@ -58,8 +77,8 @@ export const Route = createFileRoute("/currensee_/$pair")({
     if (!loaderData) return { meta: [{ title: "Unavailable | CurrenSee" }, { name: "robots", content: "noindex" }] };
     const { pair, rate } = loaderData;
     const { from, to, slug } = pair;
-    const title = `${from} to ${to} today: live rate and converter | CurrenSee`;
-    const description = `Convert ${from} (${CURRENCY_NAMES[from]}) to ${to} (${CURRENCY_NAMES[to]}) with today's reference rate, a quick reference table both ways and a 30 day chart. Free, no account.`.slice(0, 154);
+    const title = pair.title ?? `${from} to ${to} today: live rate and converter | CurrenSee`;
+    const description = pair.description ?? `Convert ${from} (${CURRENCY_NAMES[from] ?? ADDITIONAL_NRB_CURRENCIES[from]}) to ${to} with today's ${to === "NPR" ? "Nepal Rastra Bank" : "reference"} rate and common amounts. Free, no account.`.slice(0, 154);
     const url = `https://skyco.online/currensee/${slug}`;
     return {
       meta: [
@@ -128,13 +147,14 @@ function PairPage() {
             <>
               <p className="break-words text-2xl font-extrabold tabular-nums text-foreground">1 {from} = {fmt(rate.rate)} {to}</p>
               <p className="mt-1 text-sm text-muted-foreground">Reference rate for {rate.asOf}. Source: {rate.source}</p>
+              {to === "NPR" && rate.nrbReference && <p className="mt-2 text-sm text-muted-foreground">Buying {fmt(rate.nrbReference.buy)}, selling {fmt(rate.nrbReference.sell)} NPR per {rate.nrbReference.unit} {rate.nrbReference.code}, for {rate.asOf}.</p>}
             </>
           ) : (
             <p className="text-sm text-muted-foreground">Today's reference rate is unavailable. For NPR pairs, I only show a currency when it appears in the Nepal Rastra Bank feed. Please try again later.</p>
           )}
         </section>
 
-        <CurrenSeeConverter initialFrom={from} initialTo={to} initialRate={rate ?? undefined} />
+        <CurrenSeeConverter key={pair.slug} initialFrom={from} initialTo={to} initialRate={rate ?? undefined} />
 
         {rate && (
           <section aria-labelledby="ref-heading">
@@ -147,6 +167,7 @@ function PairPage() {
         )}
 
         <section aria-labelledby="about-heading">
+          {rate && pair.slug === "omr-to-npr" && <section aria-labelledby="popular-amounts-heading" className="mb-8"><h2 id="popular-amounts-heading" className="text-2xl font-bold text-foreground">Popular amounts</h2><ul className="mt-3 space-y-2 text-sm text-muted-foreground">{pair.amounts?.map(amount => <li key={amount}>{fmt(amount)} OMR in NPR today: {fmt(amount * rate.rate)} NPR</li>)}</ul></section>}
           <h2 id="about-heading" className="text-2xl font-extrabold tracking-tight text-foreground">About this rate</h2>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{pair.explanation}</p>
         </section>
@@ -175,6 +196,7 @@ function PairPage() {
             ))}
             <li><Link to="/currensee/rates" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">Nepal Rastra Bank rates</Link></li>
             <li><Link to="/currensee" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">All currencies in CurrenSee</Link></li>
+            {pair.slug === "omr-to-npr" && <li><Link to="/guides/sending-money-to-nepal-from-australia" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">Sending money to Nepal from Australia</Link></li>}
           </ul>
         </nav>
 
