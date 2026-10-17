@@ -91,6 +91,10 @@ function RatesPage() {
           <p className="text-sm text-muted-foreground">Nepal Rastra Bank rates are unavailable right now. Please try again in a few minutes.</p>
         )}
         <p className="rounded-xl border border-sky-bright/25 p-4 text-xs leading-relaxed text-muted-foreground">{NOTE}</p>
+        <section aria-labelledby="npr-conversions-heading">
+          <h2 id="npr-conversions-heading" className="text-2xl font-bold text-foreground">Convert a currency to NPR</h2>
+          <ul className="mt-3 grid grid-cols-1 gap-x-5 sm:grid-cols-2">{PAIRS.filter(pair => pair.to === "NPR").map(pair => <li key={pair.slug}><Link to="/currensee/$pair" params={{ pair: pair.slug }} className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{pair.from} to NPR</Link></li>)}</ul>
+        </section>
         <Link to="/currensee" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Convert any amount in CurrenSee</Link>
       </div>
     </PageShell>

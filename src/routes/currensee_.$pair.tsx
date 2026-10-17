@@ -6,6 +6,9 @@ import { pairBySlug, relatedPairs, type CurrencyPair } from "@/lib/currency-pair
 import { CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
+import { ADDITIONAL_NRB_CURRENCIES } from "@/lib/converter-currencies";
+
+type PairRate = RateResult & { nrbReference?: { buy: number; sell: number; unit: number; code: string } };
 
 const AMOUNTS = [1, 5, 10, 50, 100, 500, 1000];
 
@@ -43,13 +46,13 @@ export const Route = createFileRoute("/currensee_/$pair")({
     if (!pair) throw notFound();
     const [rate, directory] = await Promise.all([
       pair.to === "NPR" || pair.from === "NPR"
-        ? getNprRates().then((day): RateResult | null => {
+        ? getNprRates().then((day): PairRate | null => {
             const code = pair.to === "NPR" ? pair.from : pair.to;
             const row = day?.rows.find(r => r.iso3 === code);
             if (!day || !row) return null;
-            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false };
+            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false, nrbReference: { buy: row.buy, sell: row.sell, unit: row.unit, code: row.iso3 } };
           }).catch(() => null)
-        : getRate({ data: { from: pair.from, to: pair.to } }).catch(() => null),
+        : getRate({ data: { from: pair.from, to: pair.to } }).then((value): PairRate => value).catch(() => null),
       getProjectDirectory().catch(() => fallbackDirectory as ResolvedProject[]),
     ]);
     return { pair, rate, directory };
@@ -59,7 +62,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
     const { pair, rate } = loaderData;
     const { from, to, slug } = pair;
     const title = `${from} to ${to} today: live rate and converter | CurrenSee`;
-    const description = `Convert ${from} (${CURRENCY_NAMES[from]}) to ${to} (${CURRENCY_NAMES[to]}) with today's reference rate, a quick reference table both ways and a 30 day chart. Free, no account.`.slice(0, 154);
+    const description = `Convert ${from} (${CURRENCY_NAMES[from] ?? ADDITIONAL_NRB_CURRENCIES[from]}) to ${to} with today's ${to === "NPR" ? "Nepal Rastra Bank" : "reference"} rate and common amounts. Free, no account.`.slice(0, 154);
     const url = `https://skyco.online/currensee/${slug}`;
     return {
       meta: [
@@ -128,13 +131,14 @@ function PairPage() {
             <>
               <p className="break-words text-2xl font-extrabold tabular-nums text-foreground">1 {from} = {fmt(rate.rate)} {to}</p>
               <p className="mt-1 text-sm text-muted-foreground">Reference rate for {rate.asOf}. Source: {rate.source}</p>
+              {to === "NPR" && rate.nrbReference && <p className="mt-2 text-sm text-muted-foreground">Buying {fmt(rate.nrbReference.buy)}, selling {fmt(rate.nrbReference.sell)} NPR per {rate.nrbReference.unit} {rate.nrbReference.code}, for {rate.asOf}.</p>}
             </>
           ) : (
             <p className="text-sm text-muted-foreground">Today's reference rate is unavailable. For NPR pairs, I only show a currency when it appears in the Nepal Rastra Bank feed. Please try again later.</p>
           )}
         </section>
 
-        <CurrenSeeConverter initialFrom={from} initialTo={to} initialRate={rate ?? undefined} />
+        <CurrenSeeConverter key={pair.slug} initialFrom={from} initialTo={to} initialRate={rate ?? undefined} />
 
         {rate && (
           <section aria-labelledby="ref-heading">

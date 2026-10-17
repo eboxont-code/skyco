@@ -5,14 +5,17 @@ import { useWebMCPTools, text } from "@/lib/webmcp";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, RefreshCw } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
+import { ADDITIONAL_NRB_CURRENCIES, converterCurrencies } from "@/lib/converter-currencies";
+
+const SELECTABLE_CURRENCIES = converterCurrencies(CURRENCIES);
 
 /**
  * The CurrenSee converter, running on skyco.online itself.
  * Opens on USD to EUR with a live rate and a 30 day chart already on screen.
  */
 export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, initialRate, onConversionChange }: { initialFrom?: string; initialTo?: string; initialAmount?: string; initialRate?: RateResult; onConversionChange?: (values: { from: string; to: string; amount: string }) => void }) {
-  const safeFrom = initialFrom && CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
-  const safeTo = initialTo && CURRENCIES.includes(initialTo) ? initialTo : "EUR";
+  const safeFrom = initialFrom && SELECTABLE_CURRENCIES.includes(initialFrom) ? initialFrom : "USD";
+  const safeTo = initialTo && SELECTABLE_CURRENCIES.includes(initialTo) ? initialTo : "EUR";
   const [from, setFrom] = useState(safeFrom);
   const [to, setTo] = useState(safeTo);
   const [amount, setAmount] = useState(initialAmount ?? "100");
@@ -284,9 +287,9 @@ function Select({
       onChange={(e) => onChange(e.target.value)}
       className="mt-1 min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-2 text-sm font-bold text-sky-deep outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
-      {CURRENCIES.map((c) => (
+      {SELECTABLE_CURRENCIES.map((c) => (
         <option key={c} value={c}>
-          {c}, {CURRENCY_NAMES[c]}
+          {c}, {CURRENCY_NAMES[c] ?? ADDITIONAL_NRB_CURRENCIES[c]}
         </option>
       ))}
     </select>
