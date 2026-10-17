@@ -1,6 +1,6 @@
 # SkyCo October 17 ordered updates
 - [x] 0: October 16 release entry; green build, phone check and publication requested
-- [ ] S1-rest: NRB buy/sell/unit line, five selected converter currencies and all NPR conversion links; verification pending
+- [x] S1-rest: NRB buy/sell/unit line, five selected converter currencies and all NPR conversion links; five SSR and 390px conversions verified, unknown pair 404, green build
 - [ ] A12: Last modification dates for the existing 41 sitemap URLs
 - [ ] P6-P10: Five additional currency config entries
 - [ ] F0, F12-F14: Config-driven Float pages
