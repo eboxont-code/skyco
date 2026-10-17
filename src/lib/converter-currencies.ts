@@ -1,4 +1,5 @@
 export const ADDITIONAL_NRB_CURRENCIES: Record<string, string> = {
+  OMR: "Omani rial",
   KWD: "Kuwaiti dinar",
   BHD: "Bahraini dinar",
   HKD: "Hong Kong dollar",
