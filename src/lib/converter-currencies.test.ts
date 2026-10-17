@@ -20,3 +20,9 @@ test("AUD to SGD uses Frankfurter and requested amounts", () => {
   assert.equal(pair?.source, "frankfurter");
   assert.deepEqual(pair?.amounts, [50, 100, 500, 1000, 5000]);
 });
+
+test("AUD to CAD uses Frankfurter and requested amounts", () => {
+  const pair = pairBySlug("aud-to-cad");
+  assert.equal(pair?.source, "frankfurter");
+  assert.deepEqual(pair?.amounts, [50, 100, 500, 1000, 5000]);
+});

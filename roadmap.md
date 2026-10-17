@@ -4,7 +4,8 @@
 - [x] A12: Last modification dates for the existing 41 sitemap URLs; valid XML and identical URL list verified
 - [x] P6: OMR config, live NRB reference, FAQ, salary amounts and sitemap; SSR, mobile conversion, tests and green build verified
 - [x] P7: AUD to SGD config, Frankfurter converter, chart, FAQs and sitemap; live SSR, mobile conversion, chart, tests and green build verified
-- [ ] P8-P10: Remaining three currency config entries
+- [ ] P8: AUD to CAD config, live converter, chart and sitemap; verification pending
+- [ ] P9-P10: Crypto currency config entries
 - [ ] F0, F12-F14: Config-driven Float pages
 - [ ] F3b, C0h-rest, A3-A11, A13-A20, 1-48: Remaining ordered presentation updates
 - [x] 0: October 15 changelog entry, green build and publication requested

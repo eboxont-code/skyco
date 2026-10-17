@@ -22,6 +22,11 @@ function fmt(n: number) {
 
 function faqs(pair: CurrencyPair, rate: RateResult | null): { id: string; q: string; a: string }[] {
   const { from, to } = pair;
+  if (pair.slug === "aud-to-cad") return [
+    ...(rate ? [{ id: "rate-today", q: "How much is 1 AUD in CAD today?", a: `1 AUD is about ${fmt(rate.rate)} CAD on the reference rate for ${rate.asOf}.` }] : []),
+    { id: "rate-updates", q: "How often does this rate update?", a: "Frankfurter publishes new reference rates on working days, so weekends show the last working day's rate." },
+    { id: "offered-rate", q: "Is this the rate I will get?", a: "Probably not exactly. Banks and transfer services add a margin and sometimes a fee, so the rate you are offered is usually lower." },
+  ];
   if (pair.slug === "aud-to-sgd") return [
     ...(rate ? [{ id: "rate-today", q: "How much is 1 AUD in SGD today?", a: `1 AUD is about ${fmt(rate.rate)} SGD on the reference rate for ${rate.asOf}.` }] : []),
     { id: "rate-source", q: "Where does this rate come from?", a: "I use Frankfurter, which publishes reference rates from the European Central Bank on working days." },
