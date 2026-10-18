@@ -48,8 +48,8 @@ function sample(): Store {
   };
 }
 
-export function FloatPlanner({ shared }: { shared?: string }) {
-  const [period, setPeriod] = useState<Period>("week");
+export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false, showCommitted = false }: { shared?: string; initialPeriod?: Period; bnplFirst?: boolean; showCommitted?: boolean }) {
+  const [period, setPeriod] = useState<Period>(initialPeriod);
   const [store, setStore] = useState<Store>(() => {
     const fromLink = decodeFloatShare(shared);
     return fromLink ? withIds(fromLink) : sample();
@@ -150,6 +150,11 @@ export function FloatPlanner({ shared }: { shared?: string }) {
         <p className="mt-3 text-sm tabular-nums text-muted-foreground">
           {formatAud(incomeTotal)} in, minus {formatAud(billsTotal)} bills and {formatAud(bnplTotal)} BNPL
         </p>
+        {showCommitted && incomeTotal > 0 && (
+          <p className="mt-2 text-sm tabular-nums text-muted-foreground">
+            Committed: {formatAud(billsTotal + bnplTotal)} of {formatAud(incomeTotal)}, {Math.round(((billsTotal + bnplTotal) / incomeTotal) * 100)}%
+          </p>
+        )}
         <Button variant="ghost" className="mt-2 min-h-11" onClick={share} aria-label="Share these numbers with a link">
           {shareState === "copied" ? <Check className="size-4" aria-hidden="true" /> : <Share2 className="size-4" aria-hidden="true" />}
           {shareState === "copied" ? "Link copied" : "Share these numbers"}
@@ -168,8 +173,9 @@ export function FloatPlanner({ shared }: { shared?: string }) {
         <ExpiryAlerts items={deals} />
         <OutgoingsChart income={incomeTotal} bills={billsTotal} bnpl={bnplTotal} periodLabel={windowLabel} />
         <EntrySection title="Income" subtitle="Pay landing in this window" nameLabel="Source" namePlaceholder="Wages" dateLabel="Pay date" emptyText="Add a pay to see your number." tone="positive" total={incomeTotal} entries={income} defaultDate={today} defaultFrequency="fortnightly" {...handlers("income")} />
+        {bnplFirst && <EntrySection title="Afterpay and BNPL" subtitle="Instalments and plans" nameLabel="Provider or plan" namePlaceholder="Afterpay" dateLabel="Due date" emptyText="Add an instalment to include it." tone="outgoing" total={bnplTotal} entries={bnpl} defaultDate={today} defaultFrequency="fortnightly" showDealFields {...handlers("bnpl")} />}
         <EntrySection title="Bills due" subtitle="Biggest first" nameLabel="Bill" namePlaceholder="Mobile plan" dateLabel="Due date" emptyText="Add a bill such as rent, power or internet." tone="outgoing" total={billsTotal} entries={bills} defaultDate={today} defaultFrequency="monthly" showDealFields {...handlers("bills")} />
-        <EntrySection title="Afterpay and BNPL" subtitle="Instalments and plans" nameLabel="Provider or plan" namePlaceholder="Afterpay" dateLabel="Due date" emptyText="Add an instalment to include it." tone="outgoing" total={bnplTotal} entries={bnpl} defaultDate={today} defaultFrequency="fortnightly" showDealFields {...handlers("bnpl")} />
+        {!bnplFirst && <EntrySection title="Afterpay and BNPL" subtitle="Instalments and plans" nameLabel="Provider or plan" namePlaceholder="Afterpay" dateLabel="Due date" emptyText="Add an instalment to include it." tone="outgoing" total={bnplTotal} entries={bnpl} defaultDate={today} defaultFrequency="fortnightly" showDealFields {...handlers("bnpl")} />}
         <div className="min-w-0 rounded-2xl border border-sky-bright/20 bg-card p-4 sm:p-5">
           <p className="text-xs font-bold uppercase tracking-wider text-sky-deep">Coming soon</p>
           <p className="mt-1 font-semibold text-foreground">Float accounts and sync across your devices</p>

@@ -38,6 +38,16 @@ function faqs(pair: CurrencyPair, rate: RateResult | null): { id: string; q: str
     { id: "quote-lower", q: "Why is my remittance quote lower?", a: "Each service starts from a market rate, then adds its own margin and any fee. Compare the amount that will arrive in Nepal, not just the headline rate." },
     { id: "rate-updates", q: "When does the rate change?", a: "Nepal Rastra Bank publishes a new list once a day. This page uses the latest available list when its reference data refreshes." },
   ];
+  if (pair.slug === "btc-to-aud") return [
+    ...(rate ? [{ id: "rate-today", q: "How much is 1 Bitcoin in AUD right now?", a: `About ${fmt(rate.rate)} AUD, based on the latest CoinGecko price shown above.` }] : []),
+    { id: "exchange-different", q: "Why is an exchange price different?", a: "Each exchange has its own buyers and sellers, a spread between buy and sell, and its own fees, so its price can differ from this market average." },
+    { id: "refresh", q: "How often does the price refresh?", a: "CoinGecko prices are close to live. This page checks again within a few minutes." },
+  ];
+  if (pair.slug === "eth-to-aud") return [
+    ...(rate ? [{ id: "rate-today", q: "How much is 1 ETH in AUD right now?", a: `About ${fmt(rate.rate)} AUD, based on the latest CoinGecko price shown above.` }] : []),
+    { id: "eth-ethereum", q: "Is ETH the same as Ethereum?", a: "Ethereum is the network. ETH, or ether, is the coin that runs on it. People use the two names for the price interchangeably." },
+    { id: "app-different", q: "Why does my app show a different price?", a: "Apps and exchanges set their own buy and sell prices and add fees, so their number often differs a little from this market price." },
+  ];
   const list: { id: string; q: string; a: string }[] = [];
   if (rate) {
     list.push({
