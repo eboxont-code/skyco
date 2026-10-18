@@ -48,7 +48,7 @@ function sample(): Store {
   };
 }
 
-export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false }: { shared?: string; initialPeriod?: Period; bnplFirst?: boolean }) {
+export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false, showCommitted = false }: { shared?: string; initialPeriod?: Period; bnplFirst?: boolean; showCommitted?: boolean }) {
   const [period, setPeriod] = useState<Period>(initialPeriod);
   const [store, setStore] = useState<Store>(() => {
     const fromLink = decodeFloatShare(shared);
@@ -150,6 +150,11 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
         <p className="mt-3 text-sm tabular-nums text-muted-foreground">
           {formatAud(incomeTotal)} in, minus {formatAud(billsTotal)} bills and {formatAud(bnplTotal)} BNPL
         </p>
+        {showCommitted && incomeTotal > 0 && (
+          <p className="mt-2 text-sm tabular-nums text-muted-foreground">
+            Committed: {formatAud(billsTotal + bnplTotal)} of {formatAud(incomeTotal)}, {Math.round(((billsTotal + bnplTotal) / incomeTotal) * 100)}%
+          </p>
+        )}
         <Button variant="ghost" className="mt-2 min-h-11" onClick={share} aria-label="Share these numbers with a link">
           {shareState === "copied" ? <Check className="size-4" aria-hidden="true" /> : <Share2 className="size-4" aria-hidden="true" />}
           {shareState === "copied" ? "Link copied" : "Share these numbers"}
