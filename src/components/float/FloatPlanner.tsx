@@ -48,8 +48,8 @@ function sample(): Store {
   };
 }
 
-export function FloatPlanner({ shared }: { shared?: string }) {
-  const [period, setPeriod] = useState<Period>("week");
+export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false }: { shared?: string; initialPeriod?: Period; bnplFirst?: boolean }) {
+  const [period, setPeriod] = useState<Period>(initialPeriod);
   const [store, setStore] = useState<Store>(() => {
     const fromLink = decodeFloatShare(shared);
     return fromLink ? withIds(fromLink) : sample();
