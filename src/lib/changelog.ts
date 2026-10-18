@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-17",
+    title: "Three new pair pages and clearer rate sources",
+    tag: "Improvement",
+    items: [
+      "OMR to NPR now has its own pair page with the Nepal Rastra Bank reference rate, alongside new AUD to SGD and AUD to CAD pages.",
+      "Every NPR pair page now shows the Nepal Rastra Bank buying and selling rates next to the midpoint.",
+      "The sitemap now carries a last updated date for every page.",
+    ],
+  },
+  {
     date: "2026-10-16",
     title: "Five more Nepal currency pairs and a security update",
     tag: "Improvement",
