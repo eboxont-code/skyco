@@ -28,6 +28,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as CurrenseePairRouteImport } from './routes/currensee_.$pair'
 import { Route as CurrenseeRatesRouteImport } from './routes/currensee_.rates'
 import { Route as FloatSlugRouteImport } from './routes/float_.$slug'
+import { Route as GuidesBudgetingInAustraliaForNewArrivalsRouteImport } from './routes/guides.budgeting-in-australia-for-new-arrivals'
 import { Route as GuidesSendingMoneyToNepalFromAustraliaRouteImport } from './routes/guides.sending-money-to-nepal-from-australia'
 
 const IndexRoute = IndexRouteImport.update({
@@ -125,6 +126,12 @@ const FloatSlugRoute = FloatSlugRouteImport.update({
   path: '/float/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesBudgetingInAustraliaForNewArrivalsRoute =
+  GuidesBudgetingInAustraliaForNewArrivalsRouteImport.update({
+    id: '/guides/budgeting-in-australia-for-new-arrivals',
+    path: '/guides/budgeting-in-australia-for-new-arrivals',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GuidesSendingMoneyToNepalFromAustraliaRoute =
   GuidesSendingMoneyToNepalFromAustraliaRouteImport.update({
     id: '/guides/sending-money-to-nepal-from-australia',
@@ -152,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/currensee/$pair': typeof CurrenseePairRoute
   '/currensee/rates': typeof CurrenseeRatesRoute
   '/float/$slug': typeof FloatSlugRoute
+  '/guides/budgeting-in-australia-for-new-arrivals': typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 export interface FileRoutesByTo {
@@ -174,6 +182,7 @@ export interface FileRoutesByTo {
   '/currensee/$pair': typeof CurrenseePairRoute
   '/currensee/rates': typeof CurrenseeRatesRoute
   '/float/$slug': typeof FloatSlugRoute
+  '/guides/budgeting-in-australia-for-new-arrivals': typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 export interface FileRoutesById {
@@ -197,6 +206,7 @@ export interface FileRoutesById {
   '/currensee_/$pair': typeof CurrenseePairRoute
   '/currensee_/rates': typeof CurrenseeRatesRoute
   '/float_/$slug': typeof FloatSlugRoute
+  '/guides/budgeting-in-australia-for-new-arrivals': typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 export interface FileRouteTypes {
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/currensee/$pair'
     | '/currensee/rates'
     | '/float/$slug'
+    | '/guides/budgeting-in-australia-for-new-arrivals'
     | '/guides/sending-money-to-nepal-from-australia'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/currensee/$pair'
     | '/currensee/rates'
     | '/float/$slug'
+    | '/guides/budgeting-in-australia-for-new-arrivals'
     | '/guides/sending-money-to-nepal-from-australia'
   id:
     | '__root__'
@@ -265,6 +277,7 @@ export interface FileRouteTypes {
     | '/currensee_/$pair'
     | '/currensee_/rates'
     | '/float_/$slug'
+    | '/guides/budgeting-in-australia-for-new-arrivals'
     | '/guides/sending-money-to-nepal-from-australia'
   fileRoutesById: FileRoutesById
 }
@@ -288,6 +301,7 @@ export interface RootRouteChildren {
   CurrenseePairRoute: typeof CurrenseePairRoute
   CurrenseeRatesRoute: typeof CurrenseeRatesRoute
   FloatSlugRoute: typeof FloatSlugRoute
+  GuidesBudgetingInAustraliaForNewArrivalsRoute: typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   GuidesSendingMoneyToNepalFromAustraliaRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 
@@ -426,6 +440,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FloatSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/budgeting-in-australia-for-new-arrivals': {
+      id: '/guides/budgeting-in-australia-for-new-arrivals'
+      path: '/guides/budgeting-in-australia-for-new-arrivals'
+      fullPath: '/guides/budgeting-in-australia-for-new-arrivals'
+      preLoaderRoute: typeof GuidesBudgetingInAustraliaForNewArrivalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guides/sending-money-to-nepal-from-australia': {
       id: '/guides/sending-money-to-nepal-from-australia'
       path: '/guides/sending-money-to-nepal-from-australia'
@@ -456,6 +477,8 @@ const rootRouteChildren: RootRouteChildren = {
   CurrenseePairRoute: CurrenseePairRoute,
   CurrenseeRatesRoute: CurrenseeRatesRoute,
   FloatSlugRoute: FloatSlugRoute,
+  GuidesBudgetingInAustraliaForNewArrivalsRoute:
+    GuidesBudgetingInAustraliaForNewArrivalsRoute,
   GuidesSendingMoneyToNepalFromAustraliaRoute:
     GuidesSendingMoneyToNepalFromAustraliaRoute,
 }
