@@ -9,7 +9,7 @@ import { formatAud } from "@/lib/float";
 const IMAGE = "https://skyco.online/og/float.jpg";
 const NOT_AFFILIATED = "Not affiliated with Afterpay or any buy now pay later provider.";
 
-export const Route = createFileRoute("/float_/$slug")({
+export const Route = createFileRoute("/float/$slug")({
   loader: ({ params }) => {
     const page = floatPageBySlug(params.slug);
     if (!page) throw notFound();
