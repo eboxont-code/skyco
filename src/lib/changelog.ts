@@ -12,6 +12,15 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-18",
+    title: "Bitcoin and Ethereum prices in Australian dollars",
+    tag: "Improvement",
+    items: [
+      "BTC to AUD and ETH to AUD have their own price pages, with prices from CoinGecko.",
+      "Float now has eight planning pages for pay cycles, bills and buy now pay later instalments.",
+    ],
+  },
+  {
     date: "2026-10-17",
     title: "Three new pair pages and clearer rate sources",
     tag: "Improvement",
