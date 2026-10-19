@@ -17,6 +17,7 @@ export const changelog: ChangeEntry[] = [
     tag: "Improvement",
     items: [
       "BTC to AUD and ETH to AUD have their own price pages, with prices from CoinGecko.",
+      "Float now has eight planning pages for pay cycles, bills and buy now pay later instalments.",
     ],
   },
   {

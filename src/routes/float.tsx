@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { breadcrumbScript, productAppScript } from "@/lib/seo";
 import { ProductPage } from "@/components/ProductPage";
 import { FloatPlanner } from "@/components/float/FloatPlanner";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
+import { FLOAT_PAGES } from "@/lib/float-pages";
 
 const TITLE = "Float | What you can spend this week after bills and BNPL";
 const DESCRIPTION =
@@ -88,6 +89,12 @@ function FloatPage() {
               </details>
             ))}
           </div>
+          <nav aria-labelledby="float-ways-heading" className="mt-8">
+            <h2 id="float-ways-heading" className="text-2xl font-extrabold text-foreground">Ways to use Float</h2>
+            <ul className="mt-3 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+              {FLOAT_PAGES.map(page => <li key={page.slug}><Link to="/float/$slug" params={{ slug: page.slug }} className="inline-flex min-h-11 items-center text-sm font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{page.h1}</Link></li>)}
+            </ul>
+          </nav>
         </section>
       }
     />
