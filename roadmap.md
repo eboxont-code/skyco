@@ -1,4 +1,10 @@
-# SkyCo October 17 ordered updates
+# SkyCo October 19 ordered updates
+- [ ] F0-fix: Un-nest Float pages and widen the shared breadcrumb parent; verify and publish
+- [ ] 0: October 18 crypto release entry
+- [ ] F-rest: Eight Float links and sitemap entries
+- [ ] X1: Server-rendered crypto prices or truthful FAQ fallback
+- [ ] F20: New-arrivals budgeting guide
+- [ ] U1, U3, U6, U7, F3b, C0h-rest, A3-A11, A13-A20, U2, U4-U5, U8-U9, 1-48: Follow in order
 - [x] 0: October 16 release entry; green build, phone check and publication requested
 - [x] S1-rest: NRB buy/sell/unit line, five selected converter currencies and all NPR conversion links; five SSR and 390px conversions verified, unknown pair 404, green build
 - [x] A12: Last modification dates for the existing 41 sitemap URLs; valid XML and identical URL list verified

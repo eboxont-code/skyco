@@ -43,6 +43,7 @@ export function PageShell({
                   </Link>
                 </li>
                 <li aria-hidden="true">/</li>
+                {parent?.to === "/float" && <><li><Link to="/" hash="tools" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring">Products</Link></li><li aria-hidden="true">/</li></>}
                 {parent && (
                   <>
                     <li><Link to={parent.to} className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{parent.label}</Link></li>

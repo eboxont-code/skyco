@@ -31,3 +31,4 @@
 - NPR pair page loaders consume getNprRates rows directly and never display peg-derived fallback rates, so their published reference matches the rates table.
 - Waitlist submissions use a validated public server function with insert-only privileged access; visitors cannot read submission rows.
 - Keep Start and router packages at a tested compatible release set and use the validator builder API, so security updates preserve existing rate and waitlist behavior.
+- Keep Float planning pages in the un-nested `float_.$slug` route; this isolates their content and metadata from the main Float page.
