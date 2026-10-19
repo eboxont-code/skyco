@@ -1,5 +1,5 @@
 # SkyCo October 19 ordered updates
-- [ ] F0-fix: Un-nest Float pages and widen the shared breadcrumb parent; verify and publish
+- [x] F0-fix: Eight pages return 200 with independent headings, one canonical and matching FAQs; unknown slug 404, green build, phone/desktop checks and publication requested
 - [ ] 0: October 18 crypto release entry
 - [ ] F-rest: Eight Float links and sitemap entries
 - [ ] X1: Server-rendered crypto prices or truthful FAQ fallback
