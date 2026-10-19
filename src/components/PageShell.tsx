@@ -19,7 +19,7 @@ export function PageShell({
   parent,
   crumb,
 }: {
-  parent?: { label: string; to: "/currensee" };
+  parent?: { label: string; to: "/currensee" | "/float" };
   crumb?: string;
   eyebrow: string;
   title: string;
