@@ -32,3 +32,4 @@
 - Waitlist submissions use a validated public server function with insert-only privileged access; visitors cannot read submission rows.
 - Keep Start and router packages at a tested compatible release set and use the validator builder API, so security updates preserve existing rate and waitlist behavior.
 - Keep Float planning pages in the un-nested `float_.$slug` route; this isolates their content and metadata from the main Float page.
+- Guide FAQ arrays drive both visible answers and structured data so the two remain identical.

@@ -2,7 +2,7 @@
 - [x] F0-fix: Eight pages return 200 with independent headings, one canonical and matching FAQs; unknown slug 404, green build, phone/desktop checks and publication requested
 - [x] 0: October 18 crypto release entry renders; green build and publication requested
 - [x] F-rest: Eight 44px Float links and 54 sitemap URLs verified; green build and publication requested
-- [ ] X1: Server-rendered crypto prices or truthful FAQ fallback
+- [x] X1: Both crypto prices verified in server HTML with matching FAQs; unavailable fallback retained; publication requested
 - [ ] F20: New-arrivals budgeting guide
 - [ ] U1, U3, U6, U7, F3b, C0h-rest, A3-A11, A13-A20, U2, U4-U5, U8-U9, 1-48: Follow in order
 - [x] 0: October 16 release entry; green build, phone check and publication requested
