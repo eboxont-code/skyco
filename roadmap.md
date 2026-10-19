@@ -1,7 +1,7 @@
 # SkyCo October 19 ordered updates
 - [x] F0-fix: Eight pages return 200 with independent headings, one canonical and matching FAQs; unknown slug 404, green build, phone/desktop checks and publication requested
 - [x] 0: October 18 crypto release entry renders; green build and publication requested
-- [ ] F-rest: Eight Float links and sitemap entries
+- [x] F-rest: Eight 44px Float links and 54 sitemap URLs verified; green build and publication requested
 - [ ] X1: Server-rendered crypto prices or truthful FAQ fallback
 - [ ] F20: New-arrivals budgeting guide
 - [ ] U1, U3, U6, U7, F3b, C0h-rest, A3-A11, A13-A20, U2, U4-U5, U8-U9, 1-48: Follow in order
