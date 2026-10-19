@@ -27,7 +27,7 @@ import { Route as SupportRouteImport } from './routes/support'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as CurrenseePairRouteImport } from './routes/currensee_.$pair'
 import { Route as CurrenseeRatesRouteImport } from './routes/currensee_.rates'
-import { Route as FloatSlugRouteImport } from './routes/float.$slug'
+import { Route as FloatSlugRouteImport } from './routes/float_.$slug'
 import { Route as GuidesSendingMoneyToNepalFromAustraliaRouteImport } from './routes/guides.sending-money-to-nepal-from-australia'
 
 const IndexRoute = IndexRouteImport.update({
@@ -121,9 +121,9 @@ const CurrenseeRatesRoute = CurrenseeRatesRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const FloatSlugRoute = FloatSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => FloatRoute,
+  id: '/float_/$slug',
+  path: '/float/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesSendingMoneyToNepalFromAustraliaRoute =
   GuidesSendingMoneyToNepalFromAustraliaRouteImport.update({
@@ -141,7 +141,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/finance-friend': typeof FinanceFriendRoute
-  '/float': typeof FloatRouteWithChildren
+  '/float': typeof FloatRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/privacy': typeof PrivacyRoute
@@ -163,7 +163,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/finance-friend': typeof FinanceFriendRoute
-  '/float': typeof FloatRouteWithChildren
+  '/float': typeof FloatRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/privacy': typeof PrivacyRoute
@@ -186,7 +186,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/finance': typeof FinanceRoute
   '/finance-friend': typeof FinanceFriendRoute
-  '/float': typeof FloatRouteWithChildren
+  '/float': typeof FloatRoute
   '/grocery': typeof GroceryRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/privacy': typeof PrivacyRoute
@@ -196,7 +196,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/currensee_/$pair': typeof CurrenseePairRoute
   '/currensee_/rates': typeof CurrenseeRatesRoute
-  '/float/$slug': typeof FloatSlugRoute
+  '/float_/$slug': typeof FloatSlugRoute
   '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 export interface FileRouteTypes {
@@ -264,7 +264,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/currensee_/$pair'
     | '/currensee_/rates'
-    | '/float/$slug'
+    | '/float_/$slug'
     | '/guides/sending-money-to-nepal-from-australia'
   fileRoutesById: FileRoutesById
 }
@@ -277,7 +277,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   FinanceRoute: typeof FinanceRoute
   FinanceFriendRoute: typeof FinanceFriendRoute
-  FloatRoute: typeof FloatRouteWithChildren
+  FloatRoute: typeof FloatRoute
   GroceryRoute: typeof GroceryRoute
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -287,6 +287,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   CurrenseePairRoute: typeof CurrenseePairRoute
   CurrenseeRatesRoute: typeof CurrenseeRatesRoute
+  FloatSlugRoute: typeof FloatSlugRoute
   GuidesSendingMoneyToNepalFromAustraliaRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRoute
 }
 
@@ -418,12 +419,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CurrenseeRatesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/float/$slug': {
-      id: '/float/$slug'
-      path: '/$slug'
+    '/float_/$slug': {
+      id: '/float_/$slug'
+      path: '/float/$slug'
       fullPath: '/float/$slug'
       preLoaderRoute: typeof FloatSlugRouteImport
-      parentRoute: typeof FloatRoute
+      parentRoute: typeof rootRouteImport
     }
     '/guides/sending-money-to-nepal-from-australia': {
       id: '/guides/sending-money-to-nepal-from-australia'
@@ -435,16 +436,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface FloatRouteChildren {
-  FloatSlugRoute: typeof FloatSlugRoute
-}
-
-const FloatRouteChildren: FloatRouteChildren = {
-  FloatSlugRoute: FloatSlugRoute,
-}
-
-const FloatRouteWithChildren = FloatRoute._addFileChildren(FloatRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -454,7 +445,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   FinanceRoute: FinanceRoute,
   FinanceFriendRoute: FinanceFriendRoute,
-  FloatRoute: FloatRouteWithChildren,
+  FloatRoute: FloatRoute,
   GroceryRoute: GroceryRoute,
   LlmsDottxtRoute: LlmsDottxtRoute,
   PrivacyRoute: PrivacyRoute,
@@ -464,6 +455,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   CurrenseePairRoute: CurrenseePairRoute,
   CurrenseeRatesRoute: CurrenseeRatesRoute,
+  FloatSlugRoute: FloatSlugRoute,
   GuidesSendingMoneyToNepalFromAustraliaRoute:
     GuidesSendingMoneyToNepalFromAustraliaRoute,
 }
