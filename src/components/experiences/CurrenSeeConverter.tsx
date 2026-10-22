@@ -25,18 +25,31 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
   useWebMCPTools([{ name: "get_currency_rate", description: "Get the current reference rate for a supported currency pair.", inputSchema: { type: "object", properties: { from: { type: "string", enum: CURRENCIES }, to: { type: "string", enum: CURRENCIES } }, required: ["from", "to"], additionalProperties: false }, execute: async args => { const from = String(args.from ?? "").toUpperCase(); const to = String(args.to ?? "").toUpperCase(); if (!CURRENCIES.includes(from) || !CURRENCIES.includes(to)) return text("Choose two supported currency codes."); try { const result = await fetchRate({ data: { from, to } }); return text(`1 ${from} = ${currencyFormat(result.rate, to, true)}, reference rate for ${result.asOf}. Source: ${result.source}`); } catch { return text("Rate service unavailable. No current rate could be retrieved."); } } }]);
   const [swapStatus, setSwapStatus] = useState("");
   const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
+  const [favorites, setFavorites] = useState<Pair[]>([]);
+  const [favoriteStatus, setFavoriteStatus] = useState("");
+  const [defaultStatus, setDefaultStatus] = useState("");
   const [storageReady, setStorageReady] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
+    setFavorites(getFavorites());
+    let restoredLast = false;
     try {
       const last: unknown = JSON.parse(localStorage.getItem("skyco.currensee.last") ?? "null");
       if (last && typeof last === "object" && "from" in last && "to" in last && "amount" in last && typeof last.from === "string" && typeof last.to === "string" && typeof last.amount === "string" && CURRENCIES.includes(last.from) && CURRENCIES.includes(last.to) && /^\d+(?:\.\d+)?$/.test(last.amount) && last.amount.length <= 30 && Number.isFinite(Number(last.amount)) && Number(last.amount) > 0) {
         if (!initialFrom) setFrom(last.from);
         if (!initialTo) setTo(last.to);
         if (!initialAmount) setAmount(last.amount);
+        restoredLast = true;
       }
     } catch { /* Storage is optional. */ }
+    if (!restoredLast && !initialFrom && !initialTo) {
+      const fallbackPair = getDefaultPair();
+      if (fallbackPair) {
+        setFrom(fallbackPair.from);
+        setTo(fallbackPair.to);
+      }
+    }
     try {
       const saved: unknown = JSON.parse(localStorage.getItem("skyco.currensee.recent") ?? "[]");
       if (Array.isArray(saved)) setRecent(saved.filter((p): p is { from: string; to: string } => p && typeof p.from === "string" && typeof p.to === "string" && CURRENCIES.includes(p.from) && CURRENCIES.includes(p.to)).slice(0, 5));
