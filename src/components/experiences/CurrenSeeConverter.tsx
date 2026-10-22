@@ -3,9 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useWebMCPTools, text } from "@/lib/webmcp";
 import { Button } from "@/components/ui/button";
-import { ArrowLeftRight, RefreshCw } from "lucide-react";
+import { ArrowLeftRight, RefreshCw, Star, X } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { ADDITIONAL_NRB_CURRENCIES, converterCurrencies } from "@/lib/converter-currencies";
+import { getDefaultPair, getFavorites, isFavorite, setDefaultPair, toggleFavorite, type Pair } from "@/lib/currensee-store";
 
 const SELECTABLE_CURRENCIES = converterCurrencies(CURRENCIES);
 
