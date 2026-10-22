@@ -3,9 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useWebMCPTools, text } from "@/lib/webmcp";
 import { Button } from "@/components/ui/button";
-import { ArrowLeftRight, RefreshCw } from "lucide-react";
+import { ArrowLeftRight, RefreshCw, Star, X } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { ADDITIONAL_NRB_CURRENCIES, converterCurrencies } from "@/lib/converter-currencies";
+import { getDefaultPair, getFavorites, isFavorite, setDefaultPair, toggleFavorite, type Pair } from "@/lib/currensee-store";
 
 const SELECTABLE_CURRENCIES = converterCurrencies(CURRENCIES);
 
@@ -24,18 +25,31 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
   useWebMCPTools([{ name: "get_currency_rate", description: "Get the current reference rate for a supported currency pair.", inputSchema: { type: "object", properties: { from: { type: "string", enum: CURRENCIES }, to: { type: "string", enum: CURRENCIES } }, required: ["from", "to"], additionalProperties: false }, execute: async args => { const from = String(args.from ?? "").toUpperCase(); const to = String(args.to ?? "").toUpperCase(); if (!CURRENCIES.includes(from) || !CURRENCIES.includes(to)) return text("Choose two supported currency codes."); try { const result = await fetchRate({ data: { from, to } }); return text(`1 ${from} = ${currencyFormat(result.rate, to, true)}, reference rate for ${result.asOf}. Source: ${result.source}`); } catch { return text("Rate service unavailable. No current rate could be retrieved."); } } }]);
   const [swapStatus, setSwapStatus] = useState("");
   const [recent, setRecent] = useState<{ from: string; to: string }[]>([]);
+  const [favorites, setFavorites] = useState<Pair[]>([]);
+  const [favoriteStatus, setFavoriteStatus] = useState("");
+  const [defaultStatus, setDefaultStatus] = useState("");
   const [storageReady, setStorageReady] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
+    setFavorites(getFavorites());
+    let restoredLast = false;
     try {
       const last: unknown = JSON.parse(localStorage.getItem("skyco.currensee.last") ?? "null");
       if (last && typeof last === "object" && "from" in last && "to" in last && "amount" in last && typeof last.from === "string" && typeof last.to === "string" && typeof last.amount === "string" && CURRENCIES.includes(last.from) && CURRENCIES.includes(last.to) && /^\d+(?:\.\d+)?$/.test(last.amount) && last.amount.length <= 30 && Number.isFinite(Number(last.amount)) && Number(last.amount) > 0) {
         if (!initialFrom) setFrom(last.from);
         if (!initialTo) setTo(last.to);
         if (!initialAmount) setAmount(last.amount);
+        restoredLast = true;
       }
     } catch { /* Storage is optional. */ }
+    if (!restoredLast && !initialFrom && !initialTo) {
+      const fallbackPair = getDefaultPair();
+      if (fallbackPair) {
+        setFrom(fallbackPair.from);
+        setTo(fallbackPair.to);
+      }
+    }
     try {
       const saved: unknown = JSON.parse(localStorage.getItem("skyco.currensee.recent") ?? "[]");
       if (Array.isArray(saved)) setRecent(saved.filter((p): p is { from: string; to: string } => p && typeof p.from === "string" && typeof p.to === "string" && CURRENCIES.includes(p.from) && CURRENCIES.includes(p.to)).slice(0, 5));
@@ -105,6 +119,19 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         <h2 className="text-sm font-bold uppercase tracking-wider text-sky-deep">
           Convert now
         </h2>
+        <button
+          type="button"
+          aria-pressed={favorites.some((p) => p.from === from && p.to === to)}
+          aria-label={favorites.some((p) => p.from === from && p.to === to) ? `Remove ${from} to ${to} from favourites` : `Save ${from} to ${to} as a favourite`}
+          onClick={() => {
+            const wasSaved = isFavorite({ from, to });
+            setFavorites(toggleFavorite({ from, to }));
+            setFavoriteStatus(wasSaved ? "Removed from favourites" : "Saved to favourites");
+          }}
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-sky-bright/30 text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <Star className="h-5 w-5" aria-hidden="true" fill={favorites.some((p) => p.from === from && p.to === to) ? "currentColor" : "none"} />
+        </button>
         <span className="text-xs text-muted-foreground" role="status" aria-live="polite">
           {!mounted
             ? data ? `Reference rate for ${data.asOf}` : "Loading rate"
@@ -167,6 +194,29 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
 
       <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" className="min-h-11" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
       <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["AUD", "NPR"], ["USD", "NPR"], ["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" className="min-h-11" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}>{base} → {quote}</Button> : null)}</div>
+      <div role="group" aria-label="Favourite currency pairs" className="mt-3">
+        <span className="text-xs font-semibold text-muted-foreground">Favourites</span>
+        {favorites.length === 0 ? (
+          <p className="mt-1 text-xs text-muted-foreground">Tap the star to keep a pair here.</p>
+        ) : (
+          <div className="mt-1 flex flex-nowrap gap-2 overflow-x-auto pb-1 sm:flex-wrap">
+            {favorites.map((p) => (
+              <span key={`${p.from}:${p.to}`} className="inline-flex shrink-0 items-center gap-1">
+                <Button variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>
+                <button
+                  type="button"
+                  aria-label={`Remove ${p.from} to ${p.to}`}
+                  onClick={() => { setFavorites(toggleFavorite(p)); setFavoriteStatus(`Removed ${p.from} to ${p.to} from favourites`); }}
+                  className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-sky-bright/30 text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <X className="h-4 w-4" aria-hidden="true" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+      <p role="status" className="sr-only">{favoriteStatus}</p>
       {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
       <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
@@ -203,6 +253,14 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         <span role="status" aria-live="polite" className="text-xs text-muted-foreground">
           {copied ? "Link copied" : ""}
         </span>
+        <button
+          type="button"
+          onClick={() => { setDefaultPair({ from, to }); setDefaultStatus(`${from} to ${to} is now your default pair`); }}
+          className="inline-flex min-h-11 items-center text-xs font-semibold text-sky-deep underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Make this my default pair
+        </button>
+        <span role="status" className="text-xs text-muted-foreground">{defaultStatus}</span>
       </div>
 
       <div className="mt-5">

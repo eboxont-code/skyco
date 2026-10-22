@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-19",
+    title: "A budgeting guide for new arrivals and better Float pages",
+    tag: "Improvement",
+    items: [
+      "New guide: Budgeting in Australia when you are new here, written for students and workers on weekly or fortnightly pay.",
+      "The eight Float planning pages now each have their own content and a place in the sitemap, with a Ways to use Float list on the Float page.",
+      "The crypto pair FAQs now point to the latest CoinGecko price shown on the page.",
+    ],
+  },
+  {
     date: "2026-10-18",
     title: "Bitcoin and Ethereum prices in Australian dollars",
     tag: "Improvement",
