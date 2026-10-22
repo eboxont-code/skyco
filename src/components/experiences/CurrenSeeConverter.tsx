@@ -119,6 +119,19 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         <h2 className="text-sm font-bold uppercase tracking-wider text-sky-deep">
           Convert now
         </h2>
+        <button
+          type="button"
+          aria-pressed={favorites.some((p) => p.from === from && p.to === to)}
+          aria-label={favorites.some((p) => p.from === from && p.to === to) ? `Remove ${from} to ${to} from favourites` : `Save ${from} to ${to} as a favourite`}
+          onClick={() => {
+            const wasSaved = isFavorite({ from, to });
+            setFavorites(toggleFavorite({ from, to }));
+            setFavoriteStatus(wasSaved ? "Removed from favourites" : "Saved to favourites");
+          }}
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-sky-bright/30 text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <Star className="h-5 w-5" aria-hidden="true" fill={favorites.some((p) => p.from === from && p.to === to) ? "currentColor" : "none"} />
+        </button>
         <span className="text-xs text-muted-foreground" role="status" aria-live="polite">
           {!mounted
             ? data ? `Reference rate for ${data.asOf}` : "Loading rate"
