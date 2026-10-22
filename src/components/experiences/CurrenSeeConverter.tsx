@@ -253,6 +253,14 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         <span role="status" aria-live="polite" className="text-xs text-muted-foreground">
           {copied ? "Link copied" : ""}
         </span>
+        <button
+          type="button"
+          onClick={() => { setDefaultPair({ from, to }); setDefaultStatus(`${from} to ${to} is now your default pair`); }}
+          className="inline-flex min-h-11 items-center text-xs font-semibold text-sky-deep underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Make this my default pair
+        </button>
+        <span role="status" className="text-xs text-muted-foreground">{defaultStatus}</span>
       </div>
 
       <div className="mt-5">
