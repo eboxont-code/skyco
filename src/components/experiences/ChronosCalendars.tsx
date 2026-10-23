@@ -4,13 +4,14 @@ import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { formatCalendar, nativeCalendarLabel, type CalendarSystem } from "@/lib/calendars";
+import { ChronosObservances } from "./ChronosObservances";
 
 /**
  * The Chronos reading, running on skyco.online itself.
  * Pick one day and read it back in six calendar systems at once.
  */
 const SYSTEMS: { label: string; calendar: string; locale: string; system?: CalendarSystem; lang?: string; dir?: "rtl" | "ltr" }[] = [
-  { label: "Gregorian", calendar: "gregory", locale: "en-GB" },
+  { label: "Gregorian", calendar: "gregory", locale: "en-GB", system: "gregorian" },
   { label: "Nepali (Bikram Sambat)", calendar: "nepali", locale: "ne", system: "nepali", lang: "ne", dir: "ltr" },
   { label: "Hijri", calendar: "islamic-umalqura", locale: "en-GB", system: "hijri", lang: "ar", dir: "rtl" },
   { label: "Hebrew", calendar: "hebrew", locale: "en-GB", system: "hebrew", lang: "he", dir: "rtl" },
@@ -57,7 +58,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
       } catch {
         /* keep the fallback text */
       }
-      return { label: s.label, text, native, lang: s.lang, dir: s.dir };
+      return { label: s.label, text, native, lang: s.lang, dir: s.dir, system: s.system };
     });
   }, [value, dateIsValid]);
 
@@ -98,7 +99,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
 
       <div className="mt-4"><label htmlFor="chronos-end-date" className="text-sm font-semibold text-foreground">Days between</label><input id="chronos-end-date" type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="mt-1 block min-h-11 rounded-lg border border-input bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring" /><p role="status" className="mt-2 text-sm text-muted-foreground">{dateIsValid && /^\d{4}-\d{2}-\d{2}$/.test(endDate) && Number.isFinite(new Date(`${endDate}T12:00:00Z`).getTime()) ? `${Math.round((new Date(`${endDate}T12:00:00Z`).getTime() - new Date(`${value}T12:00:00Z`).getTime()) / 86400000)} days from ${value} to ${endDate}` : "Choose a second date."}</p></div>
       <p id="calendar-help" className="mt-1 text-xs text-muted-foreground">
-        Calendar readings use your browser&apos;s standard calendar data. Holidays and observances are not included.
+        Hijri uses the Umm al-Qura arithmetic method, so a local moon sighting can move a date by one day. Dashain, Tihar, Shivaratri and other Nepali lunar festivals are computed from the tithi at sunrise in Kathmandu, so a local panchang can differ by a day.
       </p>
 
       <p className="sr-only" role="status">{dateIsValid ? `Readings updated for ${weekday}, ${value}` : "Choose a valid date."}</p>
@@ -121,6 +122,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
               {r.native && <span lang={r.lang} dir={r.dir} className="mt-1 block text-sm text-muted-foreground">{r.native}</span>}
               {r.label === "Gregorian" && dateIsValid && <span className="mt-1 block text-xs text-muted-foreground">{ordinalSummary(value)}</span>}
             </dd>
+            {r.system && <ChronosObservances system={r.system} value={value} />}
           </div>
         ))}
       </dl>
