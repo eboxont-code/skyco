@@ -33,3 +33,4 @@
 - Keep Start and router packages at a tested compatible release set and use the validator builder API, so security updates preserve existing rate and waitlist behavior.
 - Keep Float planning pages in the un-nested `float_.$slug` route; this isolates their content and metadata from the main Float page.
 - Guide FAQ arrays drive both visible answers and structured data so the two remain identical.
+- Chronos parses selected dates at UTC noon, then constructs a local calendar date for the ported Nepali formatter so timezone offsets cannot change the selected day.
