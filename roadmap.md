@@ -1,9 +1,10 @@
 # SkyCo October 23 ordered updates
 - [x] B0: Missing Nepali calendar dependency installed; green build; publication requested
 - [x] 0: October 22 release entry added
-- [ ] U6-rest: Seventh calendar and native reading integration
-- [ ] U7: Lazy-loaded monthly observances and calendar downloads
-- [ ] F3b, C0h-rest, A3-A11, A13-A20, U2, U4-U5, U8-U9, 1-48: Follow in order
+- [x] U6-rest: Seventh calendar and native reading integration; phone and desktop verified
+- [x] U7: Lazy-loaded monthly observances and calendar downloads; three tests pass, download verified; October port shows Dashain, with Tihar outside this month
+- [x] F3b: Actual Float view captured for the home card
+- [ ] C0h-rest, A3-A11, A13-A20, U2, U4-U5, U8-U9, 1-48: Follow in order
 - [x] F0-fix: Eight pages return 200 with independent headings, one canonical and matching FAQs; unknown slug 404, green build, phone/desktop checks and publication requested
 - [x] 0: October 18 crypto release entry renders; green build and publication requested
 - [x] F-rest: Eight 44px Float links and 54 sitemap URLs verified; green build and publication requested
