@@ -5,9 +5,9 @@ import { ChronosCalendars } from "@/components/experiences/ChronosCalendars";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
-const TITLE = "Chronos | Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka calendars";
+const TITLE = "Chronos date converter: Gregorian, Nepali, Hijri and more | SkyCo";
 const DESCRIPTION =
-  "Pick one date and read it in six calendar systems at once. Free, no account, built for families and teams living across calendars.";
+  "Date converter: Gregorian, Nepali (Bikram Sambat), Hijri, Hebrew, Chinese, Persian and Indian Saka. Read one date in seven calendars, free with no account.";
 
 const URL = "https://skyco.online/chronos";
 
@@ -55,12 +55,12 @@ function ChronosPage() {
     <ProductPage
       slug="chronos"
       directory={Route.useLoaderData()}
-      experience={<><ChronosCalendars initialDate={Route.useSearch().date} /><section className="mt-8" aria-labelledby="about-calendars"><h2 id="about-calendars" className="text-xl font-bold text-foreground">About the six calendars</h2><ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground"><li>Gregorian: the solar calendar used for most civil dates worldwide.</li><li>Hijri: the lunar Islamic calendar, using your browser's Umm al-Qura calculation.</li><li>Hebrew: a calendar of lunar months with leap months to stay aligned with the solar year.</li><li>Chinese: a lunisolar calendar with lunar months and occasional leap months.</li><li>Persian: a solar calendar whose year begins around the March equinox.</li><li>Indian Saka: India's national civil calendar, not a general Hindu religious calendar.</li></ul><p className="mt-2 text-xs text-muted-foreground">Readings use standard browser calendar data. Holidays and observances are not included.</p></section><section className="mt-8" aria-labelledby="how-it-works"><h2 id="how-it-works" className="text-xl font-bold text-foreground">How it works</h2><ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground"><li>Pick a date, or use Previous day, Next day or Today.</li><li>Read the same day in six calendar systems.</li><li>Copy the readings or compare two dates.</li></ol></section></>}
-      experienceTitle="Read one date in six calendars"
-      intro="Read one date in six calendar systems."
-      headline="Tap one day and read it back as Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka. About ten seconds, no conversion tables."
+      experience={<><ChronosCalendars initialDate={Route.useSearch().date} /><section className="mt-8" aria-labelledby="about-calendars"><h2 id="about-calendars" className="text-xl font-bold text-foreground">About the seven calendars</h2><ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground"><li>Gregorian: the solar calendar used for most civil dates worldwide.</li><li>Nepali (Bikram Sambat): Nepal's calendar, with a native-script reading where conversion data is available.</li><li>Hijri: the lunar Islamic calendar, using your browser's Umm al-Qura calculation.</li><li>Hebrew: a calendar of lunar months with leap months to stay aligned with the solar year.</li><li>Chinese: a lunisolar calendar with lunar months and occasional leap months.</li><li>Persian: a solar calendar whose year begins around the March equinox.</li><li>Indian Saka: India's national civil calendar, not a general Hindu religious calendar.</li></ul><p className="mt-2 text-xs text-muted-foreground">Readings use browser calendar data and the Nepali date converter. Monthly observances are reference dates; local moon sightings and panchang readings can differ by a day.</p></section><section className="mt-8" aria-labelledby="how-it-works"><h2 id="how-it-works" className="text-xl font-bold text-foreground">How it works</h2><ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-muted-foreground"><li>Pick a date, or use Previous day, Next day or Today.</li><li>Read the same day in seven calendar systems.</li><li>Copy the readings or compare two dates.</li></ol></section></>}
+      experienceTitle="Read one date in seven calendars"
+      intro="Read one date in seven calendar systems."
+      headline="Read the same day as Gregorian, Nepali (Bikram Sambat), Hijri, Hebrew, Chinese, Persian and Indian Saka."
       points={[
-        "Six calendar systems lined up against the same date.",
+        "Seven calendar systems lined up against the same date.",
         "Pick any date, or jump back to today with one tap.",
         "Each system named clearly, so you know which reading is which.",
 

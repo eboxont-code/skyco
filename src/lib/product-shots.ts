@@ -18,6 +18,12 @@ type ProductShot = {
  * showing evidence rather than decoration.
  */
 export const productShots: Record<string, ProductShot> = {
+  float: {
+    src: "/screens/float-card.webp",
+    alt: "Float weekly spending preview",
+    captured: "2026-10-23",
+    result: "The weekly spending view, with bills and BNPL deducted.",
+  },
   currensee: {
     src: currensee,
     alt: "CurrenSee showing the USD to EUR rate with a 30 day chart and a last updated stamp",

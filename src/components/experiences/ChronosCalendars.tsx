@@ -3,23 +3,26 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { formatCalendar, nativeCalendarLabel, type CalendarSystem } from "@/lib/calendars";
+import { ChronosObservances } from "./ChronosObservances";
 
 /**
  * The Chronos reading, running on skyco.online itself.
  * Pick one day and read it back in six calendar systems at once.
  */
-const SYSTEMS: { label: string; calendar: string; locale: string }[] = [
-  { label: "Gregorian", calendar: "gregory", locale: "en-GB" },
-  { label: "Hijri", calendar: "islamic-umalqura", locale: "en-GB" },
-  { label: "Hebrew", calendar: "hebrew", locale: "en-GB" },
-  { label: "Chinese", calendar: "chinese", locale: "en-GB" },
-  { label: "Persian", calendar: "persian", locale: "en-GB" },
+const SYSTEMS: { label: string; calendar: string; locale: string; system?: CalendarSystem; lang?: string; dir?: "rtl" | "ltr" }[] = [
+  { label: "Gregorian", calendar: "gregory", locale: "en-GB", system: "gregorian" },
+  { label: "Nepali (Bikram Sambat)", calendar: "nepali", locale: "ne", system: "nepali", lang: "ne", dir: "ltr" },
+  { label: "Hijri", calendar: "islamic-umalqura", locale: "en-GB", system: "hijri", lang: "ar", dir: "rtl" },
+  { label: "Hebrew", calendar: "hebrew", locale: "en-GB", system: "hebrew", lang: "he", dir: "rtl" },
+  { label: "Chinese", calendar: "chinese", locale: "en-GB", system: "chinese", lang: "zh", dir: "ltr" },
+  { label: "Persian", calendar: "persian", locale: "en-GB", system: "persian", lang: "fa", dir: "rtl" },
   { label: "Indian Saka", calendar: "indian", locale: "en-GB" },
 ];
 
 export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
   const navigate = useNavigate({ from: "/chronos" });
-  useWebMCPTools([{ name: "read_date_in_calendars", description: "Read a date in Gregorian, Hijri, Hebrew, Chinese, Persian and Indian Saka calendars.", inputSchema: { type: "object", properties: { date: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}$" } }, required: ["date"], additionalProperties: false }, execute: async args => { const value = String(args.date ?? ""); const date = new Date(`${value}T12:00:00Z`); if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== value) return text("Choose a valid YYYY-MM-DD date."); return text(SYSTEMS.map(s => { try { return `${s.label}: ${new Intl.DateTimeFormat(`${s.locale}-u-ca-${s.calendar}`, { day: "numeric", month: "long", year: "numeric", era: s.calendar === "gregory" ? undefined : "short", timeZone: "UTC" }).format(date)}`; } catch { return `${s.label}: Not available in this browser`; } }).join("\n")); } }]);
+  useWebMCPTools([{ name: "read_date_in_calendars", description: "Read a date in Gregorian, Nepali, Hijri, Hebrew, Chinese, Persian and Indian Saka calendars.", inputSchema: { type: "object", properties: { date: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}$" } }, required: ["date"], additionalProperties: false }, execute: async args => { const value = String(args.date ?? ""); const date = new Date(`${value}T12:00:00Z`); if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== value) return text("Choose a valid YYYY-MM-DD date."); return text(SYSTEMS.map(s => { try { if (s.system === "nepali") return `${s.label}: ${formatCalendar("nepali", new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 12))}`; return `${s.label}: ${new Intl.DateTimeFormat(`${s.locale}-u-ca-${s.calendar}`, { day: "numeric", month: "long", year: "numeric", era: s.calendar === "gregory" ? undefined : "short", timeZone: "UTC" }).format(date)}`; } catch { return `${s.label}: Not available in this browser`; } }).join("\n")); } }]);
   const [value, setValue] = useState(() => initialDate ?? new Date().toISOString().slice(0, 10));
   const [endDate, setEndDate] = useState("");
   const [copyStatus, setCopyStatus] = useState("");
@@ -40,9 +43,12 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
     const date = new Date(`${value}T12:00:00Z`);
     if (!dateIsValid) return [];
     return SYSTEMS.map((s) => {
-      let text = "Not available in this browser";
+      let text = "Not available for this date";
+      let native: string | null = null;
       try {
-        text = new Intl.DateTimeFormat(`${s.locale}-u-ca-${s.calendar}`, {
+        const localDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 12);
+        if (s.system) native = nativeCalendarLabel(s.system, localDate);
+        text = s.system === "nepali" ? formatCalendar("nepali", localDate) : new Intl.DateTimeFormat(`${s.locale}-u-ca-${s.calendar}`, {
           day: "numeric",
           month: "long",
           year: "numeric",
@@ -52,7 +58,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
       } catch {
         /* keep the fallback text */
       }
-      return { label: s.label, text };
+      return { label: s.label, text, native, lang: s.lang, dir: s.dir, system: s.system };
     });
   }, [value, dateIsValid]);
 
@@ -88,12 +94,12 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground" suppressHydrationWarning>
-        {weekday ? `${weekday}, read in six systems.` : "Choose a valid date."}
+        {weekday ? `${weekday}, read in seven systems.` : "Choose a valid date."}
       </p>
 
       <div className="mt-4"><label htmlFor="chronos-end-date" className="text-sm font-semibold text-foreground">Days between</label><input id="chronos-end-date" type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="mt-1 block min-h-11 rounded-lg border border-input bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring" /><p role="status" className="mt-2 text-sm text-muted-foreground">{dateIsValid && /^\d{4}-\d{2}-\d{2}$/.test(endDate) && Number.isFinite(new Date(`${endDate}T12:00:00Z`).getTime()) ? `${Math.round((new Date(`${endDate}T12:00:00Z`).getTime() - new Date(`${value}T12:00:00Z`).getTime()) / 86400000)} days from ${value} to ${endDate}` : "Choose a second date."}</p></div>
       <p id="calendar-help" className="mt-1 text-xs text-muted-foreground">
-        Calendar readings use your browser&apos;s standard calendar data. Holidays and observances are not included.
+        Hijri uses the Umm al-Qura arithmetic method, so a local moon sighting can move a date by one day. Dashain, Tihar, Shivaratri and other Nepali lunar festivals are computed from the tithi at sunrise in Kathmandu, so a local panchang can differ by a day.
       </p>
 
       <p className="sr-only" role="status">{dateIsValid ? `Readings updated for ${weekday}, ${value}` : "Choose a valid date."}</p>
@@ -113,8 +119,10 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
             </dt>
             <dd className="mt-0.5 text-sm font-semibold text-foreground" suppressHydrationWarning>
               {r.text}
+              {r.native && <span lang={r.lang} dir={r.dir} className="mt-1 block text-sm text-muted-foreground">{r.native}</span>}
               {r.label === "Gregorian" && dateIsValid && <span className="mt-1 block text-xs text-muted-foreground">{ordinalSummary(value)}</span>}
             </dd>
+            {r.system && <ChronosObservances system={r.system} value={value} />}
           </div>
         ))}
       </dl>

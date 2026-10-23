@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-22",
+    title: "Favourite currency pairs and rate alerts",
+    tag: "Improvement",
+    items: [
+      "CurrenSee now lets you star favourite pairs and choose a default pair that opens first.",
+      "You can set a rate alert to tell you while the page is open when a pair crosses your chosen level.",
+      "The budgeting guide for new arrivals in Australia is now listed in the sitemap.",
+    ],
+  },
+  {
     date: "2026-10-19",
     title: "A budgeting guide for new arrivals and better Float pages",
     tag: "Improvement",
