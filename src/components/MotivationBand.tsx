@@ -12,7 +12,7 @@ const tiles = [
 
 export function MotivationBand() {
   return (
-    <section id="motivation" aria-labelledby="motivation-heading" className="px-6 py-20 md:py-24 bg-motivation-band">
+    <section id="motivation" aria-labelledby="motivation-heading" className="px-6 py-12 md:py-16 bg-motivation-band">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div>
