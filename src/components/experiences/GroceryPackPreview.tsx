@@ -196,11 +196,11 @@ export function GroceryPackPreview({ initialPack }: { initialPack?: string } = {
         const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${quantity(i)}`).join("\n")).join("\n\n");
         try { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } catch { setCopyStatus("Copy unavailable in this browser"); }
       }} className="no-print mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy list</button>
-      <Button variant="outline" className="no-print ml-3" onClick={async () => { const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${quantity(i)}`).join("\n")).join("\n\n"); try { if (navigator.share) { await navigator.share({ title: pack.name, text }); setCopyStatus("List shared"); } else { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } } catch (error) { setCopyStatus(error instanceof Error && error.name === "AbortError" ? "Sharing cancelled" : "Sharing unavailable in this browser"); } }}>Share list</Button>
+      <Button variant="outline" className="no-print ml-3 h-11" onClick={async () => { const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${quantity(i)}`).join("\n")).join("\n\n"); try { if (navigator.share) { await navigator.share({ title: pack.name, text }); setCopyStatus("List shared"); } else { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } } catch (error) { setCopyStatus(error instanceof Error && error.name === "AbortError" ? "Sharing cancelled" : "Sharing unavailable in this browser"); } }}>Share list</Button>
       <span role="status" className="no-print ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
-        <Button variant="outline" aria-pressed={hideTicked} onClick={() => setHideTicked(v => !v)}>Hide ticked items</Button>
-        <Button variant="outline" disabled={checked.length === 0} onClick={() => { setChecked([]); setCopyStatus("All items unticked"); }}>Untick all</Button>
+        <Button variant="outline" className="h-11" aria-pressed={hideTicked} onClick={() => setHideTicked(v => !v)}>Hide ticked items</Button>
+        <Button variant="outline" className="h-11" disabled={checked.length === 0} onClick={() => { setChecked([]); setCopyStatus("All items unticked"); }}>Untick all</Button>
         <button
           type="button"
           onClick={() => setChecked(allChecked ? [] : itemKeys)}
@@ -235,7 +235,7 @@ export function GroceryPackPreview({ initialPack }: { initialPack?: string } = {
                   key={i.item}
                   className="flex items-baseline justify-between gap-3 text-sm text-foreground"
                 >
-                  <label className="flex min-h-8 cursor-pointer items-center gap-2">
+                  <label className="flex min-h-11 cursor-pointer items-center gap-2">
                     <input
                       type="checkbox"
                       checked={checked.includes(`${pack.id}:${i.item}`)}
