@@ -65,7 +65,7 @@ export function ProductFaqs() {
             <div className="mt-3 space-y-2">
               {g.faqs.map(([q, a]) => (
                 <details key={q} className="group rounded-lg border border-sky-bright/15 px-4 py-3">
-                  <summary className="cursor-pointer rounded-sm text-sm font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  <summary className="flex min-h-11 cursor-pointer items-center rounded-sm py-3 text-sm font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                     {q}
                   </summary>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</p>
