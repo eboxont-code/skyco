@@ -211,9 +211,19 @@ export function observancesForMonth(system: CalendarSystem, anchor: Date): Obser
         out.push({ date: day, label: `Sankranti, first of ${NEPALI_MONTHS[n.month - 1]}` });
       }
 
+      const fixed2026 = y === 2026 ? NEPALI_2026_KARTIK[`${y}-${m}-${d}`] : undefined;
+      if (fixed2026) {
+        out.push({
+          date: day,
+          label: fixed2026,
+          note: "Set by the lunar day at sunrise; local panchang can differ by a day.",
+        });
+      }
+
       const { paksha, tithi } = tithiAtSunrise(day);
       const lunarMonth = lunarMonthBs(day, paksha);
       for (const f of NEPALI_LUNAR) {
+        if (y === 2026 && f.month === 7) continue; // Kartik 2083 uses the fixed table above.
         if (f.paksha !== paksha || f.tithi !== tithi) continue;
         if (f.month !== lunarMonth) continue;
         if (out.some((o) => o.label === f.label)) continue;
