@@ -56,7 +56,7 @@ export function ProductFaqs() {
       </h2>
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         {groups.map((g) => (
-          <div key={g.name} className="rounded-2xl border border-sky-bright/20 bg-card p-6">
+          <div key={g.name} className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
             <h3 id={`faq-${g.to.slice(1)}`} className="text-lg font-bold text-foreground">
               <Link to={g.to} className="rounded-sm text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 {g.name}
@@ -65,7 +65,7 @@ export function ProductFaqs() {
             <div className="mt-3 space-y-2">
               {g.faqs.map(([q, a]) => (
                 <details key={q} className="group rounded-lg border border-sky-bright/15 px-4 py-3">
-                  <summary className="cursor-pointer rounded-sm text-sm font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  <summary className="flex min-h-11 cursor-pointer items-center rounded-sm py-3 text-sm font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                     {q}
                   </summary>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</p>

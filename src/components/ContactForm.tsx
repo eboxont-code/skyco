@@ -5,7 +5,7 @@ const topics = ["Bug report", "Feature idea", "Privacy or security question", "S
 const products = ["CurrenSee", "Chronos", "My Finance Friend", "Grocery Packs", "The SkyCo site"];
 
 const field =
-  "mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "mt-1 min-h-11 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 /** Builds an email in the visitor's own mail app. Nothing is sent to or stored by SkyCo from this form. */
 export function ContactForm({ initialProduct }: { initialProduct?: string }) {

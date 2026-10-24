@@ -28,7 +28,7 @@ const pillars = [
 export function Mission({ directory }: { directory: ResolvedProject[] }) {
   const liveCount = splitDirectory(directory).live.length;
   return (
-    <section id="mission" aria-labelledby="mission-heading" className="relative px-6 py-10 md:py-16">
+    <section id="mission" aria-labelledby="mission-heading" className="relative px-6 py-12 md:py-16">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-[1fr_1.4fr] md:items-center">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-bright">How I work</p>

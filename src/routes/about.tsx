@@ -90,7 +90,7 @@ function AboutPage() {
 
       <ul className="mt-5 space-y-3">
         {live.map((p) => (
-          <li key={p.slug} className="rounded-2xl border border-sky-bright/20 bg-card p-5">
+          <li key={p.slug} className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="text-base font-bold text-foreground"><Link to={p.path ?? "/"} className="underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">{p.name}</Link></h3>
               <Link

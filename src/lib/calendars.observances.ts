@@ -87,6 +87,26 @@ const NEPALI_LUNAR: { month: number; paksha: "shukla" | "krishna"; tithi: number
   { month: 12, paksha: "shukla", tithi: 9, label: "Ram Navami" },
 ];
 
+// Tihar 2083 BS falls in November 2026, but the low-precision lunar maths
+// below drifts it into October. For 2026 the Kartik festivals come from this
+// fixed table, taken from the Nepal Ministry of Home Affairs public holiday
+// list 2083 and the Kathmandu Metropolitan City calendar. Other years keep
+// the lunar calculation.
+// Expected 2026 dates: Dhanteras Fri 6 Nov (Kartik 20), Kaag Tihar Sat 7 Nov
+// (Kartik 21), Kukur Tihar and Laxmi Puja Sun 8 Nov (Kartik 22), Gai Tihar
+// Mon 9 Nov (Kartik 23), Govardhan Puja, Goru Puja, Mha Puja and Nepal Sambat
+// 1147 Tue 10 Nov (Kartik 24), Bhai Tika Wed 11 Nov (Kartik 25), Chhath Sun
+// 15 Nov (Kartik 29).
+const NEPALI_2026_KARTIK: Record<string, string> = {
+  "2026-11-6": "Dhanteras",
+  "2026-11-7": "Kaag Tihar, Tihar begins",
+  "2026-11-8": "Kukur Tihar and Laxmi Puja",
+  "2026-11-9": "Gai Tihar",
+  "2026-11-10": "Govardhan Puja, Goru Puja, Mha Puja and Nepal Sambat 1147",
+  "2026-11-11": "Bhai Tika",
+  "2026-11-15": "Chhath Parva",
+};
+
 /* ---------- Hindu lunar day (tithi) ---------- */
 // Low-precision solar/lunar longitudes (Meeus). Accurate to about a tenth of a
 // degree, which is plenty for naming the tithi that runs at sunrise.
@@ -191,9 +211,19 @@ export function observancesForMonth(system: CalendarSystem, anchor: Date): Obser
         out.push({ date: day, label: `Sankranti, first of ${NEPALI_MONTHS[n.month - 1]}` });
       }
 
+      const fixed2026 = y === 2026 ? NEPALI_2026_KARTIK[`${y}-${m}-${d}`] : undefined;
+      if (fixed2026) {
+        out.push({
+          date: day,
+          label: fixed2026,
+          note: "Set by the lunar day at sunrise; local panchang can differ by a day.",
+        });
+      }
+
       const { paksha, tithi } = tithiAtSunrise(day);
       const lunarMonth = lunarMonthBs(day, paksha);
       for (const f of NEPALI_LUNAR) {
+        if (y === 2026 && f.month === 7) continue; // Kartik 2083 uses the fixed table above.
         if (f.paksha !== paksha || f.tithi !== tithi) continue;
         if (f.month !== lunarMonth) continue;
         if (out.some((o) => o.label === f.label)) continue;

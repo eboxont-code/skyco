@@ -39,7 +39,7 @@ export function ProductPage({
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar directory={directory} solid />
       <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
-        <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-8 sm:py-12">
+        <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-12 md:py-16">
           <div className="mx-auto max-w-4xl">
             <div>
               <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
@@ -100,7 +100,7 @@ export function ProductPage({
         </section>
 
         {experience && (
-          <section id="use" tabIndex={-1} aria-labelledby="use-heading" className="focus:outline-none scroll-mt-24 border-b border-sky-bright/15 px-6 py-8 sm:py-12">
+          <section id="use" tabIndex={-1} aria-labelledby="use-heading" className="focus:outline-none scroll-mt-24 border-b border-sky-bright/15 px-6 py-12 md:py-16">
             <div className="mx-auto max-w-4xl">
               <h2 id="use-heading" className="sr-only">{experienceTitle ?? `Use ${project.name}`}</h2>
               <div>{experience}</div>
@@ -109,7 +109,7 @@ export function ProductPage({
         )}
 
         {after}
-        <section className="px-6 py-8 sm:py-12">
+        <section className="px-6 py-12 md:py-16">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
               What you get

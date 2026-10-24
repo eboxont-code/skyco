@@ -42,7 +42,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
   ]);
 
   return (
-    <section id="tools" aria-labelledby="tools-heading" className="px-6 py-10 md:py-16 bg-gradient-to-b from-sky-ice/60 to-background">
+    <section id="tools" aria-labelledby="tools-heading" className="px-6 py-12 md:py-16 bg-gradient-to-b from-sky-ice/60 to-background">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">

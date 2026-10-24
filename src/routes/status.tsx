@@ -71,7 +71,7 @@ function StatusPage() {
         {liveProjects.map((project) => (
           <li
             key={project.slug}
-            className="flex flex-col gap-3 rounded-2xl border border-sky-bright/20 bg-card p-5 sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-3 rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6 sm:flex-row sm:items-center sm:justify-between"
           >
             <div>
               <div className="flex items-center gap-2.5">
@@ -142,7 +142,7 @@ function RateCheck() {
     }
   };
   return (
-    <div className="mt-6 rounded-2xl border border-sky-bright/20 bg-card p-5">
+    <div className="mt-6 rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
       <button type="button" onClick={check} disabled={busy} className="min-h-11 rounded-full bg-sky-deep px-5 text-sm font-bold text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60">Check rates now</button>
       <p role="status" className="mt-3 text-sm text-muted-foreground">{message}</p>
     </div>

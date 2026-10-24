@@ -50,7 +50,7 @@ function ChangelogPage() {
         {changelog.filter(entry => entry.date.startsWith(month)).map((entry) => (
           <li
             key={entry.date + entry.title}
-            className="rounded-2xl border border-sky-bright/20 bg-card p-6"
+            className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6"
           >
             <article id={`change-${entry.date}`} className="scroll-mt-24">
             <div className="flex flex-wrap items-center gap-3">

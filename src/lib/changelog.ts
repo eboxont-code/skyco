@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-23",
+    title: "Nepali calendar readings and monthly observances in Chronos",
+    tag: "Improvement",
+    items: [
+      "Chronos now shows the Nepali Bikram Sambat date alongside the other calendars, with native script readings under each system.",
+      "Each calendar now lists the holidays and observances for the month, including Nepali, Chinese and Hebrew dates, with an option to add one to your own calendar.",
+      "The Float card on the home page now shows a preview of the weekly spending view.",
+    ],
+  },
+  {
     date: "2026-10-22",
     title: "Favourite currency pairs and rate alerts",
     tag: "Improvement",
