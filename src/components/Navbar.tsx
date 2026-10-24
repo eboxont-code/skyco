@@ -80,8 +80,8 @@ export function Navbar({
           : "bg-transparent",
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5">
-        <Link to="/" aria-current={pathname === "/" ? "page" : undefined} className="flex items-center gap-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label="SkyCo home">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-2">
+        <Link to="/" aria-current={pathname === "/" ? "page" : undefined} className="flex min-h-11 min-w-11 items-center gap-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label="SkyCo home">
           <img
             src={badge}
             alt=""
@@ -169,7 +169,7 @@ export function Navbar({
         <button
           ref={menuToggle}
           aria-controls="skyco-mobile-menu"
-          className="md:hidden rounded-md p-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="md:hidden flex min-h-11 min-w-11 items-center justify-center rounded-md p-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-expanded={mobileOpen}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
