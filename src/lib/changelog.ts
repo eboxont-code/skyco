@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-24",
+    title: "November Tihar dates and clearer help on phones",
+    tag: "Improvement",
+    items: [
+      "Chronos now shows Tihar 2026 on its November dates, from Kaag Tihar on 7 November to Bhai Tika on 11 November.",
+      "The Australia to Nepal money guide now covers how money can arrive, how long it usually takes, a worked example and common questions.",
+      "Buttons, menu links and form fields are easier to tap on phones.",
+      "Pages now share one spacing scale, with the Back to top links removed.",
+    ],
+  },
+  {
     date: "2026-10-23",
     title: "Nepali calendar readings and monthly observances in Chronos",
     tag: "Improvement",

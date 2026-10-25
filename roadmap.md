@@ -1,76 +1,14 @@
-# SkyCo October 23 ordered updates
-- [x] B0: Missing Nepali calendar dependency installed; green build; publication requested
-- [x] 0: October 22 release entry added
-- [x] U6-rest: Seventh calendar and native reading integration; phone and desktop verified
-- [x] U7: Lazy-loaded monthly observances and calendar downloads; three tests pass, download verified; October port shows Dashain, with Tihar outside this month
-- [x] F3b: Actual Float view captured for the home card
-- [ ] C0h-rest, A3-A11, A13-A20, U2, U4-U5, U8-U9, 1-48: Follow in order
-- [x] F0-fix: Eight pages return 200 with independent headings, one canonical and matching FAQs; unknown slug 404, green build, phone/desktop checks and publication requested
-- [x] 0: October 18 crypto release entry renders; green build and publication requested
-- [x] F-rest: Eight 44px Float links and 54 sitemap URLs verified; green build and publication requested
-- [x] X1: Both crypto prices verified in server HTML with matching FAQs; unavailable fallback retained; publication requested
-- [ ] F20: New-arrivals budgeting guide
-- [ ] U1, U3, U6, U7, F3b, C0h-rest, A3-A11, A13-A20, U2, U4-U5, U8-U9, 1-48: Follow in order
-- [x] 0: October 16 release entry; green build, phone check and publication requested
-- [x] S1-rest: NRB buy/sell/unit line, five selected converter currencies and all NPR conversion links; five SSR and 390px conversions verified, unknown pair 404, green build
-- [x] A12: Last modification dates for the existing 41 sitemap URLs; valid XML and identical URL list verified
-- [x] P6: OMR config, live NRB reference, FAQ, salary amounts and sitemap; SSR, mobile conversion, tests and green build verified
-- [x] P7: AUD to SGD config, Frankfurter converter, chart, FAQs and sitemap; live SSR, mobile conversion, chart, tests and green build verified
-- [x] P8: AUD to CAD config, live converter, chart and sitemap; SSR, mobile conversion, chart, tests and green build verified
-- [ ] P9-P10: Crypto currency config entries
-- [ ] F0, F12-F14: Config-driven Float pages
-- [ ] F3b, C0h-rest, A3-A11, A13-A20, 1-48: Remaining ordered presentation updates
-- [x] 0: October 15 changelog entry, green build and publication requested
-- [x] R1: NPR pair pages and their converter refresh use the existing NRB table; AUD server HTML matches 105.17 NPR on 2026-10-16
-- [x] D1: Start 1.168.60 with matching router 1.170.41 and plugin 1.168.42; validator API compatibility rename only; build green and existing pages render
-- [ ] S1, A12, F3b, C0h-rest, A3-A11, A13-A20, 1-48: Follow in the requested order
-- [ ] S1 partial: Five feed-backed config entries, related links, KWD reference amounts and sitemap URLs build and return 200 with NRB rates; buy/sell box, new-currency converter selection and mobile checks remain open
+# SkyCo October 25 ordered updates
 
-## October 15
-- [x] 0: October 14 release entry
-- [x] A1-A2: Pair hydration and NRB consistency
-- [x] C0g-C0h: Calendar controls and shared radius, input and focus presentation
-- [x] F2: Six uploaded share pictures and pair/Float/guide metadata
-- [x] F3: Existing Float guest preview preserved; no new preview behavior added
-- [x] F4: Stored shared waitlist, tested through Float and test row removed
-- [ ] Owner waitlist email: needs verified sending domain; submissions available in Cloud > Database > waitlist_submissions
-- [ ] A3-A11, A13-A20: Partial guide update shipped; remaining guide, accessibility and metadata requests open
-- [ ] 1-48: Ordered follow-on requests
+- [x] 0: October 24 changelog entry; build green and entry renders
+- [x] V1: Thumbnail product cards; phone and desktop grid, images and link verified; publication requested
+- [x] V2: Alternating section backgrounds; 390px/desktop verified, minimum sampled text contrast 6.74:1; publication requested
+- [x] V3: Icon cards and hub action verified on four pages at phone and desktop widths; publication requested
+- [x] V4: Currency pills verified with 44px targets and distinct footer label; publication requested
+- [x] V5: Shared accessible Q&A, unchanged route structured data, hash expansion verified
+- [ ] V6: Footer tint and typography coded; verification pending
+- [ ] A9-A11, A13-A20: Ordered accessibility and metadata updates
+- [ ] U2, U4, U5, U8, U9: Ordered browser-only product features
+- [ ] 1-54: Ordered follow-on items and visual checks
 
-## Previous updates
-- [x] 0: October 11 release entry
-- [x] C0a-C0f: Ordered mobile cleanup, green compilation and desktop/mobile checks
-- [x] T1: Nepal and Gulf reference-rate support
-- [ ] T2-T12: Pair pages, rates page and Nepal guide
-- [ ] C0g-C0h: Calendar layout and consistency
-- [ ] 1-48: Ordered follow-on requests
- 
-## October 10
-- [x] 0: October 10 release entry
-- [x] A-H: Current menu links, dated footer link, trade patterns, calendar explanations, single-link cards, info print styles, About product links, inverse rate
-- [ ] I-J: Enter conversion and chart period toggle
-- [ ] 1-43: Ordered numbered updates
-- [x] Publish green changes through H
-
-## Prior work
-- [x] 0: Dated release entry
-- [x] A: Household sizes
-- [x] B: FAQ search
-- [x] C: Product status rows
-- [x] D: Monthly changelog groups
-- [x] E: Upcoming tool cards
-- [x] F: Product jobs in llms.txt
-- [x] G: Remember conversion
-- [x] H: Shareable conversion parameters
-- [x] 1-2: Popular pairs and unavailable-rate alert with retry
-- [x] 3-4: Bounded one-minute server rate cache and calendar date URL replacement
-- [ ] 5-43: Ordered follow-on requests
-- [x] 0: Publish baseline and add release entry
-- [x] A-D: Shared application metadata, section navigation and breadcrumbs
-- [x] E-H: WebMCP, print header and currency formatting
-- [x] 1-7: Directory, mobile bar, support selection, footer groups, hero label, release links and shortcuts
-- [x] 8-16: Copy results, amount checks, date differences, sharing, session holdings, FAQ groups, support guidance, About metadata and back-to-top links
-- [x] 17-19: Status release date, rate explanation and existing amount-preserving swap
-- [ ] 20-43: Ordered follow-on requests
-- [x] Preview pages return 200; date difference and support selection verified without browser errors
-- [x] Final publication scheduled for skyco.online after green compilation
+Previously completed units listed in the October 25 brief remain complete and must not be repeated.

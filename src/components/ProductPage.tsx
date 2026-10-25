@@ -1,9 +1,12 @@
-import { ArrowDown, Check, ArrowLeft } from "lucide-react";
+import { ArrowDown, Check, ArrowLeft, ArrowLeftRight, CalendarDays, Wallet, ShoppingBasket, NotebookPen, Wrench } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 import { MobileActionBar } from "@/components/MobileActionBar";
-import { splitDirectory, type ResolvedProject } from "@/lib/projects";
+import { splitDirectory, type ResolvedProject, type ProjectIcon } from "@/lib/projects";
+
+const toolIcons = { converter: ArrowLeftRight, calendar: CalendarDays, wallet: Wallet, grocery: ShoppingBasket, notes: NotebookPen, default: Wrench } satisfies Record<ProjectIcon, typeof Wrench>;
 
 /**
  * One shared layout for every product page hosted on skyco.online/<product>.
@@ -38,7 +41,7 @@ export function ProductPage({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar directory={directory} solid />
-      <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="product-sections flex-1 pt-20 focus:outline-none">
         <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-12 md:py-16">
           <div className="mx-auto max-w-4xl">
             <div>
@@ -148,27 +151,22 @@ export function ProductPage({
                   Other SkyCo tools
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">Every product runs here in your browser.</p>
-                <div className="mt-5 grid gap-4 sm:grid-cols-3">
-                  {others.map((p) => (
+                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {others.map((p) => { const Icon = toolIcons[p.icon]; return (
                     <Link
                       key={p.slug}
                       to={p.path ?? "/"}
-                      className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className="flex min-h-20 items-center gap-4 rounded-lg border border-border bg-card p-5 transition-colors hover:bg-section-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
-                      <p className="text-sm font-bold text-foreground">Use {p.name}</p>
-                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                        {p.demo ?? p.tagline}
-                      </p>
+                      <Icon aria-hidden="true" className="h-7 w-7 shrink-0 text-sky-deep" />
+                      <span className="text-base font-bold text-foreground">{p.name}</span>
                     </Link>
-                  ))}
+                  ); })}
                 </div>
-                <Link
-                  to="/"
-                  className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-sm text-sm font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
+                <Button asChild variant="outline" className="mt-6 min-h-11 text-sky-deep"><Link to="/">
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                  Back to the SkyCo hub
-                </Link>
+                  Back to SkyCo hub
+                </Link></Button>
               </nav>
             )}
           </div>

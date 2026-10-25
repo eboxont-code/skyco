@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 import { productShots } from "@/lib/product-shots";
@@ -61,18 +62,18 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
           </p>
         </div>
 
-        <div className="mt-6 grid gap-6">
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {liveProjects.map(project => {
             const shot = productShots[project.slug];
-            return <Link key={project.slug} to={project.path ?? "/"} aria-labelledby={`tool-name-${project.slug}`} className="grid overflow-hidden rounded-lg border border-border bg-card grid-cols-1 md:grid-cols-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4">
-              {shot && <img src={shot.src} alt={shot.alt} width={1280} height={800} loading="lazy" decoding="async" className="aspect-[16/10] h-full w-full object-cover object-top" />}
-              <div className="p-6">
+            return <article key={project.slug} className="flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+              {shot ? <img src={shot.src} alt={shot.alt} width={1280} height={800} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover object-top" /> : <div className="flex aspect-[16/10] items-center justify-center bg-muted text-4xl" role="img" aria-label={`${project.name} icon`}>{project.icon}</div>}
+              <div className="flex flex-1 flex-col p-6">
                 <span className="text-xs font-bold uppercase text-sky-deep">Live</span>
                 <h3 id={`tool-name-${project.slug}`} className="mt-2 text-2xl font-bold text-foreground">{project.name}</h3>
-                <p className="mt-3 text-base text-muted-foreground">{project.tagline}</p>
-                <span className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-lg bg-sky-deep px-5 text-sm font-bold text-primary-foreground">Use {project.name} here <ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
+                <p className="mt-3 mb-6 text-base text-muted-foreground">{project.tagline}</p>
+                <Button asChild className="mt-auto min-h-12 w-full bg-sky-deep text-primary-foreground hover:bg-sky-azure"><Link to={project.path ?? "/"}>Use {project.name} here <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></Button>
               </div>
-            </Link>;
+            </article>;
           })}
         </div>
 
