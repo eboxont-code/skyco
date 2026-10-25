@@ -56,8 +56,8 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
             </ul>
           </nav>
 
-          <nav aria-label="Popular conversions">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Popular conversions</p>
+          <nav aria-label="Currency shortcuts">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Currency shortcuts</p>
             <ul className="mt-3 space-y-2">
               {([["aud-to-npr","AUD to NPR"],["usd-to-npr","USD to NPR"],["npr-to-inr","NPR to INR"],["aud-to-inr","AUD to INR"],["usd-to-aud","USD to AUD"]] as const).map(([slug, label]) => <li key={slug}><Link to="/currensee/$pair" params={{ pair: slug }} className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</Link></li>)}
               <li><Link to="/currensee/rates" className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">All NPR rates today</Link></li>
