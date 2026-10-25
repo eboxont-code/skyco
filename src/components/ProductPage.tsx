@@ -2,6 +2,7 @@ import { ArrowDown, Check, ArrowLeft } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 import { MobileActionBar } from "@/components/MobileActionBar";
 import { splitDirectory, type ResolvedProject } from "@/lib/projects";
 
@@ -148,27 +149,22 @@ export function ProductPage({
                   Other SkyCo tools
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">Every product runs here in your browser.</p>
-                <div className="mt-5 grid gap-4 sm:grid-cols-3">
+                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {others.map((p) => (
                     <Link
                       key={p.slug}
                       to={p.path ?? "/"}
-                      className="rounded-2xl border border-sky-bright/20 bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className="flex min-h-20 items-center gap-4 rounded-lg border border-border bg-card p-5 transition-colors hover:bg-section-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
-                      <p className="text-sm font-bold text-foreground">Use {p.name}</p>
-                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                        {p.demo ?? p.tagline}
-                      </p>
+                      <span aria-hidden="true" className="text-3xl">{p.icon}</span>
+                      <span className="text-base font-bold text-foreground">{p.name}</span>
                     </Link>
                   ))}
                 </div>
-                <Link
-                  to="/"
-                  className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-sm text-sm font-semibold text-sky-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
+                <Button asChild variant="outline" className="mt-6 min-h-11 text-sky-deep"><Link to="/">
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                  Back to the SkyCo hub
-                </Link>
+                  Back to SkyCo hub
+                </Link></Button>
               </nav>
             )}
           </div>

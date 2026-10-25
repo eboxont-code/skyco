@@ -2,7 +2,7 @@
 
 - [x] 0: October 24 changelog entry; build green and entry renders
 - [x] V1: Thumbnail product cards; phone and desktop grid, images and link verified; publication requested
-- [ ] V2: Alternating section backgrounds and contrast
+- [x] V2: Alternating section backgrounds; 390px/desktop verified, minimum sampled text contrast 6.74:1; publication requested
 - [ ] V3: Other tools card grid and hub action
 - [ ] V4: Popular currency pills and footer label
 - [ ] V5: Shared accessible Q&A
