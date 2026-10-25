@@ -3,8 +3,8 @@
 - [x] 0: October 24 changelog entry; build green and entry renders
 - [x] V1: Thumbnail product cards; phone and desktop grid, images and link verified; publication requested
 - [x] V2: Alternating section backgrounds; 390px/desktop verified, minimum sampled text contrast 6.74:1; publication requested
-- [ ] V3: Other tools card grid and hub action
-- [ ] V4: Popular currency pills and footer label
+- [x] V3: Icon cards and hub action verified on four pages at phone and desktop widths; publication requested
+- [x] V4: Currency pills verified with 44px targets and distinct footer label; publication requested
 - [ ] V5: Shared accessible Q&A
 - [ ] V6: Footer and typography
 - [ ] A9-A11, A13-A20: Ordered accessibility and metadata updates
