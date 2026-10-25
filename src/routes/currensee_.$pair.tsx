@@ -1,3 +1,4 @@
+import { QuestionAnswers } from "@/components/QuestionAnswers";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
@@ -184,14 +185,7 @@ function PairPage() {
 
         <section aria-labelledby="pair-faq-heading">
           <h2 id="pair-faq-heading" className="text-2xl font-extrabold tracking-tight text-foreground">Questions about {from} to {to}</h2>
-          <div className="mt-4 space-y-2">
-            {list.map((f) => (
-              <details key={f.id} id={`faq-${f.id}`} className="rounded-lg border border-sky-bright/15 px-4 py-3">
-                <summary className="min-h-11 cursor-pointer py-2 text-sm font-semibold text-foreground">{f.q}</summary>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
-              </details>
-            ))}
-          </div>
+          <QuestionAnswers collapsible items={list.map(f => ({ id: `faq-${f.id}`, question: f.q, answer: f.a }))} />
         </section>
 
         <nav aria-labelledby="related-heading">
