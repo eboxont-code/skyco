@@ -13,7 +13,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
   const liveProjects = splitDirectory(directory).live;
 
   return (
-    <footer className="border-t border-sky-bright/20 bg-gradient-to-b from-background to-sky-ice/50 px-6 py-14">
+    <footer className="border-t border-sky-bright/20 bg-footer-surface px-6 py-14">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div>
