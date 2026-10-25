@@ -38,7 +38,7 @@ export function ProductPage({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar directory={directory} solid />
-      <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="product-sections flex-1 pt-20 focus:outline-none">
         <section className="border-b border-sky-bright/15 bg-gradient-to-b from-sky-ice/70 to-background px-6 py-12 md:py-16">
           <div className="mx-auto max-w-4xl">
             <div>

@@ -1,7 +1,7 @@
 # SkyCo October 25 ordered updates
 
 - [x] 0: October 24 changelog entry; build green and entry renders
-- [ ] V1: Thumbnail product cards
+- [x] V1: Thumbnail product cards; phone and desktop grid, images and link verified; publication requested
 - [ ] V2: Alternating section backgrounds and contrast
 - [ ] V3: Other tools card grid and hub action
 - [ ] V4: Popular currency pills and footer label

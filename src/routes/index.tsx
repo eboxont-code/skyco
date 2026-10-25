@@ -74,7 +74,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar directory={directory} />
-      <main id="main-content" tabIndex={-1} className="focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="home-sections focus:outline-none">
         <Hero directory={directory} />
         <ToolsGrid directory={directory} />
         <section aria-labelledby="popular-conversions-heading" className="px-6 py-12 md:py-16"><div className="mx-auto max-w-3xl"><h2 id="popular-conversions-heading" className="text-2xl font-bold text-foreground">Popular conversions</h2><ul className="mt-4 grid grid-cols-1 gap-x-4 sm:grid-cols-3">{([["aud-to-npr","AUD to NPR"],["usd-to-npr","USD to NPR"],["npr-to-inr","NPR to INR"],["aud-to-inr","AUD to INR"],["usd-to-aud","USD to AUD"]] as const).map(([slug, label]) => <li key={slug}><Link to="/currensee/$pair" params={{ pair: slug }} className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</Link></li>)}<li><Link to="/currensee/rates" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">All NPR rates today</Link></li></ul></div></section>

@@ -67,11 +67,13 @@
   --color-sky-azure: var(--sky-azure);
   --color-sky-night: var(--sky-night);
   --color-sky-ice: var(--sky-ice);
+  --color-section-tint: var(--section-tint);
 }
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.97 0.01 240);
+  --background: oklch(1 0 0);
+  --section-tint: oklch(0.965 0.003 240);
   --foreground: oklch(0.25 0.04 250);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.25 0.04 250);
@@ -114,6 +116,7 @@
 }
 
 .dark {
+  --section-tint: oklch(0.18 0.012 250);
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);
@@ -146,6 +149,21 @@
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+.home-sections > section:nth-of-type(even),
+.product-sections > section:nth-of-type(even) {
+  background: var(--section-tint);
+}
+.home-sections > section:nth-of-type(odd),
+.product-sections > section:nth-of-type(odd) {
+  background: var(--background);
+}
+.home-sections h2, .product-sections h2 { color: var(--sky-deep); }
+.home-sections .text-gradient-sky {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--sky-deep);
 }
 
 @layer base {
