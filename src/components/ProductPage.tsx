@@ -1,10 +1,12 @@
-import { ArrowDown, Check, ArrowLeft } from "lucide-react";
+import { ArrowDown, Check, ArrowLeft, ArrowLeftRight, CalendarDays, Wallet, ShoppingBasket, NotebookPen, Wrench } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { MobileActionBar } from "@/components/MobileActionBar";
-import { splitDirectory, type ResolvedProject } from "@/lib/projects";
+import { splitDirectory, type ResolvedProject, type ProjectIcon } from "@/lib/projects";
+
+const toolIcons = { converter: ArrowLeftRight, calendar: CalendarDays, wallet: Wallet, grocery: ShoppingBasket, notes: NotebookPen, default: Wrench } satisfies Record<ProjectIcon, typeof Wrench>;
 
 /**
  * One shared layout for every product page hosted on skyco.online/<product>.
@@ -150,16 +152,16 @@ export function ProductPage({
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">Every product runs here in your browser.</p>
                 <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {others.map((p) => (
+                  {others.map((p) => { const Icon = toolIcons[p.icon]; return (
                     <Link
                       key={p.slug}
                       to={p.path ?? "/"}
                       className="flex min-h-20 items-center gap-4 rounded-lg border border-border bg-card p-5 transition-colors hover:bg-section-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
-                      <span aria-hidden="true" className="text-3xl">{p.icon}</span>
+                      <Icon aria-hidden="true" className="h-7 w-7 shrink-0 text-sky-deep" />
                       <span className="text-base font-bold text-foreground">{p.name}</span>
                     </Link>
-                  ))}
+                  ); })}
                 </div>
                 <Button asChild variant="outline" className="mt-6 min-h-11 text-sky-deep"><Link to="/">
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" />
