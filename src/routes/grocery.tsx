@@ -5,7 +5,7 @@ import { GroceryPackPreview, GROCERY_PACK_IDS } from "@/components/experiences/G
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
-const TITLE = "SkyCo Grocery Packs | Ready-made shopping lists sorted by store section";
+const TITLE = "Grocery Packs: ready shopping lists | SkyCo";
 const DESCRIPTION =
   "Open a pack and the week's shopping is already sorted by store section, with quantities for two people or a family of four. Free to browse, no account.";
 const URL = "https://skyco.online/grocery";

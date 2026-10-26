@@ -6,13 +6,13 @@ import { changelog, formatDate } from "@/lib/changelog";
 export const Route = createFileRoute("/changelog")({
   head: () => ({
     meta: [
-      { title: "What's New | SkyCo" },
+      { title: "What's new at SkyCo: changelog and updates" },
       {
         name: "description",
         content:
           "Releases, improvements and fixes across SkyCo. Only changes that actually shipped, with the date they went out.",
       },
-      { property: "og:title", content: "What's New | SkyCo" },
+      { property: "og:title", content: "What's new at SkyCo: changelog and updates" },
       {
         property: "og:description",
         content: "Releases, improvements and fixes across SkyCo, with the date they shipped.",
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/changelog")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/changelog" },
       ...shareMeta("changelog", "SkyCo Changelog page share card"),
-      { name: "twitter:title", content: "What's New | SkyCo" },
+      { name: "twitter:title", content: "What's new at SkyCo: changelog and updates" },
       { name: "twitter:description", content: "Releases, improvements and fixes across SkyCo, with the date they shipped." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/changelog" }],

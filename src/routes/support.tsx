@@ -11,13 +11,13 @@ export const Route = createFileRoute("/support")({
   validateSearch: (search: Record<string, unknown>): { product?: string } => ({ product: typeof search.product === "string" ? search.product : undefined }),
   head: () => ({
     meta: [
-      { title: "Support and Contact | SkyCo" },
+      { title: "SkyCo support: report a problem or ask a question" },
       {
         name: "description",
         content:
           "Get help with a SkyCo product, report a bug, request a feature or ask a privacy question. One inbox, answered by the person who built it.",
       },
-      { property: "og:title", content: "Support and Contact | SkyCo" },
+      { property: "og:title", content: "SkyCo support: report a problem or ask a question" },
       {
         property: "og:description",
         content: "Get help with a SkyCo product, report a bug or ask a privacy question.",
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/support")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/support" },
       ...shareMeta("support", "SkyCo Support page share card"),
-      { name: "twitter:title", content: "Support and Contact | SkyCo" },
+      { name: "twitter:title", content: "SkyCo support: report a problem or ask a question" },
       { name: "twitter:description", content: "Get help with a SkyCo product, report a bug or ask a privacy question." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/support" }],

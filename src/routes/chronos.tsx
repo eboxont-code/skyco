@@ -5,7 +5,7 @@ import { ChronosCalendars } from "@/components/experiences/ChronosCalendars";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
-const TITLE = "Chronos date converter: Gregorian, Nepali, Hijri and more | SkyCo";
+const TITLE = "Chronos: one date in six calendars | SkyCo";
 const DESCRIPTION =
   "Date converter: Gregorian, Nepali (Bikram Sambat), Hijri, Hebrew, Chinese, Persian and Indian Saka. Read one date in seven calendars, free with no account.";
 

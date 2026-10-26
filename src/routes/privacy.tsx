@@ -7,13 +7,13 @@ const UPDATED = "29 August 2026";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy | SkyCo" },
+      { title: "Privacy policy for SkyCo web tools" },
       {
         name: "description",
         content:
           "What SkyCo stores, what it does not, and how each product handles your data. Written in plain English.",
       },
-      { property: "og:title", content: "Privacy Policy | SkyCo" },
+      { property: "og:title", content: "Privacy policy for SkyCo web tools" },
       {
         property: "og:description",
         content: "What SkyCo stores, what it does not, and how each product handles your data.",
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/privacy")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/privacy" },
       ...shareMeta("privacy", "SkyCo Privacy page share card"),
-      { name: "twitter:title", content: "Privacy Policy | SkyCo" },
+      { name: "twitter:title", content: "Privacy policy for SkyCo web tools" },
       { name: "twitter:description", content: "What SkyCo stores, what it does not, and how each product handles your data." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/privacy" }],
