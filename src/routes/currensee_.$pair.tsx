@@ -178,7 +178,8 @@ function PairPage() {
         )}
 
         <section aria-labelledby="about-heading">
-          {rate && pair.slug === "omr-to-npr" && <section aria-labelledby="popular-amounts-heading" className="mb-8"><h2 id="popular-amounts-heading" className="text-2xl font-bold text-foreground">Popular amounts</h2><ul className="mt-3 space-y-2 text-sm text-muted-foreground">{pair.amounts?.map(amount => <li key={amount}>{fmt(amount)} OMR in NPR today: {fmt(amount * rate.rate)} NPR</li>)}</ul></section>}
+          {rate && <section aria-labelledby="popular-amounts-heading" className="mb-8"><h2 id="popular-amounts-heading" className="text-2xl font-bold text-foreground">Popular amounts</h2><ul className="mt-3 space-y-2 text-sm text-muted-foreground">{(pair.amounts ?? [100, 500, 1000]).map(amount => <li key={amount}>{fmt(amount)} {from} in {to} today: {fmt(amount * rate.rate)} {to}</li>)}</ul></section>}
+          {(pair.slug.endsWith("-to-npr") || pair.slug.startsWith("aud-")) && <p className="mb-8 text-sm"><Link to="/guides/sending-money-to-nepal-from-australia" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline underline-offset-4">Read the guide to sending money from Australia to Nepal</Link></p>}
           <h2 id="about-heading" className="text-2xl font-extrabold tracking-tight text-foreground">About this rate</h2>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{pair.explanation}</p>
         </section>
