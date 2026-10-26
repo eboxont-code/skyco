@@ -279,3 +279,6 @@ footer nav li + li { margin-top: .75rem; }
 html { scroll-padding-top: 72px; }
 :root:not(.dark) .text-sky-bright { color: #006a9e; }
 .text-\[10px\], .text-\[11px\] { font-size: 12px !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
