@@ -12,6 +12,19 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-25",
+    title: "Clearer product cards and easier pages to scan",
+    tag: "Improvement",
+    items: [
+      "The home page now shows each product as a card with a real screenshot, a short description and a clear button.",
+      "Sections on the home and product pages alternate between white and a light tint, so they are easier to scan.",
+      "Product pages show the other SkyCo tools as cards, with a link back to the hub.",
+      "Popular currency pairs are now pill links that are easy to tap.",
+      "Questions and answers use one clearer layout across the site.",
+      "The footer and headings are easier to read.",
+    ],
+  },
+  {
     date: "2026-10-24",
     title: "November Tihar dates and clearer help on phones",
     tag: "Improvement",
