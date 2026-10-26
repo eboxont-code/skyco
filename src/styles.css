@@ -278,3 +278,4 @@ footer nav li + li { margin-top: .75rem; }
 @media (min-width: 768px) { #tools { padding-block: 6rem; } }
 html { scroll-padding-top: 72px; }
 :root:not(.dark) .text-sky-bright { color: #006a9e; }
+.text-\[10px\], .text-\[11px\] { font-size: 12px !important; }
