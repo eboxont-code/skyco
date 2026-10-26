@@ -26,6 +26,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
   const [value, setValue] = useState(() => initialDate ?? new Date().toISOString().slice(0, 10));
   const [endDate, setEndDate] = useState("");
   const [copyStatus, setCopyStatus] = useState("");
+  const [birth, setBirth] = useState("");
   const shiftDay = (offset: number) => {
     const date = new Date(`${value}T12:00:00Z`);
     if (isNaN(date.getTime())) return;
@@ -91,13 +92,24 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
         >
           Today
         </Button>
+        <Button variant="outline" type="button" disabled={!dateIsValid} className="min-h-12 rounded-full px-5" onClick={async () => {
+          const url = `https://skyco.online/chronos?date=${value}`;
+          try {
+            if (typeof navigator.share === "function") { await navigator.share({ title: "Chronos date reading", url }); return; }
+            await navigator.clipboard.writeText(url); setCopyStatus("Link copied");
+          } catch (err) {
+            if (err instanceof DOMException && err.name === "AbortError") return;
+            window.prompt("Copy this link", url);
+          }
+        }}>Share this date</Button>
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground" suppressHydrationWarning>
         {weekday ? `${weekday}, read in seven systems.` : "Choose a valid date."}
       </p>
 
-      <div className="mt-4"><label htmlFor="chronos-end-date" className="text-sm font-semibold text-foreground">Days between</label><input id="chronos-end-date" type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="mt-1 block min-h-11 rounded-lg border border-input bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring" /><p role="status" className="mt-2 text-sm text-muted-foreground">{dateIsValid && /^\d{4}-\d{2}-\d{2}$/.test(endDate) && Number.isFinite(new Date(`${endDate}T12:00:00Z`).getTime()) ? `${Math.round((new Date(`${endDate}T12:00:00Z`).getTime() - new Date(`${value}T12:00:00Z`).getTime()) / 86400000)} days from ${value} to ${endDate}` : "Choose a second date."}</p></div>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2"><div><label htmlFor="chronos-end-date" className="text-sm font-semibold text-foreground">Days between</label><input id="chronos-end-date" type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="mt-1 block min-h-11 rounded-lg border border-input bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring" /><p role="status" className="mt-2 text-sm text-muted-foreground">{dateIsValid && /^\d{4}-\d{2}-\d{2}$/.test(endDate) && Number.isFinite(new Date(`${endDate}T12:00:00Z`).getTime()) ? `${Math.round((new Date(`${endDate}T12:00:00Z`).getTime() - new Date(`${value}T12:00:00Z`).getTime()) / 86400000)} days from ${value} to ${endDate}` : "Choose a second date."}</p></div>
+        <div><p className="text-sm font-semibold text-foreground">Age on this date</p><label htmlFor="chronos-birth" className="mt-1 block text-xs text-muted-foreground">Date of birth</label><input id="chronos-birth" type="date" value={birth} onChange={e => setBirth(e.target.value)} className="mt-1 block min-h-11 rounded-lg border border-input bg-background px-3 text-foreground focus-visible:ring-2 focus-visible:ring-ring" /><p role="status" className="mt-2 text-sm text-muted-foreground">{dateIsValid ? ageText(birth, value) : "Choose a valid date."}</p></div></div>
       <p id="calendar-help" className="mt-1 text-xs text-muted-foreground">
         Hijri uses the Umm al-Qura arithmetic method, so a local moon sighting can move a date by one day. Dashain, Tihar, Shivaratri and other Nepali lunar festivals are computed from the tithi at sunrise in Kathmandu, so a local panchang can differ by a day.
       </p>
@@ -128,6 +140,21 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
       </dl>
     </div>
   );
+}
+
+export function ageText(birth: string, on: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(birth)) return "Enter a date of birth.";
+  const [by, bm, bd] = birth.split("-").map(Number) as [number, number, number];
+  const [oy, om, od] = on.split("-").map(Number) as [number, number, number];
+  const b = Date.UTC(by, bm - 1, bd, 12), o = Date.UTC(oy, om - 1, od, 12);
+  if (!Number.isFinite(b)) return "Enter a date of birth.";
+  if (b > o) return "Date of birth is after the selected date.";
+  let years = oy - by, months = om - bm, days = od - bd;
+  if (days < 0) { months -= 1; days += new Date(Date.UTC(oy, om - 1, 0)).getUTCDate(); }
+  if (months < 0) { years -= 1; months += 12; }
+  const total = Math.round((o - b) / 86400000);
+  const p = (n: number, w: string) => `${n} ${w}${n === 1 ? "" : "s"}`;
+  return `${p(years, "year")}, ${p(months, "month")}, ${p(days, "day")}. ${total.toLocaleString("en-US")} days in total.`;
 }
 
 function ordinalSummary(value: string) {
