@@ -17,13 +17,13 @@ export const Route = createFileRoute("/status")({
   },
   head: () => ({
     meta: [
-      { title: "Product Status | SkyCo" },
+      { title: "SkyCo status: live checks for every tool" },
       {
         name: "description",
         content:
           "Published availability for every SkyCo product, with direct links to check each browser tool yourself.",
       },
-      { property: "og:title", content: "Product Status | SkyCo" },
+      { property: "og:title", content: "SkyCo status: live checks for every tool" },
       {
         property: "og:description",
         content: "Published availability for every SkyCo product, with direct links to each tool.",
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/status")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/status" },
       ...shareMeta("status", "SkyCo Status page share card"),
-      { name: "twitter:title", content: "Product Status | SkyCo" },
+      { name: "twitter:title", content: "SkyCo status: live checks for every tool" },
       { name: "twitter:description", content: "Published availability and direct links for every live SkyCo product." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/status" }],

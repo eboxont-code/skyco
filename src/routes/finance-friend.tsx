@@ -5,7 +5,7 @@ import { FinanceParser } from "@/components/experiences/FinanceParser";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 
-const TITLE = "My Finance Friend | Turn a plain-English trade into checkable fields";
+const TITLE = "My Finance Friend: plain English trade parser | SkyCo";
 const DESCRIPTION =
   "Type a stock or ETF trade in ordinary words and preview the structured entry directly on SkyCo. Nothing is stored by this demo.";
 const URL = "https://skyco.online/finance-friend";

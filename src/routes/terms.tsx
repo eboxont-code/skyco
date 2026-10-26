@@ -7,13 +7,13 @@ const UPDATED = "29 August 2026";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Use | SkyCo" },
+      { title: "Terms of use for SkyCo web tools" },
       {
         name: "description",
         content:
           "The terms that apply when you use skyco.online and SkyCo products, including data accuracy limits and financial disclaimers.",
       },
-      { property: "og:title", content: "Terms of Use | SkyCo" },
+      { property: "og:title", content: "Terms of use for SkyCo web tools" },
       {
         property: "og:description",
         content: "The terms that apply when you use skyco.online and SkyCo products.",
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/terms")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/terms" },
       ...shareMeta("terms", "SkyCo Terms page share card"),
-      { name: "twitter:title", content: "Terms of Use | SkyCo" },
+      { name: "twitter:title", content: "Terms of use for SkyCo web tools" },
       { name: "twitter:description", content: "The terms that apply when you use skyco.online and SkyCo products." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/terms" }],
