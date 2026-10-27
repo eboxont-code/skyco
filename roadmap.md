@@ -4,7 +4,7 @@
 - [x] A13: Smaller badge variants verified at 390px and desktop; publication requested
 - [x] A14: Four smaller screenshot variants verified on mobile and desktop; publication requested
 - [x] A16-rest: Sentence note sizing implemented; Chronos, Float and rates checked at 390px; publication requested
-- [ ] A19: NRB table headings, links and metadata
+- [ ] A19: Headings and dated WebPage metadata coded; 121-character description and all 17 pair links verified, build green, publication requested. NRB returned no payload in preview or published check, so the date-bearing heading and metadata remain unverified with real data. Do not start A21-rest until this verification completes.
 - [ ] A21-rest: Four NRB pair configs and sitemap URLs
 - [ ] U2: Saved conversions
 - [ ] U4: Currency flags
