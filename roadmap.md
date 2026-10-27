@@ -3,7 +3,7 @@
 - [x] 0: October 26 changelog entry verified; publication requested
 - [x] A13: Smaller badge variants verified at 390px and desktop; publication requested
 - [x] A14: Four smaller screenshot variants verified on mobile and desktop; publication requested
-- [ ] A16-rest: Sentence notes at least 14px
+- [x] A16-rest: Sentence note sizing implemented; Chronos, Float and rates checked at 390px; publication requested
 - [ ] A19: NRB table headings, links and metadata
 - [ ] A21-rest: Four NRB pair configs and sitemap URLs
 - [ ] U2: Saved conversions

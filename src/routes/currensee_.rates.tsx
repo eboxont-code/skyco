@@ -8,7 +8,7 @@ import { getProjectDirectory } from "@/lib/projects.functions";
 
 const TITLE = "NPR exchange rates today: all currencies | CurrenSee";
 const DESCRIPTION =
-  "Today's Nepalese rupee reference rates from Nepal Rastra Bank for the US dollar, Australian dollar, Indian rupee, Gulf currencies and more, with links to each converter.";
+  "Nepal Rastra Bank buy, sell and midpoint reference rates, with the rate date, currency units and links to NPR converters.";
 const URL = "https://skyco.online/currensee/rates";
 const NOTE =
   "Rates on this page are mid-market reference rates and may lag the live market by a day or more. They are not a quote from a bank or remittance provider, and the amount you receive will usually be lower once fees and the provider's own rate are applied.";
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/currensee_/rates")({
     ]);
     return { day, directory };
   },
-  head: () => ({
+  head: ({ loaderData }) => ({
     meta: [
       { title: TITLE },
       { name: "description", content: DESCRIPTION },
@@ -37,7 +37,20 @@ export const Route = createFileRoute("/currensee_/rates")({
       { name: "twitter:description", content: DESCRIPTION },
     ],
     links: [{ rel: "canonical", href: URL }],
-    scripts: [breadcrumbScript([{ name: "CurrenSee", path: "/currensee" }, { name: "NPR rates today", path: "/currensee/rates" }])],
+    scripts: [
+      breadcrumbScript([{ name: "CurrenSee", path: "/currensee" }, { name: "NPR rates today", path: "/currensee/rates" }]),
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: TITLE,
+          description: DESCRIPTION,
+          url: URL,
+          ...(loaderData?.day ? { dateModified: loaderData.day.date } : {}),
+        }),
+      },
+    ],
   }),
   component: RatesPage,
 });
@@ -49,6 +62,7 @@ function RatesPage() {
       <div className="space-y-6">
         {day ? (
           <>
+            <h2 className="text-2xl font-bold text-foreground">Nepal Rastra Bank rates for <time dateTime={day.date}>{day.date}</time></h2>
             <div className="overflow-x-auto rounded-2xl border border-sky-bright/20 bg-card">
               <table className="w-full min-w-[560px] text-sm">
                 <caption className="sr-only">Nepal Rastra Bank reference rates for {day.date}</caption>
