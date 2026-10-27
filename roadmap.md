@@ -1,14 +1,16 @@
-# SkyCo October 25 ordered updates
+# SkyCo October 27 ordered updates
 
-- [x] 0: October 24 changelog entry; build green and entry renders
-- [x] V1: Thumbnail product cards; phone and desktop grid, images and link verified; publication requested
-- [x] V2: Alternating section backgrounds; 390px/desktop verified, minimum sampled text contrast 6.74:1; publication requested
-- [x] V3: Icon cards and hub action verified on four pages at phone and desktop widths; publication requested
-- [x] V4: Currency pills verified with 44px targets and distinct footer label; publication requested
-- [x] V5: Shared accessible Q&A, unchanged route structured data, hash expansion verified
-- [ ] V6: Footer tint and typography coded; verification pending
-- [ ] A9-A11, A13-A20: Ordered accessibility and metadata updates
-- [ ] U2, U4, U5, U8, U9: Ordered browser-only product features
-- [ ] 1-54: Ordered follow-on items and visual checks
+- [ ] 0: October 26 changelog entry, verify and publish
+- [ ] A13: Smaller hero badge variants
+- [ ] A14: Smaller product preview variants
+- [ ] A16-rest: Sentence notes at least 14px
+- [ ] A19: NRB table headings, links and metadata
+- [ ] A21-rest: Four NRB pair configs and sitemap URLs
+- [ ] U2: Saved conversions
+- [ ] U4: Currency flags
+- [ ] U5: Home screen hint
+- [ ] Numbered items: 1-12, 14-31, 33-34, 36-41, 43-48, 54
+- [ ] FAV: Existing SkyCo brand favicon and touch icon
+- [ ] CS1-CS10: Ordered CurrenSee copy and presentation fixes
 
-Previously completed units listed in the October 25 brief remain complete and must not be repeated.
+Do not repeat completed items from the October 27 brief. Front end only, existing routes and packages only. Stop at a confirmed credit balance of 0.29 or less.
