@@ -66,7 +66,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
           {liveProjects.map(project => {
             const shot = productShots[project.slug];
             return <article key={project.slug} className="flex flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-              {shot ? <img src={shot.src} alt={shot.alt} width={1280} height={800} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover object-top" /> : <div className="flex aspect-[16/10] items-center justify-center bg-muted text-4xl" role="img" aria-label={`${project.name} icon`}>{project.icon}</div>}
+              {shot ? <img src={shot.src} srcSet={shot.srcSet} sizes="(max-width: 640px) 100vw, 50vw" alt={shot.alt} width={1280} height={800} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover object-top" /> : <div className="flex aspect-[16/10] items-center justify-center bg-muted text-4xl" role="img" aria-label={`${project.name} icon`}>{project.icon}</div>}
               <div className="flex flex-1 flex-col p-6">
                 <span className="text-xs font-bold uppercase text-sky-deep">Live</span>
                 <h3 id={`tool-name-${project.slug}`} className="mt-2 text-2xl font-bold text-foreground">{project.name}</h3>

@@ -227,7 +227,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         {data ? (
           <>
             1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
-            <span className="ml-2 block text-xs sm:inline">Reference rate for {data.asOf}. Source: {data.source}</span>
+            <span className="ml-2 block text-sm sm:inline">Reference rate for {data.asOf}. Source: {data.source}</span>
             {Number.isFinite(data.rate) && data.rate > 0 && <span className="mt-1 block text-sm">1 {to} = {new Intl.NumberFormat("en-GB", { maximumFractionDigits: 8 }).format(1 / data.rate)} {from}</span>}
           </>
         ) : query.isError ? (
@@ -308,9 +308,9 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
             </p>
           )}
           {data && data.series.length > 1 && (
-            <div aria-hidden="true" className="mt-2 flex justify-between text-[11px] text-muted-foreground">
+            <div aria-hidden="true" className="mt-2 flex flex-wrap justify-between gap-2 text-xs text-muted-foreground">
               <span>{data.series[0]?.date}</span>
-              <span>
+              <span className="order-3 w-full text-sm sm:order-none sm:w-auto">
                 {data.approximate ? "Converted through USD. " : ""}
                 {changeLabel(data.series)}
               </span>
@@ -321,7 +321,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         {data && data.series.length > 0 && (<>
           <p className="mt-3 text-xs text-muted-foreground">Period high: {format(Math.max(...data.series.map(p => p.value)))} {to}. Low: {format(Math.min(...data.series.map(p => p.value)))} {to}. Average: {format(data.series.reduce((sum, p) => sum + p.value, 0) / data.series.length)} {to}.</p>
           <details className="mt-3 text-sm text-foreground"><summary className="min-h-11 cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Show the 30 day data as a table</summary>
-            <table className="mt-2 w-full text-left"><caption className="text-left text-xs text-muted-foreground">Reference rates for 1 {from} in {to}</caption><thead><tr><th scope="col">Date</th><th scope="col">Rate</th></tr></thead><tbody>{data.series.map(p => <tr key={p.date}><th scope="row" className="py-1 font-normal">{p.date}</th><td>{format(p.value)}</td></tr>)}</tbody></table>
+            <table className="mt-2 w-full text-left"><caption className="text-left text-sm text-muted-foreground">Reference rates for 1 {from} in {to}</caption><thead><tr><th scope="col">Date</th><th scope="col">Rate</th></tr></thead><tbody>{data.series.map(p => <tr key={p.date}><th scope="row" className="py-1 font-normal">{p.date}</th><td>{format(p.value)}</td></tr>)}</tbody></table>
           </details>
         </>)}
       </div>

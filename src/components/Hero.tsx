@@ -1,6 +1,9 @@
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import badge from "@/assets/skyco-badge-512.webp";
+import badge192 from "@/assets/skyco-badge-192.webp";
+import badge256 from "@/assets/skyco-badge-256.webp";
+import badge384 from "@/assets/skyco-badge-384.webp";
 import { entryHref, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { countWord } from "@/lib/project-copy";
 
@@ -57,12 +60,14 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
         <div className="relative flex justify-center md:justify-end">
           <img
             src={badge}
+            srcSet={`${badge192} 192w, ${badge256} 256w, ${badge384} 384w, ${badge} 512w`}
+            sizes="(max-width: 640px) 160px, 256px"
             alt="SkyCo brand mark: a bird inside a glowing blue ring"
             width={512}
             height={512}
             fetchPriority="high"
             decoding="async"
-            className="w-32 sm:w-72 md:w-80 drop-shadow-2xl"
+            className="w-40 min-[641px]:w-64 drop-shadow-2xl"
           />
         </div>
       </div>

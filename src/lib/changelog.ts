@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-26",
+    title: "Clearer reading and more date tools",
+    tag: "Improvement",
+    items: [
+      "The footer has clear column headings and roomier links.",
+      "Small labels are larger and easier to read, and in-page links no longer hide under the header.",
+      "Currency pair pages now show popular amounts using the rate on the page.",
+      "Chronos can share a date and work out an age on any selected date.",
+    ],
+  },
+  {
     date: "2026-10-25",
     title: "Clearer product cards and easier pages to scan",
     tag: "Improvement",
