@@ -1,7 +1,7 @@
 # SkyCo October 27 ordered updates
 
 - [x] 0: October 26 changelog entry verified; publication requested
-- [ ] A13: Smaller hero badge variants
+- [x] A13: Smaller badge variants verified at 390px and desktop; publication requested
 - [ ] A14: Smaller product preview variants
 - [ ] A16-rest: Sentence notes at least 14px
 - [ ] A19: NRB table headings, links and metadata
