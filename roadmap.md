@@ -1,6 +1,6 @@
 # SkyCo October 27 ordered updates
 
-- [ ] 0: October 26 changelog entry, verify and publish
+- [x] 0: October 26 changelog entry verified; publication requested
 - [ ] A13: Smaller hero badge variants
 - [ ] A14: Smaller product preview variants
 - [ ] A16-rest: Sentence notes at least 14px
