@@ -4,6 +4,7 @@ import { PAIR_GROUPS } from "@/lib/currency-pairs";
 import { ProductPage } from "@/components/ProductPage";
 import { CurrenSeeConverter } from "@/components/experiences/CurrenSeeConverter";
 import { CurrenSeeAlerts } from "@/components/experiences/CurrenSeeAlerts";
+import { InstallHint } from "@/components/InstallHint";
 import { fallbackDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 import { CURRENCIES } from "@/lib/rates.functions";
