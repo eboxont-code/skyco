@@ -1,4 +1,5 @@
 import { CURRENCIES } from "@/lib/rates.functions";
+import { converterCurrencies } from "@/lib/converter-currencies";
 
 /**
  * Browser storage for CurrenSee preferences. Everything is optional: when
@@ -92,10 +93,16 @@ export function getSavedConversions(): SavedConversion[] {
       (s): s is SavedConversion =>
         Boolean(s) &&
         typeof s === "object" &&
-        validPair(s) &&
+        typeof (s as SavedConversion).from === "string" &&
+        typeof (s as SavedConversion).to === "string" &&
+        converterCurrencies(CURRENCIES).includes((s as SavedConversion).from) &&
+        converterCurrencies(CURRENCIES).includes((s as SavedConversion).to) &&
         typeof (s as SavedConversion).amount === "number" &&
         typeof (s as SavedConversion).result === "number" &&
         typeof (s as SavedConversion).rate === "number" &&
+        Number.isFinite((s as SavedConversion).amount) && (s as SavedConversion).amount > 0 &&
+        Number.isFinite((s as SavedConversion).result) && (s as SavedConversion).result >= 0 &&
+        Number.isFinite((s as SavedConversion).rate) && (s as SavedConversion).rate > 0 &&
         typeof (s as SavedConversion).asOf === "string" &&
         typeof (s as SavedConversion).source === "string" &&
         typeof (s as SavedConversion).at === "string",

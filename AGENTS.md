@@ -19,6 +19,7 @@
 - Product single-job descriptions live in the registry so machine-readable product listings stay consistent.
 - Rate results use a bounded per-pair 60-second server cache to reduce repeated provider requests.
 - Recent currency pairs use validated optional browser storage so unavailable storage never blocks conversion.
+- Saved conversions preserve the displayed result and source metadata as bounded browser snapshots, never recomputed during refresh; this keeps historical records unchanged.
 
 - Product SoftwareApplication metadata uses the shared productAppScript helper so free access and publisher details stay consistent.
 - Mount mobile actions only in ProductPage and derive them from its project, so home and unrelated tools never share a sticky action.
