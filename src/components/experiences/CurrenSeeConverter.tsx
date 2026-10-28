@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, RefreshCw, Star, X } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { ADDITIONAL_NRB_CURRENCIES, converterCurrencies } from "@/lib/converter-currencies";
+import { currencyFlag } from "@/lib/currency-flags";
 import { getDefaultPair, getFavorites, isFavorite, setDefaultPair, toggleFavorite, getSavedConversions, saveConversion, clearSavedConversions, type SavedConversion, type Pair } from "@/lib/currensee-store";
 
 const SELECTABLE_CURRENCIES = converterCurrencies(CURRENCIES);
@@ -367,11 +368,15 @@ function Select({
     >
       {SELECTABLE_CURRENCIES.map((c) => (
         <option key={c} value={c}>
-          {c}, {CURRENCY_NAMES[c] ?? ADDITIONAL_NRB_CURRENCIES[c]}
+          {currencyFlag(c)} {c}, {CURRENCY_NAMES[c] ?? ADDITIONAL_NRB_CURRENCIES[c]}
         </option>
       ))}
     </select>
   );
+}
+
+function CurrencySymbol({ code }: { code: string }) {
+  return <span aria-hidden="true" className={["BTC", "ETH", "SOL"].includes(code) ? "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-muted text-xs" : "inline-flex shrink-0"}>{currencyFlag(code)}</span>;
 }
 
 function format(n: number) {
