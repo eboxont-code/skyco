@@ -1,14 +1,14 @@
-# SkyCo October 27 ordered updates
+# SkyCo October 28 ordered updates
 
-- [x] 0: October 26 changelog entry verified; publication requested
+- [x] 0: October 27 changelog entry verified; publication requested
 - [x] A13: Smaller badge variants verified at 390px and desktop; publication requested
 - [x] A14: Four smaller screenshot variants verified on mobile and desktop; publication requested
 - [x] A16-rest: Sentence note sizing implemented; Chronos, Float and rates checked at 390px; publication requested
-- [ ] A19: Headings and dated WebPage metadata coded; 121-character description and all 17 pair links verified, build green, publication requested. NRB returned no payload in preview or published check, so the date-bearing heading and metadata remain unverified with real data. Do not start A21-rest until this verification completes.
-- [ ] A21-rest: Four NRB pair configs and sitemap URLs
-- [ ] U2: Saved conversions
-- [ ] U4: Currency flags
-- [ ] U5: Home screen hint
+- [x] A19: Completed in the previous release; do not repeat.
+- [x] A21-rest: Four NRB pair configs, self metadata, 59 sitemap URLs; all four return 200 and unknown pair returns 404; publication requested. NRB unavailable state checked, no rates invented.
+- [x] U2: Saved snapshots, max 20, restore and confirmed clear; actual Frankfurter result survives reload and refresh; 10 tests passed; publication requested.
+- [x] U4: Picker flags and decorative popular/recent/favourite symbols verified at 390px and desktop; build green; publication requested.
+- [ ] U5: Home-screen hint coded and build green; publication requested. Browser prompt simulation timed out, so install/iOS/desktop verification remains open.
 - [ ] Numbered items: 1-12, 14-31, 33-34, 36-41, 43-48, 54
 - [ ] FAV: Existing SkyCo brand favicon and touch icon
 - [ ] CS1-CS10: Ordered CurrenSee copy and presentation fixes

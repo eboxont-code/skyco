@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-27",
+    title: "Smaller home images and clearer NPR rates",
+    tag: "Improvement",
+    items: [
+      "Pages load faster on phones because the home images now come in smaller sizes.",
+      "Helper notes are larger and easier to read.",
+      "The NPR rates page now links to every currency to NPR converter.",
+    ],
+  },
+  {
     date: "2026-10-26",
     title: "Clearer reading and more date tools",
     tag: "Improvement",

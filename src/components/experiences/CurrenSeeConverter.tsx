@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, RefreshCw, Star, X } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { ADDITIONAL_NRB_CURRENCIES, converterCurrencies } from "@/lib/converter-currencies";
-import { getDefaultPair, getFavorites, isFavorite, setDefaultPair, toggleFavorite, type Pair } from "@/lib/currensee-store";
+import { currencyFlag } from "@/lib/currency-flags";
+import { getDefaultPair, getFavorites, isFavorite, setDefaultPair, toggleFavorite, getSavedConversions, saveConversion, clearSavedConversions, type SavedConversion, type Pair } from "@/lib/currensee-store";
 
 const SELECTABLE_CURRENCIES = converterCurrencies(CURRENCIES);
 
@@ -28,11 +29,13 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
   const [favorites, setFavorites] = useState<Pair[]>([]);
   const [favoriteStatus, setFavoriteStatus] = useState("");
   const [defaultStatus, setDefaultStatus] = useState("");
+  const [savedConversions, setSavedConversions] = useState<SavedConversion[]>([]);
   const [storageReady, setStorageReady] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
     setFavorites(getFavorites());
+    setSavedConversions(getSavedConversions());
     let restoredLast = false;
     try {
       const last: unknown = JSON.parse(localStorage.getItem("skyco.currensee.last") ?? "null");
@@ -193,7 +196,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
       </div>
 
       <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" className="min-h-11" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
-      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["AUD", "NPR"], ["USD", "NPR"], ["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" className="min-h-11" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}>{base} → {quote}</Button> : null)}</div>
+      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["AUD", "NPR"], ["USD", "NPR"], ["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" className="min-h-11" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}><CurrencySymbol code={base} />{base} → <CurrencySymbol code={quote} />{quote}</Button> : null)}</div>
       <div role="group" aria-label="Favourite currency pairs" className="mt-3">
         <span className="text-xs font-semibold text-muted-foreground">Favourites</span>
         {favorites.length === 0 ? (
@@ -202,7 +205,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
           <div className="mt-1 flex flex-nowrap gap-2 overflow-x-auto pb-1 sm:flex-wrap">
             {favorites.map((p) => (
               <span key={`${p.from}:${p.to}`} className="inline-flex shrink-0 items-center gap-1">
-                <Button variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>
+                <Button variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}><CurrencySymbol code={p.from} />{p.from} to <CurrencySymbol code={p.to} />{p.to}</Button>
                 <button
                   type="button"
                   aria-label={`Remove ${p.from} to ${p.to}`}
@@ -217,7 +220,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         )}
       </div>
       <p role="status" className="sr-only">{favoriteStatus}</p>
-      {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
+      {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}><CurrencySymbol code={p.from} />{p.from} to <CurrencySymbol code={p.to} />{p.to}</Button>)}</div>}
       <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
         {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
@@ -242,6 +245,11 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
       </p>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
+        <Button variant="outline" className="min-h-11" disabled={!data || !amountIsValid || converted === null || !Number.isFinite(converted) || query.isError} onClick={() => {
+          if (!data || !amountIsValid || converted === null || !Number.isFinite(converted) || query.isError) return;
+          setSavedConversions(saveConversion({ from, to, amount: parsedAmount, result: converted, rate: data.rate, asOf: data.asOf, source: data.source, at: new Date().toISOString() }));
+          setResultStatus("Conversion saved");
+        }}>Save this conversion</Button>
         <Button variant="outline" className="min-h-11" disabled={!data || converted === null} onClick={async () => { if (!data || converted === null) return; try { await navigator.clipboard.writeText(`${amount} ${from} = ${currencyFormat(converted, to)}, reference rate for ${data.asOf}`); setResultStatus("Result copied"); } catch { setResultStatus("Copy unavailable in this browser"); } }}>Copy result</Button><span role="status" className="text-xs text-muted-foreground">{resultStatus}</span>
         <button
           type="button"
@@ -262,6 +270,19 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         </button>
         <span role="status" className="text-xs text-muted-foreground">{defaultStatus}</span>
       </div>
+
+      <details className="mt-5 text-sm text-foreground">
+        <summary className="flex min-h-11 cursor-pointer items-center font-semibold focus-visible:ring-2 focus-visible:ring-ring">Saved conversions</summary>
+        {savedConversions.length === 0 ? <p className="mt-2 text-muted-foreground">No saved conversions yet.</p> : <ul className="mt-2 space-y-3">
+          {savedConversions.map((entry, index) => <li key={`${entry.at}:${index}`}>
+            <Button variant="ghost" className="h-auto min-h-11 w-full justify-start whitespace-normal px-2 py-3 text-left" onClick={() => { setFrom(entry.from); setTo(entry.to); setAmount(String(entry.amount)); setResultStatus("Saved pair and amount loaded"); }}>
+              <span className="min-w-0 break-words"><span className="block font-semibold">{format(entry.amount)} {entry.from} = {currencyFormat(entry.result, entry.to)}</span><span className="mt-1 block font-normal text-muted-foreground">Rate {format(entry.rate)}, reference date <time dateTime={entry.asOf}>{entry.asOf}</time>, {entry.source}</span></span>
+            </Button>
+          </li>)}
+        </ul>}
+        <p className="mt-3 text-sm text-muted-foreground">Saved values are a record of the rate at the time you saved them. They do not update.</p>
+        <Button variant="outline" className="mt-3 min-h-11" disabled={savedConversions.length === 0} onClick={() => { if (!window.confirm("Clear all saved conversions?")) return; clearSavedConversions(); setSavedConversions([]); setResultStatus("Saved conversions cleared"); }}>Clear saved</Button>
+      </details>
 
       <div className="mt-5">
         <div className="flex items-center justify-between">
@@ -347,11 +368,15 @@ function Select({
     >
       {SELECTABLE_CURRENCIES.map((c) => (
         <option key={c} value={c}>
-          {c}, {CURRENCY_NAMES[c] ?? ADDITIONAL_NRB_CURRENCIES[c]}
+          {currencyFlag(c)} {c}, {CURRENCY_NAMES[c] ?? ADDITIONAL_NRB_CURRENCIES[c]}
         </option>
       ))}
     </select>
   );
+}
+
+function CurrencySymbol({ code }: { code: string }) {
+  return <span aria-hidden="true" className={["BTC", "ETH", "SOL"].includes(code) ? "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-muted text-xs" : "inline-flex shrink-0"}>{currencyFlag(code)}</span>;
 }
 
 function format(n: number) {
