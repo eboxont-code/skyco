@@ -196,7 +196,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
       </div>
 
       <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" className="min-h-11" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
-      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["AUD", "NPR"], ["USD", "NPR"], ["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" className="min-h-11" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}>{base} → {quote}</Button> : null)}</div>
+      <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["AUD", "NPR"], ["USD", "NPR"], ["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" className="min-h-11" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}><CurrencySymbol code={base} />{base} → <CurrencySymbol code={quote} />{quote}</Button> : null)}</div>
       <div role="group" aria-label="Favourite currency pairs" className="mt-3">
         <span className="text-xs font-semibold text-muted-foreground">Favourites</span>
         {favorites.length === 0 ? (
@@ -205,7 +205,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
           <div className="mt-1 flex flex-nowrap gap-2 overflow-x-auto pb-1 sm:flex-wrap">
             {favorites.map((p) => (
               <span key={`${p.from}:${p.to}`} className="inline-flex shrink-0 items-center gap-1">
-                <Button variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>
+                <Button variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}><CurrencySymbol code={p.from} />{p.from} to <CurrencySymbol code={p.to} />{p.to}</Button>
                 <button
                   type="button"
                   aria-label={`Remove ${p.from} to ${p.to}`}
@@ -220,7 +220,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         )}
       </div>
       <p role="status" className="sr-only">{favoriteStatus}</p>
-      {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}>{p.from} to {p.to}</Button>)}</div>}
+      {recent.length > 0 && <div role="group" aria-label="Recent currency pairs" className="mt-3 flex flex-wrap gap-2">{recent.map(p => <Button key={`${p.from}:${p.to}`} variant="outline" className="min-h-11" aria-pressed={from === p.from && to === p.to} onClick={() => { setFrom(p.from); setTo(p.to); }}><CurrencySymbol code={p.from} />{p.from} to <CurrencySymbol code={p.to} />{p.to}</Button>)}</div>}
       <p role="status" className="sr-only">{swapStatus}</p>
       <p id="amount-help" className="mt-2 text-xs text-muted-foreground">
         {!amountIsValid ? "Enter an amount greater than zero using digits, commas or one decimal point." : "Rates are reference values and may differ from the rate offered by a bank or exchange."}
