@@ -7,7 +7,7 @@
 - [x] A19: Completed in the previous release; do not repeat.
 - [x] A21-rest: Four NRB pair configs, self metadata, 59 sitemap URLs; all four return 200 and unknown pair returns 404; publication requested. NRB unavailable state checked, no rates invented.
 - [x] U2: Saved snapshots, max 20, restore and confirmed clear; actual Frankfurter result survives reload and refresh; 10 tests passed; publication requested.
-- [ ] U4: Currency flags
+- [x] U4: Picker flags and decorative popular/recent/favourite symbols verified at 390px and desktop; build green; publication requested.
 - [ ] U5: Home screen hint
 - [ ] Numbered items: 1-12, 14-31, 33-34, 36-41, 43-48, 54
 - [ ] FAV: Existing SkyCo brand favicon and touch icon
