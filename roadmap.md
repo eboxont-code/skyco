@@ -5,7 +5,7 @@
 - [x] A14: Four smaller screenshot variants verified on mobile and desktop; publication requested
 - [x] A16-rest: Sentence note sizing implemented; Chronos, Float and rates checked at 390px; publication requested
 - [x] A19: Completed in the previous release; do not repeat.
-- [ ] A21-rest: Four NRB pair configs and sitemap URLs
+- [x] A21-rest: Four NRB pair configs, self metadata, 59 sitemap URLs; all four return 200 and unknown pair returns 404; publication requested. NRB unavailable state checked, no rates invented.
 - [ ] U2: Saved conversions
 - [ ] U4: Currency flags
 - [ ] U5: Home screen hint
