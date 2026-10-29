@@ -102,6 +102,10 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
             window.prompt("Copy this link", url);
           }
         }}>Share this date</Button>
+        <Button variant="outline" className="min-h-12" disabled={!dateIsValid} onClick={async () => {
+          try { await navigator.clipboard.writeText(`https://skyco.online/chronos?date=${value}`); setCopyStatus("Link copied"); }
+          catch { setCopyStatus("Copy unavailable in this browser."); }
+        }}>Copy link</Button>
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground" suppressHydrationWarning>
