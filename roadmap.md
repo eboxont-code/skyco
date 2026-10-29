@@ -6,7 +6,7 @@
 - [x] 2: 7/30-day history selector, concrete date-limit tests and actual provider chart verified; publication requested.
 - [x] 3: Chronos Copy link verified against actual clipboard on phone and desktop; publication requested.
 - [x] 4: Invalid date keeps all last valid readings and recovers; mobile/desktop checked; publication requested.
-- [ ] 5: Clear all confirmation added; Remove already present; verification pending.
+- [ ] 5: Clear all cancel/confirm verified at 390px; Remove already present; build green and publication requested. Desktop verification remains open.
 
 - [x] 0: October 27 changelog entry verified; publication requested
 - [x] A13: Smaller badge variants verified at 390px and desktop; publication requested
@@ -16,7 +16,7 @@
 - [x] A21-rest: Four NRB pair configs, self metadata, 59 sitemap URLs; all four return 200 and unknown pair returns 404; publication requested. NRB unavailable state checked, no rates invented.
 - [x] U2: Saved snapshots, max 20, restore and confirmed clear; actual Frankfurter result survives reload and refresh; 10 tests passed; publication requested.
 - [x] U4: Picker flags and decorative popular/recent/favourite symbols verified at 390px and desktop; build green; publication requested.
-- [ ] Numbered items: 1-12, 14-31, 33-34, 36-41, 43-48, 54
+- [ ] Numbered items: 5 desktop check, 6-12, 14-31, 33-34, 36-41, 43-48, 54
 - [ ] FAV: Existing SkyCo brand favicon and touch icon
 - [ ] CS1-CS10: Ordered CurrenSee copy and presentation fixes
 
