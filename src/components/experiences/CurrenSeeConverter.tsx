@@ -156,6 +156,13 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
               inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                e.preventDefault();
+                if (!amountIsValid) { setResultStatus("Enter a valid amount before converting."); return; }
+                if (data && converted !== null) setResultStatus(`${normalizedAmount} ${from} = ${currencyFormat(converted, to)}`);
+                else void query.refetch();
+              }}
               id="cs-amount"
               aria-invalid={!amountIsValid}
               aria-describedby="amount-help"
