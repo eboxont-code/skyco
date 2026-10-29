@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-28",
+    title: "More NPR pairs and saved conversions",
+    tag: "Improvement",
+    items: [
+      "Swiss franc and Chinese yuan to NPR, NPR to pound and NPR to euro now have converter pages.",
+      "Saved conversions in CurrenSee stay after a reload and keep the values originally saved.",
+      "Currency pickers now show flags, with symbols on pair shortcuts.",
+    ],
+  },
+  {
     date: "2026-10-27",
     title: "Smaller home images and clearer NPR rates",
     tag: "Improvement",

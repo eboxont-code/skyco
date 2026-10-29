@@ -34,6 +34,9 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
     setValue(date.toISOString().slice(0, 10));
   };
   const dateIsValid = /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(new Date(`${value}T12:00:00Z`).getTime()) && new Date(`${value}T12:00:00Z`).toISOString().slice(0, 10) === value;
+  const [lastValid, setLastValid] = useState(value);
+  useEffect(() => { if (dateIsValid) setLastValid(value); }, [value, dateIsValid]);
+  const readingDate = dateIsValid ? value : lastValid;
   useEffect(() => {
     if (!dateIsValid || new Date(`${value}T12:00:00Z`).toISOString().slice(0, 10) !== value) return;
     if (new URLSearchParams(window.location.search).get("date") === value) return;
@@ -41,8 +44,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
   }, [value, dateIsValid, navigate]);
 
   const rows = useMemo(() => {
-    const date = new Date(`${value}T12:00:00Z`);
-    if (!dateIsValid) return [];
+    const date = new Date(`${readingDate}T12:00:00Z`);
     return SYSTEMS.map((s) => {
       let text = "Not available for this date";
       let native: string | null = null;
@@ -61,7 +63,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
       }
       return { label: s.label, text, native, lang: s.lang, dir: s.dir, system: s.system };
     });
-  }, [value, dateIsValid]);
+  }, [readingDate]);
 
   const weekday = useMemo(() => {
     const date = new Date(`${value}T12:00:00Z`);
@@ -102,7 +104,13 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
             window.prompt("Copy this link", url);
           }
         }}>Share this date</Button>
+        <Button variant="outline" className="min-h-12" disabled={!dateIsValid} onClick={async () => {
+          try { await navigator.clipboard.writeText(`https://skyco.online/chronos?date=${value}`); setCopyStatus("Link copied"); }
+          catch { setCopyStatus("Copy unavailable in this browser."); }
+        }}>Copy link</Button>
       </div>
+
+      {!dateIsValid && <p role="alert" className="text-sm text-foreground">Choose a valid date. The last valid readings are still shown.</p>}
 
       <p className="mt-4 text-sm text-muted-foreground" suppressHydrationWarning>
         {weekday ? `${weekday}, read in seven systems.` : "Choose a valid date."}
@@ -132,9 +140,9 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
             <dd className="mt-0.5 text-sm font-semibold text-foreground" suppressHydrationWarning>
               {r.text}
               {r.native && <span lang={r.lang} dir={r.dir} className="mt-1 block text-sm text-muted-foreground">{r.native}</span>}
-              {r.label === "Gregorian" && dateIsValid && <span className="mt-1 block text-sm text-muted-foreground">{ordinalSummary(value)}</span>}
+              {r.label === "Gregorian" && <span className="mt-1 block text-sm text-muted-foreground">{ordinalSummary(readingDate)}</span>}
             </dd>
-            {r.system && <ChronosObservances system={r.system} value={value} />}
+            {r.system && <ChronosObservances system={r.system} value={readingDate} />}
           </div>
         ))}
       </dl>

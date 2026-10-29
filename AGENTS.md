@@ -39,3 +39,4 @@
 - Load monthly observance libraries only through a post-mount dynamic import; calendar downloads remain browser-only all-day events.
 - Render Q&A presentation through QuestionAnswers while keeping route-owned structured data unchanged; shared semantics and hash opening stay consistent.
 - Bundle responsive sizes of existing brand and product images and select them with srcSet; small screens should not download full-size previews.
+- Chart periods filter existing provider points by calendar date without filling missing days, so every point remains source-backed.

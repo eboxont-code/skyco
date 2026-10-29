@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeftRight, RefreshCw, Star, X } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { ADDITIONAL_NRB_CURRENCIES, converterCurrencies } from "@/lib/converter-currencies";
+import { chartPeriod, DEFAULT_CHART_DAYS } from "@/lib/chart-period";
 import { currencyFlag } from "@/lib/currency-flags";
 import { getDefaultPair, getFavorites, isFavorite, setDefaultPair, toggleFavorite, getSavedConversions, saveConversion, clearSavedConversions, type SavedConversion, type Pair } from "@/lib/currensee-store";
 
@@ -114,7 +115,9 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
     onConversionChange?.({ from, to, amount: normalizedAmount });
   }, [from, to, normalizedAmount, amountIsValid, storageReady, onConversionChange]);
 
-  const path = useMemo(() => buildPath(data?.series ?? []), [data?.series]);
+  const [days, setDays] = useState<7 | 30>(DEFAULT_CHART_DAYS);
+  const series = useMemo(() => chartPeriod(data?.series ?? [], days), [data?.series, days]);
+  const path = useMemo(() => buildPath(series), [series]);
 
   return (
     <div className="rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6" aria-busy={query.isFetching}>
@@ -156,6 +159,13 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
               inputMode="decimal"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                e.preventDefault();
+                if (!amountIsValid) { setResultStatus("Enter a valid amount before converting."); return; }
+                if (data && converted !== null) setResultStatus(`${normalizedAmount} ${from} = ${currencyFormat(converted, to)}`);
+                else void query.refetch();
+              }}
               id="cs-amount"
               aria-invalid={!amountIsValid}
               aria-describedby="amount-help"
@@ -287,7 +297,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
       <div className="mt-5">
         <div className="flex items-center justify-between">
           <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-            Last 30 days
+            Last {days} days
           </h3>
           <button
             type="button"
@@ -299,6 +309,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
             Refresh
           </button>
         </div>
+        <div role="group" aria-label="Chart period" className="mt-2 flex gap-2">{([7, 30] as const).map(period => <Button key={period} variant={days === period ? "default" : "outline"} className="min-h-11" aria-pressed={days === period} onClick={() => setDays(period)}>{period} days</Button>)}</div>
         <div className="mt-2 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-3">
           {path ? (
             <svg
@@ -306,9 +317,9 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
               preserveAspectRatio="none"
               className="h-24 w-full"
               role="img"
-              aria-label={`Trend of ${from} to ${to} over the last 30 days`}
+              aria-label={`Trend of ${from} to ${to} over the last ${days} days`}
             >
-              <title>{`${from} to ${to} reference-rate trend over the last 30 days`}</title>
+              <title>{`${from} to ${to} reference-rate trend over the last ${days} days`}</title>
               <path d={path.area} fill="color-mix(in oklab, var(--sky-bright) 22%, transparent)" />
               <path
                 d={path.line}
@@ -323,26 +334,26 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
               {query.isLoading ? "Loading the chart" : "No history available for this pair."}
             </p>
           )}
-          {data && data.series.length > 1 && (
+          {data && series.length > 1 && (
             <p className="sr-only">
-              {`From ${data.series[0]?.date} to ${data.series[data.series.length - 1]?.date}, 1 ${from} moved from ${format(data.series[0]?.value ?? 0)} to ${format(data.series[data.series.length - 1]?.value ?? 0)} ${to}, ${changeLabel(data.series)}.`}
+              {`From ${series[0]?.date} to ${series[series.length - 1]?.date}, 1 ${from} moved from ${format(series[0]?.value ?? 0)} to ${format(series[series.length - 1]?.value ?? 0)} ${to}, ${changeLabel(series)}.`}
             </p>
           )}
-          {data && data.series.length > 1 && (
+          {data && series.length > 1 && (
             <div aria-hidden="true" className="mt-2 flex flex-wrap justify-between gap-2 text-xs text-muted-foreground">
-              <span>{data.series[0]?.date}</span>
+              <span>{series[0]?.date}</span>
               <span className="order-3 w-full text-sm sm:order-none sm:w-auto">
                 {data.approximate ? "Converted through USD. " : ""}
-                {changeLabel(data.series)}
+                {changeLabel(series)}
               </span>
-              <span>{data.series[data.series.length - 1]?.date}</span>
+              <span>{series[series.length - 1]?.date}</span>
             </div>
           )}
         </div>
-        {data && data.series.length > 0 && (<>
-          <p className="mt-3 text-xs text-muted-foreground">Period high: {format(Math.max(...data.series.map(p => p.value)))} {to}. Low: {format(Math.min(...data.series.map(p => p.value)))} {to}. Average: {format(data.series.reduce((sum, p) => sum + p.value, 0) / data.series.length)} {to}.</p>
-          <details className="mt-3 text-sm text-foreground"><summary className="min-h-11 cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Show the 30 day data as a table</summary>
-            <table className="mt-2 w-full text-left"><caption className="text-left text-sm text-muted-foreground">Reference rates for 1 {from} in {to}</caption><thead><tr><th scope="col">Date</th><th scope="col">Rate</th></tr></thead><tbody>{data.series.map(p => <tr key={p.date}><th scope="row" className="py-1 font-normal">{p.date}</th><td>{format(p.value)}</td></tr>)}</tbody></table>
+        {data && series.length > 0 && (<>
+          <p className="mt-3 text-xs text-muted-foreground">Period high: {format(Math.max(...series.map(p => p.value)))} {to}. Low: {format(Math.min(...series.map(p => p.value)))} {to}. Average: {format(series.reduce((sum, p) => sum + p.value, 0) / series.length)} {to}.</p>
+          <details className="mt-3 text-sm text-foreground"><summary className="min-h-11 cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Show the {days} day data as a table</summary>
+            <table className="mt-2 w-full text-left"><caption className="text-left text-sm text-muted-foreground">Reference rates for 1 {from} in {to}</caption><thead><tr><th scope="col">Date</th><th scope="col">Rate</th></tr></thead><tbody>{series.map(p => <tr key={p.date}><th scope="row" className="py-1 font-normal">{p.date}</th><td>{format(p.value)}</td></tr>)}</tbody></table>
           </details>
         </>)}
       </div>
