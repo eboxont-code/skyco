@@ -140,7 +140,7 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
             <dd className="mt-0.5 text-sm font-semibold text-foreground" suppressHydrationWarning>
               {r.text}
               {r.native && <span lang={r.lang} dir={r.dir} className="mt-1 block text-sm text-muted-foreground">{r.native}</span>}
-              {r.label === "Gregorian" && dateIsValid && <span className="mt-1 block text-sm text-muted-foreground">{ordinalSummary(readingDate)}</span>}
+              {r.label === "Gregorian" && <span className="mt-1 block text-sm text-muted-foreground">{ordinalSummary(readingDate)}</span>}
             </dd>
             {r.system && <ChronosObservances system={r.system} value={readingDate} />}
           </div>
