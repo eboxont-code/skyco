@@ -1,4 +1,8 @@
-# SkyCo October 29 ordered updates
+# SkyCo October 30 ordered updates
+
+- [x] 0: October 29 changelog added, phone/desktop checked; publication requested.
+- [x] 5-desktop: Remove and confirmed/cancelled Clear all verified with an entered holding.
+- [ ] 6: Saved holding total implemented; tests and phone/desktop verification pending.
 
 - [x] 0: October 28 changelog entry verified; publication requested.
 - [x] U5-finish: Install and dismissal, iOS once, mobile/desktop and no layout shift verified; publication requested.
@@ -6,7 +10,7 @@
 - [x] 2: 7/30-day history selector, concrete date-limit tests and actual provider chart verified; publication requested.
 - [x] 3: Chronos Copy link verified against actual clipboard on phone and desktop; publication requested.
 - [x] 4: Invalid date keeps all last valid readings and recovers; mobile/desktop checked; publication requested.
-- [ ] 5: Clear all cancel/confirm verified at 390px; Remove already present; build green and publication requested. Desktop verification remains open.
+- [x] 5: Clear all and Remove verified at 390px and desktop.
 
 - [x] 0: October 27 changelog entry verified; publication requested
 - [x] A13: Smaller badge variants verified at 390px and desktop; publication requested
