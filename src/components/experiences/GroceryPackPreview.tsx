@@ -264,15 +264,15 @@ export function GroceryPackPreview({ initialPack }: { initialPack?: string } = {
         ))}
       </div>
 
-      <button
-        type="button"
+      <Button
+        variant="outline"
         onClick={() => window.print()}
         aria-describedby="sample-pack-note"
         className="no-print mt-5 inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-bright/40 px-6 text-sm font-semibold text-sky-deep transition-colors hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <Printer className="h-4 w-4" aria-hidden="true" />
-        Print this list
-      </button>
+        Print list
+      </Button>
       <p id="sample-pack-note" className="no-print mt-2 text-xs text-muted-foreground">
         Printing includes the selected sample pack, quantities and your checked items.
       </p>
