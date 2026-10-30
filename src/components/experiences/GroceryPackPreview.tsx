@@ -192,10 +192,13 @@ export function GroceryPackPreview({ initialPack }: { initialPack?: string } = {
       </p>
 
       <p className="mt-2 text-xs text-muted-foreground">Checked items stay in this browser until you reset them or clear site data.</p>
-      <button type="button" onClick={async () => {
-        const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${quantity(i)}`).join("\n")).join("\n\n");
+      <Button variant="outline" onClick={async () => {
+        const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => {
+          const remaining = section.items.filter(i => !checked.includes(`${pack.id}:${i.item}`));
+          return remaining.length ? `${section.name}\n` + remaining.map(i => `${i.item}: ${quantity(i)}`).join("\n") : "";
+        }).filter(Boolean).join("\n\n");
         try { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } catch { setCopyStatus("Copy unavailable in this browser"); }
-      }} className="no-print mt-3 min-h-11 rounded-full border border-sky-bright/30 px-4 text-xs font-semibold text-sky-deep focus-visible:ring-2 focus-visible:ring-ring">Copy list</button>
+      }} className="no-print mt-3 min-h-11">Copy list</Button>
       <Button variant="outline" className="no-print ml-3 h-11" onClick={async () => { const text = `${pack.name} (sample), for ${size}\n\n` + pack.sections.map(section => `${section.name}\n` + section.items.map(i => `${checked.includes(`${pack.id}:${i.item}`) ? "[x]" : "[ ]"} ${i.item}: ${quantity(i)}`).join("\n")).join("\n\n"); try { if (navigator.share) { await navigator.share({ title: pack.name, text }); setCopyStatus("List shared"); } else { await navigator.clipboard.writeText(text); setCopyStatus("List copied"); } } catch (error) { setCopyStatus(error instanceof Error && error.name === "AbortError" ? "Sharing cancelled" : "Sharing unavailable in this browser"); } }}>Share list</Button>
       <span role="status" className="no-print ml-3 text-xs text-muted-foreground">{copyStatus}</span>
       <div className="no-print mt-3 flex flex-wrap gap-2" aria-label="Shopping list controls">
