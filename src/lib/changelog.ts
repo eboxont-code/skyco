@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-29",
+    title: "More ways to convert, share dates and manage holdings",
+    tag: "Improvement",
+    items: [
+      "Press Enter to convert in CurrenSee, and choose a 7 day or 30 day rate chart.",
+      "Chronos can copy a link to any selected date and explains invalid dates without losing the last valid readings.",
+      "CurrenSee offers a home screen install hint on supported browsers.",
+      "Finance Friend has Remove and confirmed Clear all controls for saved holdings.",
+    ],
+  },
+  {
     date: "2026-10-28",
     title: "More NPR pairs and saved conversions",
     tag: "Improvement",
