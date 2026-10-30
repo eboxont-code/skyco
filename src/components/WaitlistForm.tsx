@@ -14,11 +14,14 @@ export function WaitlistForm({ productName }: { productName: string }) {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [pending, setPending] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const emailError = emailTouched && !waitlistSchema.shape.email.safeParse(email).success ? "Enter a valid email address." : "";
   const submit = useServerFn(joinWaitlist);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (pending) return;
+    setEmailTouched(true);
     const parsed = waitlistSchema.safeParse({ product: productName, name, email });
     if (!parsed.success) { setError(parsed.error.issues[0]?.message ?? "Check your details."); return; }
     setError("");
@@ -51,15 +54,17 @@ export function WaitlistForm({ productName }: { productName: string }) {
         type="email"
         maxLength={255}
         autoComplete="email"
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `wl-error-${slug}` : undefined}
+        aria-invalid={Boolean(emailError)}
+        aria-describedby={emailError ? `wl-email-error-${slug}` : undefined}
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        onBlur={() => setEmailTouched(true)}
         placeholder="you@example.com"
         className="min-h-11 w-full rounded-lg border border-sky-bright/30 bg-background px-3 text-sm outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring"
       />
-      {error && <p id={`wl-error-${slug}`} role="alert" className="text-xs text-destructive">{error}</p>}
+      {emailError && <p id={`wl-email-error-${slug}`} role="alert" className="text-sm text-destructive">{emailError}</p>}
+      {error && !emailError && <p id={`wl-error-${slug}`} role="alert" className="text-sm text-destructive">{error}</p>}
       <Button
         type="submit"
         disabled={pending || sent}
