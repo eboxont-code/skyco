@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-10-30",
+    title: "Holding totals, grocery lists and clearer email checks",
+    tag: "Improvement",
+    items: [
+      "Finance Friend shows the total value of saved holdings with a price.",
+      "Grocery packs have Copy list and Print list buttons.",
+      "The waitlist form gives clearer email checks before joining.",
+    ],
+  },
+  {
     date: "2026-10-29",
     title: "More ways to convert, share dates and manage holdings",
     tag: "Improvement",
