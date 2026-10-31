@@ -1,4 +1,8 @@
-# SkyCo October 30 ordered updates
+# SkyCo October 31 ordered updates
+
+- [ ] 0: October 30 changelog added; awaiting phone/desktop check and publication.
+- [ ] 9-finish: Verify successful waitlist confirmation with a mocked response.
+- [ ] 10: Client-only waitlist honeypot.
 
 - [x] 0: October 29 changelog added, phone/desktop checked; publication requested.
 - [x] 5-desktop: Remove and confirmed/cancelled Clear all verified with an entered holding.
