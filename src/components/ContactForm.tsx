@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { SUPPORT_EMAIL } from "@/lib/site-nav";
 
-const topics = ["Bug report", "Feature idea", "Privacy or security question", "Something else"];
+const topics = ["General", "CurrenSee", "Chronos", "Finance Friend", "Grocery", "Float", "Security"];
 const products = ["CurrenSee", "Chronos", "My Finance Friend", "Grocery Packs", "The SkyCo site"];
 
 const field =
   "mt-1 min-h-11 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 /** Builds an email in the visitor's own mail app. Nothing is sent to or stored by SkyCo from this form. */
-export function ContactForm({ initialProduct }: { initialProduct?: string }) {
+export function ContactForm({ initialProduct, initialTopic }: { initialProduct?: string; initialTopic?: string }) {
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const [messageLength, setMessageLength] = useState(0);
   const [error, setError] = useState("");
@@ -53,7 +53,7 @@ export function ContactForm({ initialProduct }: { initialProduct?: string }) {
       <form onSubmit={onSubmit} aria-describedby="contact-note" noValidate className="relative mt-5 grid gap-4 sm:grid-cols-2">
         <div className="text-sm font-semibold text-foreground">
           <label htmlFor="contact-topic">Topic</label>
-          <select id="contact-topic" name="topic" className={field}>
+          <select id="contact-topic" name="topic" defaultValue={topics.includes(initialTopic ?? "") ? initialTopic : "General"} className={field}>
             {topics.map((t) => <option key={t}>{t}</option>)}
           </select>
         </div>
