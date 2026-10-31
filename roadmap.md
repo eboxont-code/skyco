@@ -6,6 +6,7 @@
 - [x] 11: ProductFaqs already uses details with stable IDs through QuestionAnswers; /support#faq-currensee-1 opens at phone/desktop.
 - [x] 12: HelpSection links to Support, FAQ and Status with purpose lines; phone/desktop checked, 44px targets; publication requested.
 - [x] 14: Hero badge already has width, height, high fetch priority and async decoding; loaded at phone/desktop.
+- [x] 15: Mission and all six home sections already have aria-labelledby pointing at their heading; verified phone/desktop.
 
 - [x] 0: October 29 changelog added, phone/desktop checked; publication requested.
 - [x] 5-desktop: Remove and confirmed/cancelled Clear all verified with an entered holding.
@@ -30,7 +31,7 @@
 - [x] A21-rest: Four NRB pair configs, self metadata, 59 sitemap URLs; all four return 200 and unknown pair returns 404; publication requested. NRB unavailable state checked, no rates invented.
 - [x] U2: Saved snapshots, max 20, restore and confirmed clear; actual Frankfurter result survives reload and refresh; 10 tests passed; publication requested.
 - [x] U4: Picker flags and decorative popular/recent/favourite symbols verified at 390px and desktop; build green; publication requested.
-- [ ] Numbered items: 9 successful-join verification, 10-12, 14-31, 33-34, 36-41, 43-48, 54
+- [ ] Numbered items: 16-31, 33-34, 36-41, 43-48, 54
 - [ ] FAV: Existing SkyCo brand favicon and touch icon
 - [ ] CS1-CS10: Ordered CurrenSee copy and presentation fixes
 
