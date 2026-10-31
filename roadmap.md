@@ -3,6 +3,7 @@
 - [x] 0: October 30 changelog verified at phone/desktop; green checks and publication requested.
 - [x] 9-finish: Mocked successful response announces confirmation and disables Joined at phone/desktop; no stored email created.
 - [x] 10: Client-only honeypot tested; filled field makes no request, normal mocked join still confirms; publication requested.
+- [x] 11: ProductFaqs already uses details with stable IDs through QuestionAnswers; /support#faq-currensee-1 opens at phone/desktop.
 
 - [x] 0: October 29 changelog added, phone/desktop checked; publication requested.
 - [x] 5-desktop: Remove and confirmed/cancelled Clear all verified with an entered holding.
