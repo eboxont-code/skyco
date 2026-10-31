@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Link } from "@tanstack/react-router";
 import { Send, MessageCircleHeart } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -82,6 +83,11 @@ export function HelpSection() {
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-azure"/> Report a bug in one of my live products</li>
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-sky-deep"/> Talk to me about working together</li>
           </ul>
+          <nav aria-label="Help pages" className="mt-6 space-y-3 text-sm text-muted-foreground">
+            <div><Link to="/support" className="inline-flex min-h-11 items-center rounded-sm font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">Support</Link><p>Use Support to report a problem or get in touch.</p></div>
+            <div><Link to="/faq" className="inline-flex min-h-11 items-center rounded-sm font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">FAQ</Link><p>Use FAQ for answers to common questions.</p></div>
+            <div><Link to="/status" className="inline-flex min-h-11 items-center rounded-sm font-semibold text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring">Status</Link><p>Use Status to check the tools and their rate sources.</p></div>
+          </nav>
         </div>
 
         <div>
