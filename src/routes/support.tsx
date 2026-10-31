@@ -8,7 +8,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { ProductFaqs } from "@/components/ProductFaqs";
 
 export const Route = createFileRoute("/support")({
-  validateSearch: (search: Record<string, unknown>): { product?: string } => ({ product: typeof search.product === "string" ? search.product : undefined }),
+  validateSearch: (search: Record<string, unknown>): { product?: string; topic?: string } => ({ product: typeof search.product === "string" ? search.product : undefined, topic: typeof search.topic === "string" ? search.topic : undefined }),
   head: () => ({
     meta: [
       { title: "SkyCo support: report a problem or ask a question" },
@@ -88,7 +88,7 @@ function SupportPage() {
 
       <ProductFaqs />
       <p className="mt-8 text-sm text-muted-foreground"><strong className="text-foreground">Before you write:</strong> the <Link to="/faq" className="text-sky-deep underline">common questions</Link>, <Link to="/status" className="text-sky-deep underline">product status</Link> and <Link to="/security" className="text-sky-deep underline">data handling</Link> pages may have the answer.</p>
-      <ContactForm key={Route.useSearch().product} initialProduct={Route.useSearch().product} />
+      <ContactForm key={`${Route.useSearch().product}-${Route.useSearch().topic}`} initialProduct={Route.useSearch().product} initialTopic={Route.useSearch().topic} />
 
       <div className="mt-10">
         <Prose>
