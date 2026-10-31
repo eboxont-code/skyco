@@ -5,6 +5,7 @@
 - [x] 10: Client-only honeypot tested; filled field makes no request, normal mocked join still confirms; publication requested.
 - [x] 11: ProductFaqs already uses details with stable IDs through QuestionAnswers; /support#faq-currensee-1 opens at phone/desktop.
 - [x] 12: HelpSection links to Support, FAQ and Status with purpose lines; phone/desktop checked, 44px targets; publication requested.
+- [x] 14: Hero badge already has width, height, high fetch priority and async decoding; loaded at phone/desktop.
 
 - [x] 0: October 29 changelog added, phone/desktop checked; publication requested.
 - [x] 5-desktop: Remove and confirmed/cancelled Clear all verified with an entered holding.
