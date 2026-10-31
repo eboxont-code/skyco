@@ -1,7 +1,7 @@
 # SkyCo October 31 ordered updates
 
 - [x] 0: October 30 changelog verified at phone/desktop; green checks and publication requested.
-- [ ] 9-finish: Verify successful waitlist confirmation with a mocked response.
+- [x] 9-finish: Mocked successful response announces confirmation and disables Joined at phone/desktop; no stored email created.
 - [ ] 10: Client-only waitlist honeypot.
 
 - [x] 0: October 29 changelog added, phone/desktop checked; publication requested.
@@ -9,7 +9,7 @@
 - [x] 6: Total value tested and checked at phone/desktop; publication requested.
 - [x] 7: Copy list excludes ticked items; actual clipboard checked at phone/desktop; publication requested.
 - [x] 8: Print list shows selected pack and its heading, hides menus; phone/desktop checked; publication requested.
-- [ ] 9: Inline email validation and recovery checked at phone/desktop. Existing successful-join status preserved; real successful submission not checked because no real signup details were supplied.
+- [x] 9: Inline validation previously tested; successful-join confirmation now verified with mocked success.
 
 - [x] 0: October 28 changelog entry verified; publication requested.
 - [x] U5-finish: Install and dismissal, iOS once, mobile/desktop and no layout shift verified; publication requested.
