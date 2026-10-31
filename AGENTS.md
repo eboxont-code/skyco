@@ -32,6 +32,7 @@
 - Keep additional NRB selector currencies in a browser-safe module and display buying, selling and unit data from the same loader row as the midpoint; this avoids backend changes and mismatched references.
 - NPR pair page loaders consume getNprRates rows directly and never display peg-derived fallback rates, so their published reference matches the rates table.
 - Waitlist submissions use a validated public server function with insert-only privileged access; visitors cannot read submission rows.
+- The waitlist honeypot is checked only before client submission and is excluded from the stored payload, preserving the existing signup flow.
 - Keep Start and router packages at a tested compatible release set and use the validator builder API, so security updates preserve existing rate and waitlist behavior.
 - Keep Float planning pages in the un-nested `float_.$slug` route; this isolates their content and metadata from the main Float page.
 - Guide FAQ arrays drive both visible answers and structured data so the two remain identical.

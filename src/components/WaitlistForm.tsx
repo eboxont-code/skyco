@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { joinWaitlist } from "@/lib/waitlist.functions";
-import { waitlistSchema } from "@/lib/waitlist-schema";
+import { waitlistSchema, isWaitlistHoneypotEmpty } from "@/lib/waitlist-schema";
 
 /**
  * Stored interest in upcoming products. Account sync is not available yet.
@@ -12,6 +12,7 @@ export function WaitlistForm({ productName }: { productName: string }) {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
   const [sent, setSent] = useState(false);
   const [pending, setPending] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
@@ -20,7 +21,7 @@ export function WaitlistForm({ productName }: { productName: string }) {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (pending) return;
+    if (pending || !isWaitlistHoneypotEmpty(website)) return;
     setEmailTouched(true);
     const parsed = waitlistSchema.safeParse({ product: productName, name, email });
     if (!parsed.success) { setError(parsed.error.issues[0]?.message ?? "Check your details."); return; }
@@ -36,6 +37,10 @@ export function WaitlistForm({ productName }: { productName: string }) {
 
   return (
     <form noValidate onSubmit={onSubmit} className="mt-4 space-y-2">
+      <div hidden aria-hidden="true">
+        <label htmlFor={`wl-website-${slug}`}>Website</label>
+        <input id={`wl-website-${slug}`} name="website" autoComplete="off" tabIndex={-1} value={website} onChange={(e) => setWebsite(e.target.value)} />
+      </div>
       <label className="block text-xs font-semibold text-foreground" htmlFor={`wl-email-${slug}`}>
         Get an email when it opens
       </label>
