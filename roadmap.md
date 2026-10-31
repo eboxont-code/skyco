@@ -2,7 +2,7 @@
 
 - [x] 0: October 30 changelog verified at phone/desktop; green checks and publication requested.
 - [x] 9-finish: Mocked successful response announces confirmation and disables Joined at phone/desktop; no stored email created.
-- [ ] 10: Client-only waitlist honeypot.
+- [x] 10: Client-only honeypot tested; filled field makes no request, normal mocked join still confirms; publication requested.
 
 - [x] 0: October 29 changelog added, phone/desktop checked; publication requested.
 - [x] 5-desktop: Remove and confirmed/cancelled Clear all verified with an entered holding.
