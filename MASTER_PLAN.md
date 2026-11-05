@@ -505,3 +505,12 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - fb39978c326349c08b7764967c3555f8e57aee21 — add safe environment template.
 - dbbb95ad081c145bf275b4ba0b5a3394147c2806 — ignore local environment files.
 - debac1fc7467729092f4697393b0c1afca2cf2fa — stop tracking root .env.
+
+### Post-change verification
+
+- Latest inspected main head after this audit's README update: 9edcd3344491c0759e7fcc13e0ae5c0056c629d1.
+- [x] Re-read the recursive main tree: .env is absent; .env.example, .gitignore, MASTER_PLAN.md and README.md are present.
+- [x] Re-checked open issues and pull requests: none returned.
+- [x] Re-checked GitHub Actions: zero workflow runs returned and no .github/workflows files exist in the tree.
+- [ ] Branch protection remains unverified: the GitHub integration returned 403 for the branch-protection endpoint. Do not infer that main is protected or unprotected.
+- [ ] GitHub secret-scanning alert inventory was not available through the connected GitHub integration. A clean secret scan has not been established.
