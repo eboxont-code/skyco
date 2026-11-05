@@ -39,3 +39,27 @@
 - [ ] CS1-CS10: Ordered CurrenSee copy and presentation fixes
 
 Do not repeat completed items from the October 27 brief. Front end only, existing routes and packages only. Stop at a confirmed credit balance of 0.29 or less.
+# SkyCo.Online bot backlog (added 5 November 2026)
+
+Items tracked by the SkyCo.Online bot that were not yet in this file or MASTER_PLAN.md.
+
+## Server / code route
+- [ ] NRB server fetch is failing: fall back to the latest published NRB date instead of showing unavailable.
+- [ ] Cache the last good rate per pair with its date and a stale flag.
+- [ ] Server-render each -to-npr pair page's rate in the raw HTML (currently client only).
+- [ ] Confirm which Frankfurter API version is used and add tests.
+- [ ] Confirm the support/contact form sends and stores nothing server side, or document what it does.
+
+## Domain, DNS and search (needs access to the Hostinger account holding skyco.online)
+- [ ] Free @skyco.online email or forwarding to main.skyco@gmail.com.
+- [ ] Add Google Search Console TXT record (google-site-verification=wpfXT2n_BKnpaJJbRp58gbZb96Nv8rAdaDYKzTm-SIU), verify, submit sitemap.xml.
+- [ ] Import the site into Bing Webmaster Tools.
+- [ ] 301 currensee.skyco.online to skyco.online/currensee and chronos.skyco.online to skyco.online/chronos, only after the subdomain gap audit shows every feature is on the main site.
+- [ ] Watch SSL expiry: apex, www, currensee 1 Dec 2026; chronos 15 Dec 2026.
+
+## SkyCo's own free accounts
+- [ ] GitHub, Vercel, Supabase and Sentry accounts on main.skyco@gmail.com (free plans). GitHub sign-up is blocked at a verification step.
+- [ ] Migrate on a preview first; keep the current setup live until checked; delete nothing.
+
+## Growth
+- [ ] Traffic is about 3% of the ~2,000 visitors per fortnight AdSense bar; Search Console sitemap submission is the main lever.
