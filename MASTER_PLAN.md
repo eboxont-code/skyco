@@ -162,7 +162,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Review repository history and current branch before making product changes.
 - [ ] Secret-scan the tracked `.env` file and repository history without copying secret values into issues, logs or AI prompts.
 - [ ] If credentials were committed, identify their owner, scope and exposure; rotate/revoke affected credentials before relying on the environment.
-- [ ] Add appropriate local-secret patterns to `.gitignore`; use a safe example env file with names only and placeholder values.
+- [x] Add `.env` / `.env.*` ignore rules (while allowing `.env.example`) and add a placeholder-only `.env.example`; verified on main 5 November 2026.
 - [ ] Confirm deployment/runtime variables are configured in the hosting platform, not committed to Git.
 - [ ] Confirm `main` remains a working Lovable-connected branch; use normal commits only.
 - [ ] Establish branch/PR and rollback conventions. Never force-push or rewrite published history.
@@ -459,14 +459,15 @@ Use official documentation and re-check policy pages immediately before implemen
 
 ---
 
-## 7. Current status at plan creation
+## 7. Current status and delivery gates
 
 - [x] Repository identified and current `main` inspected.
 - [x] Existing website stack and repository instructions inspected.
 - [x] Five live product routes and two planned products identified from the registry.
 - [x] Important website/privacy/copy/testing mismatches recorded.
 - [x] Historical web roadmap preserved as a separate document.
-- [ ] P0 secret and environment-file audit.
+- [x] Remove the tracked root `.env` from the current main tree; add `.env.example` and ignore rules (commits recorded in the 5 November audit log).
+- [ ] P0 historical secret scan and credential review/rotation; the deleted file remains in Git history and its values were not inspected.
 - [ ] P0 privacy/security documentation reconciliation.
 - [ ] P1 website copy/registry correction.
 - [ ] P1 reproducible test command and CI.
@@ -476,4 +477,31 @@ Use official documentation and re-check policy pages immediately before implemen
 - [ ] P1 full quality and privacy gates.
 - [ ] P1 Google Play release.
 
-**Next action:** complete Phase 0, beginning with the tracked `.env` secret audit and reproducible baseline checks. Do not start Flutter feature work until the P0 audit has an owner and a documented outcome.
+**Next action:** complete the historical secret scan and confirm/rotate any credentials that may have been exposed; verify runtime environment configuration in the actual hosting platform; then establish reproducible test/lint/build checks. Do not start Flutter feature work until the P0 audit has a documented outcome.
+
+
+## 8. Audit log — 5 November 2026
+
+Repository: eboxont-code/skyco (private), default branch main. The repository tree and current project instructions were inspected; the only branch returned was main. No open GitHub issues or pull requests were returned. The baseline head before this audit's changes was 14003f4b217bd5b6ea51b24bce349fb4039ed701 ("Add project north star").
+
+### Completed repository-safety changes
+
+- [x] Added .env.example with placeholder-only values for environment variable names referenced in code: VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_SERVICE_ROLE_KEY, LOVABLE_DB_MIGRATION_URL, LOVABLE_CRON_SECRET and LOVABLE_CRON_SECRET_PREVIOUS.
+- [x] Added .env and .env.* ignore rules while explicitly allowing .env.example.
+- [x] Deleted the tracked root .env from the current branch without opening, printing or copying its values.
+- [ ] Scan Git history and hosting logs for exposed credentials; rotate/revoke any affected values. The current-branch deletion does not erase prior commits.
+- [ ] Confirm each required server-side variable in the actual Lovable/hosting runtime. A Vercel project search by repository and SkyCo/Currensee names returned no projects; this does not establish where the live site is hosted or whether runtime configuration is complete.
+
+### Baseline and delivery notes
+
+- The repository has a committed bun.lock and bunfig.toml, while the README previously instructed npm. Bun is the preferred local install workflow pending a clean Windows reproduction; no package-manager migration or dependency update was performed in this audit.
+- package.json currently defines dev, build, build:dev, preview, lint and format; it does not define a test script. Existing .test.ts files use Node's node:test API. The supported test command still needs to be run and documented.
+- No .github/workflows/ directory was present in the inspected tree. CI is not currently verified or configured by this audit.
+- The current website is documented as https://skyco.online; the five shipped first-party product routes and two planned-only products are retained as described above.
+- No deployment was triggered and no paid service or API was enabled.
+
+### Commits created by this audit
+
+- fb39978c326349c08b7764967c3555f8e57aee21 — add safe environment template.
+- dbbb95ad081c145bf275b4ba0b5a3394147c2806 — ignore local environment files.
+- debac1fc7467729092f4697393b0c1afca2cf2fa — stop tracking root .env.
