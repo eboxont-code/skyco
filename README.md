@@ -1,5 +1,13 @@
 # SkyCo - As Above, So Below
 
+## Project documentation
+
+- **[Master plan and checklist](MASTER_PLAN.md)** — authoritative website hardening, shared-service and Android delivery plan.
+- **[Working web backlog](roadmap.md)** — dated historical website tasks; preserve completed history.
+- **[Agent instructions](AGENTS.md)** — coding constraints, product invariants and Git/Lovable rules.
+
+The current live hub is **https://skyco.online**. The Android project is planned as a separate Flutter client under `apps/skyco_app/`; the existing website remains the canonical web experience.
+
 Welcome to SkyCo - As Above, So Below.
 
 This is more than just another website with tools. SkyCo is a place built to genuinely help you move through your days with a little more ease, a little more clarity, and a little more energy to go after whatever matters to you.
@@ -40,7 +48,7 @@ We’re genuinely glad you’re here.
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://skyco.lovable.app
+**Live app**: https://skyco.online
 
 ## Build with Lovable
 

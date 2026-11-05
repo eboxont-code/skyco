@@ -1,0 +1,479 @@
+# SkyCo Master Plan
+## Website hardening → shared product services → Android application
+
+**Plan version:** 1.0  
+**Last aligned with repository:** 5 November 2026  
+**Repository:** `eboxont-code/skyco`  
+**Default branch at alignment:** `main`  
+**Current delivery target:** upgraded `https://skyco.online` plus one Android application  
+**Development workstation:** Windows  
+**Current mobile platform scope:** Android only  
+**iOS/macOS:** deliberately out of scope for this delivery; keep the architecture portable without requiring a Mac.
+
+---
+
+## 0. Executive direction
+
+Build on the working SkyCo product that already exists. Do not replace the website, rewrite its technology stack, create five duplicate apps, or port unverified behaviour into Flutter.
+
+The delivery sequence is:
+
+1. **Audit and protect the existing website and repository.**
+2. **Finish the website's correctness, privacy, security, accessibility and mobile experience.**
+3. **Extract and document stable services/contracts only where a mobile client needs them.**
+4. **Build one modular Flutter Android app on Windows.**
+5. **Port the five already-shipped tools one at a time, using the website as the behaviour reference and shared test fixtures as the parity contract.**
+6. **Test, release and maintain the website and app as one product family.**
+
+The website remains independently useful. The Android app is a first-class client, not a WebView wrapper. The two clients share verified service contracts and product rules; they do not need to share the same UI framework or duplicate private data.
+
+### Product principle
+
+**Small useful tools, clear limitations, no compulsory account, no unnecessary data collection.**
+
+Do not introduce monetisation, advertising, bank connections, brokerage access, cloud sync, AI trade execution or compulsory registration as part of this plan. Any future change to those promises requires a separate product and privacy decision.
+
+---
+
+## 1. Repository alignment: verified baseline
+
+This plan was aligned against the repository tree, current `main` head, source files and project instructions. The following are observations, not assumptions.
+
+### 1.1 Existing technology and project structure
+
+- Existing website: Vite + TanStack Start + React + TypeScript + Tailwind.
+- Server/runtime configuration is wrapped by `@lovable.dev/vite-tanstack-config`; do not duplicate its integrated Vite/TanStack/Nitro plugins.
+- Supabase integration and Drizzle/PostgreSQL configuration are present. Inspect actual usage before expanding backend responsibilities.
+- The repository is connected to Lovable. Normal commits to the connected branch sync into the editor. Never force-push, rebase, amend or squash already-published history.
+- `bun.lock` and `bunfig.toml` are committed. The README currently describes npm installation. Confirm and document one canonical package-manager workflow; do not casually mix npm and Bun lockfiles.
+- Existing npm scripts include `dev`, `build`, `build:dev`, `preview`, `lint` and `format`. There is no declared `test` script.
+- Existing test files use Node's `node:test` API. Establish and document the exact supported test command before relying on it.
+- No `.github/workflows/` directory was present in the inspected repository tree. CI is therefore a planned improvement, not an existing guarantee.
+- `roadmap.md` is a dated web-work backlog with completed and incomplete historical item IDs. Preserve its history; do not recreate completed work or mark vague items complete without their original specification and evidence.
+
+### 1.2 Current product inventory
+
+The source registry in `src/lib/projects.ts` is the current hub directory and defines five shipped first-party routes:
+
+| Product | Current route | Verified scope to preserve |
+|---|---|---|
+| CurrenSee | `/currensee` | Fiat/crypto reference-rate conversion, source/time labels, history chart, favourites/default pair, saved conversion snapshots and foreground rate alerts |
+| Chronos | `/chronos` | Seven calendar readings, date navigation, date difference, age calculation, copy/share and monthly observances |
+| My Finance Friend | `/finance-friend` | Deterministic local plain-English trade parser, editable/inspectable preview, session-only list and CSV copy |
+| SkyCo Grocery Packs | `/grocery` | Sample packs, household sizing, checked items, print/share; browser persistence is used where available |
+| Float | `/float` | Income, bills and BNPL planning over week/fortnight/month, recurring entries, guest mode and share link |
+
+Two entries are planned, not shipped: **Budget & Expenses** and **Daily Notes**. Do not represent them as live or put empty placeholder modules into Android 1.0.
+
+All shipped products belong under `skyco.online/<product>`. Do not revive the historic separate-subdomain plan in `.lovable/plan.md`; that file is an older snapshot and has been labelled accordingly.
+
+### 1.3 Confirmed mismatches and risks to resolve
+
+| Priority | Finding | Required response |
+|---|---|---|
+| P0 | A root `.env` file is tracked in Git. Its values were intentionally not opened or reproduced during this audit. | Run a secret scan without printing values. Determine whether it contains live credentials. Rotate exposed credentials and stop tracking local secrets. Do not rewrite published history as part of this plan; history remediation needs a separate, deliberate decision because the repo is Lovable-connected. |
+| P0 | Privacy and security pages do not fully describe current product behaviour; Float is omitted from their product coverage/table. | Reconcile every statement with the source code. Document Float guest-mode browser storage, sharing behaviour, Grocery persistence and CurrenSee preferences/saved snapshots. |
+| P0 | Float share links encode entered income, bills and BNPL details into a URL payload using Base64 URL-safe encoding. Base64 is not encryption. | Warn before sharing; explain that the link contains the selected figures and can be copied, logged or forwarded. Evaluate a safer opt-in share design. Never claim that the current share payload is encrypted. |
+| P1 | Chronos supports seven systems in its UI, including Indian Saka, while some registry copy and the route title still say six. | Make product registry, title, descriptions, FAQs, metadata and UI consistently say seven. |
+| P1 | The custom `CalendarSystem` type contains six systems; Indian Saka is formatted through `Intl.DateTimeFormat` in the UI. | Treat the seven-calendar engine as mixed implementation today. Test Android ICU/runtime compatibility and make output deterministic before choosing a Flutter implementation. |
+| P1 | `AGENTS.md` says product paths are four route literals; the registry has five shipped route literals. | Correct the instruction to five and keep it aligned with the registry. |
+| P1 | Status page explicitly says “published” means a working route, not continuous uptime monitoring. Its manual rate check is not full-site monitoring. | Preserve honest status wording. Add independent monitors only when they are actually running and their scope/retention is documented. |
+| P1 | README lists `skyco.lovable.app` as the live app while the canonical hub is `https://skyco.online`. | Update the README canonical URL and add links to the project plan and working backlog. |
+| P1 | Existing tests are present but no test script or CI workflow is defined. | Make the test command reproducible, add CI and publish the actual checks that pass. |
+| P2 | Current CurrenSee `getRate` is a TanStack Start server function, not a separately documented public/versioned mobile API contract. | Add a stable, documented mobile-facing HTTP contract before the app depends on it. Do not guess internal routes or scrape website HTML. |
+
+### 1.4 Current implementation details that must remain true unless deliberately changed
+
+- CurrenSee currently sources fiat rates from Frankfurter, crypto data from CoinGecko, and selected NPR/pegged-currency references from Nepal Rastra Bank. NPR fallback may be derived from INR at the official 1.6 peg and is explicitly labelled. QAR/AED/SAR require the supported NRB source; do not invent replacement values on failure.
+- The current rate service has a bounded 60-second per-pair cache; NRB payload data is cached hourly. Preserve source timestamps, reference dates and source attribution in any mobile contract.
+- CurrenSee preference/history/alert helpers use optional browser storage. The UI must continue working if browser storage is blocked.
+- Chronos uses a mix of custom code, `Intl` calendar support and the Nepali date converter. Selected dates are handled around UTC noon to avoid date shifts. Hijri and Nepali observance dates can differ from local moon-sighting or panchang decisions; retain those caveats.
+- My Finance Friend is a deterministic parser preview, not an AI investment adviser, portfolio service, broker or trading engine. Session entries are not durable storage.
+- Grocery pack selections and household size use optional browser storage. Grocery must remain usable if storage is unavailable.
+- Float begins with sample values. User-entered figures persist in the browser only after the visitor chooses guest mode. The current guest implementation uses browser local storage without application-level encryption. The share URL carries encoded data. Neither behaviour may be described as encrypted or cloud-synchronised.
+- Current SkyCo product behaviour and privacy claims must be based on code that ships, not on an aspirational plan.
+
+---
+
+## 2. Product and architecture decisions
+
+These are the delivery defaults. A change requires a short decision record in the plan or repository documentation.
+
+### 2.1 One application, five independent modules
+
+Ship one Android app named **SkyCo**, with five independent feature modules:
+
+1. CurrenSee
+2. Chronos
+3. My Finance Friend
+4. SkyCo Grocery Packs
+5. Float
+
+The app shell owns home, tool discovery, navigation, common settings, theme, help and app-level error handling. Each tool owns its own domain rules, state and tests.
+
+Do not publish five separate Android apps in the first release. Do not merge the tools into one tangled feature or shared data model.
+
+### 2.2 Website remains first-class
+
+- Keep the existing TanStack Start website and canonical first-party routes.
+- Do not replace product routes with redirects to the app.
+- Do not make installation mandatory.
+- Keep each website product useful without the Android app.
+- Add Android App Links only after the domain association file and app manifest are validated. Installed Android devices may open the app; everyone else must continue to reach the website.
+- Avoid a WebView-only shell. The Flutter UI must be native Flutter UI with platform-appropriate Android interaction patterns.
+
+### 2.3 Shared services versus local-first modules
+
+| Product | Initial Android data strategy |
+|---|---|
+| CurrenSee | Server-mediated public market/reference data; cache with source and freshness metadata |
+| Chronos | Local calculation where parity is proven; versioned reference fixtures; no user account |
+| My Finance Friend | Local deterministic parser; session-only history by default |
+| Grocery Packs | Bundled sample packs and local list state; offline-first |
+| Float | Local-first private records; encrypted local persistence before durable-save release; no automatic cloud sync |
+
+No amount, name, trade sentence, date of birth or Float record should be sent to the server unless that specific transfer is required, disclosed and explicitly approved by the user.
+
+### 2.4 Mobile-facing API contract
+
+Do not expose internal TanStack Start implementation details as a public API. Before Flutter integration, design a small versioned HTTP contract (for example, `/api/v1/rates`) and document it.
+
+The contract must:
+- Validate currency codes against an explicit allowlist.
+- Return the numeric rate, from/to codes, source, reference date (`asOf`), server fetch time (`fetchedAt`), approximation/fallback status and available historical points.
+- Distinguish provider failure, unsupported pair, rate-limited response and empty history.
+- Never label a stale/cached value as newly fetched.
+- State reference-rate limitations clearly; a reference rate is not an executable cash/card/crypto trading quote.
+- Apply bounded caching, sensible timeouts, rate limits and safe error responses.
+- Avoid embedding provider credentials or server secrets in the APK.
+- Include a versioning/deprecation policy and machine-readable examples.
+- Be tested against the existing website's source-backed fixtures.
+
+Chronos, Finance Friend, Grocery and Float do not need a server API for their initial core job. Do not add a backend merely for architectural symmetry.
+
+---
+
+## 3. Delivery phases and master checklist
+
+**Checklist rule:** all new work starts unchecked. Check an item only after implementation, the relevant test, and any required deployment or manual verification have actually passed. Put evidence in the commit/PR or linked test report. “Code written” is not “done”.
+
+### Phase 0 — repository safety and project governance (P0)
+
+- [ ] Review repository history and current branch before making product changes.
+- [ ] Secret-scan the tracked `.env` file and repository history without copying secret values into issues, logs or AI prompts.
+- [ ] If credentials were committed, identify their owner, scope and exposure; rotate/revoke affected credentials before relying on the environment.
+- [ ] Add appropriate local-secret patterns to `.gitignore`; use a safe example env file with names only and placeholder values.
+- [ ] Confirm deployment/runtime variables are configured in the hosting platform, not committed to Git.
+- [ ] Confirm `main` remains a working Lovable-connected branch; use normal commits only.
+- [ ] Establish branch/PR and rollback conventions. Never force-push or rewrite published history.
+- [ ] Choose and document the canonical package manager (Bun is indicated by the committed `bun.lock` and `bunfig.toml`; verify the deployment toolchain before locking this in).
+- [ ] Add a reproducible test command for existing Node tests.
+- [ ] Add CI for install, lint, test and production build; do not claim CI coverage until a workflow exists and passes.
+- [ ] Record the baseline website build, lint and test results before product changes.
+- [ ] Maintain a short Architecture Decision Record for material changes.
+
+**Exit gate:** secrets have been assessed and contained; developers can reproduce install, lint, tests and build; history and Lovable sync are protected.
+
+### Phase 1 — website correctness, privacy and experience (P0/P1)
+
+#### Product inventory and copy
+
+- [ ] Treat `src/lib/projects.ts` as the product registry source of truth.
+- [ ] Correct Chronos registry job/tagline/copy from six to seven systems.
+- [ ] Correct the Chronos page title and all stale six-calendar text.
+- [ ] Verify all five shipped product cards and routes point to `skyco.online/<product>`.
+- [ ] Keep Budget & Expenses and Daily Notes clearly planned, not live.
+- [ ] Remove obsolete separate-subdomain instructions from active project guidance; retain history with a clear superseded label.
+- [ ] Align README's canonical live URL with `https://skyco.online`.
+- [ ] Add project-document links to README: `MASTER_PLAN.md`, `roadmap.md`, `AGENTS.md`.
+
+#### Privacy and security claims
+
+- [ ] Re-audit every product's browser/device/server/third-party data flow from code.
+- [ ] Update `/privacy` to cover all five shipped tools, including Float.
+- [ ] Update `/security` table to cover all five shipped tools.
+- [ ] Document CurrenSee favorites, defaults, saved snapshots, alert preferences and alert history in browser storage accurately.
+- [ ] Document Grocery per-pack checked items and household-size persistence accurately.
+- [ ] Document Float's opt-in guest-mode local storage accurately, including the fact that current browser storage is not application-level encrypted.
+- [ ] Document Float share-link contents and Base64's lack of confidentiality.
+- [ ] Add a clear pre-share disclosure and explicit confirmation for Float share links, or replace the current mechanism after a tested privacy design.
+- [ ] Document support email handling, hosting logs and each third-party rate provider based on current implementation.
+- [ ] Ensure no page claims that data is never stored if the product stores it locally.
+- [ ] Ensure no page claims encryption, continuous monitoring, authentication or sync unless the feature is implemented and verified.
+- [ ] Re-check all claims after any change to local storage, API calls or third-party SDKs.
+
+#### Reliability, accessibility and SEO
+
+- [ ] Keep the Status page's distinction between a published route and uptime monitoring.
+- [ ] Decide whether to add independent uptime checks; if added, define probe scope, schedule, alert destination and retention.
+- [ ] Add explicit rate-service freshness/provider failure monitoring only after the monitor exists.
+- [ ] Check all five product flows on narrow Android-sized browser viewports and desktop.
+- [ ] Check keyboard navigation, focus order, screen reader labels, contrast and text scaling.
+- [ ] Verify SEO titles, canonical URLs, structured data, sitemap and `llms.txt` reflect the five live routes and two planned entries.
+- [ ] Confirm install hints and PWA metadata do not promise native app features.
+
+**Exit gate:** published website behaviour, product registry, metadata and trust pages agree with the implementation; no unresolved P0 privacy/security issue remains.
+
+### Phase 2 — shared rules, fixtures and API readiness (P0/P1)
+
+- [ ] Map the existing CurrenSee request/response path from browser to TanStack Start server function to provider.
+- [ ] Define and document the versioned rate HTTP contract for Flutter.
+- [ ] Keep third-party fetches server-side; do not put secrets in mobile source or assets.
+- [ ] Preserve Frankfurter, CoinGecko and NRB source attribution and the existing NRB fallback rules.
+- [ ] Preserve the 60-second pair cache and hourly NRB payload cache unless measurements justify a documented change.
+- [ ] Add deterministic rate fixtures for supported pairs, missing values, NRB unavailable, provider timeout, 429, malformed payload and empty history.
+- [ ] Define rate freshness behaviour and the UI's exact stale/unavailable labels.
+- [ ] Create golden JSON fixtures for all seven Chronos readings across representative years, month boundaries, leap conditions and timezone boundaries.
+- [ ] Explicitly test Indian Saka on Android-supported runtimes; do not assume browser `Intl` output automatically matches Dart/Android.
+- [ ] Create parser fixtures for valid, ambiguous, malformed, missing-price and missing-date trade descriptions.
+- [ ] Create grocery pack fixtures and tests for household sizes 1, 2, 4 and 6, list persistence and storage-unavailable behaviour.
+- [ ] Create Float fixtures for weekly, fortnightly, monthly recurrence, month-end clamping, date boundaries, negative balances, empty inputs and invalid inputs.
+- [ ] Define Float export/import format and threat model before adding mobile persistence.
+- [ ] Create a written parity matrix: website expected output vs service/API vs Android expected output.
+
+**Exit gate:** mobile-facing interfaces and golden fixtures are versioned, documented, deterministic and tested. No app module relies on scraping the website.
+
+### Phase 3 — Flutter/Android foundation on Windows (P1)
+
+- [ ] Install the current stable Flutter SDK on Windows using the official setup guide.
+- [ ] Install Android Studio and the Android SDK/platform tools.
+- [ ] Configure Android emulator acceleration or connect a physical Android test device.
+- [ ] Verify `flutter doctor -v`, `flutter --version` and `flutter devices`.
+- [ ] Create the Flutter project under a dedicated directory (proposed: `apps/skyco_app/`) without disturbing the existing web root.
+- [ ] Pin and document the Flutter/Dart stable toolchain used for the app.
+- [ ] Create app identifier, display name, icon, splash screen and brand tokens.
+- [ ] Create the app shell: Home, Tools and Settings.
+- [ ] Create independent routes and feature boundaries for the five products.
+- [ ] Establish state management, navigation, dependency injection and repository conventions; choose packages only after review.
+- [ ] Add shared loading, empty, offline, error and retry components.
+- [ ] Add theme support and accessible font scaling.
+- [ ] Define local persistence interfaces and migration/version strategy.
+- [ ] Add unit/widget/integration test conventions and CI validation for Flutter.
+- [ ] Add a clear Windows development guide to the repository.
+- [ ] Ensure generated build output, local databases, keystores, signing credentials and machine-specific files are ignored by Git.
+
+**Exit gate:** a clean Android build runs on emulator and physical device from Windows; app shell routes work; CI can analyze and test it.
+
+### Phase 4 — Android product modules (P1/P2)
+
+#### 4A. CurrenSee — first module
+
+- [ ] Implement fiat and supported crypto selectors from the authoritative currency list.
+- [ ] Implement amount entry, conversion and swap.
+- [ ] Implement source, reference date and fetched-at labels.
+- [ ] Implement 7-day/30-day history only when source points exist; never fabricate missing days.
+- [ ] Implement favourites, default pair and saved conversion snapshots.
+- [ ] Preserve the displayed saved result and source metadata; never recompute a historic snapshot on refresh.
+- [ ] Implement explicit unavailable, stale, approximate and provider-error states.
+- [ ] Preserve NRB buy/sell midpoint/unit rules and labelled fallback behaviour.
+- [ ] Implement foreground rate alerts first.
+- [ ] Do not promise background alerts until a tested Android scheduling/push architecture exists.
+- [ ] Verify every fixture against website behaviour and the documented rate API.
+
+**Acceptance:** all supported fixtures match; provider failures are honest; rate source/date/freshness are visible; no amount or personal data is sent to the rate provider.
+
+#### 4B. Chronos
+
+- [ ] Implement Gregorian, Nepali Bikram Sambat, Hijri, Hebrew, Chinese, Persian and Indian Saka.
+- [ ] Choose and document a deterministic calculation strategy for each system.
+- [ ] Reuse existing TypeScript logic only as a behaviour reference; Dart code requires golden-fixture parity, not a line-by-line translation assumption.
+- [ ] Verify selected-date timezone handling and date boundaries.
+- [ ] Implement previous/next/today, date difference and age calculation.
+- [ ] Implement month/observance view only for observances supported by verified data.
+- [ ] Keep local moon-sighting and Nepali panchang caveats visible.
+- [ ] Implement copy/share and optional Android calendar insertion with clear user action.
+- [ ] Test on multiple Android versions/devices.
+
+**Acceptance:** all seven systems match approved fixtures and caveats; unsupported runtime output produces a clear unavailable state, not a plausible but wrong date.
+
+#### 4C. SkyCo Grocery Packs
+
+- [ ] Port only the sample packs currently shipped on the website.
+- [ ] Preserve sections and item ordering.
+- [ ] Support household sizes currently available (1, 2, 4 and 6) and verify quantity rounding.
+- [ ] Implement check/uncheck, remaining count, reset and completed-item filtering.
+- [ ] Persist the user's list locally with versioned schema and safe migration.
+- [ ] Remain useful when storage fails or the device is offline.
+- [ ] Implement Android share/print flows using platform-appropriate mechanisms.
+- [ ] Do not display supermarket prices without a reliable, licensed and current source.
+
+**Acceptance:** packs and quantities match fixtures; selections survive normal restart; storage failure never blocks use.
+
+#### 4D. My Finance Friend
+
+- [ ] Port the deterministic parser, not an invented AI/LLM workflow.
+- [ ] Parse action, quantity, ticker, optional price and supported date phrases.
+- [ ] Mark assumed/defaulted values explicitly.
+- [ ] Reject or request correction for ambiguous/malformed entries.
+- [ ] Keep preview/session history local and non-durable by default.
+- [ ] Implement CSV export/share only after the user initiates it.
+- [ ] Do not add brokerage access, trade execution, recommendations or performance claims.
+
+**Acceptance:** parser results match fixtures; missing facts are not guessed; session data is not silently persisted or uploaded.
+
+#### 4E. Float — highest privacy scrutiny
+
+- [ ] Port income, bills, BNPL, periods and recurrence rules from the current web behaviour.
+- [ ] Preserve the distinction between sample mode and user-entered data.
+- [ ] Decide whether Android should save by default or require an explicit “save on this device” action; make the choice visible.
+- [ ] Implement encrypted local database storage only after selecting and reviewing an actively maintained implementation.
+- [ ] Protect encryption keys using Android Keystore-backed storage.
+- [ ] Exclude sensitive database contents from unsafe backup paths; document Android backup behaviour.
+- [ ] Provide export, import, clear-all and delete flows with confirmation.
+- [ ] Keep cloud sync, accounts and banking integrations out of Android 1.0.
+- [ ] Reassess the current Base64 URL share design; disclose exactly which figures are included before using Android Sharesheet.
+- [ ] Do not say Float is encrypted until tests verify encryption at rest and key handling on actual devices.
+
+**Acceptance:** calculations match fixtures; records survive ordinary restart; database/key handling is verified; deletion works; no network request contains Float entries; share content is disclosed.
+
+### Phase 5 — integration, security and quality (P1)
+
+- [ ] Integrate all five modules into one app shell without cross-module state leakage.
+- [ ] Add Android App Links for existing first-party product paths only after `/.well-known/assetlinks.json` and manifest verification.
+- [ ] Ensure a product URL still works on the website when the app is absent.
+- [ ] Add home-screen shortcuts only for stable, working destinations.
+- [ ] Add notifications only for user-requested functions with clear permission rationale.
+- [ ] Audit all Android permissions; remove anything not required.
+- [ ] Review all Flutter packages, licences, maintainers, transitive dependencies and permissions.
+- [ ] Threat-model Float storage/share, API transport, app links and update/signing.
+- [ ] Test offline start, loss of connection, reconnect, slow data, malformed responses and provider outages.
+- [ ] Test screen sizes, font scaling, TalkBack, keyboard/focus and contrast.
+- [ ] Test app restart, process death, device rotation, background/foreground and low-memory recovery.
+- [ ] Run unit, widget, integration, static analysis and release-build checks.
+- [ ] Run web regression tests after shared API or product-rule changes.
+- [ ] Record all known limitations and verify they are disclosed in the UI.
+
+**Exit gate:** no open critical/high privacy or security defect; no critical calculation mismatch; app is stable on the agreed Android device matrix.
+
+### Phase 6 — Google Play release (P1)
+
+- [ ] Confirm current Play Console account type, identity verification and registration requirements.
+- [ ] Confirm the current target API requirement immediately before submission. At this plan's creation date, the applicable new-app/update requirement is Android 16 / API 36 or higher; re-check Google's policy at release.
+- [ ] Produce a signed release Android App Bundle (`.aab`) and a separately testable APK when needed.
+- [ ] Protect upload/signing keys outside the repository and document recovery.
+- [ ] Prepare app icon, screenshots, short/full descriptions and contact details.
+- [ ] Publish a privacy policy that matches actual Android and SDK behaviour.
+- [ ] Complete the Play Data safety form accurately, including third-party SDK collection and processing.
+- [ ] Complete content rating, app access and permissions declarations as applicable.
+- [ ] Run internal testing on real devices.
+- [ ] If the account is a personal developer account subject to Google's post-13-November-2023 testing rule, complete the required closed test (currently 12 testers opted in continuously for 14 days) before applying for production access; verify the live rule in Play Console.
+- [ ] Collect and triage tester feedback.
+- [ ] Release gradually and monitor crashes, Android Vitals, user feedback and rate-service reliability.
+- [ ] Maintain rollback/release notes and a support path.
+
+**Acceptance:** Google Play accepts the listing; installed production build passes smoke tests; privacy declarations match observed behaviour.
+
+### Phase 7 — post-launch and future scope (P2)
+
+- [ ] Maintain website/app parity fixtures for every product change.
+- [ ] Monitor crash rates and provider errors using a documented, privacy-minimising setup.
+- [ ] Publish changelog entries for user-visible changes.
+- [ ] Add Budget & Expenses only after a separate scope, privacy and overlap review with Float.
+- [ ] Add Daily Notes only after a separate local-data and backup/privacy review.
+- [ ] Consider cloud sync only with a full account, encryption, consent, deletion and support design.
+- [ ] Keep Flutter dependencies and Android target requirements current.
+- [ ] Consider iOS only as a separate future decision; the current project does not require a Mac or iOS build pipeline.
+
+---
+
+## 4. Release gates and definition of done
+
+A phase is not complete because a screen exists. It is complete only when the evidence is recorded.
+
+### Website gate
+
+- [ ] Five live routes and two planned entries are represented accurately.
+- [ ] No known P0 secret/privacy/security issue remains open.
+- [ ] Privacy/security/status statements match shipped code.
+- [ ] Production build, lint and defined tests pass.
+- [ ] Mobile and desktop smoke tests pass.
+- [ ] Canonical URL and metadata are correct.
+
+### API gate
+
+- [ ] Versioned contract, schema and error model are documented.
+- [ ] Provider names, source dates and fetched timestamps are tested.
+- [ ] Cache and rate-limit behaviour are bounded and documented.
+- [ ] No provider secret is in the app bundle.
+- [ ] Fixtures cover expected failures and fallbacks.
+
+### Android gate
+
+- [ ] Windows setup is reproducible from documentation.
+- [ ] One app contains five independent modules.
+- [ ] No WebView-only implementation.
+- [ ] Local-first features work offline.
+- [ ] Float's storage/share behaviour is disclosed and verified.
+- [ ] All core calculations pass parity fixtures.
+- [ ] No unnecessary permissions or silent collection.
+- [ ] Unit/widget/integration tests and static analysis pass.
+- [ ] Real-device smoke tests pass.
+
+### Publication gate
+
+- [ ] Release signing material is protected.
+- [ ] Play policy and target API are rechecked.
+- [ ] Privacy policy and Data safety are accurate.
+- [ ] Required testing/account steps are complete.
+- [ ] Staged rollout and rollback plan are ready.
+
+---
+
+## 5. GitHub execution rules
+
+1. **Read these files at the start of every work session:** `AGENTS.md`, `MASTER_PLAN.md`, `roadmap.md`, then the specific source files being changed.
+2. Inspect current `main`, uncommitted/local changes and open PRs before editing. Never assume an old audit is still current.
+3. `AGENTS.md` contains immediate coding constraints; this file contains product scope and acceptance criteria; `roadmap.md` retains dated web tasks/history.
+4. Do not blindly replace the historical roadmap with a new checklist. Link the documents and keep each purpose separate.
+5. Use small, reviewable commits. The Lovable-connected branch must remain buildable.
+6. Prefer a working branch and PR for multi-file implementation. Merge only after tests pass and the diff is reviewed.
+7. Never force-push, amend, rebase or squash commits already published to the connected repository.
+8. Never paste secrets, private user data, Float entries or full `.env` contents into issues, logs, commits or AI prompts.
+9. Check a box only with evidence: test name/output, manual test notes, deployment URL or commit/PR reference.
+10. Update the changelog and plan when user-visible behaviour or a release gate changes.
+11. If code, plan and deployed website disagree, inspect the deployed build and source before deciding which one is authoritative; do not silently invent behaviour.
+12. Do not mark a planned product or a future platform as shipped.
+
+### Suggested GitHub labels
+
+Use consistent labels if/when issues are created: `priority:P0`, `priority:P1`, `priority:P2`, `area:website`, `area:api`, `area:android`, `area:privacy`, `area:security`, `area:testing`, `area:release`.
+
+Do not create duplicate issues for already-completed items in the dated `roadmap.md`.
+
+---
+
+## 6. Authoritative references
+
+Use official documentation and re-check policy pages immediately before implementation/release:
+
+- Flutter on Windows / Android setup: https://docs.flutter.dev/platform-integration/android/setup
+- Flutter architecture guidance: https://docs.flutter.dev/app-architecture/guide
+- Flutter Android deployment: https://docs.flutter.dev/deployment/android
+- Android App Links: https://developer.android.com/training/app-links
+- Android core app quality: https://developer.android.com/docs/quality-guidelines/core-app-quality
+- Google Play target API requirements: https://developer.android.com/google/play/requirements/target-sdk
+- Google Play testing requirements: https://support.google.com/googleplay/android-developer/answer/14151465
+- Google Play Data safety: https://support.google.com/googleplay/android-developer/answer/10787469
+
+**Policy and toolchain values are time-sensitive.** Confirm current stable Flutter/Dart, Android SDK and Google Play requirements at the time of work. Do not copy a version number from an old plan and assume it is still current.
+
+---
+
+## 7. Current status at plan creation
+
+- [x] Repository identified and current `main` inspected.
+- [x] Existing website stack and repository instructions inspected.
+- [x] Five live product routes and two planned products identified from the registry.
+- [x] Important website/privacy/copy/testing mismatches recorded.
+- [x] Historical web roadmap preserved as a separate document.
+- [ ] P0 secret and environment-file audit.
+- [ ] P0 privacy/security documentation reconciliation.
+- [ ] P1 website copy/registry correction.
+- [ ] P1 reproducible test command and CI.
+- [ ] P1 versioned mobile API contract.
+- [ ] P1 Flutter Windows foundation.
+- [ ] P1 five Android modules.
+- [ ] P1 full quality and privacy gates.
+- [ ] P1 Google Play release.
+
+**Next action:** complete Phase 0, beginning with the tracked `.env` secret audit and reproducible baseline checks. Do not start Flutter feature work until the P0 audit has an owner and a documented outcome.

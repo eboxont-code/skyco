@@ -12,7 +12,7 @@
 - Keep all shipped products on first-party `skyco.online/<product>` routes; this preserves one trusted hub and prevents duplicate product homes.
 - Describe only behavior implemented by the current in-page experiences; this keeps privacy, security, status, and product claims verifiable.
 
-- Keep product paths typed as the four hub route literals so shared navigation uses type-safe TanStack links.
+- Keep product paths typed as the five shipped hub route literals so shared navigation uses type-safe TanStack links.
 - Grocery check persistence uses versioned browser storage with per-pack keys and validation; lists must remain usable when storage is unavailable.
 
 - Product data sources live in the project registry and drive trust pages to prevent duplicated provider claims.
@@ -41,3 +41,21 @@
 - Render Q&A presentation through QuestionAnswers while keeping route-owned structured data unchanged; shared semantics and hash opening stay consistent.
 - Bundle responsive sizes of existing brand and product images and select them with srcSet; small screens should not download full-size previews.
 - Chart periods filter existing provider points by calendar date without filling missing days, so every point remains source-backed.
+
+
+## Master plan and execution authority
+
+- Read `MASTER_PLAN.md` before planning or implementing website-to-Android work. It is the current product scope, phased plan and acceptance checklist.
+- `roadmap.md` remains the dated, historical web-work backlog. Do not duplicate completed entries or rewrite its history; add new execution tasks to the master plan or focused GitHub issues.
+- `AGENTS.md` remains the immediate coding constraints document. If it conflicts with stale project notes, inspect the current registry and source, then update the stale note rather than reviving obsolete architecture.
+- At the start of work, inspect the current branch/head, working tree, open PRs and relevant source files. Do not assume a previous audit remains current.
+- Check a plan item only after its implementation and required tests/manual verification pass. Record the evidence in the commit, PR or test report.
+- Keep the existing TanStack Start website and first-party `skyco.online/<product>` routes. The five shipped product paths are `/currensee`, `/chronos`, `/finance-friend`, `/grocery` and `/float`. Budget & Expenses and Daily Notes are planned, not shipped.
+- The Android app is a separate Flutter client, not a WebView replacement. Current scope is Android built/tested from Windows; do not require macOS or start iOS work in this milestone.
+- Keep mobile code isolated under the planned `apps/skyco_app/` directory so the existing Vite/TanStack web root and Lovable configuration remain intact.
+- Do not expose or copy the tracked root `.env` contents into chat, prompts, issues, logs or commits. Treat the file as a P0 secret-audit item until a secret scan establishes whether it contains credentials. Use environment configuration and safe placeholder examples.
+- Float currently persists guest data in browser local storage only after an explicit guest action. Its share payload is Base64 URL-safe encoded data, not encrypted. Do not describe it as encrypted or transmit it to a server without a reviewed design and explicit consent.
+- Chronos currently displays seven systems, including Indian Saka, while some metadata/type/copy is stale. Use the current seven-system UI as the baseline and require golden-fixture parity before changing the calculation engine.
+- Product privacy/security/status claims must match shipped code. Do not claim continuous uptime monitoring, secure encryption, background alerts, cloud sync or other capabilities until they are implemented and tested.
+- CurrenSee's current `getRate` is a TanStack Start server function, not a documented public mobile REST contract. Do not guess its transport route or scrape HTML; implement and document a versioned HTTP adapter before Flutter depends on it.
+- Preserve Lovable-connected Git history: never force-push or rewrite published commits. Keep the connected branch buildable and use small, reviewable commits.

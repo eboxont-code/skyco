@@ -1,3 +1,5 @@
+> **Current project direction:** See [MASTER_PLAN.md](MASTER_PLAN.md) for the authoritative website-hardening → shared-services/API → Flutter Android programme and its acceptance checklist. This file is retained as the dated 31 October 2026 web-work backlog. Its completed entries are historical evidence; do not duplicate them or mark remaining shorthand IDs complete without the original brief and verification.
+
 # SkyCo October 31 ordered updates
 
 - [x] 0: October 30 changelog verified at phone/desktop; green checks and publication requested.

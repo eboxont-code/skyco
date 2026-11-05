@@ -1,3 +1,9 @@
+> [!WARNING]
+> **Historical snapshot — not the current architecture or source of truth.**
+> This plan describes an earlier three-project/subdomain arrangement. The current repository registry (`src/lib/projects.ts`) ships five first-party products on `https://skyco.online/<product>`; Budget & Expenses and Daily Notes remain planned. Do not implement the old subdomain destinations or treat the old project list as current.
+>
+> Current execution authority: [MASTER_PLAN.md](../MASTER_PLAN.md), [AGENTS.md](../AGENTS.md), and the actual current source files. This historical note is preserved for context only.
+
 ## What I verified
 
 - Live projects in your workspace: **CurrenSee**, **Celestial Timekeeper (Chronos)**, **My Finance Friend**.
