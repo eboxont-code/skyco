@@ -60,11 +60,20 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+The repository commits `bun.lock` and `bunfig.toml`, so use Bun for the local install workflow. Avoid creating a second package-manager lockfile.
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+git clone https://github.com/eboxont-code/skyco.git
+cd skyco
+bun install --frozen-lockfile
+bun run dev
 ```
+
+Before submitting changes, run the available checks:
+
+```sh
+bun run lint
+bun run build
+```
+
+A test script and CI workflow are not yet configured. See [MASTER_PLAN.md](MASTER_PLAN.md) for the outstanding test/CI setup and project acceptance gates.
