@@ -41,24 +41,10 @@ export type RateResult = {
   fetchedAt: string;
   series: { date: string; value: number }[];
   approximate: boolean;
+  nrbFallback?: boolean;
 };
 
-type NrbDay = { date: string; rates: { currency: { iso3: string; name?: string; unit: number }; buy: string; sell: string }[] };
-let nrbCache: { expires: number; days: NrbDay[] } | undefined;
-async function nrbDays(): Promise<NrbDay[]> {
-  if (nrbCache && nrbCache.expires > Date.now()) return nrbCache.days;
-  const to = new Date().toISOString().slice(0, 10);
-  const from = new Date(Date.now() - 35 * 86400000).toISOString().slice(0, 10);
-  const response = await fetch(`https://www.nrb.org.np/api/forex/v1/rates?page=1&per_page=100&from=${from}&to=${to}`, { signal: AbortSignal.timeout(5000) });
-  if (!response.ok) throw new Error("Reference rates unavailable");
-  const json = await response.json() as { data?: { payload?: NrbDay[] } };
-  const days = json.data?.payload;
-  if (!Array.isArray(days) || !days.length) throw new Error("Reference rates unavailable");
-  const validDays = days.filter(day => /^\d{4}-\d{2}-\d{2}$/.test(day.date) && Array.isArray(day.rates)).sort((a, b) => a.date.localeCompare(b.date));
-  if (!validDays.length) throw new Error("Reference rates unavailable");
-  nrbCache = { expires: Date.now() + 3600000, days: validDays };
-  return validDays;
-}
+type NrbDay = import("./nrb-rates.server").NrbDay;
 function nprTable(day: NrbDay): Record<string, number> {
   const table: Record<string, number> = { NPR: 1 };
   for (const row of day.rates) {
@@ -143,10 +129,14 @@ export const getRate = createServerFn({ method: "GET" })
     let asOf = "";
     const needsNrb = [from, to].some(c => ["NPR", "QAR", "AED", "SAR"].includes(c));
     let nrb: NrbDay[] = [];
+    let nrbFallback = false;
     let nrbSource: RateResult["source"] = "Nepal Rastra Bank";
     if (needsNrb) {
       try {
-        nrb = await nrbDays();
+        const { loadNrbDays } = await import("./nrb-rates.server");
+        const payload = await loadNrbDays();
+        nrb = payload.days;
+        nrbFallback = payload.fallback;
         const latest = nrb[nrb.length - 1];
         if (!latest) throw new Error("Reference rates unavailable");
         const table = nprTable(latest);
@@ -206,6 +196,7 @@ export const getRate = createServerFn({ method: "GET" })
       fetchedAt: new Date().toISOString(),
       series: series.slice(-31),
       approximate,
+      ...(needsNrb && nrbSource === "Nepal Rastra Bank" ? { nrbFallback } : {}),
     };
     for (const [oldKey, entry] of pairCache) if (entry.expires <= Date.now()) pairCache.delete(oldKey);
     if (pairCache.size >= CURRENCIES.length ** 2) {
@@ -217,12 +208,13 @@ export const getRate = createServerFn({ method: "GET" })
   });
 
 export type NprRateRow = { iso3: string; name: string; unit: number; buy: number; sell: number; midpoint: number; perOne: number };
-export type NprRatesDay = { date: string; rows: NprRateRow[] } | null;
+export type NprRatesDay = { date: string; rows: NprRateRow[]; fallback: boolean } | null;
 
 /** Latest Nepal Rastra Bank day, reusing the hourly NRB cache. Null when NRB is unavailable. */
 export const getNprRates = createServerFn({ method: "GET" }).handler(async (): Promise<NprRatesDay> => {
   try {
-    const days = await nrbDays();
+    const { loadNrbDays } = await import("./nrb-rates.server");
+    const { days, fallback } = await loadNrbDays();
     const latest = days[days.length - 1];
     if (!latest) return null;
     const rows: NprRateRow[] = [];
@@ -232,7 +224,7 @@ export const getNprRates = createServerFn({ method: "GET" }).handler(async (): P
       const midpoint = (buy + sell) / 2;
       rows.push({ iso3: r.currency.iso3, name: CURRENCY_NAMES[r.currency.iso3] ?? r.currency.name ?? r.currency.iso3, unit, buy, sell, midpoint, perOne: midpoint / unit });
     }
-    return rows.length ? { date: latest.date, rows } : null;
+    return rows.length ? { date: latest.date, rows, fallback } : null;
   } catch {
     return null;
   }

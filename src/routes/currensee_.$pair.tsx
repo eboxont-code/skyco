@@ -77,7 +77,7 @@ export const Route = createFileRoute("/currensee_/$pair")({
             const code = pair.to === "NPR" ? pair.from : pair.to;
             const row = day?.rows.find(r => r.iso3 === code);
             if (!day || !row) return null;
-            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false, nrbReference: { buy: row.buy, sell: row.sell, unit: row.unit, code: row.iso3 } };
+            return { from: pair.from, to: pair.to, rate: pair.to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: `${day.date}T00:00:00Z`, series: [], approximate: false, nrbFallback: day.fallback, nrbReference: { buy: row.buy, sell: row.sell, unit: row.unit, code: row.iso3 } };
           }).catch(() => null)
         : getRate({ data: { from: pair.from, to: pair.to } }).then((value): PairRate => value).catch(() => null),
       getProjectDirectory().catch(() => fallbackDirectory as ResolvedProject[]),
@@ -157,7 +157,8 @@ function PairPage() {
           {rate ? (
             <>
               <p className="break-words text-2xl font-extrabold tabular-nums text-foreground">1 {from} = {fmt(rate.rate)} {to}</p>
-              <p className="mt-1 text-sm text-muted-foreground">Reference rate for {rate.asOf}. Source: {rate.source}</p>
+              <p className="mt-1 text-sm text-muted-foreground">Reference rate for <time dateTime={rate.asOf}>{rate.asOf}</time>. Source: {rate.source}</p>
+              {rate.nrbFallback && <p role="status" className="mt-1 text-sm text-muted-foreground">Latest available published NRB rates. These are not confirmed as today's rates.</p>}
               {to === "NPR" && rate.nrbReference && <p className="mt-2 text-sm text-muted-foreground">Buying {fmt(rate.nrbReference.buy)}, selling {fmt(rate.nrbReference.sell)} NPR per {rate.nrbReference.unit} {rate.nrbReference.code}, for {rate.asOf}.</p>}
             </>
           ) : (

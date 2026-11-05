@@ -96,7 +96,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
       const day = await fetchNprRates();
       const row = day?.rows.find(r => r.iso3 === (to === "NPR" ? from : to));
       if (!day || !row) throw new Error("Nepal Rastra Bank reference unavailable");
-      return { from, to, rate: to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: new Date().toISOString(), series: [], approximate: false };
+      return { from, to, rate: to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: new Date().toISOString(), series: [], approximate: false, nrbFallback: day.fallback };
     },
     initialData: from === initialRate?.from && to === initialRate?.to ? initialRate : undefined,
     staleTime: 60_000,
@@ -240,7 +240,8 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         {data ? (
           <>
             1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
-            <span className="ml-2 block text-sm sm:inline">Reference rate for {data.asOf}. Source: {data.source}</span>
+            <span className="ml-2 block text-sm sm:inline">Reference rate for <time dateTime={data.asOf}>{data.asOf}</time>. Source: {data.source}</span>
+            {data.nrbFallback && <span className="mt-1 block text-sm">Latest available published NRB rates. These are not confirmed as today's rates.</span>}
             {Number.isFinite(data.rate) && data.rate > 0 && <span className="mt-1 block text-sm">1 {to} = {new Intl.NumberFormat("en-GB", { maximumFractionDigits: 8 }).format(1 / data.rate)} {from}</span>}
           </>
         ) : query.isError ? (

@@ -63,6 +63,7 @@ function RatesPage() {
         {day ? (
           <>
             <h2 className="text-2xl font-bold text-foreground">Nepal Rastra Bank rates for <time dateTime={day.date}>{day.date}</time></h2>
+            {day.fallback && <p role="status" className="text-sm text-muted-foreground">Latest available published NRB rates. These are not confirmed as today's rates.</p>}
             <div className="overflow-x-auto rounded-2xl border border-sky-bright/20 bg-card">
               <table className="w-full min-w-[560px] text-sm">
                 <caption className="sr-only">Nepal Rastra Bank reference rates for {day.date}</caption>
