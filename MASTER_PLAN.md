@@ -165,7 +165,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [x] Add `.env` / `.env.*` ignore rules (while allowing `.env.example`) and add a placeholder-only `.env.example`; verified on main 5 November 2026.
 - [ ] Confirm deployment/runtime variables are configured in the hosting platform, not committed to Git.
 - [ ] Confirm `main` remains a working Lovable-connected branch; use normal commits only.
-- [ ] Establish branch/PR and rollback conventions. Never force-push or rewrite published history.
+- [x] Establish branch/PR and rollback conventions in `AGENTS.md`; explicitly preserve Lovable-connected history and document safe revert/deployment recovery rules (6 November 2026).
 - [ ] Choose and document the canonical package manager (Bun is indicated by the committed `bun.lock` and `bunfig.toml`; verify the deployment toolchain before locking this in).
 - [ ] Add a reproducible test command for existing Node tests.
 - [ ] Add CI for install, lint, test and production build; do not claim CI coverage until a workflow exists and passes.
@@ -479,6 +479,13 @@ Use official documentation and re-check policy pages immediately before implemen
 
 **Next action:** complete the historical secret scan and confirm/rotate any credentials that may have been exposed; verify runtime environment configuration in the actual hosting platform; then establish reproducible test/lint/build checks. Do not start Flutter feature work until the P0 audit has a documented outcome.
 
+
+
+## 9. Audit log — 6 November 2026
+
+- [x] Documented branch naming, pull-request expectations, Lovable-connected main-branch constraints and non-destructive rollback conventions in `AGENTS.md`.
+- [ ] Historical Gitleaks scan remains pending verification; the workflow was added at `.github/workflows/secret-history-scan.yml` (commit `a7e6fa916c4637464f141a282f3813ee8e2658fd`). The connected GitHub tools do not expose push-triggered workflow run results, so no clean scan is claimed.
+- [ ] Hosting runtime-variable verification remains pending. No Vercel project matching `eboxont-code/skyco` or `skyco` was found, and the README's Lovable project ID was not accessible in the connected Lovable workspace. The actual production host is not established by these checks.
 
 ## 8. Audit log — 5 November 2026
 
