@@ -158,6 +158,7 @@ function PairPage() {
             <>
               <p className="break-words text-2xl font-extrabold tabular-nums text-foreground">1 {from} = {fmt(rate.rate)} {to}</p>
               <p className="mt-1 text-sm text-muted-foreground">Reference rate for <time dateTime={rate.asOf}>{rate.asOf}</time>. Source: {rate.source}</p>
+              {(rate.stale || rate.nrbFallback) && <p role="status" className="mt-1 text-xs text-muted-foreground">Not current. Last updated: <time dateTime={rate.asOf}>{rate.asOf}</time>. I could not confirm a newer rate.</p>}
               {rate.nrbFallback && <p role="status" className="mt-1 text-sm text-muted-foreground">Latest available published NRB rates. These are not confirmed as today's rates.</p>}
               {to === "NPR" && rate.nrbReference && <p className="mt-2 text-sm text-muted-foreground">Buying {fmt(rate.nrbReference.buy)}, selling {fmt(rate.nrbReference.sell)} NPR per {rate.nrbReference.unit} {rate.nrbReference.code}, for {rate.asOf}.</p>}
             </>

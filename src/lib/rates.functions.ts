@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { createRateCache } from "./rate-cache";
 
 /**
  * Live rate lookup for the in-hub CurrenSee converter.
@@ -42,6 +43,7 @@ export type RateResult = {
   series: { date: string; value: number }[];
   approximate: boolean;
   nrbFallback?: boolean;
+  stale?: boolean;
 };
 
 type NrbDay = import("./nrb-rates.server").NrbDay;
@@ -107,7 +109,7 @@ async function cryptoSeries(code: string, multiplier: number) {
   }));
 }
 
-const pairCache = new Map<string, { expires: number; result: RateResult }>();
+const cachedRate = createRateCache<RateResult>(CURRENCIES.length ** 2);
 
 export const CURRENCY_NAMES: Record<string, string> = { NPR: "Nepalese rupee", QAR: "Qatari riyal", AED: "UAE dirham", SAR: "Saudi riyal", MYR: "Malaysian ringgit", KRW: "South Korean won", USD: "US dollar", EUR: "Euro", GBP: "British pound", JPY: "Japanese yen", INR: "Indian rupee", AUD: "Australian dollar", CAD: "Canadian dollar", CHF: "Swiss franc", CNY: "Chinese yuan", SGD: "Singapore dollar", SEK: "Swedish krona", NOK: "Norwegian krone", NZD: "New Zealand dollar", BRL: "Brazilian real", ZAR: "South African rand", BTC: "Bitcoin", ETH: "Ethereum", SOL: "Solana" };
 
@@ -122,9 +124,7 @@ export const getRate = createServerFn({ method: "GET" })
   })
   .handler(async ({ data }): Promise<RateResult> => {
     const { from, to } = data;
-    const key = `${from}:${to}`;
-    const cached = pairCache.get(key);
-    if (cached && cached.expires > Date.now()) return cached.result;
+    return cachedRate(from, to, async () => {
     let fiat: Record<string, number> = {};
     let asOf = "";
     const needsNrb = [from, to].some(c => ["NPR", "QAR", "AED", "SAR"].includes(c));
@@ -196,15 +196,11 @@ export const getRate = createServerFn({ method: "GET" })
       fetchedAt: new Date().toISOString(),
       series: series.slice(-31),
       approximate,
+      stale: needsNrb && nrbSource === "Nepal Rastra Bank" && nrbFallback,
       ...(needsNrb && nrbSource === "Nepal Rastra Bank" ? { nrbFallback } : {}),
     };
-    for (const [oldKey, entry] of pairCache) if (entry.expires <= Date.now()) pairCache.delete(oldKey);
-    if (pairCache.size >= CURRENCIES.length ** 2) {
-      const oldest = pairCache.keys().next().value;
-      if (oldest !== undefined) pairCache.delete(oldest);
-    }
-    pairCache.set(key, { expires: Date.now() + 60_000, result });
     return result;
+    });
   });
 
 export type NprRateRow = { iso3: string; name: string; unit: number; buy: number; sell: number; midpoint: number; perOne: number };

@@ -7,10 +7,12 @@ import { ArrowLeftRight, RefreshCw, Star, X } from "lucide-react";
 import { CURRENCIES, CURRENCY_NAMES, getRate, getNprRates, type RateResult } from "@/lib/rates.functions";
 import { ADDITIONAL_NRB_CURRENCIES, converterCurrencies } from "@/lib/converter-currencies";
 import { chartPeriod, DEFAULT_CHART_DAYS } from "@/lib/chart-period";
+import { createRateCache } from "@/lib/rate-cache";
 import { currencyFlag } from "@/lib/currency-flags";
 import { getDefaultPair, getFavorites, isFavorite, setDefaultPair, toggleFavorite, getSavedConversions, saveConversion, clearSavedConversions, type SavedConversion, type Pair } from "@/lib/currensee-store";
 
 const SELECTABLE_CURRENCIES = converterCurrencies(CURRENCIES);
+const cachedNprRate = createRateCache<RateResult>(SELECTABLE_CURRENCIES.length ** 2);
 
 /**
  * The CurrenSee converter, running on skyco.online itself.
@@ -93,10 +95,12 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
     queryKey: ["rate", from, to],
     queryFn: async () => {
       if (initialTo !== "NPR" && initialFrom !== "NPR" || from !== "NPR" && to !== "NPR") return fetchRate({ data: { from, to } });
+      return cachedNprRate(from, to, async () => {
       const day = await fetchNprRates();
       const row = day?.rows.find(r => r.iso3 === (to === "NPR" ? from : to));
       if (!day || !row) throw new Error("Nepal Rastra Bank reference unavailable");
-      return { from, to, rate: to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: new Date().toISOString(), series: [], approximate: false, nrbFallback: day.fallback };
+      return { from, to, rate: to === "NPR" ? row.perOne : 1 / row.perOne, source: "Nepal Rastra Bank", asOf: day.date, fetchedAt: new Date().toISOString(), series: [], approximate: false, nrbFallback: day.fallback, stale: day.fallback };
+      });
     },
     initialData: from === initialRate?.from && to === initialRate?.to ? initialRate : undefined,
     staleTime: 60_000,
@@ -104,6 +108,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
   });
 
   const data = query.data;
+  const rateIsStale = Boolean(data && (data.stale || data.nrbFallback || query.isError));
   const normalizedAmount = amount.replace(/,/g, "");
   const parsedAmount = Number(normalizedAmount);
   const amountIsValid = /^\d+(?:\.\d+)?$/.test(normalizedAmount) && Number.isFinite(parsedAmount) && parsedAmount > 0;
@@ -144,7 +149,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
             : query.isFetching
             ? "Refreshing rate"
             : data
-              ? `Updated ${timeAgo(data.fetchedAt)}`
+              ? rateIsStale ? "Last available rate, not current" : `Checked ${timeAgo(data.fetchedAt)}`
               : query.isError
                 ? "Rate service unavailable"
                 : "Loading rate"}
@@ -241,13 +246,13 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
           <>
             1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
             <span className="ml-2 block text-sm sm:inline">Reference rate for <time dateTime={data.asOf}>{data.asOf}</time>. Source: {data.source}</span>
+            {rateIsStale && <span role="status" className="mt-1 block text-xs">Not current. Last updated: <time dateTime={data.asOf}>{data.asOf}</time>. I could not confirm a newer rate.</span>}
             {data.nrbFallback && <span className="mt-1 block text-sm">Latest available published NRB rates. These are not confirmed as today's rates.</span>}
             {Number.isFinite(data.rate) && data.rate > 0 && <span className="mt-1 block text-sm">1 {to} = {new Intl.NumberFormat("en-GB", { maximumFractionDigits: 8 }).format(1 / data.rate)} {from}</span>}
           </>
         ) : query.isError ? (
           <>
-            I could not reach the rate service just now. The numbers stay blank rather than show
-            you something stale.
+            I could not reach the rate service just now. No previously retrieved rate is available for this pair.
             <Button variant="outline" className="ml-2 min-h-11" onClick={() => { void query.refetch(); }}>Try again</Button>
           </>
         ) : (
