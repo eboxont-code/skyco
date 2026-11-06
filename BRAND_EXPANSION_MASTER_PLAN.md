@@ -901,7 +901,6 @@ Sources reviewed on 6 November 2026. Official requirements can change; recheck t
 - Australian Border Force — GST and other taxes on imports: https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/cost-of-importing-goods/gst-and-other-taxes/
 - ACMA — Avoid sending spam: https://www.acma.gov.au/avoid-sending-spam
 - OAIC — Small business and privacy: https://www.oaic.gov.au/privacy/privacy-guidance-for-organisations-and-government-agencies/organisations/small-business
-- Australian Retail Council — September 2026 retail spending summary: https://www.retail.org.au/media/slowdown-in-consumer-spending-ahead-of-peak-season
 
 ### Research limitations
 
