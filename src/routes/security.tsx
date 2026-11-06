@@ -34,7 +34,7 @@ const table = [
   {
     product: "CurrenSee",
     account: "Not required",
-    device: "Browser storage keeps the last pair and amount, recent pairs, favourites, default pair, up to 20 saved conversions, up to 10 alerts, the check interval and up to 30 alert-history entries.",
+    device: "Browser storage keeps the last pair and amount, recent pairs, favourites, default pair, up to 20 saved conversions, up to 10 alerts, the check interval and up to 30 alert-history entries. Copy link also puts the selected pair and amount in the URL.",
     server: "The rate function receives currency codes, not the conversion amount. Public rate responses are cached in server memory for 60 seconds.",
     external: "Frankfurter for fiat reference rates, CoinGecko for BTC/ETH/SOL, and Nepal Rastra Bank for supported NPR-related rates.",
   },
@@ -124,7 +124,7 @@ function SecurityPage() {
             <li>My Finance Friend: the parser runs locally. The typed sentence and up to five recent entries remain in page memory only until you leave or refresh; copying CSV is an explicit action.</li>
             <li>Grocery Packs: checked items and household size are stored in browser local storage. Copy and Share actions hand the list to your clipboard or device share sheet.</li>
             <li>Float: planner data stays in page memory until you choose guest mode, which saves it to browser local storage. The share URL contains Base64 URL-safe encoded entries; Base64 is not encryption and anyone with the link can read the figures.</li>
-            <li>Support: the message draft is kept in session storage for the current tab. The form opens a pre-filled email; the message reaches SkyCo only after you send it from your mail app.</li>
+            <li>Support: the message draft is kept in session storage for the current tab. The pre-filled email also includes the browser's user-agent string; the message reaches SkyCo only after you send it from your mail app.</li>
             <li>Float waitlist: submitting the form sends the selected product, email and optional name to a server function that inserts a row into Supabase.</li>
           </ul>
 
