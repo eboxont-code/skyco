@@ -61,11 +61,13 @@ function PrivacyPage() {
           The product tools do not require an account. The Support page keeps the message draft in
           this browser tab's session storage while you write. Submitting the form opens a pre-filled
           email in your own mail app; SkyCo does not receive the message unless you press Send in
-          that app. The draft is removed from session storage when the email app is opened.
+          that app. The pre-filled email also includes your browser's user-agent string. The saved
+          draft is removed from session storage when you submit the form to open your email app.
         </p>
         <p>
-          Standard web server logs (IP address, browser type, requested page, timestamp) are created
-          by the hosting provider so the site can be served and abuse can be spotted.
+          The production host may process technical request details such as IP address, browser
+          type, requested page and timestamp. The active host and its exact log-retention settings
+          are not established in this repository review.
         </p>
 
         <h3>In CurrenSee</h3>
@@ -73,8 +75,8 @@ function PrivacyPage() {
           CurrenSee uses this browser's local storage for the last currency pair and amount, recent
           pairs, favourites, the default pair, saved conversion snapshots (up to 20), rate alerts
           (up to 10), the alert check interval and alert history (up to 30). These values stay in
-          this browser unless you copy a link: a CurrenSee link includes the selected pair and
-          entered amount in its URL. The amount is multiplied in your browser; the rate request to
+          this browser's local storage. When you choose Copy link, the selected pair and entered
+          amount are also placed in the URL. The amount is multiplied in your browser; the rate request to
           SkyCo's server contains the selected currency codes.
         </p>
 
@@ -125,9 +127,9 @@ function PrivacyPage() {
         <p>
           If you submit the Float waitlist form, the selected product, email address and optional
           name are sent to a server function and inserted into the connected Supabase
-          <code>waitlist_submissions</code> table. This is server-side storage, separate from your
-          Float planner entries. The application schema records the submission time; the repository
-          does not define an automatic deletion period.
+          <code>waitlist_submissions</code> table with a generated record ID and submission timestamp.
+          This is server-side storage, separate from your Float planner entries. The repository does
+          not define an automatic deletion period.
         </p>
 
         <h2 id="what-i-do-not-do" className="scroll-mt-24">What I do not do</h2>
