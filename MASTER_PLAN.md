@@ -2,7 +2,7 @@
 ## Website hardening → shared product services → Android application
 
 **Plan version:** 1.0  
-**Last aligned with repository:** 6 November 2026  
+**Last aligned with repository:** 7 November 2026  
 **Repository:** `eboxont-code/skyco`  
 **Default branch at alignment:** `main`  
 **Current delivery target:** upgraded `https://skyco.online` plus one Android application  
@@ -170,7 +170,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Add a reproducible test command for existing Node tests. **Implemented on open PR #1, not yet on `main`:** the latest run passed 29 tests across 8 files.
 - [ ] Add CI for install, lint, test and production build; do not claim CI coverage until a workflow exists and passes. **Implemented on open PR #1, not yet on `main`:** run `42213036495` passed unit tests and production build, but ESLint failed on 1,606 existing Prettier errors and 10 warnings. Keep the lint gate open; do not disable lint or mass-format unrelated files.
 - [ ] Record the baseline website build, lint and test results before product changes. **Evidence is recorded on open PR #1 but is not yet integrated on `main`;** tests/build pass and the existing lint baseline fails as noted above.
-- [ ] Maintain a short Architecture Decision Record for material changes.
+- [x] Maintain a short Architecture Decision Record for material changes; accepted decision `docs/decisions/ADR-0001-website-and-android-boundary.md` records the website/native Android boundary and delivery constraints (7 November 2026).
 
 **Exit gate:** secrets have been assessed and contained; developers can reproduce install, lint, tests and build; history and Lovable sync are protected.
 
@@ -477,7 +477,7 @@ Use official documentation and re-check policy pages immediately before implemen
 - [ ] P1 full quality and privacy gates.
 - [ ] P1 Google Play release.
 
-**Next action:** the full-history secret scan is complete with no findings. The next safe Phase 0 task is to record the already-approved website/native Android boundary in a short Architecture Decision Record. Hosting runtime verification remains blocked on the production host/project identity and read-only environment-settings access; Lovable sync verification remains blocked on read-only access to the connected project workspace. Keep Android implementation deferred until the remaining P0 gates are resolved.
+**Next action:** ADR-0001 is accepted and checked in. No additional independent Phase 0 task is currently executable without user-only access or approval. Runtime-variable verification requires the production host/project identity and read-only environment-settings access; Lovable sync verification requires read-only access to the connected Lovable workspace; canonical package-manager confirmation requires the production build configuration or deployment logs. PR #1's test/CI work remains unmerged and its lint job still fails on the pre-existing 1,606 Prettier errors and 10 warnings; resolving or merging it requires a narrow verified fix and maintainer review, not disabling lint or mass-formatting unrelated files. Keep Phase 1 and Android implementation deferred until the Phase 0 exit gate is met. Reassess these exact blockers on later runs without retrying unchanged inputs.
 
 
 
@@ -533,3 +533,13 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - PR #1 (`test/reproducible-bun-tests`) remains open. Its latest CI run `42213036495` passed 29/29 tests and the production build; ESLint failed on 1,606 existing Prettier errors and 10 warnings. The test command and CI workflow are not yet on `main`.
 - PR #3 (`docs/privacy-security-reconcile`) remains a draft. No Actions run was present for it in the inspected run list; automated checks have not been established for this draft.
 - Next independent Phase 0 task: add a concise ADR documenting the already-approved boundary between the existing TanStack website and the separate native Flutter Android client. This is documentation-only and does not require account access.
+
+
+## 12. Audit log — 7 November 2026 — architecture boundary ADR
+
+- [x] Added accepted ADR-0001 at `docs/decisions/ADR-0001-website-and-android-boundary.md`. It records the existing TanStack website as first-class, one separate native Flutter Android client under `apps/skyco_app/`, the five independent modules, Windows/Android-only delivery scope, CurrenSee's versioned API prerequisite, local-first boundaries and explicit non-goals.
+- [x] Verified the ADR is present on `main` and its two relative repository links resolve to `MASTER_PLAN.md` and `AGENTS.md`. Structural checks confirmed the five module names, accepted status, Windows/Android scope, native-not-WebView boundary, versioned API prerequisite, privacy constraints and acceptance checklist.
+- [x] Current repository snapshot after the ADR commit: `main` HEAD `d1f191b806c6d0521692225e4165eec98464981f`; no open issues; PR #1 remains open and PR #3 remains an open draft.
+- No application source or runtime behaviour changed. Application lint, tests and production build were not run for this documentation-only change; the documentation-specific content and internal-link checks above passed.
+- Phase 0 items still blocked: hosting runtime-variable verification needs the production host/project identity and read-only environment-settings access; Lovable sync verification needs read-only workspace access; canonical package-manager confirmation needs production build configuration/logs. PR #1 remains unmerged with a failing existing lint baseline (1,606 Prettier errors and 10 warnings); do not disable lint or mass-format unrelated files.
+- No further independent Phase 0 task is currently safe to execute without those inputs or maintainer review. Keep later phases deferred and re-evaluate for newly available, independent work on subsequent runs.
