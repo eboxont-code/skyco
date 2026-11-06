@@ -3,6 +3,7 @@
 ## Project documentation
 
 - **[Master plan and checklist](MASTER_PLAN.md)** — authoritative website hardening, shared-service and Android delivery plan.
+- **[Brand expansion master plan](BRAND_EXPANSION_MASTER_PLAN.md)** — proposed Technology, Lifestyle and Community brand architecture and apparel/community validation checklist; does not replace the software roadmap.
 - **[Working web backlog](roadmap.md)** — dated historical website tasks; preserve completed history.
 - **[Agent instructions](AGENTS.md)** — coding constraints, product invariants and Git/Lovable rules.
 
