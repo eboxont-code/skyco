@@ -2,7 +2,7 @@
 ## Website hardening → shared product services → Android application
 
 **Plan version:** 1.0  
-**Last aligned with repository:** 5 November 2026  
+**Last aligned with repository:** 6 November 2026  
 **Repository:** `eboxont-code/skyco`  
 **Default branch at alignment:** `main`  
 **Current delivery target:** upgraded `https://skyco.online` plus one Android application  
@@ -159,17 +159,17 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 
 ### Phase 0 — repository safety and project governance (P0)
 
-- [x] Review repository history and current branch before making product changes; verified 6 November 2026: only branch is `main`, latest observed HEAD is `8af8b48c3b8fcae391fee8349df0199738258387`, and there are no open issues or pull requests. Branch protection remains unverified.
-- [ ] Secret-scan the tracked `.env` file and repository history without copying secret values into issues, logs or AI prompts.
-- [ ] If credentials were committed, identify their owner, scope and exposure; rotate/revoke affected credentials before relying on the environment.
+- [x] Review repository history and current branch before making product changes; re-verified 6 November 2026: `main` HEAD is `407e22d4e3101e7845168a623ccf65b79a692179`, there are no open issues, PR #1 is open and PR #3 is an open draft, and the branch API reports `protected=false` with no required status checks.
+- [x] Secret-scan the tracked `.env` file and repository history without copying secret values into issues, logs or AI prompts; Gitleaks v8.30.1 scanned full reachable history on 6 November 2026 and reported no leaks (Actions run `42201818522`).
+- [x] Review Gitleaks findings for committed credentials; no findings were reported, so no credential owner/scope/rotation follow-up was triggered by this scan. Hosting logs and runtime credentials remain a separate review.
 - [x] Add `.env` / `.env.*` ignore rules (while allowing `.env.example`) and add a placeholder-only `.env.example`; verified on main 5 November 2026.
-- [ ] Confirm deployment/runtime variables are configured in the hosting platform, not committed to Git.
-- [ ] Confirm `main` remains a working Lovable-connected branch; use normal commits only.
+- [ ] Confirm deployment/runtime variables are configured in the hosting platform, not committed to Git. **Blocked:** the production host/project is not identified; this requires its exact project identity and read-only access to the environment-variable settings.
+- [ ] Confirm `main` remains a working Lovable-connected branch; use normal commits only. **Blocked:** requires read-only access to the connected Lovable project workspace to verify connection and sync status.
 - [x] Establish branch/PR and rollback conventions in `AGENTS.md`; explicitly preserve Lovable-connected history and document safe revert/deployment recovery rules (6 November 2026).
-- [ ] Choose and document the canonical package manager (Bun is indicated by the committed `bun.lock` and `bunfig.toml`; verify the deployment toolchain before locking this in).
-- [ ] Add a reproducible test command for existing Node tests.
-- [ ] Add CI for install, lint, test and production build; do not claim CI coverage until a workflow exists and passes.
-- [ ] Record the baseline website build, lint and test results before product changes.
+- [ ] Choose and document the canonical package manager (Bun is indicated by the committed `bun.lock` and `bunfig.toml`; verify the deployment toolchain before locking this in). **Blocked:** requires the actual production build/deployment configuration or build logs; repository-local Bun files do not establish the deployed toolchain.
+- [ ] Add a reproducible test command for existing Node tests. **Implemented on open PR #1, not yet on `main`:** the latest run passed 29 tests across 8 files.
+- [ ] Add CI for install, lint, test and production build; do not claim CI coverage until a workflow exists and passes. **Implemented on open PR #1, not yet on `main`:** run `42213036495` passed unit tests and production build, but ESLint failed on 1,606 existing Prettier errors and 10 warnings. Keep the lint gate open; do not disable lint or mass-format unrelated files.
+- [ ] Record the baseline website build, lint and test results before product changes. **Evidence is recorded on open PR #1 but is not yet integrated on `main`;** tests/build pass and the existing lint baseline fails as noted above.
 - [ ] Maintain a short Architecture Decision Record for material changes.
 
 **Exit gate:** secrets have been assessed and contained; developers can reproduce install, lint, tests and build; history and Lovable sync are protected.
@@ -467,7 +467,7 @@ Use official documentation and re-check policy pages immediately before implemen
 - [x] Important website/privacy/copy/testing mismatches recorded.
 - [x] Historical web roadmap preserved as a separate document.
 - [x] Remove the tracked root `.env` from the current main tree; add `.env.example` and ignore rules (commits recorded in the 5 November audit log).
-- [ ] P0 historical secret scan and credential review/rotation; the deleted file remains in Git history and its values were not inspected.
+- [x] P0 historical secret scan completed: Gitleaks v8.30.1 scanned full reachable history on 6 November 2026; no leaks found (run `42201818522`). No credential-specific rotation follow-up was triggered by this scan.
 - [ ] P0 privacy/security documentation reconciliation.
 - [ ] P1 website copy/registry correction.
 - [ ] P1 reproducible test command and CI.
@@ -477,7 +477,7 @@ Use official documentation and re-check policy pages immediately before implemen
 - [ ] P1 full quality and privacy gates.
 - [ ] P1 Google Play release.
 
-**Next action:** complete the historical secret scan and confirm/rotate any credentials that may have been exposed; verify runtime environment configuration in the actual hosting platform; then establish reproducible test/lint/build checks. Do not start Flutter feature work until the P0 audit has a documented outcome.
+**Next action:** the full-history secret scan is complete with no findings. The next safe Phase 0 task is to record the already-approved website/native Android boundary in a short Architecture Decision Record. Hosting runtime verification remains blocked on the production host/project identity and read-only environment-settings access; Lovable sync verification remains blocked on read-only access to the connected project workspace. Keep Android implementation deferred until the remaining P0 gates are resolved.
 
 
 
@@ -521,3 +521,15 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - [x] Re-checked GitHub Actions: zero workflow runs returned and no .github/workflows files exist in the tree.
 - [ ] Branch protection remains unverified: the GitHub integration returned 403 for the branch-protection endpoint. Do not infer that main is protected or unprotected.
 - [ ] GitHub secret-scanning alert inventory was not available through the connected GitHub integration. A clean secret scan has not been established.
+
+## 11. Audit log — 6 November 2026 — historical secret scan
+
+- [x] Ran the Historical secret scan workflow on `main` commit `a7e6fa916c4637464f141a282f3813ee8e2658fd` (Actions run `42201818522`, Gitleaks `v8.30.1`). The workflow checked out complete history (`fetch-depth: 0`) and ran `gitleaks git . --log-opts=--all --redact=100 --no-banner`. The job and scan step completed successfully; the redacted log reported `no leaks found`. No secret values were opened or copied.
+- [x] No Gitleaks findings were reported, so no credential-specific owner/scope/rotation action was triggered by this scan. This does not assess hosting logs, runtime variables or values outside the scanner's detection rules.
+- [x] Current repository snapshot: `main` HEAD `407e22d4e3101e7845168a623ccf65b79a692179`; branch API reports `protected=false` and no required status checks; no open issues; PR #1 is open and PR #3 is an open draft.
+- [ ] Hosting runtime-variable verification remains blocked: the exact production host/project identity and read-only access to its environment-variable settings are missing. No environment configuration was changed.
+- [ ] Lovable connection/sync verification remains blocked: read-only access to the connected Lovable project workspace is missing.
+- [ ] Canonical package-manager selection remains blocked: access to the actual production build/deployment configuration or build logs is missing.
+- PR #1 (`test/reproducible-bun-tests`) remains open. Its latest CI run `42213036495` passed 29/29 tests and the production build; ESLint failed on 1,606 existing Prettier errors and 10 warnings. The test command and CI workflow are not yet on `main`.
+- PR #3 (`docs/privacy-security-reconcile`) remains a draft. No Actions run was present for it in the inspected run list; automated checks have not been established for this draft.
+- Next independent Phase 0 task: add a concise ADR documenting the already-approved boundary between the existing TanStack website and the separate native Flutter Android client. This is documentation-only and does not require account access.
