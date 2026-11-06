@@ -159,7 +159,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 
 ### Phase 0 — repository safety and project governance (P0)
 
-- [ ] Review repository history and current branch before making product changes.
+- [x] Review repository history and current branch before making product changes; verified 6 November 2026: only branch is `main`, latest observed HEAD is `8af8b48c3b8fcae391fee8349df0199738258387`, and there are no open issues or pull requests. Branch protection remains unverified.
 - [ ] Secret-scan the tracked `.env` file and repository history without copying secret values into issues, logs or AI prompts.
 - [ ] If credentials were committed, identify their owner, scope and exposure; rotate/revoke affected credentials before relying on the environment.
 - [x] Add `.env` / `.env.*` ignore rules (while allowing `.env.example`) and add a placeholder-only `.env.example`; verified on main 5 November 2026.
