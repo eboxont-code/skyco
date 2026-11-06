@@ -64,32 +64,19 @@ The intended promise is to make everyday life better, support progress and give 
 
 These are preliminary research observations captured on 6 November 2026. They are leads for a proper clearance process, not legal opinions.
 
-### 1.1 Existing SkyCo Online registration and same-name/conflict signals — P0
+### 1.1 SkyCo name and rights clearance — P0
 
-- [x] Preliminary public ABN Lookup research reviewed on 6 November 2026 identifies **SkyCo Online** as an active registered business name, with a commencement date of 4 February 2026. The search-result record describes the associated entity type as **Individual/Sole Trader**, not a company named SkyCo Online Pty Ltd. Source: https://abr.business.gov.au/ABN/View?abn=87603673306 (search result record extracted 28 October 2026).
-- [ ] Confirm the current official ABN/Business Names Register details directly, including the exact registered name, status, holder and renewal date. Treat the ABN Lookup result as a useful lead until the current live record or registration certificate is checked.
-- [ ] Ask the founder to check the ASIC/company registration certificate or provide the exact legal company name/ACN if they remember incorporating a separate company. A business-name registration and a company registration are different things; a person or company can hold a business name.
-- [ ] If a separate company exists under another legal name, verify it through ASIC/ABN Lookup and document its role as owner/operator of SkyCo Online.
-- [ ] Do not state that SkyCo Online is a company, a Pty Ltd entity or a company-owned business until that separate legal entity is verified.
-
-- [ ] Investigate the public store at https://skycostudios.com/. A web review on 6 November 2026 found a store branded “Skyco” listing clothing such as hoodies, a skirt, shirts, sweatshirts and a jacket. Confirm the operator, actual trading status, markets, first-use history, social handles and any relevant registered rights.
-- [ ] Establish whether that store or its operator has registered or unregistered rights in Australia or any target market. Do not assume the store is unrelated or that a different domain resolves the issue.
-- [ ] Treat the separate Australian entity SKYCO TRADES PTY LTD as a distinct name-search lead only. The available public record does not establish that it is connected to SkyCo Online or to the proposed apparel division; do not describe it as the user's company or assume it is the same business.
-- [ ] Search Australian Trade Mark Search for SKYCO, SKY CO, SKYCO LIFESTYLE, SKYCO APPAREL and phonetic, spelling and logo variants.
-- [ ] Use IP Australia's free TM Checker as a preliminary screen, then use the detailed search for pending and registered marks.
-- [ ] Search Class 25 goods (clothing, footwear and headwear) and assess whether any adjacent classes are relevant to the actual intended products and retail services.
-- [ ] Search owner names and relevant goods/services, not only the exact word.
-- [ ] Review similar marks, stylised marks, logos, pronunciation, visual similarity and related goods/services.
-- [ ] Search WIPO's Global Brand Database for international registrations and participating national/regional collections.
-- [ ] Search official trademark registers for every intended launch/export market after the initial market has been selected.
-- [ ] Search ASIC business names and company names, ABN Lookup, domain records, search engines, social platforms, marketplaces and existing unregistered uses.
-- [ ] Record each result with mark/name, owner, jurisdiction, status, class/goods, filing/priority date, source URL, date checked and a plain-language risk note.
+- [ ] Confirm the existing SkyCo parent-brand assets and the scope in which the founder intends to use them.
+- [ ] Search relevant Australian and target-market trademark registers for SKYCO and relevant word, spacing, phonetic and logo variants.
+- [ ] Review relevant goods/services, ownership, status, priority dates and geographic scope before using the name for apparel.
+- [ ] Search relevant business-name and company registers, domain records, public search results, social platforms, marketplaces and unregistered uses as part of the clearance process.
+- [ ] Record any potential conflict in a private clearance report. Keep unrelated company, competitor and website names out of the working SkyCo TODO unless the founder specifically asks for that detail.
 - [ ] Obtain qualified Australian trade mark/legal advice before investing in labels, packaging, stock, launch campaigns or a public apparel storefront.
-- [ ] Decide whether the name can safely be used for apparel, requires a different sub-brand, requires permission/licensing, or should not be used for this category.
-- [ ] If the risk is unresolved or unacceptable, stop apparel naming and develop legally distinct alternatives. Adding “Lifestyle”, “Apparel”, “Studio” or a logo does not automatically cure a conflict.
-- [ ] Record the final clearance outcome and approved name scope in a signed-off decision record.
+- [ ] Decide whether the existing SKYCO brand can safely extend to apparel, requires a different sub-brand, requires permission/licensing, or should not be used for this category.
+- [ ] Record the final clearance outcome and approved name scope in a decision record.
 
-**Gate:** No apparel name, garment label, product listing, public campaign, commercial order or paid brand asset is approved until the name-clearance decision is documented. A preliminary web search is not legal clearance.
+**Gate:** No apparel name, garment label, product listing, public campaign, commercial order or paid brand asset is approved until name clearance is documented. A preliminary web search is not legal clearance.
+
 
 ### 1.2 Initial market context — P1
 
@@ -895,9 +882,6 @@ Sources reviewed on 6 November 2026. Official requirements can change; recheck t
 - IP Australia — Trade mark timeframes and fees: https://www.ipaustralia.gov.au/trade-marks/timeframes-and-fees
 - ASIC — Business names vs trade marks: https://www.asic.gov.au/for-business-and-companies/business-names/register-a-business-name/business-names-vs-trademarks
 - WIPO — Global Brand Database: https://www.wipo.int/en/web/global-brand-database/index
-- Preliminary same-name clothing store review: https://skycostudios.com/
-- ABN Lookup — SkyCo Online business-name record surfaced in public search: https://abr.business.gov.au/ABN/View?abn=87603673306
-- ABN Lookup — separate SKYCO TRADES PTY LTD record (not established as related to SkyCo Online): https://abr.business.gov.au/ABN/View?id=51606014886
 
 ### Australian apparel, consumer and product obligations
 
@@ -923,6 +907,4 @@ Sources reviewed on 6 November 2026. Official requirements can change; recheck t
 
 - The Australian Trade Mark Search and WIPO databases must be queried directly with exact and similar marks; this plan does not report a completed legal clearance.
 - Search-engine results can omit pending marks, common-law use, unregistered rights and local businesses. Absence from a web search is not proof of availability.
-- The apparel store at skycostudios.com is a same-name commercial-use signal only. No conclusion is made about ownership, relationship, registration or infringement.
-- The Australian Retail Council summary is market context and does not establish SkyCo customer demand, attainable share, margins or profitability.
 - No supplier quote, sample inspection, legal opinion, tax advice, customer interview or paid market study has been completed as part of creating this plan.
