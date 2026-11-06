@@ -185,7 +185,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Keep Budget & Expenses and Daily Notes clearly planned, not live.
 - [ ] Remove obsolete separate-subdomain instructions from active project guidance; retain history with a clear superseded label.
 - [x] Align README's canonical live URL with `https://skyco.online`; verified in `README.md` on 6 November 2026.
-- [ ] Add project-document links to README: `MASTER_PLAN.md`, `roadmap.md`, `AGENTS.md`.
+- [x] Add project-document links to README: `MASTER_PLAN.md`, `roadmap.md`, `AGENTS.md`; all three links verified on 6 November 2026.
 
 #### Privacy and security claims
 
