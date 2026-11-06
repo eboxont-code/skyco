@@ -66,7 +66,7 @@ const table = [
     server: "Planner calculations run locally. The waitlist form sends product, email and optional name to a server function that inserts a Supabase row. Share URLs contain encoded planner entries in the query string and may be present in request logs.",
     external: "Supabase for Float waitlist submissions only; Float planner entries are not sent to Supabase.",
   },
-
+];
 
 function SecurityPage() {
   return (
