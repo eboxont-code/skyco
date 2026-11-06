@@ -98,6 +98,7 @@ All shipped products belong under `skyco.online/<product>`. Do not revive the hi
 ## 2. Product and architecture decisions
 
 These are the delivery defaults. A change requires a short decision record in the plan or repository documentation.
+
 ### 2.1 One application, five independent modules
 
 Ship one Android app named **SkyCo**, with five independent feature modules:
@@ -196,7 +197,8 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Document Float's opt-in guest-mode local storage accurately, including the fact that current browser storage is not application-level encrypted.
 - [ ] Document Float share-link contents and Base64's lack of confidentiality.
 - [ ] Add a clear pre-share disclosure and explicit confirmation for Float share links, or replace the current mechanism after a tested privacy design.
-- [ ] Document support email handling, hosting logs and each third-party rate provider based on current implementation.- [ ] Ensure no page claims that data is never stored if the product stores it locally.
+- [ ] Document support email handling, hosting logs and each third-party rate provider based on current implementation.
+- [ ] Ensure no page claims that data is never stored if the product stores it locally.
 - [ ] Ensure no page claims encryption, continuous monitoring, authentication or sync unless the feature is implemented and verified.
 - [ ] Re-check all claims after any change to local storage, API calls or third-party SDKs.
 
@@ -296,6 +298,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Do not display supermarket prices without a reliable, licensed and current source.
 
 **Acceptance:** packs and quantities match fixtures; selections survive normal restart; storage failure never blocks use.
+
 #### 4D. My Finance Friend
 
 - [ ] Port the deterministic parser, not an invented AI/LLM workflow.
@@ -395,6 +398,7 @@ A phase is not complete because a screen exists. It is complete only when the ev
 - [ ] Fixtures cover expected failures and fallbacks.
 
 ### Android gate
+
 - [ ] Windows setup is reproducible from documentation.
 - [ ] One app contains five independent modules.
 - [ ] No WebView-only implementation.
@@ -494,6 +498,7 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - [x] Deleted the tracked root .env from the current branch without opening, printing or copying its values.
 - [ ] Scan Git history and hosting logs for exposed credentials; rotate/revoke any affected values. The current-branch deletion does not erase prior commits.
 - [ ] Confirm each required server-side variable in the actual Lovable/hosting runtime. A Vercel project search by repository and SkyCo/Currensee names returned no projects; this does not establish where the live site is hosted or whether runtime configuration is complete.
+
 ### Baseline and delivery notes
 
 - The repository has a committed bun.lock and bunfig.toml, while the README previously instructed npm. Bun is the preferred local install workflow pending a clean Windows reproduction; no package-manager migration or dependency update was performed in this audit.
@@ -538,6 +543,7 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - No application source or runtime behaviour changed. Application lint, tests and production build were not run for this documentation-only change; the documentation-specific content and internal-link checks above passed.
 - Phase 0 items still blocked: hosting runtime-variable verification needs the production host/project identity and read-only environment-settings access; Lovable sync verification needs read-only workspace access; canonical package-manager confirmation needs production build configuration/logs. PR #1 remains unmerged with a failing existing lint baseline (1,606 Prettier errors and 10 warnings); do not disable lint or mass-format unrelated files.
 - No further independent Phase 0 task is currently safe to execute without those inputs or maintainer review. Keep later phases deferred and re-evaluate for newly available, independent work on subsequent runs.
+
 
 ## 13. Repository re-check — 7 November 2026
 
