@@ -47,8 +47,9 @@ export function ContactForm({ initialProduct, initialTopic }: { initialProduct?:
         Write to me
       </h2>
       <p id="contact-note" className="mt-2 text-sm text-muted-foreground">
-        This form opens a ready-made email in your own mail app. Nothing is sent or stored until you
-        press send there.
+        This form keeps your message draft in this browser tab's session storage while you write.
+        Opening your email app prepares a message; nothing is delivered to SkyCo unless you press
+        Send in that app.
       </p>
       <form onSubmit={onSubmit} aria-describedby="contact-note" noValidate className="relative mt-5 grid gap-4 sm:grid-cols-2">
         <div className="text-sm font-semibold text-foreground">
