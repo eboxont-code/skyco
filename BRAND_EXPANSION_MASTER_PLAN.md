@@ -64,11 +64,17 @@ The intended promise is to make everyday life better, support progress and give 
 
 These are preliminary research observations captured on 6 November 2026. They are leads for a proper clearance process, not legal opinions.
 
-### 1.1 Same-name and brand-conflict signals — P0
+### 1.1 Existing SkyCo Online registration and same-name/conflict signals — P0
+
+- [x] Preliminary public ABN Lookup research reviewed on 6 November 2026 identifies **SkyCo Online** as an active registered business name, with a commencement date of 4 February 2026. The search-result record describes the associated entity type as **Individual/Sole Trader**, not a company named SkyCo Online Pty Ltd. Source: https://abr.business.gov.au/ABN/View?abn=87603673306 (search result record extracted 28 October 2026).
+- [ ] Confirm the current official ABN/Business Names Register details directly, including the exact registered name, status, holder and renewal date. Treat the ABN Lookup result as a useful lead until the current live record or registration certificate is checked.
+- [ ] Ask the founder to check the ASIC/company registration certificate or provide the exact legal company name/ACN if they remember incorporating a separate company. A business-name registration and a company registration are different things; a person or company can hold a business name.
+- [ ] If a separate company exists under another legal name, verify it through ASIC/ABN Lookup and document its role as owner/operator of SkyCo Online.
+- [ ] Do not state that SkyCo Online is a company, a Pty Ltd entity or a company-owned business until that separate legal entity is verified.
 
 - [ ] Investigate the public store at https://skycostudios.com/. A web review on 6 November 2026 found a store branded “Skyco” listing clothing such as hoodies, a skirt, shirts, sweatshirts and a jacket. Confirm the operator, actual trading status, markets, first-use history, social handles and any relevant registered rights.
 - [ ] Establish whether that store or its operator has registered or unregistered rights in Australia or any target market. Do not assume the store is unrelated or that a different domain resolves the issue.
-- [ ] Investigate the Australian ABN Lookup record for SKYCO TRADES PTY LTD (ABN 51 606 014 886), which appeared as active with the business name SKYCO TRADES in the public record reviewed on 6 November 2026. Establish whether it is connected to any relevant goods/services or creates confusion risk; do not assume it is the same business.
+- [ ] Treat the separate Australian entity SKYCO TRADES PTY LTD as a distinct name-search lead only. The available public record does not establish that it is connected to SkyCo Online or to the proposed apparel division; do not describe it as the user's company or assume it is the same business.
 - [ ] Search Australian Trade Mark Search for SKYCO, SKY CO, SKYCO LIFESTYLE, SKYCO APPAREL and phonetic, spelling and logo variants.
 - [ ] Use IP Australia's free TM Checker as a preliminary screen, then use the detailed search for pending and registered marks.
 - [ ] Search Class 25 goods (clothing, footwear and headwear) and assess whether any adjacent classes are relevant to the actual intended products and retail services.
@@ -890,7 +896,8 @@ Sources reviewed on 6 November 2026. Official requirements can change; recheck t
 - ASIC — Business names vs trade marks: https://www.asic.gov.au/for-business-and-companies/business-names/register-a-business-name/business-names-vs-trademarks
 - WIPO — Global Brand Database: https://www.wipo.int/en/web/global-brand-database/index
 - Preliminary same-name clothing store review: https://skycostudios.com/
-- ABN Lookup — SKYCO TRADES PTY LTD record: https://abr.business.gov.au/ABN/View?id=51606014886
+- ABN Lookup — SkyCo Online business-name record surfaced in public search: https://abr.business.gov.au/ABN/View?abn=87603673306
+- ABN Lookup — separate SKYCO TRADES PTY LTD record (not established as related to SkyCo Online): https://abr.business.gov.au/ABN/View?id=51606014886
 
 ### Australian apparel, consumer and product obligations
 
