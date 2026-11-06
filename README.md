@@ -73,7 +73,8 @@ Before submitting changes, run the available checks:
 
 ```sh
 bun run lint
+bun run test
 bun run build
 ```
 
-A test script and CI workflow are not yet configured. See [MASTER_PLAN.md](MASTER_PLAN.md) for the outstanding test/CI setup and project acceptance gates.
+The repository pins **Bun 1.4.4** in `package.json` and uses the committed `bun.lock`. The `test` script runs all existing TypeScript tests with Bun's test runner. [GitHub Actions CI](.github/workflows/ci.yml) runs the frozen install, lint, test and production build checks for pull requests and pushes to `main`.
