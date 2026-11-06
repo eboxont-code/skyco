@@ -484,7 +484,7 @@ Use official documentation and re-check policy pages immediately before implemen
 ## 9. Audit log — 6 November 2026
 
 - [x] Documented branch naming, pull-request expectations, Lovable-connected main-branch constraints and non-destructive rollback conventions in `AGENTS.md`.
-- [ ] Historical Gitleaks scan remains pending verification; the workflow was added at `.github/workflows/secret-history-scan.yml` (commit `a7e6fa916c4637464f141a282f3813ee8e2658fd`). The connected GitHub tools do not expose push-triggered workflow run results, so no clean scan is claimed.
+- [ ] Historical Gitleaks scan remained pending verification **at the time of this entry**; this was superseded by the successful 6 November run documented in section 11 (Actions run `42201818522`, Gitleaks v8.30.1).
 - [ ] Hosting runtime-variable verification remains pending. No Vercel project matching `eboxont-code/skyco` or `skyco` was found, and the README's Lovable project ID was not accessible in the connected Lovable workspace. The actual production host is not established by these checks.
 
 ## 8. Audit log — 5 November 2026
