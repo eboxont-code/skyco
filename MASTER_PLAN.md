@@ -45,10 +45,10 @@ This plan was aligned against the repository tree, current `main` head, source f
 - Server/runtime configuration is wrapped by `@lovable.dev/vite-tanstack-config`; do not duplicate its integrated Vite/TanStack/Nitro plugins.
 - Supabase integration and Drizzle/PostgreSQL configuration are present. Inspect actual usage before expanding backend responsibilities.
 - The repository is connected to Lovable. Normal commits to the connected branch sync into the editor. Never force-push, rebase, amend or squash already-published history.
-- `bun.lock` and `bunfig.toml` are committed. The README currently describes npm installation. Confirm and document one canonical package-manager workflow; do not casually mix npm and Bun lockfiles.
-- Existing npm scripts include `dev`, `build`, `build:dev`, `preview`, `lint` and `format`. There is no declared `test` script.
-- Existing test files use Node's `node:test` API. Establish and document the exact supported test command before relying on it.
-- No `.github/workflows/` directory was present in the inspected repository tree. CI is therefore a planned improvement, not an existing guarantee.
+- `bun.lock` and `bunfig.toml` are committed. The current README documents Bun for local development (`bun install --frozen-lockfile`). The production deployment/build toolchain remains unverified; do not infer it from repository-local files or add a second lockfile.
+- On `main`, `package.json` defines `dev`, `build`, `build:dev`, `preview`, `lint` and `format`, but no `test` script.
+- Existing test files use Node's `node:test` API. PR #1 proposes a Bun test command; it is not yet integrated on `main`. Its latest CI run (`42213036495`) passed locked installation, 29 tests across 8 files and the production build, but ESLint failed with 1,606 Prettier errors and 10 warnings. Keep that lint failure visible; do not weaken the gate or mass-format unrelated files.
+- `main` contains `.github/workflows/secret-history-scan.yml`, which covers the historical Gitleaks scan only. The general install/lint/test/build CI workflow is proposed on open PR #1 and is not yet integrated or green on `main`.
 - `roadmap.md` is a dated web-work backlog with completed and incomplete historical item IDs. Preserve its history; do not recreate completed work or mark vague items complete without their original specification and evidence.
 
 ### 1.2 Current product inventory
@@ -98,7 +98,6 @@ All shipped products belong under `skyco.online/<product>`. Do not revive the hi
 ## 2. Product and architecture decisions
 
 These are the delivery defaults. A change requires a short decision record in the plan or repository documentation.
-
 ### 2.1 One application, five independent modules
 
 Ship one Android app named **SkyCo**, with five independent feature modules:
@@ -197,8 +196,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Document Float's opt-in guest-mode local storage accurately, including the fact that current browser storage is not application-level encrypted.
 - [ ] Document Float share-link contents and Base64's lack of confidentiality.
 - [ ] Add a clear pre-share disclosure and explicit confirmation for Float share links, or replace the current mechanism after a tested privacy design.
-- [ ] Document support email handling, hosting logs and each third-party rate provider based on current implementation.
-- [ ] Ensure no page claims that data is never stored if the product stores it locally.
+- [ ] Document support email handling, hosting logs and each third-party rate provider based on current implementation.- [ ] Ensure no page claims that data is never stored if the product stores it locally.
 - [ ] Ensure no page claims encryption, continuous monitoring, authentication or sync unless the feature is implemented and verified.
 - [ ] Re-check all claims after any change to local storage, API calls or third-party SDKs.
 
@@ -298,7 +296,6 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Do not display supermarket prices without a reliable, licensed and current source.
 
 **Acceptance:** packs and quantities match fixtures; selections survive normal restart; storage failure never blocks use.
-
 #### 4D. My Finance Friend
 
 - [ ] Port the deterministic parser, not an invented AI/LLM workflow.
@@ -398,7 +395,6 @@ A phase is not complete because a screen exists. It is complete only when the ev
 - [ ] Fixtures cover expected failures and fallbacks.
 
 ### Android gate
-
 - [ ] Windows setup is reproducible from documentation.
 - [ ] One app contains five independent modules.
 - [ ] No WebView-only implementation.
@@ -498,7 +494,6 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - [x] Deleted the tracked root .env from the current branch without opening, printing or copying its values.
 - [ ] Scan Git history and hosting logs for exposed credentials; rotate/revoke any affected values. The current-branch deletion does not erase prior commits.
 - [ ] Confirm each required server-side variable in the actual Lovable/hosting runtime. A Vercel project search by repository and SkyCo/Currensee names returned no projects; this does not establish where the live site is hosted or whether runtime configuration is complete.
-
 ### Baseline and delivery notes
 
 - The repository has a committed bun.lock and bunfig.toml, while the README previously instructed npm. Bun is the preferred local install workflow pending a clean Windows reproduction; no package-manager migration or dependency update was performed in this audit.
@@ -543,3 +538,10 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - No application source or runtime behaviour changed. Application lint, tests and production build were not run for this documentation-only change; the documentation-specific content and internal-link checks above passed.
 - Phase 0 items still blocked: hosting runtime-variable verification needs the production host/project identity and read-only environment-settings access; Lovable sync verification needs read-only workspace access; canonical package-manager confirmation needs production build configuration/logs. PR #1 remains unmerged with a failing existing lint baseline (1,606 Prettier errors and 10 warnings); do not disable lint or mass-format unrelated files.
 - No further independent Phase 0 task is currently safe to execute without those inputs or maintainer review. Keep later phases deferred and re-evaluate for newly available, independent work on subsequent runs.
+
+## 13. Repository re-check — 7 November 2026
+
+- Re-read `README.md`, `AGENTS.md`, this plan and `roadmap.md`; rechecked the private repository's `main` head, branches, open issues and pull requests. `main` HEAD is `45882075334e8b55c924d79d3e3575b0ef05959e`; there are no open issues. PR #1 is open and not draft; PR #3 is open and remains draft. Neither PR has submitted reviews or inline review threads.
+- PR #1 head `8f92c2ccf18afb3027c1a13bab07ed1932eb724c` has one PR-triggered CI run, `42213036495`: locked install passed, unit tests passed (29 across 8 files), production build passed, and ESLint failed (1,606 errors and 10 warnings). PR #3 head `a0e319e4e8dd3d4167ecc16f45529786d11f9ad2` has no PR-triggered workflow run. No PR was merged or changed during this audit.
+- Corrected §1.1 so its local Bun workflow and workflow-directory statements describe current `main`, while the production toolchain remains explicitly unverified. No checklist item was marked complete and no application code or behaviour changed.
+- Documentation verification: the four stale baseline statements each had exactly one match and were replaced once. No application lint, tests or build were run because this was a documentation-only correction.
