@@ -43,6 +43,17 @@
 - Chart periods filter existing provider points by calendar date without filling missing days, so every point remains source-backed.
 
 
+## Branch, pull request and rollback conventions
+
+- Keep `main` as the shared, Lovable-connected integration branch. Never force-push, rebase, amend or squash published commits.
+- Use short-lived branches for code, security, dependency, test or multi-file changes. Name them `feat/<topic>`, `fix/<topic>`, `security/<topic>`, `test/<topic>`, `chore/<topic>` or `docs/<topic>`.
+- Open a pull request into `main` for changes that affect application behaviour, privacy, security, dependencies, build/release configuration or multiple product files. Keep the change focused and include purpose, affected areas, verification results, known risks and rollback notes.
+- A narrowly scoped documentation-only correction may be committed directly to `main` when it does not change product behaviour. Lovable-originated changes may continue to sync to the connected branch; inspect the resulting diff and run applicable checks.
+- Do not assume branch protection, required reviews or automatic production deployment are configured. Verify those settings in the hosting/GitHub accounts before relying on them.
+- Roll back published code with a new revert commit; never rewrite history. Prefer the hosting provider's previous-known-good deployment rollback for a bad release, then reconcile Git with a revert commit. Preserve user data and avoid destructive database rollback; use a forward fix unless a migration-specific recovery plan has been tested.
+- Before any release, record the source commit, target environment, checks completed and recovery path. Do not claim a deployment or rollback until the provider confirms its outcome.
+
+
 ## Master plan and execution authority
 
 - Read `MASTER_PLAN.md` before planning or implementing website-to-Android work. It is the current product scope, phased plan and acceptance checklist.
