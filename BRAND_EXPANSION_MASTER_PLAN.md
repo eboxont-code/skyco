@@ -916,6 +916,6 @@ Sources reviewed on 6 November 2026. Official requirements can change; recheck t
 
 - The Australian Trade Mark Search and WIPO databases must be queried directly with exact and similar marks; this plan does not report a completed legal clearance.
 - Search-engine results can omit pending marks, common-law use, unregistered rights and local businesses. Absence from a web search is not proof of availability.
-- The apparel store at sk ycostudios.com (remove the space in the actual domain: skycostudios.com) is a same-name commercial-use signal only. No conclusion is made about ownership, relationship, registration or infringement.
+- The apparel store at skycostudios.com is a same-name commercial-use signal only. No conclusion is made about ownership, relationship, registration or infringement.
 - The Australian Retail Council summary is market context and does not establish SkyCo customer demand, attainable share, margins or profitability.
 - No supplier quote, sample inspection, legal opinion, tax advice, customer interview or paid market study has been completed as part of creating this plan.
