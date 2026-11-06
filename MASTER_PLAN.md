@@ -167,9 +167,9 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 - [ ] Confirm `main` remains a working Lovable-connected branch; use normal commits only.
 - [x] Establish branch/PR and rollback conventions in `AGENTS.md`; explicitly preserve Lovable-connected history and document safe revert/deployment recovery rules (6 November 2026).
 - [ ] Choose and document the canonical package manager (Bun is indicated by the committed `bun.lock` and `bunfig.toml`; verify the deployment toolchain before locking this in).
-- [ ] Add a reproducible test command for existing Node tests.
-- [ ] Add CI for install, lint, test and production build; do not claim CI coverage until a workflow exists and passes.
-- [ ] Record the baseline website build, lint and test results before product changes.
+- [x] Add a reproducible test command for existing Node tests; `package.json` pins `bun@1.4.4`, `bun run test` passed 29 tests across 8 files in GitHub Actions PR run `42212470384` (6 November 2026).
+- [ ] Add CI for install, lint, test and production build; `.github/workflows/ci.yml` now runs independent jobs. PR run `42212470384`: frozen installs succeeded, tests passed (29/29), production build passed, but lint failed on 1,606 existing Prettier errors and 10 warnings in unchanged files. Keep this item open until the lint baseline is resolved; do not disable lint or mass-format unrelated files as part of this change.
+- [x] Record baseline website build, lint and test results before product changes; GitHub Actions run `42212470384` on the code-only unchanged baseline recorded 29/29 tests passing, production build passing, and ESLint failing on 1,606 Prettier errors / 10 warnings (6 November 2026).
 - [ ] Maintain a short Architecture Decision Record for material changes.
 
 **Exit gate:** secrets have been assessed and contained; developers can reproduce install, lint, tests and build; history and Lovable sync are protected.
@@ -480,6 +480,14 @@ Use official documentation and re-check policy pages immediately before implemen
 **Next action:** complete the historical secret scan and confirm/rotate any credentials that may have been exposed; verify runtime environment configuration in the actual hosting platform; then establish reproducible test/lint/build checks. Do not start Flutter feature work until the P0 audit has a documented outcome.
 
 
+
+## 10. Audit log — 6 November 2026 — reproducible tests
+
+- [x] Added the repository test command on PR #1: `bun run test` → `bun test`, with `packageManager: bun@1.4.4`; no dependencies or lockfile were changed.
+- [x] Verified all eight existing TypeScript test files through GitHub Actions run `42212470384`: 29 passed, 0 failed.
+- [x] Verified the production build in the same run; the build job concluded successfully.
+- [ ] CI is implemented in `.github/workflows/ci.yml`, but the lint job is not green. ESLint reports 1,606 Prettier formatting errors and 10 warnings across pre-existing files; no application source files were changed in PR #1. Keep CI acceptance open rather than suppressing lint or formatting unrelated files.
+- [ ] PR #1 remains open for review; no merge or production deployment was performed.
 
 ## 9. Audit log — 6 November 2026
 
