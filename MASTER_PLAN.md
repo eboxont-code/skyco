@@ -178,7 +178,7 @@ Chronos, Finance Friend, Grocery and Float do not need a server API for their in
 
 #### Product inventory and copy
 
-- [ ] Treat `src/lib/projects.ts` as the product registry source of truth.
+- [x] Treat `src/lib/projects.ts` as the product registry source of truth; verified the five shipped first-party route literals and planned-only Budget & Expenses / Daily Notes entries on 6 November 2026.
 - [ ] Correct Chronos registry job/tagline/copy from six to seven systems.
 - [ ] Correct the Chronos page title and all stale six-calendar text.
 - [ ] Verify all five shipped product cards and routes point to `skyco.online/<product>`.
