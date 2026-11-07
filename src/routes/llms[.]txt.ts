@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { companyLinks, legalLinks } from "@/lib/site-nav";
-import { fallbackDirectory, splitDirectory } from "@/lib/projects";
+import { fallbackDirectory } from "@/lib/projects";
+import { buildLlmsContent, resolveLlmsDirectory } from "@/lib/llms-content";
 
 export const Route = createFileRoute("/llms.txt")({
   server: {
@@ -9,36 +10,11 @@ export const Route = createFileRoute("/llms.txt")({
       GET: async () => {
         // Never block the response on outbound probes: read whatever is
         // already known and let the discovery cache refresh in the background.
-        let directory = fallbackDirectory;
-        try {
+        const directory = await resolveLlmsDirectory(async () => {
           const { getDirectorySnapshot } = await import("@/lib/project-discovery.server");
-          directory = getDirectorySnapshot();
-        } catch {
-          directory = fallbackDirectory;
-        }
-        const { live, upcoming } = splitDirectory(directory);
-
-        const body = [
-          "# SkyCo",
-          "",
-          `> SkyCo is a founder-led software studio building small web tools for everyday life. ${live.length} products are live today.`,
-          "",
-          "SkyCo is the single home for a family of focused, no-clutter web tools. Every live product runs at a path on skyco.online.",
-          "",
-          "## Pages",
-          "",
-          "- [Home](https://skyco.online/): Overview of SkyCo, its live products, how the company works, and how to get in touch.",
-          "",
-          ...[...companyLinks, ...legalLinks].map(p => `- [${p.label}](https://skyco.online${p.to}): ${p.description ?? p.label + " information for SkyCo."}`),
-          "",
-          "## Projects",
-          "",
-          ...live.map((p) => `${p.name}: ${p.job ?? p.tagline} https://skyco.online${p.path ?? ""}`),
-          ...(upcoming.length
-            ? ["", "## Planned — not live yet", "", ...upcoming.map((p) => `- ${p.name}: ${p.description}`)]
-            : []),
-          "",
-        ].join("\n");
+          return getDirectorySnapshot();
+        }, fallbackDirectory);
+        const body = buildLlmsContent(directory, companyLinks, legalLinks);
 
         return new Response(body, {
           headers: {
