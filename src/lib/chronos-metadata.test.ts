@@ -54,7 +54,7 @@ test("Chronos renderer declares exactly the seven expected calendar systems", ()
   const systemsBlock = componentSource.match(/const SYSTEMS:[\s\S]*?\n\];/)?.[0];
   assert.ok(systemsBlock, "Chronos SYSTEMS declaration must exist");
 
-  const labels = [...systemsBlock.matchAll(/\{ label: "([^"]+)" /g)].map(([, label]) => label);
+  const labels = [...systemsBlock.matchAll(/\{ label: "([^"]+)"/g)].map(([, label]) => label);
   assert.deepEqual(labels, CALENDAR_SYSTEMS);
   assert.match(componentSource, /Pick one day and read it back in seven calendar systems at once/);
   assert.doesNotMatch(componentSource, /six calendars?|six calendar systems?/i);
