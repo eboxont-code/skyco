@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createRateCache } from "./rate-cache";
+import { frankfurterLatestUrl, frankfurterHistoryUrl } from "./frankfurter";
 
 /**
  * Live rate lookup for the in-hub CurrenSee converter.
@@ -59,7 +60,7 @@ function nprTable(day: NrbDay): Record<string, number> {
 async function fiatUsdTable(): Promise<Record<string, number>> {
   const symbols = FIAT.filter((c) => c !== "USD" && !["NPR", "QAR", "AED", "SAR"].includes(c)).join(",");
   const res = await fetch(
-    `https://api.frankfurter.dev/v1/latest?base=USD&symbols=${symbols}`,
+    frankfurterLatestUrl(symbols),
   );
   if (!res.ok) throw new Error("rate source unavailable");
   const json = (await res.json()) as { date: string; rates: Record<string, number> };
@@ -87,7 +88,7 @@ async function cryptoUsd(codes: string[]): Promise<Record<string, number>> {
 async function fiatSeries(from: string, to: string) {
   const start = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
   const res = await fetch(
-    `https://api.frankfurter.dev/v1/${start}..?base=${from}&symbols=${to}`,
+    frankfurterHistoryUrl(start, from, to),
   );
   if (!res.ok) return [];
   const json = (await res.json()) as { rates: Record<string, Record<string, number>> };
