@@ -55,7 +55,7 @@ Items tracked by the SkyCo.Online bot that were not yet in this file or MASTER_P
 - [ ] Free @skyco.online email or forwarding to main.skyco@gmail.com.
 - [ ] Add Google Search Console TXT record (google-site-verification=wpfXT2n_BKnpaJJbRp58gbZb96Nv8rAdaDYKzTm-SIU), verify, submit sitemap.xml.
 - [ ] Import the site into Bing Webmaster Tools.
-- [ ] 301 currensee.skyco.online to skyco.online/currensee and chronos.skyco.online to skyco.online/chronos, only after the subdomain gap audit shows every feature is on the main site.
+- **SUPERSEDED — DO NOT EXECUTE (7 November 2026; historical proposal only):** 301 `currensee.skyco.online` to `skyco.online/currensee` and `chronos.skyco.online` to `skyco.online/chronos`, only after the subdomain gap audit shows every feature is on the main site. The current architecture keeps shipped products under `skyco.online/<product>`; this old redirect proposal is retained for history, not as an active DNS task. This documentation update made no DNS or hosting changes; the live redirect state remains unverified.
 - [ ] Watch SSL expiry: apex, www, currensee 1 Dec 2026; chronos 15 Dec 2026.
 
 ## SkyCo's own free accounts
