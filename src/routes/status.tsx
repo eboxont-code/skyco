@@ -2,7 +2,7 @@ import { changelog, formatDate } from "@/lib/changelog";
 import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, Prose } from "@/components/PageShell";
-import { fallbackDirectory, splitDirectory, liveProjects, type ResolvedProject } from "@/lib/projects";
+import { fallbackDirectory, splitDirectory, type ResolvedProject } from "@/lib/projects";
 import { getProjectDirectory } from "@/lib/projects.functions";
 import { useState } from "react";
 import { getRate } from "@/lib/rates.functions";
@@ -17,25 +17,25 @@ export const Route = createFileRoute("/status")({
   },
   head: () => ({
     meta: [
-      { title: "SkyCo status: live checks for every tool" },
+      { title: "SkyCo product status: published and planned tools" },
       {
         name: "description",
         content:
-          "Published availability for every SkyCo product, with direct links to check each browser tool yourself.",
+          "See which SkyCo tools have a published route and which are planned. Published status is not continuous uptime monitoring.",
       },
-      { property: "og:title", content: "SkyCo status: live checks for every tool" },
+      { property: "og:title", content: "SkyCo product status: published and planned tools" },
       {
         property: "og:description",
-        content: "Published availability for every SkyCo product, with direct links to each tool.",
+        content: "See which SkyCo tools have a published route and which are planned. Published status is not continuous uptime monitoring.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://skyco.online/status" },
       ...shareMeta("status", "SkyCo Status page share card"),
-      { name: "twitter:title", content: "SkyCo status: live checks for every tool" },
-      { name: "twitter:description", content: "Published availability and direct links for every live SkyCo product." },
+      { name: "twitter:title", content: "SkyCo product status: published and planned tools" },
+      { name: "twitter:description", content: "See which SkyCo tools have a published route and which are planned. Published status is not continuous uptime monitoring." },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/status" }],
-    scripts: [breadcrumbScript([{ name: "Status", path: "/status" }]), pageScript("WebPage", "SkyCo Status", "/status", "Status page for SkyCo, a founder-led studio of small web tools.")],
+    scripts: [breadcrumbScript([{ name: "Status", path: "/status" }]), pageScript("WebPage", "SkyCo Status", "/status", "Published and planned SkyCo product routes; published status is not continuous uptime monitoring.")],
   }),
   component: StatusPage,
 });
@@ -43,19 +43,19 @@ export const Route = createFileRoute("/status")({
 function StatusPage() {
   const directory = Route.useLoaderData();
   const { live, upcoming } = splitDirectory(directory);
-  const allUp = upcoming.length === 0 || live.length > 0;
+  const hasPublishedProducts = live.length > 0;
 
   return (
     <PageShell
       eyebrow="Status"
       title="Product status"
-      intro="This page reflects the products currently published on the SkyCo hub. Use the direct links below to check the feature you need."
+      intro="This page shows which products have a published route on the SkyCo hub and which are still planned. Published status is not a continuous uptime check."
       wide
     >
       {changelog[0] && <p className="mb-4 text-sm text-muted-foreground">Last updated <time dateTime={changelog[0].date}>{formatDate(changelog[0].date)}</time></p>}
       <div
         className={`rounded-2xl border p-5 ${
-          allUp ? "border-sky-bright/30 bg-sky-ice/50" : "border-destructive/30 bg-destructive/5"
+          hasPublishedProducts ? "border-sky-bright/30 bg-sky-ice/50" : "border-destructive/30 bg-destructive/5"
         }`}
       >
         <p className="text-sm font-bold text-foreground">
@@ -68,7 +68,7 @@ function StatusPage() {
 
       <RateCheck />
       <ul className="mt-6 space-y-3">
-        {liveProjects.map((project) => (
+        {live.map((project) => (
           <li
             key={project.slug}
             className="flex flex-col gap-3 rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6 sm:flex-row sm:items-center sm:justify-between"
@@ -101,6 +101,33 @@ function StatusPage() {
           </li>
         ))}
       </ul>
+
+      {upcoming.length > 0 && (
+        <section className="mt-10" aria-labelledby="planned-products-heading">
+          <h2 id="planned-products-heading" className="text-xl font-bold text-foreground">
+            Planned — not live yet
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            These products are not available yet and do not have a published route.
+          </p>
+          <ul className="mt-4 space-y-3">
+            {upcoming.map((project) => (
+              <li
+                key={project.slug}
+                className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div>
+                  <h3 className="text-base font-bold text-foreground">{project.name}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{project.tagline}</p>
+                </div>
+                <span className="w-fit rounded-full bg-muted px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Planned — not live yet
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <div className="mt-10">
         <Prose>
