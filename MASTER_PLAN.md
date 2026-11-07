@@ -198,7 +198,7 @@ At the start of each run:
 - [x] Treat `src/lib/projects.ts` as the product registry source of truth; verified the five shipped first-party route literals and planned-only Budget & Expenses / Daily Notes entries on 6 November 2026.
 - [ ] Correct Chronos registry job/tagline/copy from six to seven systems.
 - [ ] Correct the Chronos page title and all stale six-calendar text.
-- [ ] Verify all five shipped product cards and routes point to `skyco.online/<product>`.
+- [x] Verify all five shipped product cards and routes point to `skyco.online/<product>`; 7 November 2026: registry slugs/paths, typed ToolsGrid links, route declarations, canonical/OG/SoftwareApplication URLs and sitemap entries match `/currensee`, `/chronos`, `/finance-friend`, `/grocery` and `/float`. Live home-card click-through opened all five expected pages.
 - [ ] Keep Budget & Expenses and Daily Notes clearly planned, not live.
 - [ ] Remove obsolete separate-subdomain instructions from active project guidance; retain history with a clear superseded label.
 - [x] Align README's canonical live URL with `https://skyco.online`; verified in `README.md` on 6 November 2026.
