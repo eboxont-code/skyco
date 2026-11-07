@@ -43,9 +43,9 @@ export const productShots: Record<string, ProductShot> = {
   chronos: {
     src: chronos,
     srcSet: `${chronos480} 480w, ${chronos800} 800w, ${chronos} 1280w`,
-    alt: "Chronos showing the chosen date in six calendar systems",
+    alt: "Chronos date converter showing several calendar readings for one selected day",
     captured: "2026-10-11",
-    result: "One tapped day, read back in six calendar systems.",
+    result: "One selected day, shown across multiple calendar systems.",
   },
   "my-finance-friend": {
     src: finance,
