@@ -1,10 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { fallbackDirectory } from "./projects.ts";
+import { companyLinks, legalLinks } from "./site-nav.ts";
 import { buildLlmsContent, resolveLlmsDirectory } from "./llms-content.ts";
-
-const companyLinks = [{ label: "About", to: "/about", description: "Who runs SkyCo" }];
-const legalLinks = [{ label: "Privacy", to: "/privacy" }];
 
 test("the generated Projects section lists all five shipped products at first-party paths", () => {
   const body = buildLlmsContent(fallbackDirectory, companyLinks, legalLinks);
@@ -41,11 +39,15 @@ test("planned products appear only in the planned section and never receive live
   assert.doesNotMatch(body, /https:\/\/skyco\.online\/(budget|notes)(?:\s|$)/);
 });
 
-test("the generated document retains the shared company and legal navigation links", () => {
+test("the generated document retains every shared company and legal navigation link", () => {
   const body = buildLlmsContent(fallbackDirectory, companyLinks, legalLinks);
 
-  assert.match(body, /\[About\]\(https:\/\/skyco\.online\/about\): Who runs SkyCo/);
-  assert.match(body, /\[Privacy\]\(https:\/\/skyco\.online\/privacy\): Privacy information for SkyCo\./);
+  for (const page of [...companyLinks, ...legalLinks]) {
+    const description = page.description ?? `${page.label} information for SkyCo.`;
+    assert.ok(
+      body.includes(`- [${page.label}](https://skyco.online${page.to}): ${description}`),
+    );
+  }
 });
 
 test("the planned section is omitted when every supplied product is live", () => {
