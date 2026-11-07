@@ -5,6 +5,16 @@
 import { useEffect, useState } from "react";
 import { Check, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { EntrySection, type Entry, type EntryDraft } from "@/components/float/EntrySection";
 import { PeriodTabs } from "@/components/float/PeriodTabs";
@@ -57,6 +67,7 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
   const [guest, setGuest] = useState(false);
   const [edits, setEdits] = useState(0);
   const [shareState, setShareState] = useState<"idle" | "copied" | "failed">("idle");
+  const [shareConfirmOpen, setShareConfirmOpen] = useState(false);
   const { start, end } = periodRange(period);
   const today = toIsoDate(new Date());
 
@@ -84,7 +95,12 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
     setEdits(0);
   }
 
-  async function share() {
+  function requestShare() {
+    setShareState("idle");
+    setShareConfirmOpen(true);
+  }
+
+  async function confirmShare() {
     const url = `${window.location.origin}/float?d=${encodeFloatShare(strip(store))}`;
     try {
       if (navigator.share) {
@@ -155,11 +171,46 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
             Committed: {formatAud(billsTotal + bnplTotal)} of {formatAud(incomeTotal)}, {Math.round(((billsTotal + bnplTotal) / incomeTotal) * 100)}%
           </p>
         )}
-        <Button variant="ghost" className="mt-2 min-h-11" onClick={share} aria-label="Share these numbers with a link">
+        <Button
+          variant="ghost"
+          className="mt-2 min-h-11"
+          onClick={requestShare}
+          aria-label="Share these numbers with a link"
+          aria-haspopup="dialog"
+          aria-expanded={shareConfirmOpen}
+        >
           {shareState === "copied" ? <Check className="size-4" aria-hidden="true" /> : <Share2 className="size-4" aria-hidden="true" />}
           {shareState === "copied" ? "Link copied" : "Share these numbers"}
         </Button>
-        {shareState === "failed" ? <p className="text-xs text-destructive" role="alert">The link could not be copied. Please try again.</p> : null}
+        {shareState === "failed" ? <p className="text-xs text-destructive" role="alert">The link could not be shared or copied. Please try again.</p> : null}
+        <AlertDialog open={shareConfirmOpen} onOpenChange={setShareConfirmOpen}>
+          <AlertDialogContent className="max-h-[90vh] overflow-y-auto">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Before you share these numbers</AlertDialogTitle>
+              <AlertDialogDescription>
+                The link includes the current entries in your Income, Bills due and Afterpay and BNPL sections.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+              <li>Entry names, amounts, dates and recurrence.</li>
+              <li>Optional original amounts and deal end dates.</li>
+            </ul>
+            <p className="text-sm text-muted-foreground">
+              The details are Base64 URL-safe encoded, not encrypted. Anyone with the link can decode and read them.
+              The URL may remain in browser history and may be processed in hosting request logs when opened.
+            </p>
+            <p className="text-sm font-medium text-foreground">
+              Cancel to keep the link from being created. Continue only if you are comfortable sharing these figures
+              with anyone who receives the link.
+            </p>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => { void confirmShare(); }}>
+                Continue to share
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </section>
 
       <div className="mt-6 grid min-w-0 grid-cols-1 gap-5">
