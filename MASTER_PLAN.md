@@ -221,12 +221,12 @@ At the start of each run:
 
 #### Reliability, accessibility and SEO
 
-- [ ] Keep the Status page's distinction between a published route and uptime monitoring.
-- [ ] Decide whether to add independent uptime checks; if added, define probe scope, schedule, alert destination and retention.
-- [ ] Add explicit rate-service freshness/provider failure monitoring only after the monitor exists.
-- [ ] Check all five product flows on narrow Android-sized browser viewports and desktop.
-- [ ] Check keyboard navigation, focus order, screen reader labels, contrast and text scaling.
-- [ ] Verify SEO titles, canonical URLs, structured data, sitemap and `llms.txt` reflect the five live routes and two planned entries.
+- [ ] Keep the Status page's distinction between a published route and uptime monitoring. **Implementation submitted in draft [PR #7](https://github.com/eboxont-code/skyco/pull/7):** the page now renders the resolved live list and a separate “Planned — not live yet” list without links; title, description, Open Graph and Twitter copy no longer imply “live checks”. Static source assertions passed 9/9; keep unchecked pending project checks and browser verification.
+- [ ] Decide whether to add independent uptime checks; if added, define probe scope, schedule, alert destination and retention. **Blocked:** no owner decision, alert destination or monitoring provider/configuration is available; no independent monitor is currently evidenced.
+- [ ] Add explicit rate-service freshness/provider failure monitoring only after the monitor exists. **Blocked:** no independent monitor exists; this depends on the monitoring decision and configuration in the preceding item.
+- [ ] Check all five product flows on narrow Android-sized browser viewports and desktop. **Blocked:** this execution has no interactive browser/viewport testing environment or local checkout; requires a browser preview or local run at narrow Android-sized and desktop widths.
+- [ ] Check keyboard navigation, focus order, screen reader labels, contrast and text scaling. **Blocked:** requires interactive browser and assistive-technology testing; no such test environment is available in this run.
+- [ ] Verify SEO titles, canonical URLs, structured data, sitemap and `llms.txt` reflect the five live routes and two planned entries. **Next eligible task to evaluate:** source-level SEO audit. The live `llms.txt` endpoint was not accessible to the available page reader; runtime output remains unverified.
 - [ ] Confirm install hints and PWA metadata do not promise native app features.
 
 **Exit gate:** published website behaviour, product registry, metadata and trust pages agree with the implementation; no unresolved P0 privacy/security issue remains.
