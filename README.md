@@ -3,10 +3,31 @@
 ## Project documentation
 
 - **[Master plan and checklist](MASTER_PLAN.md)** — authoritative website hardening, shared-service and Android delivery plan.
+- **[Brand expansion master plan](BRAND_EXPANSION_MASTER_PLAN.md)** — proposed Technology, Lifestyle and Community brand architecture and apparel/community validation checklist; does not replace the software roadmap.
 - **[Working web backlog](roadmap.md)** — dated historical website tasks; preserve completed history.
 - **[Agent instructions](AGENTS.md)** — coding constraints, product invariants and Git/Lovable rules.
 
 The current live hub is **https://skyco.online**. The Android project is planned as a separate Flutter client under `apps/skyco_app/`; the existing website remains the canonical web experience.
+
+## Current rate-provider contract
+
+CurrenSee uses **Frankfurter API v1**, not v2, at `https://api.frankfurter.dev/v1`:
+
+- Latest fiat reference rates: `GET /latest?base=USD&symbols=<comma-separated currencies>`. The converter reads the response's `date` and `rates`, then converts through USD.
+- Fiat history: `GET /<start-date>..?base=<from>&symbols=<to>`. The start is 30 calendar days before the request; the response contains dated rate rows. Only returned positive points are shown, sorted by date, without adding weekend or holiday points.
+- These requests run inside the existing rate server function. NPR reference rows come from Nepal Rastra Bank, and crypto prices come from CoinGecko; they are not Frankfurter v1 endpoints.
+
+The shared request URL builders are covered by `bun test src/lib/frankfurter.test.ts`. This is an internal provider contract, not a public SkyCo mobile HTTP API.
+
+## Support and contact form
+
+The home and `/support` contact form opens a `mailto:` URL in the visitor's own email app. Submitting it makes no contact POST, calls no server function and inserts no database row. SkyCo does not send an email or receive the form fields through its server. The visitor must press Send in their email app to deliver the message to the support address already configured on the site.
+
+- The email subject contains the selected topic and product. The body contains the message, an optional name and the browser user-agent string.
+- The message draft is kept locally in this tab's `sessionStorage` under `skyco.contact.draft`, restored on reload and removed when the form opens the email app. No name or topic is saved there. Storage failure does not block the form.
+- A filled hidden honeypot prevents submission. Messages outside the 20–2000 character range are rejected locally.
+- The confirmation only says the email app should be open. It does not confirm that an email was sent or delivered. Delivery and any reply happen through the visitor's email provider, not a SkyCo form-submission service.
+- This applies to the contact form only. The separate Float waitlist uses its existing stored signup flow.
 
 Welcome to SkyCo - As Above, So Below.
 
