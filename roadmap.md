@@ -47,7 +47,7 @@ Items tracked by the SkyCo.Online bot that were not yet in this file or MASTER_P
 - [ ] 6 November Phase 1 batch: reconcile seven-system Chronos copy, five-tool privacy/security, explicit Float sharing consent, Bun documentation, registry links and today's shipped-only changelog; verify 390px then desktop, lint and build. Do not publish.
 - [x] NRB fallback: retry the official latest published feed when the dated fetch fails; retain the last valid published payload on refresh outages and label its actual date. Five outage/validation tests and ten related tests pass; build green; 390px date label verified with a simulated response, no page overflow. Live NRB retrieval remains unverified because both official hostnames fail certificate verification here; a cold cache with both feeds unreachable still shows unavailable rather than invent rates. Not published.
 - [ ] Cache the last good rate per pair with its date and a stale flag.
-- [ ] Server-render each -to-npr pair page's rate in the raw HTML (currently client only).
+- [x] Server-render each -to-npr pair page's rate in the raw HTML: already implemented in the shared pair loader using getNprRates and its retained last-good NRB payload. Verified all 19 configured pair pages return a rate, Nepal Rastra Bank source and matching time/dateTime in raw HTML on 7 November 2026. AUD page checked with JavaScript disabled at 390px then 1280px, no horizontal overflow; ten NRB/cache tests pass, including expired-cache outage retention and no invented cold-cache rate. No application code changes or publication.
 - [ ] Confirm which Frankfurter API version is used and add tests.
 - [ ] Confirm the support/contact form sends and stores nothing server side, or document what it does.
 
