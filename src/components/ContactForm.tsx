@@ -7,7 +7,7 @@ const products = ["CurrenSee", "Chronos", "My Finance Friend", "Grocery Packs", 
 const field =
   "mt-1 min-h-11 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
-/** Builds an email in the visitor's own mail app. Nothing is sent to or stored by SkyCo from this form. */
+/** Opens a pre-filled email in the visitor's mail app. Only the message text is kept in this tab's sessionStorage; no contact POST is made to a SkyCo server. */
 export function ContactForm({ initialProduct, initialTopic }: { initialProduct?: string; initialTopic?: string }) {
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const [messageLength, setMessageLength] = useState(0);
@@ -47,9 +47,10 @@ export function ContactForm({ initialProduct, initialTopic }: { initialProduct?:
         Write to me
       </h2>
       <p id="contact-note" className="mt-2 text-sm text-muted-foreground">
-        This form keeps your message draft in this browser tab's session storage while you write.
-        Opening your email app prepares a message; nothing is delivered to SkyCo unless you press
-        Send in that app.
+        This form keeps only the message text in this browser tab's session storage while you write.
+        The email draft includes the selected topic and product, your message, optional name and
+        browser user-agent string. Opening your email app prepares the message; nothing is delivered
+        to SkyCo unless you press Send in that app.
       </p>
       <form onSubmit={onSubmit} aria-describedby="contact-note" noValidate className="relative mt-5 grid gap-4 sm:grid-cols-2">
         <div className="text-sm font-semibold text-foreground">
