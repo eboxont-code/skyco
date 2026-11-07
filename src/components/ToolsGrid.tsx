@@ -35,7 +35,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
         if (rows.length === 0) return text("No SkyCo products match that status.");
         return text(
           rows
-            .map((p) => `${p.name} (${p.live ? "live" : "on the way"}): ${p.description}${p.live ? ` https://skyco.online${p.path ?? ""}` : ""}`)
+            .map((p) => `${p.name} (${p.live ? "live" : "planned — not live yet"}): ${p.description}${p.live ? ` https://skyco.online${p.path ?? ""}` : ""}`)
             .join("\n"),
         );
       },
@@ -77,7 +77,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
           })}
         </div>
 
-        {upcomingProjects.length > 0 && <p className="mt-6 text-sm text-muted-foreground">On the way: {upcomingProjects.map(p => p.name).join(", ")}.</p>}
+        {upcomingProjects.length > 0 && <p className="mt-6 text-sm text-muted-foreground">Planned — not live yet: {upcomingProjects.map(p => p.name).join(", ")}.</p>}
 
       </div>
     </section>
