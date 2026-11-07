@@ -188,7 +188,8 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
             <AlertDialogHeader>
               <AlertDialogTitle>Before you share these numbers</AlertDialogTitle>
               <AlertDialogDescription>
-                The link includes the current entries in your Income, Bills due and Afterpay and BNPL sections.
+                The link includes the current entries in your Income, Bills due and Afterpay and BNPL
+                sections.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
@@ -196,16 +197,17 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
               <li>Optional original amounts and deal end dates.</li>
             </ul>
             <p className="text-sm text-muted-foreground">
-              The details are Base64 URL-safe encoded, not encrypted. Anyone with the link can decode and read them.
-              The URL may remain in browser history and may be processed in hosting request logs when opened.
+              The details are Base64 URL-safe encoded, not encrypted. Anyone with the link can decode and
+              read them. The URL may remain in browser history and may be processed in hosting request
+              logs when opened.
             </p>
             <p className="text-sm font-medium text-foreground">
-              Cancel to keep the link from being created. Continue only if you are comfortable sharing these figures
-              with anyone who receives the link.
+              Cancel to keep the link from being created. Continue only if you are comfortable sharing
+              these figures with anyone who receives the link.
             </p>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => { void confirmShare(); }}>
+              <AlertDialogCancel className="min-h-11">Cancel</AlertDialogCancel>
+              <AlertDialogAction className="min-h-11" onClick={() => { void confirmShare(); }}>
                 Continue to share
               </AlertDialogAction>
             </AlertDialogFooter>
