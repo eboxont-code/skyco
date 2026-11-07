@@ -2,7 +2,7 @@ import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
-const UPDATED = "6 November 2026";
+const UPDATED = "7 November 2026";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -58,11 +58,13 @@ function PrivacyPage() {
         <h2 id="what-i-collect" className="scroll-mt-24">What I collect</h2>
         <h3>On this website</h3>
         <p>
-          The product tools do not require an account. The Support page keeps the message draft in
-          this browser tab's session storage while you write. Submitting the form opens a pre-filled
-          email in your own mail app; SkyCo does not receive the message unless you press Send in
-          that app. The pre-filled email also includes your browser's user-agent string. The saved
-          draft is removed from session storage when you submit the form to open your email app.
+          The product tools do not require an account. The Support page keeps only the message text in
+          this browser tab's session storage while you write; the topic, product and optional name stay
+          in page memory. Submitting the form opens a pre-filled email in your own mail app. The
+          subject contains the selected topic and product; the body contains the message, optional
+          name and browser user-agent string. SkyCo does not receive the message unless you press
+          Send in that app. The saved message draft is removed when you submit the form to open your
+          email app.
         </p>
         <p>
           The production host may process technical request details such as IP address, browser
@@ -74,17 +76,21 @@ function PrivacyPage() {
         <p>
           CurrenSee uses this browser's local storage for the last currency pair and amount, recent
           pairs, favourites, the default pair, saved conversion snapshots (up to 20), rate alerts
-          (up to 10), the alert check interval and alert history (up to 30). These values stay in
-          this browser's local storage. When you choose Copy link, the selected pair and entered
-          amount are also placed in the URL. The amount is multiplied in your browser; the rate request to
-          SkyCo's server contains the selected currency codes.
+          (up to 10), the alert check interval (5, 15, 30 or 60 minutes) and alert history (up to 30).
+          These preferences and records stay in this browser's local storage. Rate alerts are checked
+          only while the CurrenSee page is open and visible. Each check sends the selected currency
+          codes to SkyCo's rate function; the amount and alert threshold stay in the browser. Optional
+          browser notifications appear only if you grant permission. There are no background checks
+          after the page is closed or while it is hidden. When you choose Copy link, the selected pair
+          and entered amount are also placed in the URL.
         </p>
 
         <h3>In Chronos</h3>
         <p>
-          The selected date and date-of-birth input remain in page memory while you use the tool.
-          The calendar conversion runs in your browser. When you choose to share a date, the link
-          includes that selected date in its URL.
+          The selected date is reflected in the page URL as
+          `?date=YYYY-MM-DD` as you change it, and a copied or shared link includes that date. The
+          comparison date and date-of-birth inputs remain in page memory only. Calendar conversion
+          runs in your browser; no calendar calculation service receives those dates.
         </p>
 
         <h3>In My Finance Friend</h3>
@@ -169,17 +175,19 @@ function PrivacyPage() {
         <p>
           The product tools do not require a sign-in session. The features described above use
           browser local storage or session storage in a few places; that storage is separate from
-          cookies and remains on this browser unless a value is included in a link or you choose to
-          share it.
+          cookies. Some tool state also appears in URL query strings: CurrenSee's pair and amount
+          when you copy a link, and Chronos's selected date as you change it. These values are visible
+          in the address bar and can be included in links you copy or share.
         </p>
 
         <h2 id="retention-and-deletion" className="scroll-mt-24">Retention and deletion</h2>
         <p>
           CurrenSee preferences and saved records, Grocery settings and Float guest records remain
           in browser local storage until you remove them using the product controls or clear this
-          site's browser data. My Finance Friend's recent entries are held only in page memory and
-          reset when you leave or refresh. The Support message draft is kept in session storage for
-          the tab's session and is removed when the email app is opened.
+          site's browser data. My Finance Friend's recent entries and Chronos's comparison and
+          date-of-birth inputs stay only in page memory and reset when you leave or refresh. The
+          Support message draft is kept in session storage for the tab's session and is removed when
+          you submit the form to open your email app.
         </p>
         <p>
           Float waitlist submissions are stored in Supabase. The application code does not specify
