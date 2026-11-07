@@ -1,0 +1,59 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { test } from "node:test";
+import { PAIRS } from "./currency-pairs";
+import { FLOAT_PAGES } from "./float-pages";
+import { projectRegistry } from "./projects";
+
+const SITE = "https://skyco.online";
+const sitemap = readFileSync(new URL("../../public/sitemap.xml", import.meta.url), "utf8");
+const robots = readFileSync(new URL("../../public/robots.txt", import.meta.url), "utf8");
+const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url);
+
+test("sitemap entries are unique canonical HTTPS URLs on the SkyCo domain", () => {
+  assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
+  assert.ok(urls.length > 0, "sitemap should contain at least one URL");
+  assert.equal(new Set(urls).size, urls.length, "sitemap URLs must not be duplicated");
+  assert.ok(urls.every((url) => url.startsWith(`${SITE}/`)), "every URL must use the canonical HTTPS host");
+  assert.ok(urls.every((url) => !url.includes("?") && !url.includes("#")), "sitemap URLs must be clean canonical paths");
+});
+
+test("sitemap includes all shipped products and excludes planned products", () => {
+  const shippedUrls = projectRegistry.flatMap((project) =>
+    project.path ? [`${SITE}${project.path}`] : [],
+  );
+  const plannedUrls = projectRegistry
+    .filter((project) => !project.path)
+    .map((project) => `${SITE}/${project.slug}`);
+
+  assert.deepEqual(shippedUrls.filter((url) => !urls.includes(url)), []);
+  assert.deepEqual(plannedUrls.filter((url) => urls.includes(url)), []);
+  assert.ok(!urls.includes(`${SITE}/finance`), "legacy redirect must not be indexed");
+});
+
+test("sitemap contains exactly the registered CurrenSee pair landing pages", () => {
+  const expected = PAIRS.map((pair) => `${SITE}/currensee/${pair.slug}`).sort();
+  const actual = urls
+    .filter((url) => url.startsWith(`${SITE}/currensee/`) && url !== `${SITE}/currensee/rates`)
+    .sort();
+
+  assert.deepEqual(actual, expected);
+});
+
+test("sitemap contains exactly the registered Float landing pages", () => {
+  const expected = FLOAT_PAGES.map((page) => `${SITE}/float/${page.slug}`).sort();
+  const actual = urls.filter((url) => url.startsWith(`${SITE}/float/`)).sort();
+
+  assert.deepEqual(actual, expected);
+});
+
+test("every sitemap URL has one valid ISO date last-modified value", () => {
+  const dates = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(([, date]) => date);
+
+  assert.equal(dates.length, urls.length);
+  assert.ok(dates.every((date) => /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date))));
+});
+
+test("robots.txt advertises the canonical sitemap", () => {
+  assert.match(robots, /^Sitemap:\s+https:\/\/skyco\.online\/sitemap\.xml$/m);
+});
