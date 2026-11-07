@@ -47,15 +47,15 @@ Items tracked by the SkyCo.Online bot that were not yet in this file or MASTER_P
 - [ ] 6 November Phase 1 batch: reconcile seven-system Chronos copy, five-tool privacy/security, explicit Float sharing consent, Bun documentation, registry links and today's shipped-only changelog; verify 390px then desktop, lint and build. Do not publish.
 - [x] NRB fallback: retry the official latest published feed when the dated fetch fails; retain the last valid published payload on refresh outages and label its actual date. Five outage/validation tests and ten related tests pass; build green; 390px date label verified with a simulated response, no page overflow. Live NRB retrieval remains unverified because both official hostnames fail certificate verification here; a cold cache with both feeds unreachable still shows unavailable rather than invent rates. Not published.
 - [ ] Cache the last good rate per pair with its date and a stale flag.
-- [ ] Server-render each -to-npr pair page's rate in the raw HTML (currently client only).
-- [ ] Confirm which Frankfurter API version is used and add tests.
-- [ ] Confirm the support/contact form sends and stores nothing server side, or document what it does.
+- [x] Server-render each -to-npr pair page's rate in the raw HTML: already implemented in the shared pair loader using getNprRates and its retained last-good NRB payload. Verified all 19 configured pair pages return a rate, Nepal Rastra Bank source and matching time/dateTime in raw HTML on 7 November 2026. AUD page checked with JavaScript disabled at 390px then 1280px, no horizontal overflow; ten NRB/cache tests pass, including expired-cache outage retention and no invented cold-cache rate. No application code changes or publication.
+- [x] Confirm which Frankfurter API version is used and add tests: v1 at https://api.frankfurter.dev/v1, latest USD-base lookup and open-ended dated history endpoint. Existing requests now reuse tested URL builders without changing endpoints. Four endpoint tests and ten cache/NRB tests pass; new files pass lint and preview build is green. Documented in README on 7 November 2026; not published.
+- [x] Confirm the support/contact form sends and stores nothing server side, or document what it does: shared home/support form only opens mailto; no contact server call or database insert. README documents subject/body, optional name and user-agent, tab-local sessionStorage draft, local validation and the distinction from the stored Float waitlist. Synthetic submission checked at 390px then desktop: only mailto navigation, focused confirmation and cleared draft; no real email sent. Not published.
 
 ## Domain, DNS and search (needs access to the Hostinger account holding skyco.online)
 - [ ] Free @skyco.online email or forwarding to main.skyco@gmail.com.
 - [ ] Add Google Search Console TXT record (google-site-verification=wpfXT2n_BKnpaJJbRp58gbZb96Nv8rAdaDYKzTm-SIU), verify, submit sitemap.xml.
 - [ ] Import the site into Bing Webmaster Tools.
-- [ ] 301 currensee.skyco.online to skyco.online/currensee and chronos.skyco.online to skyco.online/chronos, only after the subdomain gap audit shows every feature is on the main site.
+- **SUPERSEDED — DO NOT EXECUTE (7 November 2026; historical proposal only):** 301 `currensee.skyco.online` to `skyco.online/currensee` and `chronos.skyco.online` to `skyco.online/chronos`, only after the subdomain gap audit shows every feature is on the main site. The current architecture keeps shipped products under `skyco.online/<product>`; this old redirect proposal is retained for history, not as an active DNS task. This documentation update made no DNS or hosting changes; the live redirect state remains unverified.
 - [ ] Watch SSL expiry: apex, www, currensee 1 Dec 2026; chronos 15 Dec 2026.
 
 ## SkyCo's own free accounts
