@@ -8,11 +8,22 @@ import { projectRegistry } from "./projects";
 const SITE = "https://skyco.online";
 const sitemap = readFileSync(new URL("../../public/sitemap.xml", import.meta.url), "utf8");
 const robots = readFileSync(new URL("../../public/robots.txt", import.meta.url), "utf8");
-const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url);
+const entries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, block]) => ({
+  url: block.match(/<loc>([^<]+)<\/loc>/)?.[1],
+  lastmod: block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1],
+}));
+const urls = entries.map((entry) => entry.url).filter((url): url is string => Boolean(url));
+
+function isValidIsoDate(value: string | undefined): boolean {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
 
 test("sitemap entries are unique canonical HTTPS URLs on the SkyCo domain", () => {
   assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   assert.ok(urls.length > 0, "sitemap should contain at least one URL");
+  assert.equal(entries.length, urls.length, "every url element must contain a location");
   assert.equal(new Set(urls).size, urls.length, "sitemap URLs must not be duplicated");
   assert.ok(urls.every((url) => url.startsWith(`${SITE}/`)), "every URL must use the canonical HTTPS host");
   assert.ok(urls.every((url) => !url.includes("?") && !url.includes("#")), "sitemap URLs must be clean canonical paths");
@@ -47,11 +58,8 @@ test("sitemap contains exactly the registered Float landing pages", () => {
   assert.deepEqual(actual, expected);
 });
 
-test("every sitemap URL has one valid ISO date last-modified value", () => {
-  const dates = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(([, date]) => date);
-
-  assert.equal(dates.length, urls.length);
-  assert.ok(dates.every((date) => /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date))));
+test("every sitemap URL has exactly one valid ISO date last-modified value", () => {
+  assert.ok(entries.every((entry) => isValidIsoDate(entry.lastmod)));
 });
 
 test("robots.txt advertises the canonical sitemap", () => {
