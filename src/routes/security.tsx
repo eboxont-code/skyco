@@ -2,7 +2,7 @@ import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
-const UPDATED = "6 November 2026";
+const UPDATED = "7 November 2026";
 
 export const Route = createFileRoute("/security")({
   head: () => ({
@@ -34,15 +34,15 @@ const table = [
   {
     product: "CurrenSee",
     account: "Not required",
-    device: "Browser storage keeps the last pair and amount, recent pairs, favourites, default pair, up to 20 saved conversions, up to 10 alerts, the check interval and up to 30 alert-history entries. Copy link also puts the selected pair and amount in the URL.",
-    server: "The rate function receives currency codes, not the conversion amount. Public rate responses are cached in server memory for 60 seconds.",
-    external: "Frankfurter for fiat reference rates, CoinGecko for BTC/ETH/SOL, and Nepal Rastra Bank for supported NPR-related rates.",
+    device: "Browser storage keeps the last pair and amount, recent pairs, favourites, default pair, up to 20 saved conversions, up to 10 alerts, the check interval (5, 15, 30 or 60 minutes) and up to 30 alert-history entries. Alert checks run only while this page is open and visible; optional browser notifications require permission. Copy link also puts the selected pair and amount in the URL.",
+    server: "The rate function receives currency codes, not the conversion amount or alert threshold. Each alert check sends only its currency pair. The pair-rate function uses a bounded 60-second server-memory cache; Nepal Rastra Bank source data has a separate freshness-aware cache.",
+    external: "Frankfurter for fiat reference rates, CoinGecko for BTC/ETH/SOL, and Nepal Rastra Bank for supported NPR-related rates. If NRB data is unavailable, an NPR rate may use an explicitly labelled INR-at-the-official-1.6-peg fallback.",
   },
   {
     product: "Chronos",
     account: "Not required",
-    device: "Selected date and date-of-birth input stay in page memory. A shared date link includes the selected date in its URL.",
-    server: "Calendar readings are calculated in the browser; entered dates are not sent to a calculation service.",
+    device: "The selected date is reflected in the `?date=YYYY-MM-DD` URL as you change it. The comparison date and date-of-birth inputs stay in page memory.",
+    server: "Calendar readings and age/day calculations run in the browser; no calendar calculation service receives the entered dates.",
     external: "No external calendar provider for the core calculation; browser calendar support and bundled code are used.",
   },
   {
@@ -119,12 +119,12 @@ function SecurityPage() {
         <Prose>
           <h2 id="how-each-tool-works-with-your-data" className="scroll-mt-24">How each tool works with your data</h2>
           <ul>
-            <li>CurrenSee: the entered amount is multiplied in your browser. Only the selected pair codes are sent to the server rate function. Last pair/amount, recent pairs, favourites, default pair, saved conversions, alerts and alert history can remain in browser local storage.</li>
-            <li>Chronos: date conversion and date-of-birth calculations run in the browser. Sharing a date creates a URL that includes the selected date.</li>
+            <li>CurrenSee: the entered amount is multiplied in your browser. The rate function receives only the selected currency codes, not the amount or alert threshold. Last pair/amount, recent pairs, favourites, default pair, saved conversions, alerts, interval and alert history can remain in browser local storage. Alert checks run only while this page is open and visible; optional browser notifications require permission.</li>
+            <li>Chronos: date conversion and age/day calculations run in the browser. The selected date is reflected in the `?date=` URL as it changes; comparison and date-of-birth inputs remain in page memory.</li>
             <li>My Finance Friend: the parser runs locally. The typed sentence and up to five recent entries remain in page memory only until you leave or refresh; copying CSV is an explicit action.</li>
             <li>Grocery Packs: checked items and household size are stored in browser local storage. Copy and Share actions hand the list to your clipboard or device share sheet.</li>
             <li>Float: planner data stays in page memory until you choose guest mode, which saves it to browser local storage. The share URL contains Base64 URL-safe encoded entries; Base64 is not encryption and anyone with the link can read the figures.</li>
-            <li>Support: the message draft is kept in session storage for the current tab. The pre-filled email also includes the browser's user-agent string; the message reaches SkyCo only after you send it from your mail app.</li>
+            <li>Support: only the message text is kept in session storage for the current tab. The email subject contains the selected topic and product; its body contains the message, optional name and browser user-agent string. The message reaches SkyCo only after you send it from your mail app.</li>
             <li>Float waitlist: submitting the form sends the selected product, email and optional name to a server function that inserts a row into Supabase.</li>
           </ul>
 
@@ -132,6 +132,7 @@ function SecurityPage() {
           <ul>
             <li>Site traffic is served over HTTPS, which encrypts traffic in transit between the browser and the site.</li>
             <li>Browser local storage and session storage are not application-level encryption. Anyone with access to the same browser profile or device may be able to access locally stored values.</li>
+            <li>CurrenSee copy links contain the selected pair and amount; Chronos keeps the selected date in its URL query string. These values are visible in the address bar and may be processed as part of the requested URL.</li>
             <li>A Float share URL exposes its encoded income, bill and BNPL entries to anyone who receives the link. The query string may also appear in browser history and may be processed by hosting request logs when opened.</li>
             <li>Hosting infrastructure may process technical request details such as IP address, user agent, URL and timestamp. The active production host and its exact log-retention settings are not established by this repository review.</li>
             <li>Supabase receives only the selected product, email and optional name when a visitor submits the Float waitlist form. The planner's guest records are not uploaded to it.</li>
