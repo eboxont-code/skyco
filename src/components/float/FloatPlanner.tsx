@@ -14,6 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { EntrySection, type Entry, type EntryDraft } from "@/components/float/EntrySection";
@@ -95,11 +96,6 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
     setEdits(0);
   }
 
-  function requestShare() {
-    setShareState("idle");
-    setShareConfirmOpen(true);
-  }
-
   async function confirmShare() {
     const url = `${window.location.origin}/float?d=${encodeFloatShare(strip(store))}`;
     try {
@@ -171,19 +167,23 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
             Committed: {formatAud(billsTotal + bnplTotal)} of {formatAud(incomeTotal)}, {Math.round(((billsTotal + bnplTotal) / incomeTotal) * 100)}%
           </p>
         )}
-        <Button
-          variant="ghost"
-          className="mt-2 min-h-11"
-          onClick={requestShare}
-          aria-label="Share these numbers with a link"
-          aria-haspopup="dialog"
-          aria-expanded={shareConfirmOpen}
+        <AlertDialog
+          open={shareConfirmOpen}
+          onOpenChange={(open) => {
+            if (open) setShareState("idle");
+            setShareConfirmOpen(open);
+          }}
         >
-          {shareState === "copied" ? <Check className="size-4" aria-hidden="true" /> : <Share2 className="size-4" aria-hidden="true" />}
-          {shareState === "copied" ? "Link copied" : "Share these numbers"}
-        </Button>
-        {shareState === "failed" ? <p className="text-xs text-destructive" role="alert">The link could not be shared or copied. Please try again.</p> : null}
-        <AlertDialog open={shareConfirmOpen} onOpenChange={setShareConfirmOpen}>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="ghost"
+              className="mt-2 min-h-11"
+              aria-label="Share these numbers with a link"
+            >
+              {shareState === "copied" ? <Check className="size-4" aria-hidden="true" /> : <Share2 className="size-4" aria-hidden="true" />}
+              {shareState === "copied" ? "Link copied" : "Share these numbers"}
+            </Button>
+          </AlertDialogTrigger>
           <AlertDialogContent className="max-h-[90vh] overflow-y-auto">
             <AlertDialogHeader>
               <AlertDialogTitle>Before you share these numbers</AlertDialogTitle>
@@ -213,6 +213,7 @@ export function FloatPlanner({ shared, initialPeriod = "week", bnplFirst = false
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+        {shareState === "failed" ? <p className="text-xs text-destructive" role="alert">The link could not be shared or copied. Please try again.</p> : null}
       </section>
 
       <div className="mt-6 grid min-w-0 grid-cols-1 gap-5">
