@@ -49,10 +49,6 @@ const productRoutes = [
   },
 ] as const;
 
-function escapeRegex(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
 function readRoute(routeFile: string): string {
   return readFileSync(new URL(routeFile, import.meta.url), "utf8");
 }
@@ -77,29 +73,26 @@ for (const route of productRoutes) {
     const imageUrl = `${SITE}${route.imagePath}`;
     const imageConstant = source.match(/const IMAGE = "([^"]+)";/)?.[1];
 
-    assert.match(
-      source,
-      new RegExp(`const URL = "${escapeRegex(canonicalUrl)}";`),
-    );
-    assert.match(source, /\\{ property: "og:url", content: URL \\}/);
-    assert.match(source, /\\{ rel: "canonical", href: URL \\}/);
-    assert.match(source, /\\{ property: "og:title", content: TITLE \\}/);
-    assert.match(source, /\\{ property: "og:description", content: DESCRIPTION \\}/);
-    assert.match(source, /\\{ name: "twitter:card", content: "summary_large_image" \\}/);
-    assert.match(source, /\\{ name: "twitter:title", content: TITLE \\}/);
-    assert.match(source, /\\{ name: "twitter:description", content: DESCRIPTION \\}/);
-    assert.match(source, /\\{ property: "og:image:alt", content: /);
-    assert.match(source, /\\{ name: "twitter:image:alt", content: /);
+    assert.ok(source.includes(`const URL = "${canonicalUrl}";`));
+    assert.ok(source.includes('{ property: "og:url", content: URL }'));
+    assert.ok(source.includes('{ rel: "canonical", href: URL }'));
+    assert.ok(source.includes('{ property: "og:title", content: TITLE }'));
+    assert.ok(source.includes('{ property: "og:description", content: DESCRIPTION }'));
+    assert.ok(source.includes('{ property: "og:type", content: "website" }'));
+    assert.ok(source.includes('{ name: "twitter:card", content: "summary_large_image" }'));
+    assert.ok(source.includes('{ name: "twitter:title", content: TITLE }'));
+    assert.ok(source.includes('{ name: "twitter:description", content: DESCRIPTION }'));
+    assert.ok(source.includes('{ property: "og:image:alt", content: '));
+    assert.ok(source.includes('{ name: "twitter:image:alt", content: '));
 
     if (imageConstant) assert.equal(imageConstant, imageUrl);
 
     const imageValue = imageConstant ? "IMAGE" : `"${imageUrl}"`;
     assert.ok(source.includes(`{ property: "og:image", content: ${imageValue} }`));
     assert.ok(source.includes(`{ name: "twitter:image", content: ${imageValue} }`));
-    assert.match(
-      source,
-      new RegExp(
-        `productAppScript\\("${escapeRegex(route.name)}", "${escapeRegex(route.path)}", DESCRIPTION, "${route.category}"\\)`,
+    assert.ok(
+      source.includes(
+        `productAppScript("${route.name}", "${route.path}", DESCRIPTION, "${route.category}")`,
       ),
     );
     assert.ok(
