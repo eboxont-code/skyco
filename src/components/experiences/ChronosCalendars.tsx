@@ -8,7 +8,7 @@ import { ChronosObservances } from "./ChronosObservances";
 
 /**
  * The Chronos reading, running on skyco.online itself.
- * Pick one day and read it back in six calendar systems at once.
+ * Pick one day and read it back in seven calendar systems at once.
  */
 const SYSTEMS: { label: string; calendar: string; locale: string; system?: CalendarSystem; lang?: string; dir?: "rtl" | "ltr" }[] = [
   { label: "Gregorian", calendar: "gregory", locale: "en-GB", system: "gregorian" },
