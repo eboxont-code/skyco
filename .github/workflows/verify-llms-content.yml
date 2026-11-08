@@ -1,4 +1,4 @@
-name: Temporary llms.txt regression verification
+name: Verify generated llms.txt regression tests
 
 on:
   push:
@@ -7,18 +7,9 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "src/lib/llms-content.ts"
-      - "src/lib/llms-content.test.ts"
-      - "src/routes/llms[.]txt.ts"
-      - ".github/workflows/verify-llms-content.yml"
 
 permissions:
   contents: read
-
-concurrency:
-  group: verify-llms-content-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   llms-content:
