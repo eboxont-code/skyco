@@ -196,10 +196,10 @@ At the start of each run:
 #### Product inventory and copy
 
 - [x] Treat `src/lib/projects.ts` as the product registry source of truth; verified the five shipped first-party route literals and planned-only Budget & Expenses / Daily Notes entries on 6 November 2026.
-- [ ] Correct Chronos registry job/tagline/copy from six to seven systems.
-- [ ] Correct the Chronos page title and all stale six-calendar text.
+- [x] Correct Chronos registry job/tagline/copy from six to seven systems. 8 November 2026: registry job, tagline, demo, description and example include all seven, including Nepali Bikram Sambat; home and generated llms.txt verified.
+- [x] Correct the Chronos page title and all stale six-calendar text. 8 November 2026: title/OG/Twitter share the corrected seven-calendar title; corrected comments and historic count wording without inventing historical features; refreshed the existing home screenshot. Chronos date navigation and preserved moon-sighting/panchang caveats verified at 390px then 1280px, no overflow; preview build green.
 - [x] Verify all five shipped product cards and routes point to `skyco.online/<product>`; 7 November 2026: registry slugs/paths, typed ToolsGrid links, route declarations, canonical/OG/SoftwareApplication URLs and sitemap entries match `/currensee`, `/chronos`, `/finance-friend`, `/grocery` and `/float`. Live home-card click-through opened all five expected pages.
-- [ ] Keep Budget & Expenses and Daily Notes clearly planned, not live.
+- [x] Keep Budget & Expenses and Daily Notes clearly planned, not live. 8 November 2026: home explicitly says "Planned, not yet available"; both entries have no shipped paths or candidates. Two registry tests pass; all five existing card destinations and route canonical URLs verified at 390px then 1280px, with card actions at least 44px. No deployment.
 - [x] Remove obsolete separate-subdomain instructions from active project guidance; retain history with a clear superseded label. 7 November 2026: README and AGENTS.md already specify the first-party hub; corrected §1.2 to reference the actual historical proposal in `roadmap.md` (the referenced `.lovable/plan.md` path is absent from the current tree), labelled that proposal superseded/do-not-execute, and retained the original mapping. No DNS or hosting redirect state is claimed or changed.
 - [x] Align README's canonical live URL with `https://skyco.online`; verified in `README.md` on 6 November 2026.
 - [x] Add project-document links to README: `MASTER_PLAN.md`, `roadmap.md`, `AGENTS.md`; all three links verified on 6 November 2026.

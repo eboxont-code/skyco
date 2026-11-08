@@ -77,7 +77,7 @@ export function ToolsGrid({ directory }: { directory: ResolvedProject[] }) {
           })}
         </div>
 
-        {upcomingProjects.length > 0 && <p className="mt-6 text-sm text-muted-foreground">On the way: {upcomingProjects.map(p => p.name).join(", ")}.</p>}
+        {upcomingProjects.length > 0 && <p className="mt-6 text-sm text-muted-foreground">Planned, not yet available: {upcomingProjects.map(p => p.name).join(", ")}.</p>}
 
       </div>
     </section>
