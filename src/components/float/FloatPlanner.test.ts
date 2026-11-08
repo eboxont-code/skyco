@@ -91,7 +91,7 @@ test("Float share confirmation discloses every serialized field and link exposur
   assert.ok(description, "the dialog needs an accessible description");
   assert.match(title.getText(sourceFile), /Share these figures\?/);
 
-  const disclosure = description.getText(sourceFile).replace(/\\s+/g, " ");
+  const disclosure = description.getText(sourceFile).replace(/\s+/g, " ");
   for (const phrase of [
     "selected income, bills and BNPL figures",
     "names",
