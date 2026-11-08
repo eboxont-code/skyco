@@ -1,9 +1,9 @@
 name: Verify Float share-dialog regression tests
 
 on:
-  push:
+  pull_request:
     branches:
-      - test/float-share-dialog-current-main
+      - main
 
 permissions:
   contents: read
