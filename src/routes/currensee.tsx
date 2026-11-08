@@ -71,7 +71,7 @@ function CurrenSeePage() {
         "A 30 day chart so you can see whether today is a good day to convert.",
         "A clear unavailable state instead of an old rate presented as current.",
         "A last updated stamp on every rate, so you know how fresh it is.",
-        "No account, no install, no ads competing with the number you came for.",
+        "No account or download required; no ads competing with the number you came for.",
       ]}
     />
   );
