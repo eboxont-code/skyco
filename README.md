@@ -98,4 +98,4 @@ bun run test
 bun run build
 ```
 
-The repository pins **Bun 1.4.4** in `package.json` and uses the committed `bun.lock`. The `test` script runs all existing TypeScript tests with Bun's test runner. [GitHub Actions CI](.github/workflows/ci.yml) runs the frozen install, lint, test and production build checks for pull requests and pushes to `main`.
+The repository pins **Bun 1.3.14** in `package.json` and uses the committed `bun.lock`. The `test` script runs all existing TypeScript tests with Bun's built-in test runner. [GitHub Actions CI](.github/workflows/ci.yml) runs the frozen install, lint, test and production build checks for pull requests and pushes to `main`.
