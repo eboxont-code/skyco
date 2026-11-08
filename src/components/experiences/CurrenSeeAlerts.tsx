@@ -32,8 +32,9 @@ function newId() {
 }
 
 /**
- * In-browser rate alerts. Checks run only while this page is open and visible;
- * nothing is sent to a server beyond the normal rate request.
+ * In-browser rate alerts. Checks run only while this page is open and visible.
+ * Each check sends the selected currency pair to the server rate function; the
+ * amount and alert threshold remain in the browser.
  */
 export function CurrenSeeAlerts({ currentFrom, currentTo, currentRate }: { currentFrom?: string; currentTo?: string; currentRate?: number }) {
   const fetchRate = useServerFn(getRate);
@@ -166,7 +167,10 @@ export function CurrenSeeAlerts({ currentFrom, currentTo, currentRate }: { curre
     <section id="alerts" aria-labelledby="alerts-heading" className="mt-6 rounded-2xl border border-sky-bright/25 bg-card p-5 shadow-lg sm:p-6">
       <h2 id="alerts-heading" className="text-sm font-bold uppercase tracking-wider text-sky-deep">Rate alerts</h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Get a heads up when a rate crosses a level you choose. Alerts only run while this page is open in your browser. Nothing is sent to a server.
+        Get a heads up when a rate crosses a level you choose. Checks run only while this page is
+        open and visible. Each check sends the selected currency pair to SkyCo's rate function;
+        your amount and alert threshold stay in this browser. Optional browser notifications
+        require permission.
       </p>
 
       <div className="mt-4 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">

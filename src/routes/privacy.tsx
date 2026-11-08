@@ -2,7 +2,7 @@ import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
-const UPDATED = "29 August 2026";
+const UPDATED = "7 November 2026";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -51,37 +51,91 @@ function PrivacyPage() {
 
         <h2 id="who-this-covers" className="scroll-mt-24">Who this covers</h2>
         <p>
-          This policy applies to skyco.online and the SkyCo products linked from it: CurrenSee,
-          Chronos, My Finance Friend and SkyCo Grocery Packs.
+          This policy applies to skyco.online and all five shipped SkyCo products: CurrenSee,
+          Chronos, My Finance Friend, SkyCo Grocery Packs and Float.
         </p>
 
         <h2 id="what-i-collect" className="scroll-mt-24">What I collect</h2>
         <h3>On this website</h3>
         <p>
-          Nothing you type. There is no signup and no contact form that posts to a server. The
-          support page opens your own email client, so the message travels through your email
-          provider, not through SkyCo.
+          The product tools do not require an account. The Support page keeps only the message text in
+          this browser tab's session storage while you write; the topic, product and optional name stay
+          in page memory. Submitting the form opens a pre-filled email in your own mail app. The
+          subject contains the selected topic and product; the body contains the message, optional
+          name and browser user-agent string. SkyCo does not receive the message unless you press
+          Send in that app. The saved message draft is removed when you submit the form to open your
+          email app.
         </p>
         <p>
-          Standard web server logs (IP address, browser type, requested page, timestamp) are created
-          by the hosting provider so the site can be served and abuse can be spotted.
+          The production host may process technical request details such as IP address, browser
+          type, requested page and timestamp. The active host and its exact log-retention settings
+          are not established in this repository review.
         </p>
 
-        <h3>In products without accounts</h3>
+        <h3>In CurrenSee</h3>
         <p>
-          CurrenSee, Chronos and SkyCo Grocery Packs do not ask you to sign in. The in-page tools do
-          not save the currency pair, selected date, grocery pack or checked items after you leave.
+          CurrenSee uses this browser's local storage for the last currency pair and amount, recent
+          pairs, favourites, the default pair, saved conversion snapshots (up to 20), rate alerts
+          (up to 10), the alert check interval (5, 15, 30 or 60 minutes) and alert history (up to 30).
+          These preferences and records stay in this browser's local storage. Rate alerts are checked
+          only while the CurrenSee page is open and visible. Each check sends the selected currency
+          codes to SkyCo's rate function; the amount and alert threshold stay in the browser. Optional
+          browser notifications appear only if you grant permission. There are no background checks
+          after the page is closed or while it is hidden. When you choose Copy link, the selected pair
+          and entered amount are also placed in the URL.
+        </p>
+
+        <h3>In Chronos</h3>
+        <p>
+          The selected date is reflected in the page URL as
+          `?date=YYYY-MM-DD` as you change it, and a copied or shared link includes that date. The
+          comparison date and date-of-birth inputs remain in page memory only. Calendar conversion
+          runs in your browser; no calendar calculation service receives those dates.
         </p>
 
         <h3>In My Finance Friend</h3>
         <p>
-          The current in-page demonstration parses a trade description and shows a preview. It does
-          not create an account, save a portfolio, or send the description to a server.
+          The typed trade sentence and up to five recent parsed entries stay in page memory while
+          the page is open. They are not sent to a server or saved in persistent browser storage.
+          You can choose to copy a CSV to your clipboard.
         </p>
         <p>
           <strong>SkyCo never connects to your bank or brokerage.</strong> There is no account
           linking, no read access to your real holdings, and no payment details are collected
           anywhere on SkyCo.
+        </p>
+
+        <h3>In SkyCo Grocery Packs</h3>
+        <p>
+          Checked items are stored per pack in this browser's local storage. The selected household
+          size is also stored there. These settings remain until you reset them or clear site data.
+          If you choose Copy or Share, the list is handed to your clipboard or your device's share
+          sheet.
+        </p>
+
+        <h3>In Float</h3>
+        <p>
+          Float starts with sample figures. Your edits stay in page memory unless you explicitly
+          choose Keep my numbers as a guest. Guest mode stores income, bill and BNPL entries in this
+          browser's local storage, including names, amounts, dates, recurrence and optional deal
+          details. Clear my numbers removes the saved guest record. This browser storage is not
+          application-level encrypted.
+        </p>
+        <p>
+          Share these numbers creates a URL containing the entries as Base64 URL-safe encoded data.
+          Base64 is not encryption. The link can include names, amounts, dates, recurrence, original
+          amounts and deal end dates. Anyone with the link can decode and read those details. The
+          URL may also appear in browser history and may be processed in hosting request logs when
+          opened. Do not share figures you would not want a link recipient to see.
+        </p>
+
+        <h3>Float waitlist</h3>
+        <p>
+          If you submit the Float waitlist form, the selected product, email address and optional
+          name are sent to a server function and inserted into the connected Supabase
+          <code>waitlist_submissions</code> table with a generated record ID and submission timestamp.
+          This is server-side storage, separate from your Float planner entries. The repository does
+          not define an automatic deletion period.
         </p>
 
         <h2 id="what-i-do-not-do" className="scroll-mt-24">What I do not do</h2>
@@ -92,37 +146,54 @@ function PrivacyPage() {
         </ul>
 
         <h2 id="third-party-services" className="scroll-mt-24">Third-party services</h2>
-        <p>Products call outside services to do their job. In broad terms:</p>
+        <p>Outside services currently used by the shipped experiences:</p>
         <ul>
           <li>
-            <strong>Market data providers</strong> supply exchange rates, crypto prices and share
-            prices to CurrenSee and My Finance Friend. Requests carry the data needed to answer
-            them, such as a currency pair or a ticker.
+            <strong>Frankfurter</strong> provides fiat reference-rate data for CurrenSee;
+            <strong> CoinGecko</strong> provides BTC, ETH and SOL prices; and
+            <strong> Nepal Rastra Bank</strong> provides supported NPR-related reference rates.
+            Rate lookups are made by SkyCo's server using the requested currency codes. The amount
+            you convert is multiplied in your browser and is not part of that rate request.
           </li>
           <li>
-            <strong>Hosting and infrastructure providers</strong> serve the sites and store account
-            data for products that have accounts.
+            <strong>Supabase</strong> stores the product, optional name and email address when you
+            submit the Float waitlist form. The app does not send Float planner entries to Supabase.
           </li>
           <li>
-            <strong>In-browser text parsing</strong> reads the trade description in My Finance
-            Friend. The current demonstration does not send that text to an outside service.
+            <strong>Hosting infrastructure</strong> serves the website and may process technical
+            request details such as IP address, user agent, requested URL and timestamp. The active
+            production host and its exact log-retention settings are not identified in this
+            repository, so those details have not been independently verified here.
+          </li>
+          <li>
+            Support email is opened in your own mail app. Your email provider handles the message
+            only after you choose to send it.
           </li>
         </ul>
-        <p>
-          If you want the exact provider list for a specific product, email me and I will tell you
-          what that product currently uses.
-        </p>
 
         <h2 id="cookies" className="scroll-mt-24">Cookies</h2>
         <p>
-          This website does not set advertising or analytics cookies. The five in-page product
-          experiences do not require a sign-in session.
+          The product tools do not require a sign-in session. The features described above use
+          browser local storage or session storage in a few places; that storage is separate from
+          cookies. Some tool state also appears in URL query strings: CurrenSee's pair and amount
+          when you copy a link, and Chronos's selected date as you change it. These values are visible
+          in the address bar and can be included in links you copy or share.
         </p>
 
         <h2 id="retention-and-deletion" className="scroll-mt-24">Retention and deletion</h2>
         <p>
-          The current in-page product experiences do not retain what you enter after you leave.
-          Requests sent to support@skyco.online are handled through email and actioned within 30 days.
+          CurrenSee preferences and saved records, Grocery settings and Float guest records remain
+          in browser local storage until you remove them using the product controls or clear this
+          site's browser data. My Finance Friend's recent entries and Chronos's comparison and
+          date-of-birth inputs stay only in page memory and reset when you leave or refresh. The
+          Support message draft is kept in session storage for the tab's session and is removed when
+          you submit the form to open your email app.
+        </p>
+        <p>
+          Float waitlist submissions are stored in Supabase. The application code does not specify
+          an automatic expiry or retention period for those rows. Hosting and database backup
+          retention are controlled by the relevant provider settings, which have not been verified
+          in this repository.
         </p>
 
         <h2 id="children" className="scroll-mt-24">Children</h2>
