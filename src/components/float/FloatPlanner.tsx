@@ -235,7 +235,7 @@ export function FloatPlanner({
               {shareState === "copied" ? "Link copied" : "Share these numbers"}
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-y-auto rounded-lg">
+          <AlertDialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%_-_2rem)] overflow-y-auto rounded-lg">
             <AlertDialogHeader>
               <AlertDialogTitle>Share these figures?</AlertDialogTitle>
               <AlertDialogDescription className="space-y-3 text-left" asChild>
@@ -259,14 +259,15 @@ export function FloatPlanner({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel className="min-h-11">Cancel</AlertDialogCancel>
-              <AlertDialogAction className="min-h-11" onClick={share}>
-                Continue
+              <AlertDialogAction className="min-h-11 h-auto whitespace-normal" onClick={share}>
+                I understand, create link
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
         <p className="mx-auto mt-2 max-w-md text-xs text-muted-foreground">
-          Share links contain your figures, not encrypted data. Anyone with the link can read them.
+          Share links contain your income, bills and BNPL figures. Base64 is not encryption. Anyone
+          with the link can read them, copy or forward it; opened links may be logged.
         </p>
         {shareState === "failed" ? (
           <p className="text-xs text-destructive" role="alert">

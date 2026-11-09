@@ -206,22 +206,22 @@ At the start of each run:
 
 #### Privacy and security claims
 
-- [ ] Re-audit every product's browser/device/server/third-party data flow from code.
-- [ ] Update `/privacy` to cover all five shipped tools, including Float.
-- [ ] Update `/security` table to cover all five shipped tools.
-- [ ] Document CurrenSee favorites, defaults, saved snapshots, alert preferences and alert history in browser storage accurately.
-- [ ] Document Grocery per-pack checked items and household-size persistence accurately.
-- [ ] Document Float's opt-in guest-mode local storage accurately, including the fact that current browser storage is not application-level encrypted.
-- [ ] Document Float share-link contents and Base64's lack of confidentiality.
-- [ ] Add a clear pre-share disclosure and explicit confirmation for Float share links, or replace the current mechanism after a tested privacy design.
-- [ ] Document support email handling, hosting logs and each third-party rate provider based on current implementation.
-- [ ] Ensure no page claims that data is never stored if the product stores it locally.
-- [ ] Ensure no page claims encryption, continuous monitoring, authentication or sync unless the feature is implemented and verified.
+- [x] Re-audit every product's browser/device/server/third-party data flow from code. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Update `/privacy` to cover all five shipped tools, including Float. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Update `/security` table to cover all five shipped tools. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document CurrenSee favorites, defaults, saved snapshots, alert preferences and alert history in browser storage accurately. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document Grocery per-pack checked items and household-size persistence accurately. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document Float's opt-in guest-mode local storage accurately, including the fact that current browser storage is not application-level encrypted. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document Float share-link contents and Base64's lack of confidentiality. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Add a clear pre-share disclosure and explicit confirmation for Float share links, or replace the current mechanism after a tested privacy design. 9 November 2026: explicit "I understand, create link" action; 390px then 1280px checks confirm >=44px actions, trapped focus, Cancel/Escape without sharing, confirmed device-share/clipboard and link readback; two payload tests pass.
+- [x] Document support email handling, hosting logs and each third-party rate provider based on current implementation. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Ensure no page claims that data is never stored if the product stores it locally. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Ensure no page claims encryption, continuous monitoring, authentication or sync unless the feature is implemented and verified. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
 - [ ] Re-check all claims after any change to local storage, API calls or third-party SDKs.
 
 #### Reliability, accessibility and SEO
 
-- [ ] Keep the Status page's distinction between a published route and uptime monitoring.
+- [x] Keep the Status page's distinction between a published route and uptime monitoring. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
 - [ ] Decide whether to add independent uptime checks; if added, define probe scope, schedule, alert destination and retention.
 - [ ] Add explicit rate-service freshness/provider failure monitoring only after the monitor exists.
 - [ ] Check all five product flows on narrow Android-sized browser viewports and desktop.

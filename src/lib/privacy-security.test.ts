@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { liveProjects } from "./projects";
 
 const read = (path: string) =>
-  readFileSync(new URL(path, import.meta.url), "utf8");
+  readFileSync(new URL(path, import.meta.url), "utf8").replace(/\s+/g, " ");
 
 const privacy = read("../routes/privacy.tsx");
 const security = read("../routes/security.tsx");
@@ -22,18 +22,21 @@ test("privacy coverage follows all five shipped registry products", () => {
 
   assert.equal(liveProjects.length, 5);
   for (const project of liveProjects) {
-    assert.ok(coverage.includes(project.name), "Missing " + project.name + " from privacy coverage");
+    assert.ok(
+      coverage.includes(project.name),
+      "Missing " + project.name + " from privacy coverage",
+    );
   }
 });
 
 test("security table has one ordered row per live product", () => {
-  const table = security.match(/const table = \[([\s\S]*?)\n\];/)?.[1] ?? "";
-  const rowNames = Array.from(
-    table.matchAll(/product:\s*"([^"]+)"/g),
-    (match) => match[1],
-  );
+  const table = security.match(/const table = \[([\s\S]*?) \];/)?.[1] ?? "";
+  const rowNames = Array.from(table.matchAll(/product:\s*"([^"]+)"/g), (match) => match[1]);
 
-  assert.deepEqual(rowNames, liveProjects.map((project) => project.name));
+  assert.deepEqual(
+    rowNames,
+    liveProjects.map((project) => project.name),
+  );
   assert.match(security, /<td className="px-4 py-3">\{row\.external\}<\/td>/);
 });
 
@@ -54,26 +57,35 @@ test("Float guest disclosure matches local storage and encryption limitations", 
 
 test("Float share disclosure covers every serialized field and Base64 limitation", () => {
   const tuple =
-    floatShare.match(/function toTuple\(e: ShareEntry\): Tuple \{([\s\S]*?)\n\}/)?.[1] ?? "";
+    floatShare.match(/function toTuple\(e: ShareEntry\): Tuple \{([\s\S]*?) \}/)?.[1] ?? "";
 
   for (const field of ["name", "amount", "date", "frequency", "originalAmount", "dealEndsOn"]) {
     assert.ok(tuple.includes("e." + field), "Missing serialized share field: " + field);
   }
 
   assert.match(privacy, /Base64 is not encryption/);
-  assert.match(privacy, /names, amounts, dates, recurrence, original\s+amounts and deal end dates/);
+  assert.match(
+    privacy,
+    /names, amounts,\s+dates, recurrence, original\s+amounts and deal end dates/,
+  );
   assert.match(security, /Base64 is not encryption/);
 });
 
-test("Float waitlist disclosure matches validated fields and Supabase storage", () => {
+test("Float waitlist disclosure matches validated fields and Cloud storage", () => {
   for (const field of ["product", "name", "email"]) {
     assert.ok(waitlistSchema.includes(field + ": z.string()"), "Missing waitlist field: " + field);
   }
 
   assert.match(waitlistFunction, /from\("waitlist_submissions"\)\.insert\(data\)/);
-  assert.match(privacy, /selected product, email address and optional\s+name are sent to a server function/);
+  assert.match(
+    privacy,
+    /selected product, email address and optional\s+name are sent to a server function/,
+  );
   assert.match(privacy, /does\s+not define an automatic deletion period/);
-  assert.match(security, /Supabase receives only the selected product, email and optional name/);
+  assert.match(
+    security,
+    /Lovable Cloud receives only the selected product, email and optional name/,
+  );
 });
 
 test("Support disclosure matches session storage and mailto handoff", () => {
@@ -83,22 +95,28 @@ test("Support disclosure matches session storage and mailto handoff", () => {
   assert.ok(contactForm.includes("window.location.href = " + String.fromCharCode(96) + "mailto:"));
   assert.match(privacy, /session storage/);
   assert.match(privacy, /browser user-agent string/);
-  assert.match(privacy, /does not receive the message unless you press\s+Send in that app/);
+  assert.match(privacy, /does not receive the message unless you\s+press\s+Send in that app/);
 });
 
 test("Chronos and Finance Friend URL and page-memory boundaries stay documented", () => {
   assert.match(privacy, /selected date is reflected in the page URL/);
   assert.match(privacy, /comparison date and date-of-birth inputs remain in page memory/);
-  assert.match(privacy, /typed trade sentence and up to five recent parsed entries stay in page memory/);
+  assert.match(
+    privacy,
+    /typed trade sentence and up to five recent\s+parsed entries stay in page memory/,
+  );
 });
 
 test("third-party providers and unverified hosting retention remain disclosed", () => {
-  for (const provider of ["Frankfurter", "CoinGecko", "Nepal Rastra Bank", "Supabase"]) {
+  for (const provider of ["Frankfurter", "CoinGecko", "Nepal Rastra Bank", "Lovable Cloud"]) {
     assert.ok(privacy.includes(provider), "Missing provider disclosure: " + provider);
   }
 
   assert.match(privacy, /active host and its exact log-retention settings\s+are not established/);
-  assert.match(security, /active production host and its exact log-retention settings are not established/);
+  assert.match(
+    security,
+    /active production host and its exact log-retention settings are not established/,
+  );
 });
 
 test("privacy and security copy avoids unsupported blanket claims", () => {

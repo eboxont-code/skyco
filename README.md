@@ -81,7 +81,7 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Development
 
-**Canonical package manager: Bun 1.3.14.** The [Vercel deployment for main commit `64f6d36`](https://vercel.com/boxont/skyco/9A3S1DNMhCaw7XbWJxAwQckjnhvh) is marked `READY` with target `production`; its build log cloned `main` at that exact commit and recorded `bun install v1.3.14`. Use Bun 1.3.14 with the committed `bun.lock` and `bunfig.toml`; do not add a second package-manager lockfile. This confirms the package-manager version used by that observed build, not public-domain routing or runtime-variable completeness.
+**Canonical package manager: Bun 1.3.14.** The [Vercel deployment for main commit `64f6d36`](https://vercel.com/boxont/skyco/9A3S1DNMhCaw7XbWJxAwQckjnhvh) is marked `READY` with target `production`; its build log cloned `main` at that exact commit and recorded `bun install v1.3.14`. Bun is the preferred install workflow. Use Bun 1.3.14 with the committed `bun.lock` and `bunfig.toml`; do not add a second package-manager lockfile. This confirms the package-manager version used by that observed build, not public-domain routing or runtime-variable completeness.
 
 ```sh
 git clone https://github.com/eboxont-code/skyco.git
@@ -94,7 +94,8 @@ Before submitting changes, run the available checks:
 
 ```sh
 bun run lint
+bun test src/lib/*.test.ts
 bun run build
 ```
 
-A test script and CI workflow are not yet configured. See [MASTER_PLAN.md](MASTER_PLAN.md) for the outstanding test/CI setup and project acceptance gates.
+Existing node:test unit tests can be run directly with Bun as above. A package test script and CI workflow are not yet configured. See [MASTER_PLAN.md](MASTER_PLAN.md) for the outstanding test/CI setup and project acceptance gates.
