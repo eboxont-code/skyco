@@ -93,7 +93,7 @@ function StatusPage() {
             {project.path && (
               <Link
                 to={project.path}
-                className="inline-flex w-fit items-center rounded-full border-2 border-sky-deep/20 px-4 py-2 text-xs font-bold text-sky-deep transition-colors hover:border-sky-bright hover:bg-sky-ice"
+                className="inline-flex min-h-11 w-fit items-center rounded-full border-2 border-sky-deep/20 px-4 py-2 text-xs font-bold text-sky-deep transition-colors hover:border-sky-bright hover:bg-sky-ice focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Use {project.name}
               </Link>
