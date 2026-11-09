@@ -33,3 +33,11 @@ test("the manual rate check remains separate and accessible", () => {
   assert.match(statusSource, /getRate\(\{ data: \{ from: "USD", to: "EUR" \} \}\)/);
   assert.match(statusSource, /<p role="status"/);
 });
+
+test("published product links have touch-sized targets and a visible keyboard focus indicator", () => {
+  const publishedLink = statusSource.match(/<Link\\s+to=\\{project\\.path\\}[\\s\\S]*?>\\s*Use \\{project\\.name\\\\}\\s*<\\/Link>/)?.[0];
+  assert.ok(publishedLink, "expected a link for each published product");
+  assert.match(publishedLink, /min-h-11/);
+  assert.match(publishedLink, /focus-visible:outline-none/);
+  assert.match(publishedLink, /focus-visible:ring-2/);
+});
