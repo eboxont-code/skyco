@@ -2,7 +2,7 @@ import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
-const UPDATED = "29 August 2026";
+const UPDATED = "9 November 2026";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -22,10 +22,21 @@ export const Route = createFileRoute("/privacy")({
       { property: "og:url", content: "https://skyco.online/privacy" },
       ...shareMeta("privacy", "SkyCo Privacy page share card"),
       { name: "twitter:title", content: "Privacy policy for SkyCo web tools" },
-      { name: "twitter:description", content: "What SkyCo stores, what it does not, and how each product handles your data." },
+      {
+        name: "twitter:description",
+        content: "What SkyCo stores, what it does not, and how each product handles your data.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://skyco.online/privacy" }],
-    scripts: [breadcrumbScript([{ name: "Privacy", path: "/privacy" }]), pageScript("WebPage", "SkyCo Privacy", "/privacy", "Privacy page for SkyCo, a founder-led studio of small web tools.")],
+    scripts: [
+      breadcrumbScript([{ name: "Privacy", path: "/privacy" }]),
+      pageScript(
+        "WebPage",
+        "SkyCo Privacy",
+        "/privacy",
+        "Privacy page for SkyCo, a founder-led studio of small web tools.",
+      ),
+    ],
   }),
   component: PrivacyPage,
 });
@@ -38,45 +49,152 @@ function PrivacyPage() {
       intro="SkyCo is a small studio. The short version: I collect as little as possible, and no SkyCo product sells or shares your data with advertisers."
       updated={UPDATED}
     >
-      <nav aria-label="On this page" className="mb-8"><p className="font-semibold text-foreground">On this page</p><ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2"><li><a href="#who-this-covers" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Who this covers</a></li><li><a href="#what-i-collect" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">What I collect</a></li><li><a href="#what-i-do-not-do" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">What I do not do</a></li><li><a href="#third-party-services" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Third-party services</a></li><li><a href="#cookies" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Cookies</a></li><li><a href="#retention-and-deletion" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Retention and deletion</a></li><li><a href="#children" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Children</a></li><li><a href="#changes" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Changes</a></li><li><a href="#contact" className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Contact</a></li></ul></nav>
+      <nav aria-label="On this page" className="mb-8">
+        <p className="font-semibold text-foreground">On this page</p>
+        <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2">
+          <li>
+            <a
+              href="#who-this-covers"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Who this covers
+            </a>
+          </li>
+          <li>
+            <a
+              href="#what-i-collect"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              What I collect
+            </a>
+          </li>
+          <li>
+            <a
+              href="#what-i-do-not-do"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              What I do not do
+            </a>
+          </li>
+          <li>
+            <a
+              href="#third-party-services"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Third-party services
+            </a>
+          </li>
+          <li>
+            <a
+              href="#cookies"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Cookies
+            </a>
+          </li>
+          <li>
+            <a
+              href="#retention-and-deletion"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Retention and deletion
+            </a>
+          </li>
+          <li>
+            <a
+              href="#children"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Children
+            </a>
+          </li>
+          <li>
+            <a
+              href="#changes"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Changes
+            </a>
+          </li>
+          <li>
+            <a
+              href="#contact"
+              className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
       <Prose>
         <Callout title="The short version">
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>Most SkyCo products work without an account.</li>
             <li>I do not sell personal data, and there are no advertising trackers.</li>
-            <li>Financial figures you enter are yours; SkyCo has no access to your bank or broker.</li>
+            <li>
+              Financial figures you enter are yours; SkyCo has no access to your bank or broker.
+            </li>
             <li>Email me at support@skyco.online to ask what is stored or to have it deleted.</li>
           </ul>
         </Callout>
 
-        <h2 id="who-this-covers" className="scroll-mt-24">Who this covers</h2>
+        <h2 id="who-this-covers" className="scroll-mt-24">
+          Who this covers
+        </h2>
         <p>
-          This policy applies to skyco.online and the SkyCo products linked from it: CurrenSee,
-          Chronos, My Finance Friend and SkyCo Grocery Packs.
+          This policy applies to skyco.online and all five shipped SkyCo products: CurrenSee,
+          Chronos, My Finance Friend, SkyCo Grocery Packs and Float.
         </p>
 
-        <h2 id="what-i-collect" className="scroll-mt-24">What I collect</h2>
+        <h2 id="what-i-collect" className="scroll-mt-24">
+          What I collect
+        </h2>
         <h3>On this website</h3>
         <p>
-          Nothing you type. There is no signup and no contact form that posts to a server. The
-          support page opens your own email client, so the message travels through your email
-          provider, not through SkyCo.
+          The product tools do not require an account. The Support page keeps only the message text
+          in this browser tab's session storage while you write; the topic, product and optional
+          name stay in page memory. Submitting the form opens a pre-filled email in your own mail
+          app. The subject contains the selected topic and product; the body contains the message,
+          optional name and browser user-agent string. SkyCo does not receive the message unless you
+          press Send in that app. The saved message draft is removed when you submit the form to
+          open your email app.
         </p>
         <p>
-          Standard web server logs (IP address, browser type, requested page, timestamp) are created
-          by the hosting provider so the site can be served and abuse can be spotted.
+          The production host may process technical request details such as IP address, browser
+          type, requested page and timestamp. The active host and its exact log-retention settings
+          are not established in this repository review.
         </p>
 
-        <h3>In products without accounts</h3>
+        <h3>In CurrenSee</h3>
         <p>
-          CurrenSee, Chronos and SkyCo Grocery Packs do not ask you to sign in. The in-page tools do
-          not save the currency pair, selected date, grocery pack or checked items after you leave.
+          CurrenSee uses this browser's local storage for the last currency pair and amount, recent
+          pairs, favourites, the default pair, saved conversion snapshots (up to 20), rate alerts
+          (up to 10), the alert check interval (5, 15, 30 or 60 minutes) and alert history (up to
+          30). Browser storage is optional: blocked storage does not stop conversions. These
+          preferences and records stay in this browser's local storage and are not application-level
+          encrypted. Rate alerts are checked only while the CurrenSee page is open and visible. Each
+          check sends the selected currency codes to SkyCo's rate function; the amount and alert
+          threshold stay in the browser. Optional browser notifications appear only if you grant
+          permission. There are no background checks after the page is closed or while it is hidden.
+          When you choose Copy link, the selected pair and entered amount are also placed in the
+          URL.
+        </p>
+
+        <h3>In Chronos</h3>
+        <p>
+          The selected date is reflected in the page URL as `?date=YYYY-MM-DD` as you change it, and
+          a copied or shared link includes that date. The comparison date and date-of-birth inputs
+          remain in page memory only. Calendar conversion runs in your browser; no calendar
+          calculation service receives those dates. No account is required. If you request a
+          calendar download, an all-day event file is created in your browser; importing it into a
+          calendar app is your choice.
         </p>
 
         <h3>In My Finance Friend</h3>
         <p>
-          The current in-page demonstration parses a trade description and shows a preview. It does
-          not create an account, save a portfolio, or send the description to a server.
+          The deterministic parser runs locally. The typed trade sentence and up to five recent
+          parsed entries stay in page memory while the page is open. They are not sent to a server
+          or saved in persistent browser storage. You can choose to copy a CSV to your clipboard.
         </p>
         <p>
           <strong>SkyCo never connects to your bank or brokerage.</strong> There is no account
@@ -84,57 +202,129 @@ function PrivacyPage() {
           anywhere on SkyCo.
         </p>
 
-        <h2 id="what-i-do-not-do" className="scroll-mt-24">What I do not do</h2>
+        <h3>In SkyCo Grocery Packs</h3>
+        <p>
+          Checked items are stored per pack in this browser's local storage. The selected household
+          size is also stored there. The list validates saved checked-item data and supports
+          migration from its versioned legacy storage. These settings remain until you reset them or
+          clear site data. If browser storage is blocked, the list still works for the current
+          visit. If you choose Copy or Share, the list is handed to your clipboard or your device's
+          share sheet.
+        </p>
+
+        <h3>In Float</h3>
+        <p>
+          Float starts with sample figures. Your edits stay in page memory unless you explicitly
+          choose Keep my numbers as a guest. Guest mode stores income, bill and BNPL entries in this
+          browser's local storage, including names, amounts, dates, recurrence and optional deal
+          details. Clear my numbers removes the saved guest record. This browser storage is not
+          application-level encrypted and is not cloud synced.
+        </p>
+        <p>
+          Share these numbers first asks for explicit confirmation before creating a URL containing
+          the entries as Base64 URL-safe encoded data. Cancel or Escape closes the dialog without
+          creating or copying a link. Base64 is not encryption. The link can include names, amounts,
+          dates, recurrence, original amounts and deal end dates. Anyone with the link can decode
+          and read those details, and can copy or forward the link. The URL may also appear in
+          browser history and may be processed in hosting request logs when opened. Do not share
+          figures you would not want a link recipient to see.
+        </p>
+
+        <h3>Float waitlist</h3>
+        <p>
+          If you submit the Float waitlist form, the selected product, email address and optional
+          name are sent to a server function and inserted into the connected Lovable Cloud database
+          <code>waitlist_submissions</code> table with a generated record ID and submission
+          timestamp. This is server-side storage, separate from your Float planner entries. The
+          repository does not define an automatic deletion period.
+        </p>
+
+        <h2 id="what-i-do-not-do" className="scroll-mt-24">
+          What I do not do
+        </h2>
         <ul>
           <li>No selling or renting of personal data.</li>
           <li>No advertising networks and no behavioural ad tracking.</li>
           <li>No collecting of bank credentials, card numbers or government identifiers.</li>
         </ul>
 
-        <h2 id="third-party-services" className="scroll-mt-24">Third-party services</h2>
-        <p>Products call outside services to do their job. In broad terms:</p>
+        <h2 id="third-party-services" className="scroll-mt-24">
+          Third-party services
+        </h2>
+        <p>Outside services currently used by the shipped experiences:</p>
         <ul>
           <li>
-            <strong>Market data providers</strong> supply exchange rates, crypto prices and share
-            prices to CurrenSee and My Finance Friend. Requests carry the data needed to answer
-            them, such as a currency pair or a ticker.
+            <strong>Frankfurter</strong> provides fiat reference-rate data for CurrenSee;
+            <strong> CoinGecko</strong> provides BTC, ETH and SOL prices; and
+            <strong> Nepal Rastra Bank</strong> provides supported NPR-related reference rates. Rate
+            lookups are made by SkyCo's server using the requested currency codes. The amount you
+            convert is multiplied in your browser and is not part of that rate request.
           </li>
           <li>
-            <strong>Hosting and infrastructure providers</strong> serve the sites and store account
-            data for products that have accounts.
+            <strong>Lovable Cloud</strong> stores the product, optional name and email address when
+            you submit the Float waitlist form. The app does not send Float planner entries to
+            Lovable Cloud.
           </li>
           <li>
-            <strong>In-browser text parsing</strong> reads the trade description in My Finance
-            Friend. The current demonstration does not send that text to an outside service.
+            <strong>Hosting infrastructure</strong> serves the website and may process technical
+            request details such as IP address, user agent, requested URL and timestamp. The active
+            production host and its exact log-retention settings are not identified in this
+            repository, so those details have not been independently verified here.
+          </li>
+          <li>
+            Support email is opened in your own mail app. Your email provider handles the message
+            only after you choose to send it.
           </li>
         </ul>
+
+        <h2 id="cookies" className="scroll-mt-24">
+          Cookies
+        </h2>
         <p>
-          If you want the exact provider list for a specific product, email me and I will tell you
-          what that product currently uses.
+          The product tools do not require a sign-in session. The features described above use
+          browser local storage or session storage in a few places; that storage is separate from
+          cookies. Some tool state also appears in URL query strings: CurrenSee's pair and amount
+          when you copy a link, and Chronos's selected date as you change it. These values are
+          visible in the address bar and can be included in links you copy or share.
         </p>
 
-        <h2 id="cookies" className="scroll-mt-24">Cookies</h2>
+        <h2 id="retention-and-deletion" className="scroll-mt-24">
+          Retention and deletion
+        </h2>
         <p>
-          This website does not set advertising or analytics cookies. The five in-page product
-          experiences do not require a sign-in session.
+          CurrenSee preferences and saved records, Grocery settings and Float guest records remain
+          in browser local storage until you remove them using the product controls or clear this
+          site's browser data. My Finance Friend's recent entries and Chronos's comparison and
+          date-of-birth inputs stay only in page memory and reset when you leave or refresh. The
+          Support message draft is kept in session storage for the tab's session and is removed when
+          you submit the form to open your email app.
+        </p>
+        <p>
+          Float waitlist submissions are stored in Lovable Cloud. The application code does not
+          specify an automatic expiry or retention period for those rows. Hosting and database
+          backup retention are controlled by the relevant provider settings, which have not been
+          verified in this repository.
         </p>
 
-        <h2 id="retention-and-deletion" className="scroll-mt-24">Retention and deletion</h2>
+        <h2 id="children" className="scroll-mt-24">
+          Children
+        </h2>
         <p>
-          The current in-page product experiences do not retain what you enter after you leave.
-          Requests sent to support@skyco.online are handled through email and actioned within 30 days.
+          SkyCo products are not directed at children under 13 and I do not knowingly collect their
+          data.
         </p>
 
-        <h2 id="children" className="scroll-mt-24">Children</h2>
-        <p>SkyCo products are not directed at children under 13 and I do not knowingly collect their data.</p>
-
-        <h2 id="changes" className="scroll-mt-24">Changes</h2>
+        <h2 id="changes" className="scroll-mt-24">
+          Changes
+        </h2>
         <p>
           If this policy changes in a way that affects you, the updated date at the top of this page
           changes and the change is listed on the <a href="/changelog">What&rsquo;s new</a> page.
         </p>
 
-        <h2 id="contact" className="scroll-mt-24">Contact</h2>
+        <h2 id="contact" className="scroll-mt-24">
+          Contact
+        </h2>
         <p>
           Privacy questions, access requests and deletion requests all go to{" "}
           <a href="mailto:support@skyco.online">support@skyco.online</a>.
