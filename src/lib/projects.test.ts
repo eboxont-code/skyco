@@ -9,6 +9,25 @@ import {
   splitDirectory,
 } from "./projects.ts";
 
+test("the five shipped products resolve to first-party hub routes", () => {
+  const paths = ["/currensee", "/chronos", "/finance-friend", "/grocery", "/float"];
+  assert.deepEqual(liveProjects.map((project) => project.path), paths);
+  assert.deepEqual(
+    liveProjects.map((project) => project.href),
+    paths.map((path) => \`https://skyco.online\${path}\`),
+  );
+});
+
+test("Budget & Expenses and Daily Notes remain planned without shipped paths", () => {
+  const { upcoming } = splitDirectory(fallbackDirectory);
+  assert.deepEqual(upcoming.map((project) => project.name), ["Budget & Expenses", "Daily Notes"]);
+  for (const project of upcoming) {
+    assert.equal(project.live, false);
+    assert.equal(project.path, undefined);
+    assert.deepEqual(project.candidates, []);
+  }
+});
+
 test("the registry exposes the five shipped first-party product routes", () => {
   const shipped = projectRegistry.filter((project) => project.path);
 
@@ -48,7 +67,7 @@ test("planned products remain route-less and outside the live directory", () => 
 test("live fallback URLs use the canonical SkyCo host and product paths", () => {
   for (const project of liveProjects) {
     assert.ok(project.path);
-    assert.equal(project.href, `https://skyco.online${project.path}`);
+    assert.equal(project.href, \`https://skyco.online\${project.path}\`);
     assert.equal(entryHref(project), project.path);
     assert.equal(hrefForSlug(project.slug), project.href);
   }
