@@ -2,7 +2,7 @@
 ## Website hardening → shared product services → Android application
 
 **Plan version:** 1.0  
-**Last aligned with repository:** 7 November 2026  
+**Last aligned with repository:** 9 November 2026  
 **Repository:** `eboxont-code/skyco`  
 **Default branch at alignment:** `main`  
 **Current delivery target:** upgraded `https://skyco.online` plus one Android application  
@@ -176,7 +176,7 @@ At the start of each run:
 
 ### Phase 0 — repository safety and project governance (P0)
 
-- [x] Review repository history and current branch before making product changes; re-verified 6 November 2026: `main` HEAD is `407e22d4e3101e7845168a623ccf65b79a692179`, there are no open issues, PR #1 is open and PR #3 is an open draft, and the branch API reports `protected=false` with no required status checks.
+- [x] Review repository history and current branch before making product changes; re-verified 9 November 2026: `main` HEAD is [`1ad3297173bcb60c8946f796640e7b146e58ab08`](https://github.com/eboxont-code/skyco/commit/1ad3297173bcb60c8946f796640e7b146e58ab08), 13 PRs are open (#1, #5, #6, #10–#19), no non-PR issues are open, and the branch API reports `protected=false` with no required status checks. The GitHub connection exposes no local checkout or working-tree status.
 - [x] Secret-scan the tracked `.env` file and repository history without copying secret values into issues, logs or AI prompts; Gitleaks v8.30.1 scanned full reachable history on 6 November 2026 and reported no leaks (Actions run `42201818522`).
 - [x] Review Gitleaks findings for committed credentials; no findings were reported, so no credential owner/scope/rotation follow-up was triggered by this scan. Hosting logs and runtime credentials remain a separate review.
 - [x] Add `.env` / `.env.*` ignore rules (while allowing `.env.example`) and add a placeholder-only `.env.example`; verified on main 5 November 2026.
@@ -206,27 +206,27 @@ At the start of each run:
 
 #### Privacy and security claims
 
-- [ ] Re-audit every product's browser/device/server/third-party data flow from code.
-- [ ] Update `/privacy` to cover all five shipped tools, including Float.
-- [ ] Update `/security` table to cover all five shipped tools.
-- [ ] Document CurrenSee favorites, defaults, saved snapshots, alert preferences and alert history in browser storage accurately.
-- [ ] Document Grocery per-pack checked items and household-size persistence accurately.
-- [ ] Document Float's opt-in guest-mode local storage accurately, including the fact that current browser storage is not application-level encrypted.
-- [ ] Document Float share-link contents and Base64's lack of confidentiality.
-- [ ] Add a clear pre-share disclosure and explicit confirmation for Float share links, or replace the current mechanism after a tested privacy design.
-- [ ] Document support email handling, hosting logs and each third-party rate provider based on current implementation.
-- [ ] Ensure no page claims that data is never stored if the product stores it locally.
-- [ ] Ensure no page claims encryption, continuous monitoring, authentication or sync unless the feature is implemented and verified.
+- [x] Re-audit every product's browser/device/server/third-party data flow from code. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Update `/privacy` to cover all five shipped tools, including Float. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Update `/security` table to cover all five shipped tools. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document CurrenSee favorites, defaults, saved snapshots, alert preferences and alert history in browser storage accurately. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document Grocery per-pack checked items and household-size persistence accurately. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document Float's opt-in guest-mode local storage accurately, including the fact that current browser storage is not application-level encrypted. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Document Float share-link contents and Base64's lack of confidentiality. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Add a clear pre-share disclosure and explicit confirmation for Float share links, or replace the current mechanism after a tested privacy design. 9 November 2026: explicit "I understand, create link" action; 390px then 1280px checks confirm >=44px actions, trapped focus, Cancel/Escape without sharing, confirmed device-share/clipboard and link readback; two payload tests pass.
+- [x] Document support email handling, hosting logs and each third-party rate provider based on current implementation. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Ensure no page claims that data is never stored if the product stores it locally. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
+- [x] Ensure no page claims encryption, continuous monitoring, authentication or sync unless the feature is implemented and verified. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
 - [ ] Re-check all claims after any change to local storage, API calls or third-party SDKs.
 
 #### Reliability, accessibility and SEO
 
-- [ ] Keep the Status page's distinction between a published route and uptime monitoring.
+- [x] Keep the Status page's distinction between a published route and uptime monitoring. 9 November 2026: inspected shipped storage/provider/contact code; trust pages verified at 390px then 1280px, 46 tests pass, scoped lint has no errors and preview build green.
 - [ ] Decide whether to add independent uptime checks; if added, define probe scope, schedule, alert destination and retention.
 - [ ] Add explicit rate-service freshness/provider failure monitoring only after the monitor exists.
 - [ ] Check all five product flows on narrow Android-sized browser viewports and desktop.
 - [ ] Check keyboard navigation, focus order, screen reader labels, contrast and text scaling.
-- [ ] Verify SEO titles, canonical URLs, structured data, sitemap and `llms.txt` reflect the five live routes and two planned entries.
+- [ ] Verify SEO titles, canonical URLs, structured data, sitemap and `llms.txt` reflect the five live routes and two planned entries. **Source-level evidence on PR #12 (9 November 2026): 104/104 assertions passed against the current registry, five product routes, shared SEO helpers, robots file, generated `llms.txt` source and proposed sitemap. Public crawler/live HTTP verification remains outstanding; this item is not complete.**
 - [ ] Confirm install hints and PWA metadata do not promise native app features.
 
 **Exit gate:** published website behaviour, product registry, metadata and trust pages agree with the implementation; no unresolved P0 privacy/security issue remains.
@@ -817,3 +817,17 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - **Live verification limit:** the preview has SSO protection enabled for non-custom domains. The available browser fetch of `/sitemap.xml` could not access the preview, so no live HTTP or browser smoke check is claimed. The GitHub Vercel status remains `pending` even though the deployment record is READY; no GitHub Actions workflow run exists for this head.
 - **Production impact:** no merge to `main`, production deployment, DNS change, hosting configuration change, environment-variable change or production-data write occurred. The preview's exact source commit is the PR head above; it must not be described as live on the public site. Additional spend: **$0**.
 - **Next step:** retain the PR as draft until the required human review and accessible browser/crawler verification are available. The next independent source task remains the separate `llms.txt` correction in PR #5; public-host/runtime and live crawler gates remain open.
+
+
+## 34. Execution log — reconcile and re-verify sitemap/product SEO work — 9 November 2026
+
+- **Execution time:** 9 November 2026, 12:18 Australia/Brisbane. Re-read `README.md`, `AGENTS.md`, this master plan and `roadmap.md`; inspected current `main`, the complete open-PR inventory, open issues, PR #12's diff/tests, recent Actions runs and read-only deployment evidence. Current `main` is [`1ad3297173bcb60c8946f796640e7b146e58ab08`](https://github.com/eboxont-code/skyco/commit/1ad3297173bcb60c8946f796640e7b146e58ab08). GitHub reports 13 open PRs and no open non-PR issues; `main` is not protected and has no required status checks. The connector exposes no local checkout or working-tree status, so no local cleanliness claim is made.
+- **Phase 0 eligibility:** runtime-variable verification remains blocked because the connected Vercel project does not establish that it serves the public custom domain; the latest READY production-target record is for older main commit [`760d810`](https://github.com/eboxont-code/skyco/commit/760d810ceec331c39b8d4a106a3d0fc8efda7537), while the newer production-target attempt for [`cc3eefad`](https://github.com/eboxont-code/skyco/commit/cc3eefad39e884b6dc768122d054f6aa0377b36f) is CANCELED. Current main `1ad329` has no matching production deployment record. The project still reports `live=false` and 0 visible / 0 hidden environment variables. The exact production-host identity and read-only runtime settings remain missing. Lovable sync remains blocked by lack of access to the correct SkyCo workspace. PR #1's test/CI workflow remains off main; its two latest runs [42502786853](https://github.com/eboxont-code/skyco/actions/runs/42502786853) and [42503356466](https://github.com/eboxont-code/skyco/actions/runs/42503356466) failed before any job step started. The earlier lint baseline remains 1,606 formatting errors and 10 warnings; no rules were weakened or broad formatting attempted.
+- **Phase 1 candidate selection:** the uptime-monitoring decision still needs an owner-defined probe scope, schedule, alert destination and retention; rate-service monitoring depends on an actual monitor; mobile-flow and keyboard/screen-reader acceptance require an accessible interactive browser preview. Those candidates remain blocked. The source-only sitemap and product-route SEO task is independent of those gates and remains eligible.
+- **PR #12 inspection:** PR #12 targets `main`, is open/draft, and changes only `MASTER_PLAN.md`, `public/sitemap.xml`, `src/lib/sitemap.test.ts` and `src/lib/product-seo.test.ts`. Before reconciliation its head was [`2587801`](https://github.com/eboxont-code/skyco/commit/2587801cf39c7bd10e38c2bb245313e5c01c0922), 22 commits ahead and 2 behind current main. It has no submitted reviews or unresolved inline review threads.
+- **Source findings:** current main's sitemap has 59 URLs and 34 CurrenSee pair entries, but the current pair registry has only 29 supported slugs. The five unregistered entries are `cad-to-npr`, `sgd-to-npr`, `kwd-to-npr`, `bhd-to-npr` and `hkd-to-npr`; the PR sitemap removes them. The proposed sitemap has 54 unique canonical HTTPS URLs: 29 registered CurrenSee pairs, 8 registered Float pages, all 5 shipped product roots, and existing guide/legal pages. The two planned products and legacy `/finance` redirect are excluded. All `lastmod` values are valid ISO dates and `robots.txt` points to the canonical sitemap. All five product routes use matching canonical, Open Graph, Twitter, image-alt, SoftwareApplication and breadcrumb paths. The shared structured-data helpers derive URLs from the same first-party paths. The current `llms.txt` route uses the shared live/upcoming directory split and fallback; upcoming products are described without product URLs. Its current heading remains “On the way”; PR #5 separately proposes the clearer “Planned — not live yet” wording.
+- **Verification:** executed 104 in-memory source assertions against exact fetched GitHub blobs for the proposed sitemap, robots file, five product routes, product/pair/Float registries, shared SEO helpers and `llms.txt` source: **104 passed, 0 failed**. PR #12 contains 6 sitemap/robots and 8 product-route SEO `node:test` cases. The earlier Bun 1.4.4 run [42435288822](https://github.com/eboxont-code/skyco/actions/runs/42435288822) is historical evidence only; it predates the final sitemap correction and is not claimed as a current-head test run. The previous runner attempts [42443188809](https://github.com/eboxont-code/skyco/actions/runs/42443188809) and [42474786552](https://github.com/eboxont-code/skyco/actions/runs/42474786552) failed before any test step; no unchanged retry was made. Full package-script tests, lint, typecheck and build were not run.
+- **Preview/production evidence:** Vercel deployment [`dpl_HEqxeFuTuqV4Aj6SMG2Txd7FaZK8`](https://vercel.com/boxont/skyco/HEqxeFuTuqV4Aj6SMG2Txd7FaZK8) is READY for exact pre-reconciliation PR head `2587801`, with target `null` (preview). It is SSO-protected; no browser/crawler fetch or interactive smoke test was performed. Latest production-target deployment history shows the newer `cc3eefad` attempt CANCELED and the last READY production-target deployment on `760d810`; no production deployment of this PR occurred.
+- **Reconciliation:** preserved the PR's published history with a two-parent merge commit; the existing PR head remains the first parent and current main is the second parent. No rebase, force-push, amend or squash was used. The Phase 1 SEO checklist remains unchecked until public crawler/live HTTP and rendered metadata verification are possible.
+- **PR/release status:** PR #12 remains open and draft; no merge to main or production deployment was attempted. No deployment URL/ID or deployed SHA exists for this reconciliation commit. No production data, DNS, hosting settings, secrets, credentials or environment variables were changed. Additional spend: **$0**.
+- **Next eligible task:** reconcile the existing [PR #5](https://github.com/eboxont-code/skyco/pull/5) with current main and verify its six generated `llms.txt` tests plus the planned-product wording against the live registry. Keep public crawler verification and all Phase 0 release gates open.
