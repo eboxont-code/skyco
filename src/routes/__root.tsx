@@ -23,15 +23,21 @@ function NotFoundComponent() {
         <p className="mt-6 text-sm font-bold uppercase tracking-[0.2em] text-sky-deep">Error 404</p>
         <h1 className="mt-2 text-3xl font-extrabold text-foreground">Page not found</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          That address does not match a page on SkyCo. These links all work:
+          That address does not match a page on SkyCo. Choose a live tool or return to the hub:
         </p>
         <nav aria-label="Helpful links" className="mt-6">
           <ul className="grid gap-2 text-sm font-semibold">
             <li><Link to="/" className="inline-flex min-h-11 items-center justify-center rounded-full bg-sky-deep px-6 text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">Back to the SkyCo hub</Link></li>
-            <li><Link to="/currensee" className="text-sky-deep underline underline-offset-4">CurrenSee</Link></li>
-            <li><Link to="/chronos" className="text-sky-deep underline underline-offset-4">Chronos</Link></li>
-            <li><Link to="/finance-friend" className="text-sky-deep underline underline-offset-4">My Finance Friend</Link></li>
-            <li><Link to="/grocery" className="text-sky-deep underline underline-offset-4">SkyCo Grocery Packs</Link></li>
+            {liveProjects.map((project) => (
+              <li key={project.slug}>
+                <Link
+                  to={project.path ?? "/"}
+                  className="inline-flex min-h-11 items-center text-sky-deep underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {project.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
         <nav aria-label="More SkyCo pages" className="mt-4 flex justify-center gap-4">{(["/about", "/faq", "/support"] as const).map(to => <Link key={to} to={to} className="inline-flex min-h-11 items-center text-sky-deep underline focus-visible:ring-2 focus-visible:ring-ring">{to.slice(1)}</Link>)}</nav>
