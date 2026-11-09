@@ -71,5 +71,3 @@
 - CurrenSee's current `getRate` is a TanStack Start server function, not a documented public mobile REST contract. Do not guess its transport route or scrape HTML; implement and document a versioned HTTP adapter before Flutter depends on it.
 - Preserve Lovable-connected Git history: never force-push or rewrite published commits. Keep the connected branch buildable and use small, reviewable commits.
 
-- Float URL generation and clipboard/device sharing must run only from the explicit confirmation action in its existing alert dialog; cancellation must never expose a payload.
-- Render runtime-dependent native calendar labels only after hydration so differing server/browser calendar support cannot change initial element structure.
