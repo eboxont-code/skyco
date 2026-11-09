@@ -1,0 +1,1 @@
+- Render runtime-dependent native calendar labels only after hydration so differing server/browser calendar support cannot change initial element structure.
