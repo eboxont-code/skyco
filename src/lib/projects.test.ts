@@ -14,7 +14,7 @@ test("the five shipped products resolve to first-party hub routes", () => {
   assert.deepEqual(liveProjects.map((project) => project.path), paths);
   assert.deepEqual(
     liveProjects.map((project) => project.href),
-    paths.map((path) => \`https://skyco.online\${path}\`),
+    paths.map((path) => `https://skyco.online${path}`),
   );
 });
 
@@ -67,7 +67,7 @@ test("planned products remain route-less and outside the live directory", () => 
 test("live fallback URLs use the canonical SkyCo host and product paths", () => {
   for (const project of liveProjects) {
     assert.ok(project.path);
-    assert.equal(project.href, \`https://skyco.online\${project.path}\`);
+    assert.equal(project.href, `https://skyco.online${project.path}`);
     assert.equal(entryHref(project), project.path);
     assert.equal(hrefForSlug(project.slug), project.href);
   }
