@@ -65,24 +65,27 @@ test("every sitemap URL has exactly one location and one valid ISO last-modified
     assert.equal(
       (entry.block.match(/<loc>/g) ?? []).length,
       1,
-      \`URL entry \${number} must have exactly one location\`,
+      "URL entry " + number + " must have exactly one location",
     );
     assert.equal(
       (entry.block.match(/<\/loc>/g) ?? []).length,
       1,
-      \`URL entry \${number} must have exactly one closing location tag\`,
+      "URL entry " + number + " must have exactly one closing location tag",
     );
     assert.equal(
       (entry.block.match(/<lastmod>/g) ?? []).length,
       1,
-      \`URL entry \${number} must have exactly one last-modified value\`,
+      "URL entry " + number + " must have exactly one last-modified value",
     );
     assert.equal(
       (entry.block.match(/<\/lastmod>/g) ?? []).length,
       1,
-      \`URL entry \${number} must have exactly one closing last-modified tag\`,
+      "URL entry " + number + " must have exactly one closing last-modified tag",
     );
-    assert.ok(isValidIsoDate(entry.lastmod), \`URL entry \${number} must have a valid ISO last-modified date\`);
+    assert.ok(
+      isValidIsoDate(entry.lastmod),
+      "URL entry " + number + " must have a valid ISO last-modified date",
+    );
   }
 });
 
