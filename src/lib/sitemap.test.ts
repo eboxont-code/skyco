@@ -9,6 +9,7 @@ const SITE = "https://skyco.online";
 const sitemap = readFileSync(new URL("../../public/sitemap.xml", import.meta.url), "utf8");
 const robots = readFileSync(new URL("../../public/robots.txt", import.meta.url), "utf8");
 const entries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, block]) => ({
+  block,
   url: block.match(/<loc>([^<]+)<\/loc>/)?.[1],
   lastmod: block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1],
 }));
@@ -58,10 +59,15 @@ test("sitemap contains exactly the registered Float landing pages", () => {
   assert.deepEqual(actual, expected);
 });
 
-test("every sitemap URL has exactly one valid ISO date last-modified value", () => {
-  assert.ok(entries.every((entry) => isValidIsoDate(entry.lastmod)));
+test("every sitemap URL has exactly one location and one valid ISO last-modified value", () => {
+  for (const [index, entry] of entries.entries()) {
+    assert.equal((entry.block.match(/<loc>/g) ?? []).length, 1, `URL entry ${index + 1} must have exactly one location`);
+    assert.equal((entry.block.match(/<\\/loc>/g) ?? []).length, 1, `URL entry ${index + 1} must have exactly one closing location tag`);
+    assert.equal((entry.block.match(/<lastmod>/g) ?? []).length, 1, `URL entry ${index + 1} must have exactly one last-modified value`);
+    assert.equal((entry.block.match(/<\\/lastmod>/g) ?? []).length, 1, `URL entry ${index + 1} must have exactly one closing last-modified tag`);
+    assert.ok(isValidIsoDate(entry.lastmod), `URL entry ${index + 1} must have a valid ISO last-modified date`);
+  }
 });
-
 test("robots.txt advertises the canonical sitemap", () => {
   assert.match(robots, /^Sitemap:\s+https:\/\/skyco\.online\/sitemap\.xml$/m);
 });
