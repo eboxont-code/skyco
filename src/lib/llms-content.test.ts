@@ -76,3 +76,19 @@ test("a successful discovery snapshot is preferred over the static fallback", as
 
   assert.strictEqual(resolved, discovered);
 });
+
+ 
+test("the Status link describes published routes without promising uptime monitoring", () => {
+  const status = companyLinks.find((page) => page.to === "/status");
+
+  assert.equal(
+    status?.description,
+    "Published and planned product routes; not continuous uptime monitoring.",
+  );
+  const body = buildLlmsContent(fallbackDirectory, companyLinks, legalLinks);
+  assert.ok(
+    body.includes(
+      "- [Status](https://skyco.online/status): Published and planned product routes; not continuous uptime monitoring.",
+    ),
+  );
+});
