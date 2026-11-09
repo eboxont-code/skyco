@@ -757,3 +757,7 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - **Final verification:** Node v22.16.0 ran node --experimental-strip-types --test against those exact byte-for-byte source and test files: **7 passed, 0 failed**. The expected experimental type-stripping warning was emitted. This is not a Bun 1.3.14 or GitHub Actions run; full repository lint/build remain unverified.
 - **PR/release status:** PR #11 remains open and draft. No current-head GitHub Actions run exists; the Vercel status is still failed at the free daily deployment limit. No merge into main, production deployment, deployment ID, deployed SHA or live smoke check occurred. Additional spend: **$0**.
 - **Next eligible task:** inspect PR #12's sitemap/SEO regression coverage against current main. Public crawler/rendered-page verification remains blocked until an accessible matching preview or confirmed runtime is available.
+
+## Exact SHA deployment lookup — 10 November 2026
+
+- Read-only Vercel deployment history lookup for the linked SkyCo project returned **zero preview deployments** for final PR head ad1f0c774f1daf3b3370d29a02597d485d6fe2e4 and **zero production deployments** for current main SHA 1ad3297173bcb60c8946f796640e7b146e58ab08. The final PR head's GitHub combined status still reports the Vercel free daily deployment-limit failure. No deployment URL/ID or deployed SHA exists for this task; no live smoke check is possible from this evidence.
