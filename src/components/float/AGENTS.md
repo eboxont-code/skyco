@@ -1,0 +1,1 @@
+- Float URL generation and clipboard/device sharing must run only from the explicit confirmation action in its existing alert dialog; cancellation must never expose a payload.
