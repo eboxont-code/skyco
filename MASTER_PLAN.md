@@ -831,3 +831,12 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - **Reconciliation:** preserved the PR's published history with a two-parent merge commit; the existing PR head remains the first parent and current main is the second parent. No rebase, force-push, amend or squash was used. The Phase 1 SEO checklist remains unchecked until public crawler/live HTTP and rendered metadata verification are possible.
 - **PR/release status:** PR #12 remains open and draft; no merge to main or production deployment was attempted. No deployment URL/ID or deployed SHA exists for this reconciliation commit. No production data, DNS, hosting settings, secrets, credentials or environment variables were changed. Additional spend: **$0**.
 - **Next eligible task:** reconcile the existing [PR #5](https://github.com/eboxont-code/skyco/pull/5) with current main and verify its six generated `llms.txt` tests plus the planned-product wording against the live registry. Keep public crawler verification and all Phase 0 release gates open.
+
+
+## 35. Preview verification follow-up — 9 November 2026
+
+- After the two-parent reconciliation commit [`a9da1be`](https://github.com/eboxont-code/skyco/commit/a9da1beab9b338e85fe6097fa0cff4bcb0885ae1) was pushed to the PR branch, Vercel automatically created preview deployment [`dpl_EfDhnCs63Dxxv59aysh5Lx7iXN2e`](https://vercel.com/boxont/skyco/EfDhnCs63Dxxv59aysh5Lx7iXN2e) for that exact commit. Read-only deployment inspection confirms state **READY**, branch `test/sitemap-registry-coverage`, target `null` (preview), and alias `skyco-git-test-sitemap-registry-coverage-boxont.vercel.app`.
+- The preview is protected by Vercel SSO. No browser/crawler fetch, rendered metadata inspection or interactive smoke test was performed; no temporary share link or access-control change was created.
+- This is a preview build only. It did not trigger a production deployment, does not change the latest production-target deployment, and does not prove the public-domain sitemap is live. The latest READY production-target record remains on main commit `760d810`; the later `cc3eefad` production-target attempt remains CANCELED.
+- The PR remains open/draft and unmerged. No GitHub Actions run exists for the reconciliation commit. The source-level 104/104 assertions remain the current verification; the 14 committed `node:test` cases have no fresh exact-head runner result.
+- No production settings, DNS, credentials, secrets, environment variables, database or customer data changed. Additional spend: **$0**.
