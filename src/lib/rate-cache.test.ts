@@ -6,6 +6,21 @@ import { createRateCache } from "./rate-cache";
 const fixture = (from = "USD", to = "EUR") => ({ from, to, rate: 2, asOf: "2026-11-05", fetchedAt: "2026-11-06T01:00:00Z", source: "fixture" });
 const outage = async (): Promise<ReturnType<typeof fixture>> => { throw new Error("outage"); };
 
+test("fresh pair snapshots carry the provider date and false stale flag without refetching before expiry", async () => {
+  let calls = 0;
+  const load = createRateCache(3, () => 0);
+  const fetchResult = async () => { calls++; return fixture(); };
+  const fresh = await load("USD", "EUR", fetchResult);
+  assert.deepEqual(fresh, { ...fixture(), stale: false });
+  assert.deepEqual(await load("USD", "EUR", fetchResult), fresh);
+  assert.equal(calls, 1);
+});
+
+test("an entirely cold cache rejects an outage without manufacturing a result", async () => {
+  const load = createRateCache(3);
+  await assert.rejects(load("USD", "EUR", outage), /outage/);
+});
+
 test("60-second cache expiry retains the exact last good pair rate, date and source with a stale flag", async () => {
   let time = 0;
   const load = createRateCache<ReturnType<typeof fixture>>(3, () => time);
