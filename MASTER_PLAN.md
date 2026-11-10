@@ -763,3 +763,14 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - GitHub Actions still reports no workflow run for that head. PR #23 remains open/draft, with no submitted reviews or unresolved review threads. The preview is SSO-protected; no interactive browser or Lovable editor session check is claimed.
 - This is a preview only. No merge, production deployment or production change occurred. Phase 0 gates remain open; additional spend remains **$0**.
 - The next task remains the independent PR #16 Chronos metadata regression-test reconciliation described in section 28. This follow-up changes only the execution record and does not change the application or test source.
+
+
+
+## 28. Immediate run recheck — 10 November 2026
+
+- Re-fetched the exact PR #23 head and compared the preview-auth storage implementation and regression-test file with the earlier application/test commit `94d4f9d`. Both source-file blob IDs are identical; the later changes are plan-only.
+- Reviewed the current test source against the storage broker. It covers server rendering, ordinary-site fallback, rejection of a user-controlled preview hostname, trusted-editor origin and matching-request validation, local fallback when the editor has no session, logout-tombstone cleanup, and set/remove requests sent only to the configured editor origin.
+- The earlier focused test report in this PR records 7 passed and 0 failed in its isolated Node harness, plus a focused TypeScript check. This immediate recheck did not execute the test runner again; it confirms the tested implementation and test-file contents have not changed since that recorded run.
+- The exact current PR head has no GitHub Actions workflow run. Its Vercel status remains blocked by the team's free daily deployment allowance; the READY preview recorded in this PR is a preview, not Production. No browser/editor SSO interaction or cross-tab session smoke test is claimed.
+- PR #23 remains open and draft. Phase 0 release requirements remain unsatisfied (production runtime configuration and matching Lovable workspace evidence, plus reproducible main-branch quality/CI baseline). Do not merge it into the production-triggering main branch until those gates and its remaining interactive verification are genuinely satisfied.
+- No production data, session, credentials, environment variables, DNS, hosting settings or dependencies were changed. Additional spend: **$0**.
