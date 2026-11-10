@@ -149,7 +149,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
             : query.isFetching
             ? "Refreshing rate"
             : data
-              ? rateIsStale ? "Last available rate, not current" : `Checked ${timeAgo(data.fetchedAt)}`
+              ? rateIsStale ? "Stale: last available rate" : `Checked ${timeAgo(data.fetchedAt)}`
               : query.isError
                 ? "Rate service unavailable"
                 : "Loading rate"}
@@ -246,7 +246,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
           <>
             1 {from} = <span className="font-bold text-foreground">{currencyFormat(data.rate, to, true)}</span>
             <span className="ml-2 block text-sm sm:inline">Reference rate for <time dateTime={data.asOf}>{data.asOf}</time>. Source: {data.source}</span>
-            {rateIsStale && <span role="status" className="mt-1 block text-xs">Not current. Last updated: <time dateTime={data.asOf}>{data.asOf}</time>. I could not confirm a newer rate.</span>}
+            {rateIsStale && <span role="status" className="mt-1 block text-xs"><strong>Stale rate.</strong> Last updated: <time dateTime={data.asOf}>{data.asOf}</time>. I could not confirm a newer rate.</span>}
             {data.nrbFallback && <span className="mt-1 block text-sm">Latest available published NRB rates. These are not confirmed as today's rates.</span>}
             {Number.isFinite(data.rate) && data.rate > 0 && <span className="mt-1 block text-sm">1 {to} = {new Intl.NumberFormat("en-GB", { maximumFractionDigits: 8 }).format(1 / data.rate)} {from}</span>}
           </>
