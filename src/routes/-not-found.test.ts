@@ -9,10 +9,10 @@ const notFoundSource = rootSource.match(
 )?.[1];
 
 function getRegistryEntry(registry: string, slug: string): string {
-  const start = registry.indexOf(\`slug: "\${slug}",\`);
-  assert.notEqual(start, -1, \`expected \${slug} in the product registry\`);
+  const start = registry.indexOf("slug: \"" + slug + "\",");
+  assert.notEqual(start, -1, "expected " + slug + " in the product registry");
   const end = registry.indexOf("\n  },", start);
-  assert.notEqual(end, -1, \`expected \${slug} registry entry to close\`);
+  assert.notEqual(end, -1, "expected " + slug + " registry entry to close");
   return registry.slice(start, end);
 }
 
@@ -39,7 +39,7 @@ test("the registry contains five shipped routes and keeps planned products route
   assert.match(projectsSource, /export const liveProjects: ResolvedProject\[\] = splitDirectory\(fallbackDirectory\)\.live;/);
 
   for (const slug of ["budget", "notes"]) {
-    assert.doesNotMatch(getRegistryEntry(registry, slug), /^\s+path:/m, \`\${slug} must remain route-less\`);
+    assert.doesNotMatch(getRegistryEntry(registry, slug), /^\s+path:/m, slug + " must remain route-less");
   }
 });
 
