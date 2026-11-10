@@ -3,7 +3,10 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 const rootSource = readFileSync(new URL("./__root.tsx", import.meta.url), "utf8");
-const projectsSource = readFileSync(new URL("../lib/projects.ts", import.meta.url), "utf8");
+const projectsSource = readFileSync(
+  new URL("../lib/projects.ts", import.meta.url),
+  "utf8",
+);
 const notFoundSource = rootSource.match(
   /function NotFoundComponent\(\) \{([\s\S]*?)\n\}\n\nfunction ErrorComponent/,
 )?.[1];
@@ -18,7 +21,10 @@ function getRegistryEntry(registry: string, slug: string): string {
 
 test("404 recovery links are generated from the live product registry", () => {
   assert.ok(notFoundSource, "expected the root 404 component");
-  assert.match(rootSource, /import \{ liveProjects \} from "\.\.\/lib\/projects";/);
+  assert.match(
+    rootSource,
+    /import \{ liveProjects \} from "\.\.\/lib\/projects";/,
+  );
   assert.match(notFoundSource, /\{liveProjects\.map\(\(project\) => \(/);
   assert.match(notFoundSource, /key=\{project\.slug\}/);
   assert.match(notFoundSource, /to=\{project\.path \?\? "\/"\}/);
@@ -28,18 +34,33 @@ test("404 recovery links are generated from the live product registry", () => {
   );
 });
 
-test("the registry contains five shipped routes and keeps planned products route-less", () => {
+test("the registry exposes five live routes and excludes planned products", () => {
   const registry = projectsSource.match(
     /export const projectRegistry: SkyCoProject\[\] = \[([\s\S]*?)\n\];/,
   )?.[1];
   assert.ok(registry, "expected the shared project registry");
 
-  const shippedPaths = [...registry.matchAll(/^\s+path: "(\/[^"]+)",$/gm)].map(([, path]) => path);
-  assert.deepEqual(shippedPaths, ["/currensee", "/chronos", "/finance-friend", "/grocery", "/float"]);
-  assert.match(projectsSource, /export const liveProjects: ResolvedProject\[\] = splitDirectory\(fallbackDirectory\)\.live;/);
+  const shippedPaths = [...registry.matchAll(/^\s+path: "(\/[^"]+)",$/gm)].map(
+    ([, path]) => path,
+  );
+  assert.deepEqual(shippedPaths, [
+    "/currensee",
+    "/chronos",
+    "/finance-friend",
+    "/grocery",
+    "/float",
+  ]);
+  assert.match(
+    projectsSource,
+    /export const liveProjects: ResolvedProject\[\] = splitDirectory\(fallbackDirectory\)\.live;/,
+  );
 
   for (const slug of ["budget", "notes"]) {
-    assert.doesNotMatch(getRegistryEntry(registry, slug), /^\s+path:/m, slug + " must remain route-less");
+    assert.doesNotMatch(
+      getRegistryEntry(registry, slug),
+      /^\s+path:/m,
+      slug + " must remain route-less",
+    );
   }
 });
 
