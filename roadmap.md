@@ -35,7 +35,7 @@
 - [x] U2: Saved snapshots, max 20, restore and confirmed clear; actual Frankfurter result survives reload and refresh; 10 tests passed; publication requested.
 - [x] U4: Picker flags and decorative popular/recent/favourite symbols verified at 390px and desktop; build green; publication requested.
 - [ ] Numbered items: 17-31, 33-34, 36-41, 43-48, 54
-- [ ] FAV: Existing SkyCo brand favicon and touch icon
+- [x] FAV: SkyCo brand mark confirmed as favicon source; derived favicon.ico (48/32/16), 32px and 16px PNGs from existing mark (no new artwork); apple-touch-icon 180px and manifest 192/512 icons already present; root head links updated with sizes; all 8 icon/manifest URLs return HTTP 200; no Lovable/default icon references remain; no horizontal overflow at 390px or 1280px; build green; not published.
 - [ ] CS1-CS10: Ordered CurrenSee copy and presentation fixes
 
 Do not repeat completed items from the October 27 brief. Front end only, existing routes and packages only. Stop at a confirmed credit balance of 0.29 or less.
