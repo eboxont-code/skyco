@@ -227,7 +227,7 @@ At the start of each run:
 - [ ] Check all five product flows on narrow Android-sized browser viewports and desktop.
 - [ ] Check keyboard navigation, focus order, screen reader labels, contrast and text scaling.
 - [x] Verify SEO titles, canonical URLs, structured data, sitemap and `llms.txt` reflect the five live routes and two planned entries. 11 November 2026: server HTML for all five routes has unique titles, self-referencing skyco.online canonicals, SoftwareApplication + BreadcrumbList; home ItemList lists only the five; sitemap.xml has the five routes and no planned paths; /llms.txt lists five under Projects and Budget & Expenses and Daily Notes under On the way. No mismatches; no code changed.
-- [ ] Confirm install hints and PWA metadata do not promise native app features.
+- [x] Confirm install hints and PWA metadata do not promise native app features. 11 November 2026: manifest has name, icons, shortcuts and a plain web-tools description, no offline, push or store claims; no service worker in public/; InstallHint only offers Add to Home Screen for one-tap access; FAQ says there is no app to install; CurrenSee alerts state checks run only while the page is open, with optional browser notifications. No mismatches; no code changed.
 
 **Exit gate:** published website behaviour, product registry, metadata and trust pages agree with the implementation; no unresolved P0 privacy/security issue remains.
 
