@@ -77,7 +77,7 @@ test("a successful discovery snapshot is preferred over the static fallback", as
   assert.strictEqual(resolved, discovered);
 });
 
- 
+
 test("the Status link describes published routes without promising uptime monitoring", () => {
   const status = companyLinks.find((page) => page.to === "/status");
 
