@@ -220,11 +220,15 @@ export function FloatPlanner({
             {Math.round(((billsTotal + bnplTotal) / incomeTotal) * 100)}%
           </p>
         )}
-        <AlertDialog>
+        <AlertDialog
+          onOpenChange={(open) => {
+            if (open) setShareState("idle");
+          }}
+        >
           <AlertDialogTrigger asChild>
             <Button
               variant="ghost"
-              className="mt-2 min-h-11"
+              className="mt-2 h-auto min-h-11 whitespace-normal"
               aria-label="Share these numbers with a link"
             >
               {shareState === "copied" ? (
