@@ -220,7 +220,11 @@ export function FloatPlanner({
             {Math.round(((billsTotal + bnplTotal) / incomeTotal) * 100)}%
           </p>
         )}
-        <AlertDialog>
+        <AlertDialog
+          onOpenChange={(open) => {
+            if (open) setShareState("idle");
+          }}
+        >
           <AlertDialogTrigger asChild>
             <Button
               variant="ghost"

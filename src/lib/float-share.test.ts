@@ -27,3 +27,15 @@ test("Float share is readable Base64 data, not encryption", () => {
   const readable = JSON.parse(Buffer.from(encoded, "base64url").toString("utf8"));
   assert.deepEqual(readable.i, [["Synthetic", 1, "2026-11-08", 0, null, null]]);
 });
+
+test("Float share decoder rejects malformed and unusable links", () => {
+  const malformedJson = btoa("{");
+  const emptyPayload = btoa(JSON.stringify({ i: [], b: [], p: [] }));
+  const invalidEntries = btoa(
+    JSON.stringify({ i: [["", 12, "2026-11-10", 0, null, null]], b: [], p: [] }),
+  );
+
+  for (const value of ["not-a-valid-share", "%%%", malformedJson, emptyPayload, invalidEntries]) {
+    assert.equal(decodeFloatShare(value), null);
+  }
+});
