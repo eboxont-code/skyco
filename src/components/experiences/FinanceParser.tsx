@@ -68,7 +68,7 @@ export function FinanceParser() {
       </div>
 
       <p className="sr-only" role="status">{parsed ? `${parsed.action} ${parsed.quantity} ${parsed.ticker}${parsed.price === null ? ", price not provided" : ` at $${parsed.price.toFixed(2)}`}, ${parsed.when.toLowerCase()}` : text.trim() ? "Trade not recognised" : "Field cleared"}</p>
-      <div ref={previewRef} tabIndex={-1} aria-label="Parsed preview" className="focus:outline-none mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">
+      <div ref={previewRef} tabIndex={-1} aria-label="Parsed preview" className="focus-visible:ring-2 focus-visible:ring-ring mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Parsed preview
         </p>
@@ -81,7 +81,7 @@ export function FinanceParser() {
               label="Price"
               value={parsed.price === null ? "Not provided" : `$${parsed.price.toFixed(2)}`}
             />
-            <div><Field label="Date" value={parsed.when} />{parsed.when === "Today (assumed)" && <p className="mt-1 text-xs text-muted-foreground">Date assumed to be today</p>}</div>
+            <Field label="Date" value={parsed.when} />
             <Field
               label="Value"
               value={
