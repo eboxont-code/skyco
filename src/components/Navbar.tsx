@@ -179,7 +179,7 @@ export function Navbar({
       </div>
 
       {mobileOpen && (
-        <div id="skyco-mobile-menu" ref={mobilePanel} className="md:hidden border-t border-border bg-background/95 backdrop-blur-md px-6 py-4 space-y-5">
+        <div id="skyco-mobile-menu" ref={mobilePanel} className="md:hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-border bg-background/95 backdrop-blur-md px-6 py-4 space-y-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
               Products

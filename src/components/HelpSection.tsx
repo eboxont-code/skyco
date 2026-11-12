@@ -66,7 +66,7 @@ export function HelpSection() {
   return (
     <section id="help" aria-labelledby="help-heading" className="px-6 py-12 md:py-16">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-2 md:items-start">
-        <div>
+        <div className="min-w-0 break-words">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-sky-bright to-sky-azure text-white">
             <MessageCircleHeart className="h-5 w-5" />
           </div>
