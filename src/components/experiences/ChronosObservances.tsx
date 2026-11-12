@@ -44,11 +44,11 @@ export function ChronosObservances({ system, value }: { system: CalendarSystem; 
     <Button variant="ghost" className="min-h-11 h-auto w-full justify-start whitespace-normal px-0 text-left text-sm" aria-expanded={expanded} aria-controls={listId} onClick={() => setExpanded(!expanded)}>
       {failed ? "Could not load this month's dates." : events === null ? "Loading this month's dates" : events.length ? `${events.length} dates this month` : "No marked dates this month"}
     </Button>
-    {expanded && <ul id={listId} className="space-y-3 border-t border-border pt-3">{events?.map((event, index) => <li key={`${dateKey(event.date)}-${index}`} className="min-w-0">
+    <ul id={listId} hidden={!expanded} className="space-y-3 border-t border-border pt-3">{events?.map((event, index) => <li key={`${dateKey(event.date)}-${index}`} className="min-w-0">
       <time dateTime={`${event.date.getFullYear()}-${String(event.date.getMonth()+1).padStart(2,"0")}-${String(event.date.getDate()).padStart(2,"0")}`} className="block text-muted-foreground">{event.date.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "long" })}</time>
       <p className="font-semibold text-foreground">{event.label}</p>
       {event.note && <p className="mt-1 text-sm text-muted-foreground">{event.note}</p>}
       <Button variant="outline" className="mt-2 min-h-11 h-auto whitespace-normal" onClick={() => downloadCalendar(event)}>Add to my calendar</Button>
-    </li>)}</ul>}
+    </li>)}</ul>
   </div>;
 }

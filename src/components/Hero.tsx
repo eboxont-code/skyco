@@ -15,7 +15,7 @@ export function Hero({ directory }: { directory: ResolvedProject[] }) {
   return (
     <section aria-labelledby="home-heading" className="relative overflow-hidden bg-hero-gradient px-6 pt-24 pb-8 md:pt-36 md:pb-16">
       <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-6 md:grid-cols-[1.15fr_1fr]">
-        <div className="text-center md:text-left">
+        <div className="min-w-0 break-words text-center md:text-left">
           <div className="inline-flex items-center gap-2 rounded-full bg-card/70 backdrop-blur px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-deep ring-1 ring-sky-bright/40">
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             As Above, So Below
