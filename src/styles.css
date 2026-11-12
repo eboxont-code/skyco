@@ -89,7 +89,7 @@
   --muted-foreground: oklch(0.45 0.04 250);
   --accent: oklch(0.82 0.075 240);
   --accent-foreground: oklch(0.25 0.04 250);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(0.50 0.20 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.88 0.02 240);
   --input: oklch(0.88 0.02 240);
@@ -289,4 +289,10 @@ html { scroll-padding-top: 72px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
-a:focus-visible, button:focus-visible, [role="tab"]:focus-visible, summary:focus-visible { outline: 2px solid var(--sky-deep); outline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible, summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+/* Keep enlarged text inside controls rather than clipping labels at fixed heights. */
+.home-sections button, .product-sections button:not([aria-label]),
+.home-sections a, .product-sections a { height: auto; min-height: 2.75rem; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.home-sections h1, .home-sections h2, .product-sections h1, .product-sections h2 { overflow-wrap: anywhere; }
+footer a { max-width: 100%; overflow-wrap: anywhere; }
+input:focus, input:focus-within, select:focus, textarea:focus { outline: 2px solid var(--primary); outline-offset: 2px; }

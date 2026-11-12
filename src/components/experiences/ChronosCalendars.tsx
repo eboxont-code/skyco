@@ -351,8 +351,8 @@ export function ChronosCalendars({ initialDate }: { initialDate?: string }) {
                   {ordinalSummary(readingDate)}
                 </span>
               )}
+              {r.system && <ChronosObservances system={r.system} value={readingDate} />}
             </dd>
-            {r.system && <ChronosObservances system={r.system} value={readingDate} />}
           </div>
         ))}
       </dl>

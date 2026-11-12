@@ -5,7 +5,7 @@ export const companyLinks: NavLink[] = [
   { label: "About", to: "/about", description: "Who runs SkyCo and how it is built" },
   { label: "What's new", to: "/changelog", description: "Recent releases and fixes" },
   { label: "Support", to: "/support", description: "Get help or report a problem" },
-  { label: "Status", to: "/status", description: "Live reachability of every product" },
+  { label: "Status", to: "/status", description: "Published and planned product routes; not continuous uptime monitoring." },
   { label: "FAQ", to: "/faq", description: "Common questions answered" },
 ];
 

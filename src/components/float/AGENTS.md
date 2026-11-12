@@ -1,1 +1,2 @@
 - Float URL generation and clipboard/device sharing must run only from the explicit confirmation action in its existing alert dialog; cancellation must never expose a payload.
+- Use the existing single-select ToggleGroup for planning periods, not tabs without panels; this keeps selection semantics valid without inventing tab content.

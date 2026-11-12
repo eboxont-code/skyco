@@ -1,5 +1,5 @@
 // Moved from the Float app (src/components/float/EntrySection.tsx), restyled with hub tokens.
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Check, Pencil, Plus, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,7 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
   onSubmit: (draft: EntryDraft) => void;
   onCancel: () => void;
 }) {
+  const fieldId = useId();
   const [name, setName] = useState(initial.name);
   const [amount, setAmount] = useState(initial.amount ? String(initial.amount) : "");
   const [date, setDate] = useState(initial.date);
@@ -44,21 +45,21 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
       }}
     >
       <div className="grid min-w-0 gap-1.5">
-        <Label className="text-xs text-muted-foreground">{nameLabel}</Label>
-        <Input value={name} onChange={(e) => setName(e.target.value)} placeholder={namePlaceholder} required />
+        <Label htmlFor={`${fieldId}-name`} className="text-xs text-muted-foreground">{nameLabel}</Label>
+        <Input id={`${fieldId}-name`} className="min-h-11" value={name} onChange={(e) => setName(e.target.value)} placeholder={namePlaceholder} required />
       </div>
       <div className="grid min-w-0 gap-1.5">
-        <Label className="text-xs text-muted-foreground">Amount (AUD)</Label>
-        <Input value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" required />
+        <Label htmlFor={`${fieldId}-amount`} className="text-xs text-muted-foreground">Amount (AUD)</Label>
+        <Input id={`${fieldId}-amount`} className="min-h-11" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" required />
       </div>
       <div className="grid min-w-0 gap-1.5">
-        <Label className="text-xs text-muted-foreground">{dateLabel}</Label>
-        <Input value={date} onChange={(e) => setDate(e.target.value)} type="date" required />
+        <Label htmlFor={`${fieldId}-date`} className="text-xs text-muted-foreground">{dateLabel}</Label>
+        <Input id={`${fieldId}-date`} className="min-h-11" value={date} onChange={(e) => setDate(e.target.value)} type="date" required />
       </div>
       <div className="grid min-w-0 gap-1.5">
-        <Label className="text-xs text-muted-foreground">Repeats</Label>
+        <Label htmlFor={`${fieldId}-frequency`} className="text-xs text-muted-foreground">Repeats</Label>
         <Select value={frequency} onValueChange={(v) => setFrequency(v as Frequency)}>
-          <SelectTrigger><SelectValue /></SelectTrigger>
+          <SelectTrigger id={`${fieldId}-frequency`} className="min-h-11"><SelectValue /></SelectTrigger>
           <SelectContent>
             {(Object.keys(FREQUENCY_LABELS) as Frequency[]).map((key) => (
               <SelectItem key={key} value={key}>{FREQUENCY_LABELS[key]}</SelectItem>
@@ -69,12 +70,12 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
       {showDealFields ? (
         <>
           <div className="grid min-w-0 gap-1.5">
-            <Label className="text-xs text-muted-foreground">Original price (optional)</Label>
-            <Input value={originalAmount} onChange={(e) => setOriginalAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" />
+            <Label htmlFor={`${fieldId}-original`} className="text-xs text-muted-foreground">Original price (optional)</Label>
+            <Input id={`${fieldId}-original`} className="min-h-11" value={originalAmount} onChange={(e) => setOriginalAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" />
           </div>
           <div className="grid min-w-0 gap-1.5">
-            <Label className="text-xs text-muted-foreground">Deal ends (optional)</Label>
-            <Input value={dealEndsOn} onChange={(e) => setDealEndsOn(e.target.value)} type="date" />
+            <Label htmlFor={`${fieldId}-deal`} className="text-xs text-muted-foreground">Deal ends (optional)</Label>
+            <Input id={`${fieldId}-deal`} className="min-h-11" value={dealEndsOn} onChange={(e) => setDealEndsOn(e.target.value)} type="date" />
           </div>
         </>
       ) : null}

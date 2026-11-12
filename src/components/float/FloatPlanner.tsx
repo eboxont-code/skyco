@@ -228,7 +228,7 @@ export function FloatPlanner({
           <AlertDialogTrigger asChild>
             <Button
               variant="ghost"
-              className="mt-2 min-h-11"
+              className="mt-2 h-auto min-h-11 whitespace-normal"
               aria-label="Share these numbers with a link"
             >
               {shareState === "copied" ? (

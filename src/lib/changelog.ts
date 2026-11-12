@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-11-12",
+    title: "Clearer keyboard focus and accessible tool controls",
+    tag: "Fix",
+    items: [
+      "Float entry fields have connected labels, and its planning-period controls expose the selected period correctly.",
+      "Chronos and Finance Friend readings use corrected screen-reader list structure.",
+      "Keyboard focus is clearer on date fields; enlarged text wraps in headings, controls and footer links, and deal warnings have stronger contrast.",
+    ],
+  },
+  {
     date: "2026-11-09",
     title: "Clearer data handling and Float sharing consent",
     tag: "Improvement",
