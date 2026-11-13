@@ -62,7 +62,7 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
           <SelectTrigger id={`${fieldId}-frequency`} className="min-h-11"><SelectValue /></SelectTrigger>
           <SelectContent>
             {(Object.keys(FREQUENCY_LABELS) as Frequency[]).map((key) => (
-              <SelectItem key={key} value={key}>{FREQUENCY_LABELS[key]}</SelectItem>
+              <SelectItem key={key} value={key} className="min-h-11">{FREQUENCY_LABELS[key]}</SelectItem>
             ))}
           </SelectContent>
         </Select>
