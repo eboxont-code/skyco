@@ -64,3 +64,36 @@ test("an older latest-feed response cannot replace a newer cached NRB day", asyn
   assert.equal(result.days.at(-1)?.date, "2026-11-05");
   assert.equal(result.fallback, true);
 });
+
+test("a 429 from the dated feed falls back to the latest published feed", async () => {
+  const urls: string[] = [];
+  const load = createNrbLoader(async input => {
+    urls.push(String(input));
+    return urls.length === 1 ? new Response(null, { status: 429 }) : response([day("2026-11-04")]);
+  }, () => today);
+  const result = await load();
+  assert.equal(urls.length, 2);
+  assert.equal(urls[1], "https://www.nrb.org.np/api/forex/v1/rates?page=1&per_page=1");
+  assert.equal(result.days.at(-1)?.date, "2026-11-04");
+  assert.equal(result.fallback, true);
+});
+
+test("provider timeouts on both feeds fail closed without a cached rate", async () => {
+  let calls = 0;
+  const load = createNrbLoader(async () => {
+    calls++;
+    throw new DOMException("The request timed out", "TimeoutError");
+  }, () => today);
+  await assert.rejects(load(), /Reference rates unavailable/);
+  assert.equal(calls, 2);
+});
+
+test("malformed JSON from both feeds fails closed without inventing published data", async () => {
+  let calls = 0;
+  const load = createNrbLoader(async () => {
+    calls++;
+    return new Response("{not-json", { headers: { "Content-Type": "application/json" } });
+  }, () => today);
+  await assert.rejects(load(), /Reference rates unavailable/);
+  assert.equal(calls, 2);
+});
