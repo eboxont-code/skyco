@@ -100,11 +100,11 @@ test("malformed JSON from both feeds fails closed without inventing published da
 
 test("all published NRB currencies used by the pair directory retain their provider units", async () => {
   const supported = [
-    "CHF", "CNY", "GBP", "EUR", "AUD", "USD", "OMR", "KWD", "BHD",
+    "CHF", "CNY", "GBP", "EUR", "AUD", "USD", "INR", "OMR", "KWD", "BHD",
     "HKD", "CAD", "SGD", "MYR", "JPY", "QAR", "AED", "SAR", "KRW",
   ];
   const rates = supported.map((iso3, index) => ({
-    currency: { iso3, unit: ["JPY", "KRW"].includes(iso3) ? 100 : 1 },
+    currency: { iso3, unit: ["INR", "JPY", "KRW"].includes(iso3) ? 100 : 1 },
     buy: String(100 + index),
     sell: String(102 + index),
   }));
@@ -114,6 +114,7 @@ test("all published NRB currencies used by the pair directory retain their provi
   );
   const result = await load();
   assert.deepEqual(result.days[0]?.rates.map(row => row.currency.iso3), supported);
+  assert.equal(result.days[0]?.rates.find(row => row.currency.iso3 === "INR")?.currency.unit, 100);
   assert.equal(result.days[0]?.rates.find(row => row.currency.iso3 === "JPY")?.currency.unit, 100);
   assert.equal(result.days[0]?.rates.find(row => row.currency.iso3 === "KRW")?.currency.unit, 100);
 });
