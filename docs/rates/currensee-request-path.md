@@ -1,6 +1,6 @@
 # CurrenSee rate request and response path
 
-**Source baseline:** `main` at [`42b8d13e`](https://github.com/eboxont-code/skyco/commit/42b8d13ee5f12881473a294f44b8f0eb1f6c6788) (13 November 2026).
+**Source baseline:** `main` at [`6d404b9d`](https://github.com/eboxont-code/skyco/commit/6d404b9d00968c69049aa8b6a35413943125fb1d) (13 November 2026).
 
 This document maps the existing website implementation. It is **not** a public API specification and does not define a new endpoint.
 
@@ -32,7 +32,8 @@ All third-party requests are made from the server-side rate implementation, not 
 
 - Ordinary fiat pairs use [Frankfurter v1](https://api.frankfurter.dev/v1). The latest request uses USD as the base and asks for the supported symbols; the response is inverted into USD-per-currency values.
 - Fiat history requests use the selected pair and an open-ended date range beginning 30 calendar days before the request. Only positive points actually returned by Frankfurter are kept and sorted by date. Missing weekends/holidays are not filled.
-- The URL builders are isolated in [`frankfurter.ts`](../../src/lib/frankfurter.ts).
+- The pure `parseFrankfurterLatest` helper validates the dated USD-base payload and converts positive currency values to USD per unit. `parseFrankfurterHistory` keeps only positive points returned for the requested target and never fills missing dates.
+- The URL builders and response parsers are isolated in [`frankfurter.ts`](../../src/lib/frankfurter.ts).
 
 ### Crypto rates
 
@@ -58,8 +59,8 @@ All third-party requests are made from the server-side rate implementation, not 
 
 The current tree contains focused tests for:
 
-- [`frankfurter.test.ts`](../../src/lib/frankfurter.test.ts): explicit v1 base, latest URL, history URL and pair direction (4 tests).
-- [`nrb-rates.server.test.ts`](../../src/lib/nrb-rates.server.test.ts): latest-feed fallback, last-good retention, invalid dates/values, cold outage and older-feed protection (5 tests).
+- [`frankfurter.test.ts`](../../src/lib/frankfurter.test.ts): explicit v1 endpoints, USD-base cross-rate normalization, missing/invalid latest values, malformed latest payloads and empty/sparse history (9 tests).
+- [`nrb-rates.server.test.ts`](../../src/lib/nrb-rates.server.test.ts): dated/latest-feed fallback, last-good retention, invalid/missing rows, supported pair-directory currencies and units, cold outage, timeout, HTTP 429 and malformed JSON (10 tests).
 - [`rate-cache.test.ts`](../../src/lib/rate-cache.test.ts): fresh cache, cold outage, stale fallback, pair isolation, invalid results, recovery and bounded eviction (7 tests).
 
 These tests cover provider URL construction and the NRB/pair-cache helpers. There is no dedicated end-to-end test for the complete `getRate` server function across all three providers in the current tree.

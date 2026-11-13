@@ -97,3 +97,32 @@ test("malformed JSON from both feeds fails closed without inventing published da
   await assert.rejects(load(), /Reference rates unavailable/);
   assert.equal(calls, 2);
 });
+
+test("all published NRB currencies used by the pair directory retain their provider units", async () => {
+  const supported = ["CHF", "CNY", "GBP", "EUR", "AUD", "USD", "OMR", "KWD", "BHD", "HKD", "CAD", "SGD", "MYR", "JPY", "QAR", "AED", "SAR", "KRW"];
+  const rates = supported.map((iso3, index) => ({
+    currency: { iso3, unit: ["JPY", "KRW"].includes(iso3) ? 100 : 1 },
+    buy: String(100 + index),
+    sell: String(102 + index),
+  }));
+  const load = createNrbLoader(async () => response([{ date: "2026-11-05", rates }]), () => today);
+  const result = await load();
+  assert.deepEqual(result.days[0]?.rates.map(row => row.currency.iso3), supported);
+  assert.equal(result.days[0]?.rates.find(row => row.currency.iso3 === "JPY")?.currency.unit, 100);
+  assert.equal(result.days[0]?.rates.find(row => row.currency.iso3 === "KRW")?.currency.unit, 100);
+});
+
+test("rows with missing or invalid currency, buy, sell or unit values are omitted", async () => {
+  const valid = { currency: { iso3: "USD", unit: 1 }, buy: "2", sell: "4" };
+  const invalid = [
+    { currency: { iso3: "EUR", unit: 1 }, sell: "4" },
+    { currency: { iso3: "GBP", unit: 1 }, buy: "2" },
+    { currency: { iso3: "AUD" }, buy: "2", sell: "4" },
+    { currency: { iso3: "CAD", unit: 1 }, buy: "0", sell: "4" },
+    { currency: { iso3: "1JPY", unit: 1 }, buy: "2", sell: "4" },
+    null,
+  ];
+  const load = createNrbLoader(async () => response([{ date: "2026-11-05", rates: [valid, ...invalid] }]), () => today);
+  const result = await load();
+  assert.deepEqual(result.days[0]?.rates, [valid]);
+});
