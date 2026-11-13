@@ -94,8 +94,8 @@ Before submitting changes, run the available checks:
 
 ```sh
 bun run lint
-bun test src/lib/*.test.ts
+bun run test
 bun run build
 ```
 
-Existing node:test unit tests can be run directly with Bun as above. A package test script and CI workflow are not yet configured. See [MASTER_PLAN.md](MASTER_PLAN.md) for the outstanding test/CI setup and project acceptance gates.
+The repository pins **Bun 1.3.14** in `package.json` (`packageManager`) and uses the committed `bun.lock`. The `test` script runs all existing TypeScript tests with Bun's built-in test runner. [GitHub Actions CI](.github/workflows/ci.yml) runs the frozen install, lint, test and production build checks for pull requests and pushes to `main`. See [MASTER_PLAN.md](MASTER_PLAN.md) for the still-open lint baseline and project acceptance gates.
