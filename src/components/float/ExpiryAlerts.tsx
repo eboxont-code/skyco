@@ -18,7 +18,7 @@ export function ExpiryAlerts({ items }: { items: Entry[] }) {
       <ul className="mt-3 grid gap-2">
         {ending.map(({ item, days }) => (
           <li key={`${item.id}-${item.dealEndsOn}`} className="flex flex-wrap justify-between gap-x-3 break-words text-sm">
-            <span className="min-w-0 truncate text-foreground">
+            <span className="min-w-0 break-words text-foreground">
               {item.name}
               <span className="text-muted-foreground">
                 {", "}{days === 0 ? "ends today" : `ends in ${days} ${days === 1 ? "day" : "days"}`}

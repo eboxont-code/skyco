@@ -14,7 +14,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
 
   return (
     <footer className="border-t border-sky-bright/20 bg-footer-surface px-6 py-14">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl break-words [overflow-wrap:anywhere]">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <div className="flex items-center gap-2 text-foreground">

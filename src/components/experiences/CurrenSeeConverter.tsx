@@ -210,7 +210,7 @@ export function CurrenSeeConverter({ initialFrom, initialTo, initialAmount, init
         </div>
       </div>
 
-      <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" className="min-h-11" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
+      <div role="group" aria-label="Quick amounts" className="mt-3 flex flex-wrap gap-2">{[1, 10, 100, 1000].map(n => <Button key={n} variant="outline" className="min-h-11 min-w-11" aria-pressed={Number(amount) === n} onClick={() => setAmount(String(n))}>{n}</Button>)}</div>
       <div role="group" aria-label="Popular pairs" className="mt-3 flex flex-wrap items-center gap-2"><span className="text-xs font-semibold text-muted-foreground">Popular pairs</span>{[["AUD", "NPR"], ["USD", "NPR"], ["USD", "EUR"], ["EUR", "GBP"], ["USD", "JPY"], ["AUD", "USD"], ["BTC", "USD"]].map(([base, quote]) => base && quote ? <Button key={`${base}:${quote}`} variant="outline" className="min-h-11" aria-pressed={from === base && to === quote} onClick={() => { setFrom(base); setTo(quote); }}><CurrencySymbol code={base} />{base} → <CurrencySymbol code={quote} />{quote}</Button> : null)}</div>
       <div role="group" aria-label="Favourite currency pairs" className="mt-3">
         <span className="text-xs font-semibold text-muted-foreground">Favourites</span>

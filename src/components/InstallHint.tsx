@@ -28,8 +28,8 @@ export function InstallHint() {
   }, []);
   if (hidden || (!prompt && !ios)) return null;
   const dismiss = () => { setHidden(true); try { localStorage.setItem(KEY, "1"); } catch { /* Optional storage. */ } };
-  return <aside aria-label="Add CurrenSee to your home screen" className="fixed inset-x-4 bottom-20 z-50 mx-auto max-w-lg border border-border bg-muted p-3 text-sm text-foreground shadow-lg sm:bottom-4">
-    <p>{ios ? "Tap Share then Add to Home Screen" : "Add CurrenSee to your home screen for one-tap access."}</p>
-    <div className="mt-2 flex flex-wrap gap-2">{prompt && <Button className="min-h-11" onClick={async () => { try { await prompt.prompt(); const choice = await prompt.userChoice; if (choice.outcome === "accepted") dismiss(); else setPrompt(null); } catch { setPrompt(null); } }}>Install</Button>}<Button variant="outline" className="min-h-11" onClick={dismiss}>Not now</Button></div>
+  return <aside aria-label="Install the CurrenSee web app" className="fixed inset-x-4 bottom-20 z-50 mx-auto max-w-lg border border-border bg-muted p-3 text-sm text-foreground shadow-lg sm:bottom-4">
+    <p>{ios ? "In Safari, tap Share, then Add to Home Screen." : "Add the CurrenSee web app to your device for quick access."}</p>
+    <div className="mt-2 flex flex-wrap gap-2">{prompt && <Button className="min-h-11" onClick={async () => { try { await prompt.prompt(); const choice = await prompt.userChoice; if (choice.outcome === "accepted") dismiss(); else setPrompt(null); } catch { setPrompt(null); } }}>Install web app</Button>}<Button variant="outline" className="min-h-11" onClick={dismiss}>Not now</Button></div>
   </aside>;
 }
