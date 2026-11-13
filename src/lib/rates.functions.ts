@@ -1,6 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createRateCache } from "./rate-cache";
-import { frankfurterLatestUrl, frankfurterHistoryUrl } from "./frankfurter";
+import {
+  frankfurterLatestUrl,
+  frankfurterHistoryUrl,
+  parseFrankfurterLatest,
+  parseFrankfurterHistory,
+} from "./frankfurter";
 
 /**
  * Live rate lookup for the in-hub CurrenSee converter.
@@ -57,19 +62,11 @@ function nprTable(day: NrbDay): Record<string, number> {
   return table;
 }
 
-async function fiatUsdTable(): Promise<Record<string, number>> {
+async function fiatUsdTable(): Promise<{ date: string; rates: Record<string, number> }> {
   const symbols = FIAT.filter((c) => c !== "USD" && !["NPR", "QAR", "AED", "SAR"].includes(c)).join(",");
-  const res = await fetch(
-    frankfurterLatestUrl(symbols),
-  );
+  const res = await fetch(frankfurterLatestUrl(symbols));
   if (!res.ok) throw new Error("rate source unavailable");
-  const json = (await res.json()) as { date: string; rates: Record<string, number> };
-  // usdPerUnit: how many USD one unit of the currency is worth
-  const table: Record<string, number> = { USD: 1 };
-  for (const [code, perUsd] of Object.entries(json.rates)) table[code] = 1 / perUsd;
-  table["__date"] = 0;
-  (table as Record<string, number> & { date?: string }).date = json.date as never;
-  return table;
+  return parseFrankfurterLatest(await res.json());
 }
 
 async function cryptoUsd(codes: string[]): Promise<Record<string, number>> {
@@ -91,11 +88,7 @@ async function fiatSeries(from: string, to: string) {
     frankfurterHistoryUrl(start, from, to),
   );
   if (!res.ok) return [];
-  const json = (await res.json()) as { rates: Record<string, Record<string, number>> };
-  return Object.entries(json.rates)
-    .map(([date, r]) => ({ date, value: r[to] ?? 0 }))
-    .filter((p) => p.value > 0)
-    .sort((a, b) => a.date.localeCompare(b.date));
+  return parseFrankfurterHistory(await res.json(), to);
 }
 
 async function cryptoSeries(code: string, multiplier: number) {
@@ -148,15 +141,17 @@ export const getRate = createServerFn({ method: "GET" })
         asOf = latest.date;
       } catch {
         if ([from, to].some(c => ["QAR", "AED", "SAR"].includes(c))) throw new Error("Reference rates unavailable");
-        fiat = await fiatUsdTable();
-        asOf = (fiat as unknown as { date: string }).date;
+        const latest = await fiatUsdTable();
+        fiat = latest.rates;
+        asOf = latest.date;
         fiat.NPR = (fiat.INR ?? 0) / 1.6;
         nrbSource = "Derived from INR at the official 1.6 peg";
       }
     }
     if (!needsNrb) {
-      fiat = await fiatUsdTable();
-      asOf = (fiat as unknown as { date: string }).date;
+      const latest = await fiatUsdTable();
+      fiat = latest.rates;
+      asOf = latest.date;
     }
     const cryptoCodes = [from, to].filter((c) => c in CRYPTO);
     const crypto = await cryptoUsd([...new Set(cryptoCodes)]);
