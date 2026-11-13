@@ -1,6 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createRateCache } from "./rate-cache";
-import { frankfurterLatestUrl, frankfurterHistoryUrl, parseFrankfurterLatest, parseFrankfurterHistory } from "./frankfurter";
+import {
+  frankfurterLatestUrl,
+  frankfurterHistoryUrl,
+  parseFrankfurterLatest,
+  parseFrankfurterHistory,
+} from "./frankfurter";
 
 /**
  * Live rate lookup for the in-hub CurrenSee converter.

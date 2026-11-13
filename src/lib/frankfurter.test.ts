@@ -34,7 +34,6 @@ test("history requests retain the direction of the currency pair", () => {
   assert.equal(url.searchParams.get("symbols"), "USD");
 });
 
-
 test("latest USD-base values support cross rates for common fiat pairs", () => {
   const latest = parseFrankfurterLatest({
     date: "2026-11-05",
@@ -56,8 +55,14 @@ test("latest payload omits missing, invalid and unsupported rate values", () => 
 });
 
 test("malformed latest payloads fail closed", () => {
-  assert.throws(() => parseFrankfurterLatest({ rates: { AUD: 1.6 } }), /rate source unavailable/);
-  assert.throws(() => parseFrankfurterLatest({ date: "not-a-date", rates: { AUD: 1.6 } }), /rate source unavailable/);
+  assert.throws(
+    () => parseFrankfurterLatest({ rates: { AUD: 1.6 } }),
+    /rate source unavailable/,
+  );
+  assert.throws(
+    () => parseFrankfurterLatest({ date: "not-a-date", rates: { AUD: 1.6 } }),
+    /rate source unavailable/,
+  );
 });
 
 test("empty Frankfurter history stays empty without filling missing days", () => {
