@@ -1,0 +1,116 @@
+[
+  {
+    "category": "valid",
+    "input": "bought 50 shares of NVDA today at $145",
+    "expected": {
+      "action": "Buy",
+      "quantity": 50,
+      "ticker": "NVDA",
+      "price": 145,
+      "when": "Today"
+    }
+  },
+  {
+    "category": "valid",
+    "input": "sold 10 AAPL at 212.40 yesterday",
+    "expected": {
+      "action": "Sell",
+      "quantity": 10,
+      "ticker": "AAPL",
+      "price": 212.4,
+      "when": "Yesterday"
+    }
+  },
+  {
+    "category": "valid",
+    "input": "buy 0.5 shares of VOO at $1,234.56",
+    "expected": {
+      "action": "Buy",
+      "quantity": 0.5,
+      "ticker": "VOO",
+      "price": 1234.56,
+      "when": "Today (assumed)"
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "bought 2 AAPL and sold 3 NVDA at $5 today yesterday",
+    "expected": {
+      "action": "Sell",
+      "quantity": 2,
+      "ticker": "AAPL",
+      "price": 5,
+      "when": "Yesterday"
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "buy 2024 shares of NVDA at 10",
+    "expected": {
+      "action": "Buy",
+      "quantity": 2024,
+      "ticker": "NVDA",
+      "price": 10,
+      "when": "Today (assumed)"
+    }
+  },
+  {
+    "category": "malformed",
+    "input": "",
+    "expected": null
+  },
+  {
+    "category": "malformed",
+    "input": "hold ten shares of NVDA",
+    "expected": null
+  },
+  {
+    "category": "malformed",
+    "input": "buy 0 AAPL at $10",
+    "expected": null
+  },
+  {
+    "category": "missing-price",
+    "input": "bought 3 shares of VOO today",
+    "expected": {
+      "action": "Buy",
+      "quantity": 3,
+      "ticker": "VOO",
+      "price": null,
+      "when": "Today"
+    }
+  },
+  {
+    "category": "missing-price",
+    "input": "sold 10 AAPL at unknown yesterday",
+    "expected": {
+      "action": "Sell",
+      "quantity": 10,
+      "ticker": "AAPL",
+      "price": null,
+      "when": "Yesterday"
+    }
+  },
+  {
+    "category": "missing-date",
+    "input": "added 3 shares of VOO at $505",
+    "expected": {
+      "action": "Buy",
+      "quantity": 3,
+      "ticker": "VOO",
+      "price": 505,
+      "when": "Today (assumed)"
+    }
+  },
+  {
+    "category": "missing-date",
+    "input": "sell 2 MSFT @ 400 on 2024-01-01",
+    "expected": {
+      "action": "Sell",
+      "quantity": 2,
+      "ticker": "MSFT",
+      "price": 400,
+      "when": "Today (assumed)"
+    }
+  }
+]

@@ -1,0 +1,1115 @@
+{
+  "version": 1,
+  "reference": "Current Chronos useMemo reading callback; Bun 1.4.4 Intl output, not independent astronomical truth",
+  "cases": [
+    {
+      "date": "2000-02-28",
+      "reason": "Gregorian century leap eve",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "28 February 2000",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "16 Falgun 2056 BS",
+          "native": "१६ फाल्गुण २०५६",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "22 Dhuʻl-Qiʻdah 1420 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "22 Adar I 5760 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "24 First Month 2000(geng-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "9 Esfand 1378 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "9 Phalguna 1921 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2000-02-29",
+      "reason": "Gregorian century leap day",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "29 February 2000",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "17 Falgun 2056 BS",
+          "native": "१७ फाल्गुण २०५६",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "23 Dhuʻl-Qiʻdah 1420 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "23 Adar I 5760 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "25 First Month 2000(geng-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "10 Esfand 1378 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "10 Phalguna 1921 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2000-03-01",
+      "reason": "Gregorian month boundary",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "1 March 2000",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "18 Falgun 2056 BS",
+          "native": "१८ फाल्गुण २०५६",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "24 Dhuʻl-Qiʻdah 1420 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "24 Adar I 5760 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "26 First Month 2000(geng-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "11 Esfand 1378 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "11 Phalguna 1921 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2023-02-28",
+      "reason": "Gregorian common year",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "28 February 2023",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "16 Falgun 2079 BS",
+          "native": "१६ फाल्गुण २०७९",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "8 Shaʻban 1444 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "7 Adar 5783 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "9 Second Month 2023(gui-mao)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "9 Esfand 1401 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "9 Phalguna 1944 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2023-03-01",
+      "reason": "Common-year March boundary",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "1 March 2023",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "17 Falgun 2079 BS",
+          "native": "१७ फाल्गुण २०७९",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "9 Shaʻban 1444 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "8 Adar 5783 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "10 Second Month 2023(gui-mao)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "10 Esfand 1401 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "10 Phalguna 1944 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-02-29",
+      "reason": "Gregorian leap and Hebrew leap year",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "29 February 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "17 Falgun 2080 BS",
+          "native": "१७ फाल्गुण २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "19 Shaʻban 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "20 Adar I 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "20 First Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "10 Esfand 1402 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "10 Phalguna 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-03-01",
+      "reason": "Leap-year March boundary",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "1 March 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "18 Falgun 2080 BS",
+          "native": "१८ फाल्गुण २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "20 Shaʻban 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "21 Adar I 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "21 First Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "11 Esfand 1402 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "11 Phalguna 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-03-10",
+      "reason": "Hebrew Adar I ending",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "10 March 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "27 Falgun 2080 BS",
+          "native": "२७ फाल्गुण २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "29 Shaʻban 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "30 Adar I 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "1 Second Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "20 Esfand 1402 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "20 Phalguna 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-03-11",
+      "reason": "Hebrew Adar II beginning",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "11 March 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "28 Falgun 2080 BS",
+          "native": "२८ फाल्गुण २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "1 Ramadan 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "1 Adar II 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "2 Second Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "21 Esfand 1402 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "21 Phalguna 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2021-03-20",
+      "reason": "Persian leap Esfand 30",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "20 March 2021",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "7 Chaitra 2077 BS",
+          "native": "०७ चैत्र २०७७",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "7 Shaʻban 1442 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "7 Nisan 5781 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "8 Second Month 2021(xin-chou)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "30 Esfand 1399 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "29 Phalguna 1942 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2021-03-21",
+      "reason": "Persian new year",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "21 March 2021",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "8 Chaitra 2077 BS",
+          "native": "०८ चैत्र २०७७",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "8 Shaʻban 1442 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "8 Nisan 5781 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "9 Second Month 2021(xin-chou)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "1 Farvardin 1400 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "30 Phalguna 1942 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-03-19",
+      "reason": "Persian year end",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "19 March 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "6 Chaitra 2080 BS",
+          "native": "०६ चैत्र २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "9 Ramadan 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "9 Adar II 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "10 Second Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "29 Esfand 1402 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "29 Phalguna 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-03-20",
+      "reason": "Persian new year",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "20 March 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "7 Chaitra 2080 BS",
+          "native": "०७ चैत्र २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "10 Ramadan 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "10 Adar II 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "11 Second Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "1 Farvardin 1403 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "30 Phalguna 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-04-12",
+      "reason": "Nepali year end",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "12 April 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "30 Chaitra 2080 BS",
+          "native": "३० चैत्र २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "3 Shawwal 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "4 Nisan 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "4 Third Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "24 Farvardin 1403 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "23 Chaitra 1946 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-04-13",
+      "reason": "Nepali year start",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "13 April 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "1 Baishakh 2081 BS",
+          "native": "०१ बैशाख २०८१",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "4 Shawwal 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "5 Nisan 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "5 Third Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "25 Farvardin 1403 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "24 Chaitra 1946 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-02-09",
+      "reason": "Chinese year end",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "9 February 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "26 Magh 2080 BS",
+          "native": "२६ माघ २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "28 Rajab 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "30 Shevat 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "30 Twelfth Month 2023(gui-mao)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "20 Bahman 1402 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "20 Magha 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2024-02-10",
+      "reason": "Chinese new year",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "10 February 2024",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "27 Magh 2080 BS",
+          "native": "२७ माघ २०८०",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "29 Rajab 1445 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "1 Adar I 5784 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "1 First Month 2024(jia-chen)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "21 Bahman 1402 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "21 Magha 1945 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2026-12-31",
+      "reason": "Gregorian year end",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "31 December 2026",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "16 Poush 2083 BS",
+          "native": "१६ पौष २०८३",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "22 Rajab 1448 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "21 Tevet 5787 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "23 Eleventh Month 2026(bing-wu)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "10 Dey 1405 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "10 Pausa 1948 Śaka",
+          "native": null
+        }
+      ]
+    },
+    {
+      "date": "2027-01-01",
+      "reason": "Gregorian new year",
+      "readings": [
+        {
+          "label": "Gregorian",
+          "text": "1 January 2027",
+          "native": null,
+          "system": "gregorian"
+        },
+        {
+          "label": "Nepali (Bikram Sambat)",
+          "text": "17 Poush 2083 BS",
+          "native": "१७ पौष २०८३",
+          "lang": "ne",
+          "dir": "ltr",
+          "system": "nepali"
+        },
+        {
+          "label": "Hijri",
+          "text": "23 Rajab 1448 AH",
+          "native": null,
+          "lang": "ar",
+          "dir": "rtl",
+          "system": "hijri"
+        },
+        {
+          "label": "Hebrew",
+          "text": "22 Tevet 5787 AM",
+          "native": null,
+          "lang": "he",
+          "dir": "rtl",
+          "system": "hebrew"
+        },
+        {
+          "label": "Chinese",
+          "text": "24 Eleventh Month 2026(bing-wu)",
+          "native": null,
+          "lang": "zh",
+          "dir": "ltr",
+          "system": "chinese"
+        },
+        {
+          "label": "Persian",
+          "text": "11 Dey 1405 AP",
+          "native": null,
+          "lang": "fa",
+          "dir": "rtl",
+          "system": "persian"
+        },
+        {
+          "label": "Indian Saka",
+          "text": "11 Pausa 1948 Śaka",
+          "native": null
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "instant": "2024-02-29T18:14:59Z",
+      "selectedDate": "2024-02-29",
+      "zone": "Asia/Kathmandu",
+      "localDay": "2024-02-29"
+    },
+    {
+      "instant": "2024-02-29T18:15:00Z",
+      "selectedDate": "2024-02-29",
+      "zone": "Asia/Kathmandu",
+      "localDay": "2024-03-01"
+    },
+    {
+      "instant": "2024-03-01T09:59:59Z",
+      "selectedDate": "2024-03-01",
+      "zone": "Pacific/Honolulu",
+      "localDay": "2024-02-29"
+    },
+    {
+      "instant": "2024-03-01T10:00:00Z",
+      "selectedDate": "2024-03-01",
+      "zone": "Pacific/Honolulu",
+      "localDay": "2024-03-01"
+    }
+  ]
+}

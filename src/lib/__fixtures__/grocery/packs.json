@@ -1,0 +1,636 @@
+{
+  "version": 1,
+  "sizes": [
+    {
+      "size": 1,
+      "packs": [
+        {
+          "id": "easy-week",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Onions",
+                  "quantity": "2"
+                },
+                {
+                  "item": "Carrots",
+                  "quantity": "250 g"
+                },
+                {
+                  "item": "Baby spinach",
+                  "quantity": "100 g"
+                },
+                {
+                  "item": "Tomatoes",
+                  "quantity": "3"
+                },
+                {
+                  "item": "Lemons",
+                  "quantity": "1"
+                }
+              ]
+            },
+            {
+              "name": "Meat and fish",
+              "items": [
+                {
+                  "item": "Chicken thighs",
+                  "quantity": "300 g"
+                },
+                {
+                  "item": "Salmon fillets",
+                  "quantity": "1"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Milk",
+                  "quantity": "0.5 L"
+                },
+                {
+                  "item": "Greek yoghurt",
+                  "quantity": "250 g"
+                },
+                {
+                  "item": "Cheddar",
+                  "quantity": "100 g"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Rice",
+                  "quantity": "250 g"
+                },
+                {
+                  "item": "Pasta",
+                  "quantity": "250 g"
+                },
+                {
+                  "item": "Chopped tomatoes",
+                  "quantity": "1 tins"
+                },
+                {
+                  "item": "Chickpeas",
+                  "quantity": "1 tin"
+                },
+                {
+                  "item": "Olive oil",
+                  "quantity": "1 bottle"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "meat-free",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Sweet potatoes",
+                  "quantity": "2"
+                },
+                {
+                  "item": "Courgettes",
+                  "quantity": "1"
+                },
+                {
+                  "item": "Red peppers",
+                  "quantity": "2"
+                },
+                {
+                  "item": "Mushrooms",
+                  "quantity": "150 g"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Halloumi",
+                  "quantity": "1 block"
+                },
+                {
+                  "item": "Eggs",
+                  "quantity": "3"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Red lentils",
+                  "quantity": "250 g"
+                },
+                {
+                  "item": "Black beans",
+                  "quantity": "1 tins"
+                },
+                {
+                  "item": "Couscous",
+                  "quantity": "150 g"
+                },
+                {
+                  "item": "Coconut milk",
+                  "quantity": "1 tin"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "packs": [
+        {
+          "id": "easy-week",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Onions",
+                  "quantity": "3"
+                },
+                {
+                  "item": "Carrots",
+                  "quantity": "500 g"
+                },
+                {
+                  "item": "Baby spinach",
+                  "quantity": "200 g"
+                },
+                {
+                  "item": "Tomatoes",
+                  "quantity": "6"
+                },
+                {
+                  "item": "Lemons",
+                  "quantity": "2"
+                }
+              ]
+            },
+            {
+              "name": "Meat and fish",
+              "items": [
+                {
+                  "item": "Chicken thighs",
+                  "quantity": "600 g"
+                },
+                {
+                  "item": "Salmon fillets",
+                  "quantity": "2"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Milk",
+                  "quantity": "1 L"
+                },
+                {
+                  "item": "Greek yoghurt",
+                  "quantity": "500 g"
+                },
+                {
+                  "item": "Cheddar",
+                  "quantity": "200 g"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Rice",
+                  "quantity": "500 g"
+                },
+                {
+                  "item": "Pasta",
+                  "quantity": "500 g"
+                },
+                {
+                  "item": "Chopped tomatoes",
+                  "quantity": "2 tins"
+                },
+                {
+                  "item": "Chickpeas",
+                  "quantity": "1 tin"
+                },
+                {
+                  "item": "Olive oil",
+                  "quantity": "1 bottle"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "meat-free",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Sweet potatoes",
+                  "quantity": "3"
+                },
+                {
+                  "item": "Courgettes",
+                  "quantity": "2"
+                },
+                {
+                  "item": "Red peppers",
+                  "quantity": "3"
+                },
+                {
+                  "item": "Mushrooms",
+                  "quantity": "300 g"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Halloumi",
+                  "quantity": "1 block"
+                },
+                {
+                  "item": "Eggs",
+                  "quantity": "6"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Red lentils",
+                  "quantity": "500 g"
+                },
+                {
+                  "item": "Black beans",
+                  "quantity": "2 tins"
+                },
+                {
+                  "item": "Couscous",
+                  "quantity": "300 g"
+                },
+                {
+                  "item": "Coconut milk",
+                  "quantity": "1 tin"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 4,
+      "packs": [
+        {
+          "id": "easy-week",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Onions",
+                  "quantity": "5"
+                },
+                {
+                  "item": "Carrots",
+                  "quantity": "1 kg"
+                },
+                {
+                  "item": "Baby spinach",
+                  "quantity": "400 g"
+                },
+                {
+                  "item": "Tomatoes",
+                  "quantity": "10"
+                },
+                {
+                  "item": "Lemons",
+                  "quantity": "3"
+                }
+              ]
+            },
+            {
+              "name": "Meat and fish",
+              "items": [
+                {
+                  "item": "Chicken thighs",
+                  "quantity": "1.2 kg"
+                },
+                {
+                  "item": "Salmon fillets",
+                  "quantity": "4"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Milk",
+                  "quantity": "2 L"
+                },
+                {
+                  "item": "Greek yoghurt",
+                  "quantity": "1 kg"
+                },
+                {
+                  "item": "Cheddar",
+                  "quantity": "400 g"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Rice",
+                  "quantity": "1 kg"
+                },
+                {
+                  "item": "Pasta",
+                  "quantity": "1 kg"
+                },
+                {
+                  "item": "Chopped tomatoes",
+                  "quantity": "4 tins"
+                },
+                {
+                  "item": "Chickpeas",
+                  "quantity": "2 tins"
+                },
+                {
+                  "item": "Olive oil",
+                  "quantity": "1 bottle"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "meat-free",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Sweet potatoes",
+                  "quantity": "6"
+                },
+                {
+                  "item": "Courgettes",
+                  "quantity": "4"
+                },
+                {
+                  "item": "Red peppers",
+                  "quantity": "5"
+                },
+                {
+                  "item": "Mushrooms",
+                  "quantity": "600 g"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Halloumi",
+                  "quantity": "2 blocks"
+                },
+                {
+                  "item": "Eggs",
+                  "quantity": "12"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Red lentils",
+                  "quantity": "1 kg"
+                },
+                {
+                  "item": "Black beans",
+                  "quantity": "4 tins"
+                },
+                {
+                  "item": "Couscous",
+                  "quantity": "600 g"
+                },
+                {
+                  "item": "Coconut milk",
+                  "quantity": "2 tins"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 6,
+      "packs": [
+        {
+          "id": "easy-week",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Onions",
+                  "quantity": "8"
+                },
+                {
+                  "item": "Carrots",
+                  "quantity": "1.5 kg"
+                },
+                {
+                  "item": "Baby spinach",
+                  "quantity": "600 g"
+                },
+                {
+                  "item": "Tomatoes",
+                  "quantity": "15"
+                },
+                {
+                  "item": "Lemons",
+                  "quantity": "5"
+                }
+              ]
+            },
+            {
+              "name": "Meat and fish",
+              "items": [
+                {
+                  "item": "Chicken thighs",
+                  "quantity": "1.8 kg"
+                },
+                {
+                  "item": "Salmon fillets",
+                  "quantity": "6"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Milk",
+                  "quantity": "3 L"
+                },
+                {
+                  "item": "Greek yoghurt",
+                  "quantity": "1.5 kg"
+                },
+                {
+                  "item": "Cheddar",
+                  "quantity": "600 g"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Rice",
+                  "quantity": "1.5 kg"
+                },
+                {
+                  "item": "Pasta",
+                  "quantity": "1.5 kg"
+                },
+                {
+                  "item": "Chopped tomatoes",
+                  "quantity": "6 tins"
+                },
+                {
+                  "item": "Chickpeas",
+                  "quantity": "3 tins"
+                },
+                {
+                  "item": "Olive oil",
+                  "quantity": "2 bottle"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "meat-free",
+          "sections": [
+            {
+              "name": "Produce",
+              "items": [
+                {
+                  "item": "Sweet potatoes",
+                  "quantity": "9"
+                },
+                {
+                  "item": "Courgettes",
+                  "quantity": "6"
+                },
+                {
+                  "item": "Red peppers",
+                  "quantity": "8"
+                },
+                {
+                  "item": "Mushrooms",
+                  "quantity": "900 g"
+                }
+              ]
+            },
+            {
+              "name": "Dairy and chilled",
+              "items": [
+                {
+                  "item": "Halloumi",
+                  "quantity": "3 blocks"
+                },
+                {
+                  "item": "Eggs",
+                  "quantity": "18"
+                }
+              ]
+            },
+            {
+              "name": "Pantry",
+              "items": [
+                {
+                  "item": "Red lentils",
+                  "quantity": "1.5 kg"
+                },
+                {
+                  "item": "Black beans",
+                  "quantity": "6 tins"
+                },
+                {
+                  "item": "Couscous",
+                  "quantity": "900 g"
+                },
+                {
+                  "item": "Coconut milk",
+                  "quantity": "3 tins"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "storage": [
+    {
+      "initial": {
+        "skyco.grocery.checked.easy-week": "[\"easy-week:Onions\",\"easy-week:Onions\",17,\"meat-free:Eggs\",\"easy-week:Unknown\"]"
+      },
+      "expected": {
+        "easy-week": [
+          "easy-week:Onions"
+        ]
+      }
+    },
+    {
+      "initial": {
+        "skyco.grocery.checked.easy-week": "{\"wrong\":\"shape\"}",
+        "skyco.grocery.checked.meat-free": "null"
+      },
+      "expected": {}
+    },
+    {
+      "initial": {
+        "skyco.grocery.checked.easy-week": "["
+      },
+      "expected": {}
+    },
+    {
+      "initial": {
+        "skyco.grocery.v1": "[]"
+      },
+      "expected": {}
+    }
+  ]
+}

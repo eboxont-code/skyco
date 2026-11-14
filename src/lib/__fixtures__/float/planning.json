@@ -1,0 +1,442 @@
+{
+  "version": 1,
+  "recurrence": [
+    {
+      "name": "weekly inclusive boundaries",
+      "anchor": "2026-11-09",
+      "frequency": "weekly",
+      "start": "2026-11-09",
+      "end": "2026-11-23",
+      "expected": [
+        "2026-11-09",
+        "2026-11-16",
+        "2026-11-23"
+      ]
+    },
+    {
+      "name": "fortnightly across year boundary",
+      "anchor": "2026-12-28",
+      "frequency": "fortnightly",
+      "start": "2026-12-28",
+      "end": "2027-01-25",
+      "expected": [
+        "2026-12-28",
+        "2027-01-11",
+        "2027-01-25"
+      ]
+    },
+    {
+      "name": "monthly 31st clamps to common February",
+      "anchor": "2023-01-31",
+      "frequency": "monthly",
+      "start": "2023-02-01",
+      "end": "2023-02-28",
+      "expected": [
+        "2023-02-28"
+      ]
+    },
+    {
+      "name": "monthly 31st clamps to leap February",
+      "anchor": "2024-01-31",
+      "frequency": "monthly",
+      "start": "2024-02-01",
+      "end": "2024-02-29",
+      "expected": [
+        "2024-02-29"
+      ]
+    },
+    {
+      "name": "monthly 31st clamps to April",
+      "anchor": "2024-01-31",
+      "frequency": "monthly",
+      "start": "2024-04-01",
+      "end": "2024-04-30",
+      "expected": [
+        "2024-04-30"
+      ]
+    },
+    {
+      "name": "monthly March returns to anchor day",
+      "anchor": "2024-01-31",
+      "frequency": "monthly",
+      "start": "2024-03-01",
+      "end": "2024-03-31",
+      "expected": [
+        "2024-03-31"
+      ]
+    },
+    {
+      "name": "future monthly anchor current backwards recurrence",
+      "anchor": "2026-12-31",
+      "frequency": "monthly",
+      "start": "2026-11-01",
+      "end": "2026-11-30",
+      "expected": [
+        "2026-11-30"
+      ]
+    },
+    {
+      "name": "future weekly anchor has no occurrences",
+      "anchor": "2026-12-31",
+      "frequency": "weekly",
+      "start": "2026-11-01",
+      "end": "2026-11-30",
+      "expected": []
+    },
+    {
+      "name": "reversed bounds",
+      "anchor": "2026-11-09",
+      "frequency": "weekly",
+      "start": "2026-11-23",
+      "end": "2026-11-09",
+      "expected": []
+    },
+    {
+      "name": "invalid monthly date",
+      "anchor": "not-a-date",
+      "frequency": "monthly",
+      "start": "2026-11-01",
+      "end": "2026-11-30",
+      "expected": []
+    },
+    {
+      "name": "empty weekly date",
+      "anchor": "",
+      "frequency": "weekly",
+      "start": "2026-11-01",
+      "end": "2026-11-30",
+      "expected": [
+        "2026-11-02",
+        "2026-11-09",
+        "2026-11-16",
+        "2026-11-23",
+        "2026-11-30"
+      ]
+    },
+    {
+      "name": "invalid calendar day normalizes",
+      "anchor": "2024-02-31",
+      "frequency": "weekly",
+      "start": "2024-03-01",
+      "end": "2024-03-10",
+      "expected": [
+        "2024-03-02",
+        "2024-03-09"
+      ]
+    },
+    {
+      "name": "weekly single day inclusive",
+      "anchor": "2026-11-09",
+      "frequency": "weekly",
+      "start": "2026-11-09",
+      "end": "2026-11-09",
+      "expected": [
+        "2026-11-09"
+      ]
+    }
+  ],
+  "planning": [
+    {
+      "name": "negative balance",
+      "from": "2026-11-09",
+      "period": "week",
+      "store": {
+        "income": [
+          {
+            "name": "Fixture entry",
+            "amount": 100,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          }
+        ],
+        "bills": [
+          {
+            "name": "Fixture entry",
+            "amount": 150,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          }
+        ],
+        "bnpl": [
+          {
+            "name": "Fixture entry",
+            "amount": 25,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          }
+        ]
+      },
+      "expected": {
+        "start": "2026-11-09",
+        "end": "2026-11-15",
+        "income": [
+          {
+            "name": "Fixture entry",
+            "amount": 100,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          }
+        ],
+        "bills": [
+          {
+            "name": "Fixture entry",
+            "amount": 150,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          }
+        ],
+        "bnpl": [
+          {
+            "name": "Fixture entry",
+            "amount": 25,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          }
+        ],
+        "incomeTotal": 100,
+        "billsTotal": 150,
+        "bnplTotal": 25,
+        "spendable": -75
+      }
+    },
+    {
+      "name": "empty inputs",
+      "from": "2026-11-09",
+      "period": "week",
+      "store": {
+        "income": [],
+        "bills": [],
+        "bnpl": []
+      },
+      "expected": {
+        "start": "2026-11-09",
+        "end": "2026-11-15",
+        "income": [],
+        "bills": [],
+        "bnpl": [],
+        "incomeTotal": 0,
+        "billsTotal": 0,
+        "bnplTotal": 0,
+        "spendable": 0
+      }
+    },
+    {
+      "name": "fortnight totals",
+      "from": "2026-11-09",
+      "period": "fortnight",
+      "store": {
+        "income": [
+          {
+            "name": "Fixture entry",
+            "amount": 500,
+            "date": "2026-11-09",
+            "frequency": "fortnightly"
+          }
+        ],
+        "bills": [
+          {
+            "name": "Fixture entry",
+            "amount": 100,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          }
+        ],
+        "bnpl": []
+      },
+      "expected": {
+        "start": "2026-11-09",
+        "end": "2026-11-22",
+        "income": [
+          {
+            "name": "Fixture entry",
+            "amount": 500,
+            "date": "2026-11-09",
+            "frequency": "fortnightly"
+          }
+        ],
+        "bills": [
+          {
+            "name": "Fixture entry",
+            "amount": 100,
+            "date": "2026-11-09",
+            "frequency": "weekly"
+          },
+          {
+            "name": "Fixture entry",
+            "amount": 100,
+            "date": "2026-11-16",
+            "frequency": "weekly"
+          }
+        ],
+        "bnpl": [],
+        "incomeTotal": 500,
+        "billsTotal": 200,
+        "bnplTotal": 0,
+        "spendable": 300
+      }
+    },
+    {
+      "name": "leap February monthly totals",
+      "from": "2024-02-29",
+      "period": "month",
+      "store": {
+        "income": [
+          {
+            "name": "Fixture entry",
+            "amount": 1000,
+            "date": "2024-01-31",
+            "frequency": "monthly"
+          }
+        ],
+        "bills": [
+          {
+            "name": "Fixture entry",
+            "amount": 200,
+            "date": "2024-01-31",
+            "frequency": "monthly"
+          }
+        ],
+        "bnpl": []
+      },
+      "expected": {
+        "start": "2024-02-01",
+        "end": "2024-02-29",
+        "income": [
+          {
+            "name": "Fixture entry",
+            "amount": 1000,
+            "date": "2024-02-29",
+            "frequency": "monthly"
+          }
+        ],
+        "bills": [
+          {
+            "name": "Fixture entry",
+            "amount": 200,
+            "date": "2024-02-29",
+            "frequency": "monthly"
+          }
+        ],
+        "bnpl": [],
+        "incomeTotal": 1000,
+        "billsTotal": 200,
+        "bnplTotal": 0,
+        "spendable": 800
+      }
+    },
+    {
+      "name": "invalid monthly date yields no rows",
+      "from": "2026-11-09",
+      "period": "week",
+      "store": {
+        "income": [],
+        "bills": [
+          {
+            "name": "Fixture entry",
+            "amount": 100,
+            "date": "bad",
+            "frequency": "monthly"
+          }
+        ],
+        "bnpl": []
+      },
+      "expected": {
+        "start": "2026-11-09",
+        "end": "2026-11-15",
+        "income": [],
+        "bills": [],
+        "bnpl": [],
+        "incomeTotal": 0,
+        "billsTotal": 0,
+        "bnplTotal": 0,
+        "spendable": 0
+      }
+    }
+  ],
+  "form": [
+    {
+      "name": "empty name",
+      "input": {
+        "name": " ",
+        "amount": "10",
+        "date": "2026-11-09"
+      },
+      "expected": null
+    },
+    {
+      "name": "empty amount",
+      "input": {
+        "name": "Bill",
+        "amount": "",
+        "date": "2026-11-09"
+      },
+      "expected": null
+    },
+    {
+      "name": "malformed amount",
+      "input": {
+        "name": "Bill",
+        "amount": "no",
+        "date": "2026-11-09"
+      },
+      "expected": null
+    },
+    {
+      "name": "missing date",
+      "input": {
+        "name": "Bill",
+        "amount": "10",
+        "date": ""
+      },
+      "expected": null
+    },
+    {
+      "name": "rounded valid amount",
+      "input": {
+        "name": " Bill ",
+        "amount": "12.345",
+        "date": "2026-11-09"
+      },
+      "expected": {
+        "name": "Bill",
+        "amount": 12.35,
+        "date": "2026-11-09",
+        "frequency": "monthly",
+        "originalAmount": null,
+        "dealEndsOn": null
+      }
+    },
+    {
+      "name": "invalid calendar date handler trusts browser",
+      "input": {
+        "name": "Bill",
+        "amount": "10",
+        "date": "2024-02-31"
+      },
+      "expected": {
+        "name": "Bill",
+        "amount": 10,
+        "date": "2024-02-31",
+        "frequency": "monthly",
+        "originalAmount": null,
+        "dealEndsOn": null
+      }
+    },
+    {
+      "name": "negative amount handler trusts browser min",
+      "input": {
+        "name": "Bill",
+        "amount": "-10",
+        "date": "2026-11-09"
+      },
+      "expected": {
+        "name": "Bill",
+        "amount": -10,
+        "date": "2026-11-09",
+        "frequency": "monthly",
+        "originalAmount": null,
+        "dealEndsOn": null
+      }
+    }
+  ]
+}

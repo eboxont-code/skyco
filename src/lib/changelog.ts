@@ -12,6 +12,16 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-11-14",
+    title: "More checks for calendars, holdings and planning",
+    tag: "Improvement",
+    items: [
+      "Added repeatable checks for Chronos's seven calendar readings, Finance Friend trade parsing, grocery quantities and saved checks, and Float recurrence and totals.",
+      "Documented Float's share-link format and privacy limitations, including that its figures are encoded, not encrypted.",
+      "The tools' behaviour and appearance are unchanged.",
+    ],
+  },
+  {
     date: "2026-11-13",
     title: "Larger tap targets in CurrenSee and Float",
     tag: "Fix",

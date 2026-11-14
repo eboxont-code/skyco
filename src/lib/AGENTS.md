@@ -1,0 +1,1 @@
+- Keep fixture-source.ts test-only; it extracts existing component calculations for golden parity tests without adding a second production implementation.

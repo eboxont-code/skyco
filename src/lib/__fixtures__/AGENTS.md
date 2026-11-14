@@ -1,0 +1,2 @@
+- Golden fixtures record current website output; recompute through production helpers or extracted component calculations, never duplicate algorithms or auto-update expectations during tests.
+- Fixture tests use node:test through the existing Bun script and no network; runtime quirks belong in MASTER_PLAN.md rather than runtime fixes in a fixture-only task.
