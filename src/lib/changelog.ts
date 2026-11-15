@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-11-15",
+    title: "Safer planning entries and saved grocery checks",
+    tag: "Fix",
+    items: [
+      "Float no longer places monthly payments before their start date, while keeping month-end dates clamped correctly.",
+      "Float rejects impossible dates and amounts that are not positive numbers, with a message beside the field.",
+      "Finance Friend asks for a corrected line when actions, quantities, tickers or dates conflict instead of choosing a trade.",
+      "A damaged grocery pack's saved checks no longer prevent another pack from restoring. Valid older saved checks move safely to the current format.",
+    ],
+  },
+  {
     date: "2026-11-14",
     title: "More checks for calendars, holdings and planning",
     tag: "Improvement",

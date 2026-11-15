@@ -36,15 +36,12 @@
     "category": "ambiguous",
     "input": "bought 2 AAPL and sold 3 NVDA at $5 today yesterday",
     "expected": {
-      "action": "Sell",
-      "quantity": 2,
-      "ticker": "AAPL",
-      "price": 5,
-      "when": "Yesterday"
+      "status": "ambiguous",
+      "message": "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again."
     }
   },
   {
-    "category": "ambiguous",
+    "category": "valid",
     "input": "buy 2024 shares of NVDA at 10",
     "expected": {
       "action": "Buy",
@@ -111,6 +108,54 @@
       "ticker": "MSFT",
       "price": 400,
       "when": "Today (assumed)"
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "buy 2 AAPL and 3 NVDA today",
+    "expected": {
+      "status": "ambiguous",
+      "message": "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again."
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "buy 2 AAPL and MSFT today",
+    "expected": {
+      "status": "ambiguous",
+      "message": "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again."
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "buy 2 and 3 shares of NVDA",
+    "expected": {
+      "status": "ambiguous",
+      "message": "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again."
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "buy 2 AAPL and buy 3 AAPL",
+    "expected": {
+      "status": "ambiguous",
+      "message": "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again."
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "buy 2 AAPL today yesterday",
+    "expected": {
+      "status": "ambiguous",
+      "message": "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again."
+    }
+  },
+  {
+    "category": "ambiguous",
+    "input": "BUY 2 AAPL AND SELL 3 NVDA",
+    "expected": {
+      "status": "ambiguous",
+      "message": "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again."
     }
   }
 ]

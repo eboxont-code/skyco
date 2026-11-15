@@ -631,6 +631,34 @@
         "skyco.grocery.v1": "[]"
       },
       "expected": {}
+    },
+    {
+      "initial": {
+        "skyco.grocery.checked.easy-week": "[",
+        "skyco.grocery.checked.meat-free": "[\"meat-free:Eggs\"]"
+      },
+      "expected": {
+        "meat-free": [
+          "meat-free:Eggs"
+        ]
+      }
+    },
+    {
+      "initial": {
+        "skyco.grocery.v1": "[",
+        "skyco.grocery.checked.meat-free": "{\"version\":2,\"checked\":[\"meat-free:Eggs\"]}"
+      },
+      "expected": {
+        "meat-free": [
+          "meat-free:Eggs"
+        ]
+      }
+    },
+    {
+      "initial": {
+        "skyco.grocery.checked.easy-week": "{\"version\":99,\"checked\":[\"easy-week:Onions\"]}"
+      },
+      "expected": {}
     }
   ]
 }

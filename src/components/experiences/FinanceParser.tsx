@@ -26,7 +26,9 @@ export function FinanceParser() {
   const [copyStatus, setCopyStatus] = useState("");
   const [history, setHistory] = useState<Parsed[]>([]);
   const [savedStatus, setSavedStatus] = useState("");
-  const parsed = parseHolding(text);
+  const result = parseHolding(text);
+  const ambiguity = result && "status" in result ? result.message : null;
+  const parsed = result && !("status" in result) ? result : null;
   const total = holdingTotal(history);
 
   return (
@@ -46,7 +48,7 @@ export function FinanceParser() {
           spellCheck={false}
           enterKeyHint="done"
           onKeyDown={e => { if (e.key === "Enter") previewRef.current?.focus(); }}
-          aria-describedby="parser-help"
+          aria-describedby={ambiguity ? "parser-help parser-error" : "parser-help"}
           aria-invalid={text.trim().length > 0 && parsed === null}
           className="min-h-12 w-full rounded-xl border border-sky-bright/30 bg-background px-3 text-base text-foreground outline-none focus:border-sky-bright focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         />
@@ -67,7 +69,7 @@ export function FinanceParser() {
         ))}
       </div>
 
-      <p className="sr-only" role="status">{parsed ? `${parsed.action} ${parsed.quantity} ${parsed.ticker}${parsed.price === null ? ", price not provided" : ` at $${parsed.price.toFixed(2)}`}, ${parsed.when.toLowerCase()}` : text.trim() ? "Trade not recognised" : "Field cleared"}</p>
+      <p className="sr-only" role="status">{parsed ? `${parsed.action} ${parsed.quantity} ${parsed.ticker}${parsed.price === null ? ", price not provided" : ` at $${parsed.price.toFixed(2)}`}, ${parsed.when.toLowerCase()}` : ambiguity ?? (text.trim() ? "Trade not recognised" : "Field cleared")}</p>
       <div ref={previewRef} tabIndex={-1} aria-label="Parsed preview" className="focus-visible:ring-2 focus-visible:ring-ring mt-5 rounded-xl border border-sky-bright/20 bg-sky-ice/30 p-4">
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Parsed preview
@@ -94,9 +96,8 @@ export function FinanceParser() {
             />
           </dl>
         ) : (
-          <p role="alert" className="mt-2 text-sm text-muted-foreground">
-            I could not read a trade from that line yet. Include an action, a quantity and a
-            ticker, for example: bought 50 shares of NVDA today at $145.
+          <p id="parser-error" role="alert" className="mt-2 break-words text-sm text-muted-foreground">
+            {ambiguity ?? "I could not read a trade from that line yet. Include an action, a quantity and a ticker, for example: bought 50 shares of NVDA today at $145."}
           </p>
         )}
       </div>
@@ -131,9 +132,21 @@ export function holdingTotal(holdings: ReadonlyArray<Pick<Parsed, "quantity" | "
   return holdings.reduce((sum, holding) => sum + holding.quantity * (holding.price ?? 0), 0);
 }
 
-export function parseHolding(input: string): Parsed | null {
+export function parseHolding(input: string): Parsed | { status: "ambiguous"; message: string } | null {
   const text = input.trim();
   if (!text) return null;
+
+  const actions = [...text.matchAll(/\b(sold|sell|bought|buy|added|add)\b/gi)];
+  const tickerTokens = new Set([
+    ...[...text.matchAll(/\b(?:of|in)\s+([A-Za-z.]{1,6})\b/g)].map(match => match[1]?.toUpperCase()),
+    ...[...text.matchAll(/\b([A-Z]{1,5}(?:\.[A-Z]{1,2})?)\b/g)].map(match => match[1]).filter(token => token && !["BUY", "SELL", "ADD", "OF", "IN", "AT", "FOR", "TODAY"].includes(token)),
+  ]);
+  // Price and explicit ISO date numbers are not quantities.
+  const quantityText = text.replace(/\d{4}-\d{2}-\d{2}/g, "").replace(/(?:\bat\b|@|\bfor\b)\s*\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/gi, "");
+  const quantities = [...quantityText.matchAll(/\d+(?:\.\d+)?/g)];
+  if (actions.length > 1 || tickerTokens.size > 1 || quantities.length > 1 || (/\btoday\b/i.test(text) && /\byesterday\b/i.test(text))) {
+    return { status: "ambiguous", message: "This line is ambiguous. Enter one trade with one action, quantity, ticker and date, then check it again." };
+  }
 
   const action = /\b(sold|sell)\b/i.test(text)
     ? "Sell"

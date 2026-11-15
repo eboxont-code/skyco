@@ -49,11 +49,20 @@ test("Grocery legacy v1 data migrates to isolated per-pack keys and round trips"
   const expected = session.checks;
   session.save();
   assert.equal(session.data.has("skyco.grocery.v1"), false);
-  assert.equal(session.data.get("skyco.grocery.checked.easy-week"), '["easy-week:Onions"]');
-  assert.equal(session.data.get("skyco.grocery.checked.meat-free"), '["meat-free:Eggs"]');
+  assert.equal(session.data.get("skyco.grocery.checked.easy-week"), '{"version":2,"checked":["easy-week:Onions"]}');
+  assert.equal(session.data.get("skyco.grocery.checked.meat-free"), '{"version":2,"checked":["meat-free:Eggs"]}');
   const restored = storageSession(Object.fromEntries(session.data));
   restored.load();
   assert.deepEqual(restored.checks, expected);
+});
+test("Grocery unversioned arrays migrate without losing valid checked items", () => {
+  const session = storageSession({ "skyco.grocery.checked.easy-week": '["easy-week:Onions"]', "skyco.grocery.checked.meat-free": '["meat-free:Eggs"]' });
+  session.load();
+  session.save();
+  assert.equal(session.data.get("skyco.grocery.checked.easy-week"), '{"version":2,"checked":["easy-week:Onions"]}');
+  const restored = storageSession(Object.fromEntries(session.data));
+  restored.load();
+  assert.deepEqual(restored.checks, { "easy-week": ["easy-week:Onions"], "meat-free": ["meat-free:Eggs"] });
 });
 test("Grocery remains usable when storage reads and writes throw", () => {
   const session = storageSession({}, true);

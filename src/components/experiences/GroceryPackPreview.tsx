@@ -105,20 +105,32 @@ export function GroceryPackPreview({ initialPack }: { initialPack?: string } = {
       const household = Number(localStorage.getItem("skyco.grocery.household"));
       if (household === 1 || household === 2 || household === 4 || household === 6) setSize(household);
     } catch { /* Household storage is optional. */ }
-    try {
-      const legacy: unknown = JSON.parse(localStorage.getItem("skyco.grocery.v1") ?? "{}");
-      const valid: Record<string, string[]> = {};
-      for (const pack of PACKS) {
+    let legacy: unknown;
+    try { legacy = JSON.parse(localStorage.getItem("skyco.grocery.v1") ?? "{}"); } catch { /* Ignore only malformed legacy data. */ }
+    const valid: Record<string, string[]> = {};
+    for (const pack of PACKS) {
+      try {
         const keys = pack.sections.flatMap(s => s.items.map(i => `${pack.id}:${i.item}`));
         const own = localStorage.getItem(`skyco.grocery.checked.${pack.id}`);
-        const entries: unknown = own !== null ? JSON.parse(own) : legacy && typeof legacy === "object" && !Array.isArray(legacy) ? (legacy as Record<string, unknown>)[pack.id] : undefined;
+        const stored: unknown = own !== null ? JSON.parse(own) : legacy && typeof legacy === "object" && !Array.isArray(legacy) ? (legacy as Record<string, unknown>)[pack.id] : undefined;
+        const entries: unknown = Array.isArray(stored) ? stored : stored && typeof stored === "object" && "version" in stored && stored.version === 2 && "checked" in stored ? stored.checked : undefined;
         if (Array.isArray(entries)) valid[pack.id] = [...new Set(entries.filter((key): key is string => typeof key === "string" && keys.includes(key)))];
-      }
-      setChecks(valid);
-    } catch { /* Storage is optional. */ }
+      } catch { /* One pack must not prevent the others restoring. */ }
+    }
+    setChecks(valid);
     setStorageReady(true);
   }, []);
-  useEffect(() => { if (storageReady) { try { for (const pack of PACKS) { const list = checks[pack.id] ?? []; if (list.length) localStorage.setItem(`skyco.grocery.checked.${pack.id}`, JSON.stringify(list)); else localStorage.removeItem(`skyco.grocery.checked.${pack.id}`); } localStorage.removeItem("skyco.grocery.v1"); } catch { /* Keep the list usable without storage. */ } } }, [checks, storageReady]);
+  useEffect(() => {
+    if (!storageReady) return;
+    let savedAll = true;
+    for (const pack of PACKS) {
+      try {
+        const list = checks[pack.id] ?? [];
+        localStorage.setItem(`skyco.grocery.checked.${pack.id}`, JSON.stringify({ version: 2, checked: list }));
+      } catch { savedAll = false; /* Keep each list usable without storage. */ }
+    }
+    if (savedAll) { try { localStorage.removeItem("skyco.grocery.v1"); } catch { /* Retry migration on a later visit. */ } }
+  }, [checks, storageReady]);
   useEffect(() => { if (storageReady) { try { localStorage.setItem("skyco.grocery.household", String(size)); } catch { /* Storage is optional. */ } } }, [size, storageReady]);
   const quantity = (item: Pack["sections"][number]["items"][number]) => {
     if (size === 2) return item.two;

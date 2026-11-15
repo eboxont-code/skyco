@@ -66,14 +66,12 @@
       ]
     },
     {
-      "name": "future monthly anchor current backwards recurrence",
+      "name": "future December 31 monthly anchor has no occurrences",
       "anchor": "2026-12-31",
       "frequency": "monthly",
       "start": "2026-11-01",
       "end": "2026-11-30",
-      "expected": [
-        "2026-11-30"
-      ]
+      "expected": []
     },
     {
       "name": "future weekly anchor has no occurrences",
@@ -105,13 +103,7 @@
       "frequency": "weekly",
       "start": "2026-11-01",
       "end": "2026-11-30",
-      "expected": [
-        "2026-11-02",
-        "2026-11-09",
-        "2026-11-16",
-        "2026-11-23",
-        "2026-11-30"
-      ]
+      "expected": []
     },
     {
       "name": "invalid calendar day normalizes",
@@ -119,10 +111,7 @@
       "frequency": "weekly",
       "start": "2024-03-01",
       "end": "2024-03-10",
-      "expected": [
-        "2024-03-02",
-        "2024-03-09"
-      ]
+      "expected": []
     },
     {
       "name": "weekly single day inclusive",
@@ -133,6 +122,38 @@
       "expected": [
         "2026-11-09"
       ]
+    },
+    {
+      "name": "future January 31 excludes previous year",
+      "anchor": "2027-01-31",
+      "frequency": "monthly",
+      "start": "2026-12-01",
+      "end": "2026-12-31",
+      "expected": []
+    },
+    {
+      "name": "future leap February excludes earlier same-month dates",
+      "anchor": "2028-02-29",
+      "frequency": "monthly",
+      "start": "2028-02-01",
+      "end": "2028-02-28",
+      "expected": []
+    },
+    {
+      "name": "impossible 2026-02-30",
+      "anchor": "2026-02-30",
+      "frequency": "monthly",
+      "start": "2026-02-01",
+      "end": "2026-03-31",
+      "expected": []
+    },
+    {
+      "name": "impossible 2026-13-01",
+      "anchor": "2026-13-01",
+      "frequency": "monthly",
+      "start": "2026-02-01",
+      "end": "2026-03-31",
+      "expected": []
     }
   ],
   "planning": [
@@ -370,7 +391,10 @@
         "amount": "",
         "date": "2026-11-09"
       },
-      "expected": null
+      "expected": null,
+      "errors": {
+        "amount": "Enter an amount greater than zero."
+      }
     },
     {
       "name": "malformed amount",
@@ -379,7 +403,10 @@
         "amount": "no",
         "date": "2026-11-09"
       },
-      "expected": null
+      "expected": null,
+      "errors": {
+        "amount": "Enter an amount greater than zero."
+      }
     },
     {
       "name": "missing date",
@@ -407,35 +434,113 @@
       }
     },
     {
-      "name": "invalid calendar date handler trusts browser",
+      "name": "impossible calendar date rejected",
       "input": {
         "name": "Bill",
         "amount": "10",
         "date": "2024-02-31"
       },
-      "expected": {
-        "name": "Bill",
-        "amount": 10,
-        "date": "2024-02-31",
-        "frequency": "monthly",
-        "originalAmount": null,
-        "dealEndsOn": null
+      "expected": null,
+      "errors": {
+        "date": "Enter a real calendar date."
       }
     },
     {
-      "name": "negative amount handler trusts browser min",
+      "name": "negative amount rejected",
       "input": {
         "name": "Bill",
         "amount": "-10",
         "date": "2026-11-09"
       },
-      "expected": {
+      "expected": null,
+      "errors": {
+        "amount": "Enter an amount greater than zero."
+      }
+    },
+    {
+      "name": "impossible February day",
+      "input": {
         "name": "Bill",
-        "amount": -10,
+        "amount": "10",
+        "date": "2026-02-30"
+      },
+      "expected": null,
+      "errors": {
+        "date": "Enter a real calendar date."
+      }
+    },
+    {
+      "name": "impossible month",
+      "input": {
+        "name": "Bill",
+        "amount": "10",
+        "date": "2026-13-01"
+      },
+      "expected": null,
+      "errors": {
+        "date": "Enter a real calendar date."
+      }
+    },
+    {
+      "name": "NaN amount",
+      "input": {
+        "name": "Bill",
+        "amount": "NaN",
+        "date": "2026-11-09"
+      },
+      "expected": null,
+      "errors": {
+        "amount": "Enter an amount greater than zero."
+      }
+    },
+    {
+      "name": "zero amount",
+      "input": {
+        "name": "Bill",
+        "amount": "0",
+        "date": "2026-11-09"
+      },
+      "expected": null,
+      "errors": {
+        "amount": "Enter an amount greater than zero."
+      }
+    },
+    {
+      "name": "numeric prefix rejected",
+      "input": {
+        "name": "Bill",
+        "amount": "10abc",
+        "date": "2026-11-09"
+      },
+      "expected": null,
+      "errors": {
+        "amount": "Enter an amount greater than zero."
+      }
+    },
+    {
+      "name": "negative original price",
+      "input": {
+        "name": "Bill",
+        "amount": "10",
         "date": "2026-11-09",
-        "frequency": "monthly",
-        "originalAmount": null,
-        "dealEndsOn": null
+        "originalAmount": "-10"
+      },
+      "expected": null,
+      "errors": {
+        "original": "Enter an original price greater than zero, or leave it empty."
+      }
+    },
+    {
+      "name": "invalid deal date",
+      "input": {
+        "name": "Bill",
+        "amount": "10",
+        "date": "2026-11-09",
+        "dealEndsOn": "2026-02-30"
+      },
+      "expected": null,
+      "errors": {
+        "deal": "Enter a real calendar date, or leave it empty."
       }
     }
   ]

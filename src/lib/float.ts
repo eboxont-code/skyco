@@ -21,9 +21,13 @@ export function toIsoDate(date: Date): string {
   return `${date.getFullYear()}-${month}-${day}`;
 }
 
-function parseIso(iso: string): Date {
+export function parseIso(iso: string): Date {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return new Date(NaN);
   const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y ?? 1970, (m ?? 1) - 1, d ?? 1);
+  const date = new Date(0);
+  date.setFullYear(y, m - 1, d);
+  date.setHours(0, 0, 0, 0);
+  return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d ? date : new Date(NaN);
 }
 
 function startOfDay(date: Date): Date {
@@ -31,7 +35,8 @@ function startOfDay(date: Date): Date {
 }
 
 export function formatDayShort(iso: string): string {
-  return new Intl.DateTimeFormat("en-AU", { weekday: "short", day: "numeric", month: "short" }).format(parseIso(iso));
+  const date = parseIso(iso);
+  return Number.isFinite(date.getTime()) ? new Intl.DateTimeFormat("en-AU", { weekday: "short", day: "numeric", month: "short" }).format(date) : "Invalid date";
 }
 
 export function formatRange(start: Date, end: Date): string {
@@ -70,11 +75,12 @@ export function occurrencesInRange(iso: string, frequency: Frequency, start: Dat
   const from = startOfDay(start);
   const to = startOfDay(end);
   const out: string[] = [];
+  if (![anchor, from, to].every(date => Number.isFinite(date.getTime()))) return out;
   if (frequency === "monthly") {
     const monthsApart = (from.getFullYear() - anchor.getFullYear()) * 12 + (from.getMonth() - anchor.getMonth());
     for (let i = monthsApart - 1; i <= monthsApart + 2; i += 1) {
       const hit = addMonthsClamped(anchor, i);
-      if (hit >= from && hit <= to) out.push(toIsoDate(hit));
+      if (hit >= anchor && hit >= from && hit <= to) out.push(toIsoDate(hit));
     }
     return out;
   }
@@ -99,6 +105,7 @@ export function savings(original: number | null | undefined, amount: number): nu
 /** Days until a deal ends; null when there is no end date or it has passed. */
 export function dealDaysLeft(dealEndsOn: string | null | undefined): number | null {
   if (!dealEndsOn) return null;
+  if (!Number.isFinite(parseIso(dealEndsOn).getTime())) return null;
   const days = Math.round((startOfDay(parseIso(dealEndsOn)).getTime() - startOfDay(new Date()).getTime()) / 86_400_000);
   return days < 0 ? null : days;
 }

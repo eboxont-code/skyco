@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { dealDaysLeft, formatAud, formatDayShort, savings, FREQUENCY_LABELS, type Frequency } from "@/lib/float";
+import { dealDaysLeft, formatAud, formatDayShort, parseIso, savings, FREQUENCY_LABELS, type Frequency } from "@/lib/float";
 
 export type Entry = { id: string; name: string; amount: number; date: string; frequency: Frequency; originalAmount?: number | null; dealEndsOn?: string | null };
 export type EntryDraft = Omit<Entry, "id" | "originalAmount" | "dealEndsOn"> & { originalAmount: number | null; dealEndsOn: string | null };
@@ -25,15 +25,24 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
   const [frequency, setFrequency] = useState<Frequency>(initial.frequency);
   const [originalAmount, setOriginalAmount] = useState(initial.originalAmount != null ? String(initial.originalAmount) : "");
   const [dealEndsOn, setDealEndsOn] = useState(initial.dealEndsOn ?? "");
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   return (
     <form
+      noValidate
       className="grid min-w-0 gap-3 rounded-xl border border-sky-bright/20 bg-sky-ice/40 p-3 sm:grid-cols-2"
       onSubmit={(event) => {
         event.preventDefault();
-        const value = Number.parseFloat(amount);
-        if (!name.trim() || !Number.isFinite(value) || !date) return;
-        const original = Number.parseFloat(originalAmount);
+        const value = Number(amount);
+        const original = originalAmount.trim() ? Number(originalAmount) : NaN;
+        const nextErrors: Record<string, string> = {};
+        if (!name.trim()) nextErrors.name = "Enter a name.";
+        if (!amount.trim() || !Number.isFinite(value) || value <= 0 || Math.round(value * 100) / 100 <= 0) nextErrors.amount = "Enter an amount greater than zero.";
+        if (!Number.isFinite(parseIso(date).getTime())) nextErrors.date = "Enter a real calendar date.";
+        if (originalAmount.trim() && (!Number.isFinite(original) || original <= 0)) nextErrors.original = "Enter an original price greater than zero, or leave it empty.";
+        if (dealEndsOn && !Number.isFinite(parseIso(dealEndsOn).getTime())) nextErrors.deal = "Enter a real calendar date, or leave it empty.";
+        setErrors(nextErrors);
+        if (Object.keys(nextErrors).length) return;
         onSubmit({
           name: name.trim(),
           amount: Math.round(value * 100) / 100,
@@ -46,15 +55,18 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
     >
       <div className="grid min-w-0 gap-1.5">
         <Label htmlFor={`${fieldId}-name`} className="text-xs text-muted-foreground">{nameLabel}</Label>
-        <Input id={`${fieldId}-name`} className="min-h-11" value={name} onChange={(e) => setName(e.target.value)} placeholder={namePlaceholder} required />
+        <Input id={`${fieldId}-name`} aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? `${fieldId}-name-error` : undefined} className="min-h-11" value={name} onChange={(e) => setName(e.target.value)} placeholder={namePlaceholder} required />
+        {errors.name && <p id={`${fieldId}-name-error`} role="alert" className="text-sm text-destructive break-words">{errors.name}</p>}
       </div>
       <div className="grid min-w-0 gap-1.5">
         <Label htmlFor={`${fieldId}-amount`} className="text-xs text-muted-foreground">Amount (AUD)</Label>
-        <Input id={`${fieldId}-amount`} className="min-h-11" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" required />
+        <Input id={`${fieldId}-amount`} aria-invalid={Boolean(errors.amount)} aria-describedby={errors.amount ? `${fieldId}-amount-error` : undefined} className="min-h-11" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0.01" placeholder="0.00" required />
+        {errors.amount && <p id={`${fieldId}-amount-error`} role="alert" className="text-sm text-destructive break-words">{errors.amount}</p>}
       </div>
       <div className="grid min-w-0 gap-1.5">
         <Label htmlFor={`${fieldId}-date`} className="text-xs text-muted-foreground">{dateLabel}</Label>
-        <Input id={`${fieldId}-date`} className="min-h-11" value={date} onChange={(e) => setDate(e.target.value)} type="date" required />
+        <Input id={`${fieldId}-date`} aria-invalid={Boolean(errors.date)} aria-describedby={errors.date ? `${fieldId}-date-error` : undefined} className="min-h-11" value={date} onChange={(e) => setDate(e.target.value)} type="date" required />
+        {errors.date && <p id={`${fieldId}-date-error`} role="alert" className="text-sm text-destructive break-words">{errors.date}</p>}
       </div>
       <div className="grid min-w-0 gap-1.5">
         <Label htmlFor={`${fieldId}-frequency`} className="text-xs text-muted-foreground">Repeats</Label>
@@ -71,11 +83,13 @@ function EntryForm({ nameLabel, namePlaceholder, dateLabel, showDealFields, init
         <>
           <div className="grid min-w-0 gap-1.5">
             <Label htmlFor={`${fieldId}-original`} className="text-xs text-muted-foreground">Original price (optional)</Label>
-            <Input id={`${fieldId}-original`} className="min-h-11" value={originalAmount} onChange={(e) => setOriginalAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0" placeholder="0.00" />
+            <Input id={`${fieldId}-original`} aria-invalid={Boolean(errors.original)} aria-describedby={errors.original ? `${fieldId}-original-error` : undefined} className="min-h-11" value={originalAmount} onChange={(e) => setOriginalAmount(e.target.value)} inputMode="decimal" type="number" step="0.01" min="0.01" placeholder="0.00" />
+            {errors.original && <p id={`${fieldId}-original-error`} role="alert" className="text-sm text-destructive break-words">{errors.original}</p>}
           </div>
           <div className="grid min-w-0 gap-1.5">
             <Label htmlFor={`${fieldId}-deal`} className="text-xs text-muted-foreground">Deal ends (optional)</Label>
-            <Input id={`${fieldId}-deal`} className="min-h-11" value={dealEndsOn} onChange={(e) => setDealEndsOn(e.target.value)} type="date" />
+            <Input id={`${fieldId}-deal`} aria-invalid={Boolean(errors.deal)} aria-describedby={errors.deal ? `${fieldId}-deal-error` : undefined} className="min-h-11" value={dealEndsOn} onChange={(e) => setDealEndsOn(e.target.value)} type="date" />
+            {errors.deal && <p id={`${fieldId}-deal-error`} role="alert" className="text-sm text-destructive break-words">{errors.deal}</p>}
           </div>
         </>
       ) : null}
