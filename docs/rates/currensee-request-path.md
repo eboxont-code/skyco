@@ -1,6 +1,6 @@
 # CurrenSee rate request and response path
 
-**Source baseline:** `main` at [`6d404b9d`](https://github.com/eboxont-code/skyco/commit/6d404b9d00968c69049aa8b6a35413943125fb1d) (13 November 2026).
+**Source baseline:** `main` at [`633e7729`](https://github.com/eboxont-code/skyco/commit/633e7729d97046383b46860d29987f3d161e9fe4) (13 November 2026).
 
 This document maps the existing website implementation. It is **not** a public API specification and does not define a new endpoint.
 
@@ -19,8 +19,10 @@ The converter also has a dedicated client-side NRB lookup branch when both its i
 
 [`src/lib/rates.functions.ts`](../../src/lib/rates.functions.ts) exports two TanStack Start GET server functions:
 
-- **`getRate({ from, to })`** uppercases both codes and rejects anything outside `CURRENCIES`. Its result type is `RateResult`: pair codes, numeric rate, source, provider reference date (`asOf`), server fetch time (`fetchedAt`), dated history points, approximation state and optional NRB/stale flags.
+- **`getRate({ from, to })`** uppercases both codes and rejects anything outside `CURRENCIES`. Its result type is `RateResult`: pair codes, numeric rate, source, provider reference date (`asOf`), server fetch time (`fetchedAt`), dated history points, approximation state and optional NRB/stale flags. The browser-safe currency allowlist and result type live in [`rates.shared.ts`](../../src/lib/rates.shared.ts); the handler dynamically imports the server-only [`rate-provider.server.ts`](../../src/lib/rate-provider.server.ts).
 - **`getNprRates()`** returns the latest published NRB date, normalized rows (buy, sell, unit, midpoint and per-one-unit value), and a fallback flag. It returns `null` when no usable NRB data can be loaded.
+
+The provider module accepts an injected HTTP request function, NRB loader and clock for deterministic tests; production defaults remain the existing fetch, NRB loader and system clock. The provider selection, rate formulas, URLs, source labels and cache policy are unchanged.
 
 These are framework-managed server functions. The repository does not document a stable public REST path or versioned mobile contract for them. Do not guess an internal transport URL or make a Flutter client depend on one. The versioned HTTP contract remains a separate Phase 2 task.
 
@@ -62,8 +64,9 @@ The current tree contains focused tests for:
 - [`frankfurter.test.ts`](../../src/lib/frankfurter.test.ts): explicit v1 endpoints, USD-base cross-rate normalization, missing/invalid latest values, malformed latest payloads and empty/sparse history (9 tests).
 - [`nrb-rates.server.test.ts`](../../src/lib/nrb-rates.server.test.ts): dated/latest-feed fallback, last-good retention, invalid/missing rows, supported pair-directory currencies and units, cold outage, timeout, HTTP 429 and malformed JSON (10 tests).
 - [`rate-cache.test.ts`](../../src/lib/rate-cache.test.ts): fresh cache, cold outage, stale fallback, pair isolation, invalid results, recovery and bounded eviction (7 tests).
+- [`rate-provider.server.test.ts`](../../src/lib/rate-provider.server.test.ts): full provider-path fixtures for Frankfurter, CoinGecko and NRB, including the NPR peg fallback, required-source failure, history outage and stale-cache recovery (7 tests).
 
-These tests cover provider URL construction and the NRB/pair-cache helpers. There is no dedicated end-to-end test for the complete `getRate` server function across all three providers in the current tree.
+Together these four focused files contain 33 tests. The provider-path suite exercises the exact provider core called by `getRate`; it does not invoke TanStack's HTTP transport or create a public endpoint. The versioned HTTP contract remains a separate Phase 2 task.
 
 ## What this mapping does not establish
 
