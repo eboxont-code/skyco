@@ -84,9 +84,9 @@ const table = [
     device:
       "Income, bill and BNPL entries are saved in local storage only after the visitor chooses guest mode. Sample figures appear first. Browser storage is not application-level encrypted or cloud synced.",
     server:
-      "Planner calculations run locally. The waitlist form sends product, email and optional name to a server function that inserts a Lovable Cloud row. Share URLs contain encoded planner entries in the query string and may be present in request logs.",
+      "Planner calculations run locally. The waitlist form sends product, email and optional name to a server function that inserts a row in our backend. Share URLs contain encoded planner entries in the query string and may be present in request logs.",
     external:
-      "Lovable Cloud for Float waitlist submissions only; Float planner entries are not sent to Lovable Cloud.",
+      "Our hosting and development providers for Float waitlist submissions only; Float planner entries are not sent to those providers.",
   },
 ];
 
@@ -273,7 +273,7 @@ function SecurityPage() {
             </li>
             <li>
               Float waitlist: submitting the form sends the selected product, email and optional
-              name to a server function that inserts a row into Lovable Cloud.
+              name to a server function that inserts a row into our backend.
             </li>
           </ul>
 
@@ -306,7 +306,7 @@ function SecurityPage() {
               settings are not established by this repository review.
             </li>
             <li>
-              Lovable Cloud receives only the selected product, email and optional name when a
+              Our hosting and development providers receive only the selected product, email and optional name when a
               visitor submits the Float waitlist form. The planner's guest records are not uploaded
               to it.
             </li>

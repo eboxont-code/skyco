@@ -5,7 +5,7 @@
 - **[Master plan and checklist](MASTER_PLAN.md)** — authoritative website hardening, shared-service and Android delivery plan.
 - **[Brand expansion master plan](BRAND_EXPANSION_MASTER_PLAN.md)** — proposed Technology, Lifestyle and Community brand architecture and apparel/community validation checklist; does not replace the software roadmap.
 - **[Working web backlog](roadmap.md)** — dated historical website tasks; preserve completed history.
-- **[Agent instructions](AGENTS.md)** — coding constraints, product invariants and Git/Lovable rules.
+- **[Agent instructions](AGENTS.md)** — coding constraints, product invariants and Git history rules.
 
 The current live hub is **https://skyco.online**. The Android project is planned as a separate Flutter client under `apps/skyco_app/`; the existing website remains the canonical web experience.
 
@@ -66,18 +66,6 @@ This is your space to feel supported.
 Welcome to SkyCo.
 
 We’re genuinely glad you’re here.
-
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://skyco.online
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/3706605c-043c-43bf-a5d9-c50fe65c055d).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 

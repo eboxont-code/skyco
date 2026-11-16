@@ -1,11 +1,11 @@
 <!-- LOVABLE:BEGIN -->
 > [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
+> This project is connected to our editor. Avoid rewriting
 > published git history — force pushing, or rebasing/amending/squashing commits
-> that are already pushed — as it rewrites history on Lovable's side and the
+> that are already pushed — as it rewrites history on the connected side and the
 > user will likely lose their project history.
 >
-> Commits you push to the connected branch sync back to Lovable and show up in
+> Commits you push to the connected branch sync back and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
@@ -45,10 +45,10 @@
 
 ## Branch, pull request and rollback conventions
 
-- Keep `main` as the shared, Lovable-connected integration branch. Never force-push, rebase, amend or squash published commits.
+- Keep `main` as the shared, editor-connected integration branch. Never force-push, rebase, amend or squash published commits.
 - Use short-lived branches for code, security, dependency, test or multi-file changes. Name them `feat/<topic>`, `fix/<topic>`, `security/<topic>`, `test/<topic>`, `chore/<topic>` or `docs/<topic>`.
 - Open a pull request into `main` for changes that affect application behaviour, privacy, security, dependencies, build/release configuration or multiple product files. Keep the change focused and include purpose, affected areas, verification results, known risks and rollback notes.
-- A narrowly scoped documentation-only correction may be committed directly to `main` when it does not change product behaviour. Lovable-originated changes may continue to sync to the connected branch; inspect the resulting diff and run applicable checks.
+- A narrowly scoped documentation-only correction may be committed directly to `main` when it does not change product behaviour. Editor-originated changes may continue to sync to the connected branch; inspect the resulting diff and run applicable checks.
 - Do not assume branch protection, required reviews or automatic production deployment are configured. Verify those settings in the hosting/GitHub accounts before relying on them.
 - Roll back published code with a new revert commit; never rewrite history. Prefer the hosting provider's previous-known-good deployment rollback for a bad release, then reconcile Git with a revert commit. Preserve user data and avoid destructive database rollback; use a forward fix unless a migration-specific recovery plan has been tested.
 - Before any release, record the source commit, target environment, checks completed and recovery path. Do not claim a deployment or rollback until the provider confirms its outcome.
@@ -63,11 +63,11 @@
 - Check a plan item only after its implementation and required tests/manual verification pass. Record the evidence in the commit, PR or test report.
 - Keep the existing TanStack Start website and first-party `skyco.online/<product>` routes. The five shipped product paths are `/currensee`, `/chronos`, `/finance-friend`, `/grocery` and `/float`. Budget & Expenses and Daily Notes are planned, not shipped.
 - The Android app is a separate Flutter client, not a WebView replacement. Current scope is Android built/tested from Windows; do not require macOS or start iOS work in this milestone.
-- Keep mobile code isolated under the planned `apps/skyco_app/` directory so the existing Vite/TanStack web root and Lovable configuration remain intact.
+- Keep mobile code isolated under the planned `apps/skyco_app/` directory so the existing Vite/TanStack web root and editor configuration remain intact.
 - Do not expose or copy the tracked root `.env` contents into chat, prompts, issues, logs or commits. Treat the file as a P0 secret-audit item until a secret scan establishes whether it contains credentials. Use environment configuration and safe placeholder examples.
 - Float currently persists guest data in browser local storage only after an explicit guest action. Its share payload is Base64 URL-safe encoded data, not encrypted. Do not describe it as encrypted or transmit it to a server without a reviewed design and explicit consent.
 - Chronos currently displays seven systems, including Indian Saka, while some metadata/type/copy is stale. Use the current seven-system UI as the baseline and require golden-fixture parity before changing the calculation engine.
 - Product privacy/security/status claims must match shipped code. Do not claim continuous uptime monitoring, secure encryption, background alerts, cloud sync or other capabilities until they are implemented and tested.
 - CurrenSee's current `getRate` is a TanStack Start server function, not a documented public mobile REST contract. Do not guess its transport route or scrape HTML; implement and document a versioned HTTP adapter before Flutter depends on it.
-- Preserve Lovable-connected Git history: never force-push or rewrite published commits. Keep the connected branch buildable and use small, reviewable commits.
+- Preserve editor-connected Git history: never force-push or rewrite published commits. Keep the connected branch buildable and use small, reviewable commits.
 

@@ -44,7 +44,7 @@ These are delivery constraints, not a claim that the Android implementation alre
 
 - The website and Android client can evolve independently while retaining consistent product rules and source-backed fixtures.
 - Website routes, metadata, privacy disclosures and browser functionality remain release requirements after the app ships.
-- Mobile work can begin incrementally under `apps/skyco_app/` without disturbing the web root or Lovable configuration.
+- Mobile work can begin incrementally under `apps/skyco_app/` without disturbing the web root or existing web tooling configuration.
 - CurrenSee API design and parity fixtures are prerequisites to mobile integration, not reasons to expose internal server implementation details.
 - Local-first modules require explicit storage, backup, sharing and data-loss decisions before any durable or cross-device feature is added.
 - Android App Links are deferred until the domain association file and app manifest are validated; without the app, visitors must continue to reach the website.

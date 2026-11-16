@@ -233,7 +233,7 @@ function PrivacyPage() {
         <h3>Float waitlist</h3>
         <p>
           If you submit the Float waitlist form, the selected product, email address and optional
-          name are sent to a server function and inserted into the connected Lovable Cloud database
+          name are sent to a server function and inserted into our backend database
           <code>waitlist_submissions</code> table with a generated record ID and submission
           timestamp. This is server-side storage, separate from your Float planner entries. The
           repository does not define an automatic deletion period.
@@ -261,9 +261,9 @@ function PrivacyPage() {
             convert is multiplied in your browser and is not part of that rate request.
           </li>
           <li>
-            <strong>Lovable Cloud</strong> stores the product, optional name and email address when
-            you submit the Float waitlist form. The app does not send Float planner entries to
-            Lovable Cloud.
+            <strong>Our hosting and development providers</strong> store the product, optional name
+            and email address when you submit the Float waitlist form. The app does not send Float
+            planner entries to those providers.
           </li>
           <li>
             <strong>Hosting infrastructure</strong> serves the website and may process technical
@@ -300,7 +300,7 @@ function PrivacyPage() {
           you submit the form to open your email app.
         </p>
         <p>
-          Float waitlist submissions are stored in Lovable Cloud. The application code does not
+          Float waitlist submissions are stored by our hosting and development providers. The application code does not
           specify an automatic expiry or retention period for those rows. Hosting and database
           backup retention are controlled by the relevant provider settings, which have not been
           verified in this repository.

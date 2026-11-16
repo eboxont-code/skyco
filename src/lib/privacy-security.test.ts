@@ -92,7 +92,7 @@ test("Float waitlist disclosure matches validated fields and Cloud storage", () 
   assert.match(privacy, /does\s+not define an automatic deletion period/);
   assert.match(
     security,
-    /Lovable Cloud receives only the selected product, email and optional name/,
+    /Our hosting and development providers receive only the selected product, email and optional name/,
   );
 });
 
@@ -116,7 +116,7 @@ test("Chronos and Finance Friend URL and page-memory boundaries stay documented"
 });
 
 test("third-party providers and unverified hosting retention remain disclosed", () => {
-  for (const provider of ["Frankfurter", "CoinGecko", "Nepal Rastra Bank", "Lovable Cloud"]) {
+  for (const provider of ["Frankfurter", "CoinGecko", "Nepal Rastra Bank", "Our hosting and development providers"]) {
     assert.ok(privacy.includes(provider), "Missing provider disclosure: " + provider);
   }
 
