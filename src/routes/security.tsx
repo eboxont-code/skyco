@@ -74,7 +74,7 @@ const table = [
     product: "SkyCo Grocery Packs",
     account: "Not required",
     device:
-      "Checked items are saved per pack in local storage; selected household size is also saved in optional local storage. Saved checked-item data is validated, with migration from versioned legacy storage. Lists remain usable if storage is blocked.",
+      "Checked items are saved per pack in local storage; selected household size is also saved in optional local storage. Saved checked-item data is validated, with migration from legacy and unversioned saved checks into version 2 per-pack records. Lists remain usable if storage is blocked.",
     server: "No grocery-list data is submitted to a SkyCo server by the list experience.",
     external: "None for the in-page list.",
   },

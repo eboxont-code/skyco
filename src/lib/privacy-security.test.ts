@@ -46,6 +46,14 @@ test("CurrenSee and Grocery persistence disclosures match browser storage", () =
   assert.match(privacy, /CurrenSee uses this browser's local storage/);
   assert.match(privacy, /Checked items are stored per pack in this browser's local storage/);
   assert.match(privacy, /selected household\s+size is also stored there/);
+  assert.match(
+    privacy,
+    /migration from legacy and unversioned saved checks into version 2 per-pack records/,
+  );
+  assert.match(
+    security,
+    /migration from legacy and unversioned saved checks into version 2 per-pack records/,
+  );
 });
 
 test("Float guest disclosure matches local storage and encryption limitations", () => {

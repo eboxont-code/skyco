@@ -24,7 +24,7 @@ The converter also has a dedicated client-side NRB lookup branch when both its i
 
 The provider module accepts an injected HTTP request function, NRB loader and clock for deterministic tests; production defaults remain the existing fetch, NRB loader and system clock. The provider selection, rate formulas, URLs, source labels and cache policy are unchanged.
 
-These are framework-managed server functions. The repository does not document a stable public REST path or versioned mobile contract for them. Do not guess an internal transport URL or make a Flutter client depend on one. The versioned HTTP contract remains a separate Phase 2 task.
+These are framework-managed server functions. The proposed versioned mobile contract is now documented in [rate-api-contract-v1.md](rate-api-contract-v1.md), but no public REST route exists today. Do not guess an internal transport URL or make a Flutter client depend on one.
 
 ## Provider selection and conversion
 
@@ -66,7 +66,7 @@ The current tree contains focused tests for:
 - [`rate-cache.test.ts`](../../src/lib/rate-cache.test.ts): fresh cache, cold outage, stale fallback, pair isolation, invalid results, recovery and bounded eviction (7 tests).
 - [`rate-provider.server.test.ts`](../../src/lib/rate-provider.server.test.ts): full provider-path fixtures for Frankfurter, CoinGecko and NRB, including the NPR peg fallback, required-source failure, history outage and stale-cache recovery (7 tests).
 
-Together these four focused files contain 33 tests. The provider-path suite exercises the exact provider core called by `getRate`; it does not invoke TanStack's HTTP transport or create a public endpoint. The versioned HTTP contract remains a separate Phase 2 task.
+Together these four focused files contain 33 tests. The provider-path suite exercises the exact provider core called by `getRate`; it does not invoke TanStack's HTTP transport or create a public endpoint. The proposed field mapping and error contract are documented in [rate-api-contract-v1.md](rate-api-contract-v1.md) and checked by `src/lib/rate-api-contract.test.ts`; `/api/v1/rates` is not exposed today.
 
 ## What this mapping does not establish
 
@@ -75,4 +75,4 @@ Together these four focused files contain 33 tests. The provider-path suite exer
 - It does not verify production runtime variables or Supabase configuration.
 - It does not replace deterministic cross-provider fixtures or the future versioned API contract.
 
-The next API task must define a stable request/response schema, explicit error model, freshness semantics, caching/rate limits and examples without exposing provider credentials or private server-function transport details.
+The next implementation task must expose and test the documented HTTP adapter without exposing provider credentials or private server-function transport details.

@@ -206,8 +206,8 @@ function PrivacyPage() {
         <p>
           Checked items are stored per pack in this browser's local storage. The selected household
           size is also stored there. The list validates saved checked-item data and supports
-          migration from its versioned legacy storage. These settings remain until you reset them or
-          clear site data. If browser storage is blocked, the list still works for the current
+          migration from legacy and unversioned saved checks into version 2 per-pack records. These
+          settings remain until you reset them or clear site data. If browser storage is blocked, the list still works for the current
           visit. If you choose Copy or Share, the list is handed to your clipboard or your device's
           share sheet.
         </p>

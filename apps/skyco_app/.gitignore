@@ -1,0 +1,38 @@
+# Flutter and Dart generated output.
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+.metadata
+
+# Android generated output and machine-specific configuration.
+android/.gradle/
+android/.cxx/
+android/app/build/
+android/local.properties
+android/key.properties
+**/*.iml
+.idea/
+.vscode/
+
+# Local databases and journal files.
+**/*.db
+**/*.db-journal
+**/*.db-shm
+**/*.db-wal
+**/*.sqlite
+**/*.sqlite3
+
+# Signing material and local credentials. Never commit real values.
+**/key.properties
+**/*.jks
+**/*.keystore
+**/*.p12
+**/*.key
+**/*.pem
+.env
+.env.*
+!.env.example

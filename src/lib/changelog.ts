@@ -12,6 +12,17 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-11-16",
+    title: "Clearer rate contracts and mobile development guidance",
+    tag: "Improvement",
+    items: [
+      "Documented a proposed versioned rate API for the future Android app. No new public endpoint or rate behaviour changed.",
+      "Added repeatable checks for rate response fields, source attribution, cache freshness and the exact status labels used by CurrenSee.",
+      "Privacy and Security now describe the current version 2 grocery storage and migration of older saved checks.",
+      "Added a Windows Flutter and Android setup guide, plus Git protection for future app build and signing files. The app itself has not been created or built.",
+    ],
+  },
+  {
     date: "2026-11-15",
     title: "Safer planning entries and saved grocery checks",
     tag: "Fix",
