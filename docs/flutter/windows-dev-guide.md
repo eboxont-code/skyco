@@ -1,6 +1,6 @@
 # SkyCo Flutter Android development on Windows
 
-**Status:** setup guide only, written 16 November 2026. Flutter, Android Studio, an emulator, and the SkyCo Flutter application have **not** been installed, created, or built in this repository environment. Follow the official installers on a Windows development machine and record the actual tool versions when that work is done.
+**Status:** setup guide plus an uncompiled source scaffold, updated 17 November 2026. Flutter, Android Studio and an emulator have **not** been installed in this repository environment. The scaffold under `apps/skyco_app/` has not been compiled, analyzed or run. Follow the official installers on a Windows development machine and record the actual tool versions when that work is done.
 
 ## Official setup
 
@@ -28,10 +28,11 @@ Do not require macOS or begin iOS setup for this milestone. Android is the curre
 
 ## Proposed project location and boundaries
 
-Create the app only when the Phase 3 implementation task is authorized:
+The source scaffold now exists under `apps/skyco_app/`. After verifying the Windows toolchain, generate its platform folders and remaining metadata without replacing the existing source:
 
 ```powershell
-flutter create --org online.skyco --project-name skyco_app apps/skyco_app
+cd apps/skyco_app
+flutter create --org online.skyco --project-name skyco_app .
 ```
 
 The existing Vite/TanStack website stays at the repository root. Do not replace it with a WebView or move its configuration into the Flutter directory.
@@ -69,7 +70,7 @@ Read these files before writing the Flutter rate client:
 - [Current website request path](../rates/currensee-request-path.md)
 - [Website/service/Android parity matrix](../parity-matrix.md)
 
-The proposed base path is `/api/v1/rates`, but **no such public route exists today**. Do not scrape product pages, infer TanStack Start transport paths, or treat the schema as proof of deployment. Implement and test the HTTP adapter first, then configure the Flutter client with an environment-specific base URL.
+The base path is `/api/v1/rates`, and its server route now exists in source. Production availability has not been verified in this batch. Do not scrape product pages or infer TanStack Start transport paths. Configure the Flutter client with an environment-specific base URL only after the route's mocked tests pass and the intended runtime is verified.
 
 Keep Frankfurter, CoinGecko, and Nepal Rastra Bank requests on the server. Never place provider credentials, service-role keys, signing keys, or other secrets in Dart source, Flutter assets, the APK, or version control. Preserve `referenceDate`, `fetchedAt`, `stale`, `approximate`, `fallback`, and attribution in the UI. Never invent a rate when the provider and cache have no valid value.
 

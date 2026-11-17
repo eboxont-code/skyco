@@ -30,6 +30,7 @@ import { Route as CurrenseeRatesRouteImport } from './routes/currensee_.rates'
 import { Route as FloatSlugRouteImport } from './routes/float_.$slug'
 import { Route as GuidesBudgetingInAustraliaForNewArrivalsRouteImport } from './routes/guides.budgeting-in-australia-for-new-arrivals'
 import { Route as GuidesSendingMoneyToNepalFromAustraliaRouteImport } from './routes/guides.sending-money-to-nepal-from-australia'
+import { Route as ApiV1RatesRouteImport } from './routes/api/v1/rates'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -138,6 +139,11 @@ const GuidesSendingMoneyToNepalFromAustraliaRoute =
     path: '/guides/sending-money-to-nepal-from-australia',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiV1RatesRoute = ApiV1RatesRouteImport.update({
+  id: '/api/v1/rates',
+  path: '/api/v1/rates',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -161,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/float/$slug': typeof FloatSlugRoute
   '/guides/budgeting-in-australia-for-new-arrivals': typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
+  '/api/v1/rates': typeof ApiV1RatesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/float/$slug': typeof FloatSlugRoute
   '/guides/budgeting-in-australia-for-new-arrivals': typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
+  '/api/v1/rates': typeof ApiV1RatesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -208,6 +216,7 @@ export interface FileRoutesById {
   '/float_/$slug': typeof FloatSlugRoute
   '/guides/budgeting-in-australia-for-new-arrivals': typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   '/guides/sending-money-to-nepal-from-australia': typeof GuidesSendingMoneyToNepalFromAustraliaRoute
+  '/api/v1/rates': typeof ApiV1RatesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/float/$slug'
     | '/guides/budgeting-in-australia-for-new-arrivals'
     | '/guides/sending-money-to-nepal-from-australia'
+    | '/api/v1/rates'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/float/$slug'
     | '/guides/budgeting-in-australia-for-new-arrivals'
     | '/guides/sending-money-to-nepal-from-australia'
+    | '/api/v1/rates'
   id:
     | '__root__'
     | '/'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/float_/$slug'
     | '/guides/budgeting-in-australia-for-new-arrivals'
     | '/guides/sending-money-to-nepal-from-australia'
+    | '/api/v1/rates'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -303,6 +315,7 @@ export interface RootRouteChildren {
   FloatSlugRoute: typeof FloatSlugRoute
   GuidesBudgetingInAustraliaForNewArrivalsRoute: typeof GuidesBudgetingInAustraliaForNewArrivalsRoute
   GuidesSendingMoneyToNepalFromAustraliaRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRoute
+  ApiV1RatesRoute: typeof ApiV1RatesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -454,6 +467,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesSendingMoneyToNepalFromAustraliaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/rates': {
+      id: '/api/v1/rates'
+      path: '/api/v1/rates'
+      fullPath: '/api/v1/rates'
+      preLoaderRoute: typeof ApiV1RatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -481,6 +501,7 @@ const rootRouteChildren: RootRouteChildren = {
     GuidesBudgetingInAustraliaForNewArrivalsRoute,
   GuidesSendingMoneyToNepalFromAustraliaRoute:
     GuidesSendingMoneyToNepalFromAustraliaRoute,
+  ApiV1RatesRoute: ApiV1RatesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

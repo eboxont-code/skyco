@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://skyco.online/docs/rates/rate-api-contract-v1.schema.json",
   "title": "SkyCo CurrenSee rate HTTP contract v1",
-  "description": "Proposed response schema for GET /api/v1/rates. The endpoint is not exposed yet.",
+  "description": "Response schema for the implemented GET /api/v1/rates route.",
   "oneOf": [{ "$ref": "#/definitions/successResponse" }, { "$ref": "#/definitions/errorResponse" }],
   "definitions": {
     "currencyCode": {
@@ -53,6 +53,7 @@
             "RATE_LIMITED",
             "MALFORMED_UPSTREAM_PAYLOAD",
             "NRB_UNAVAILABLE",
+            "PROVIDER_UNAVAILABLE",
             "HISTORY_UNAVAILABLE"
           ]
         },

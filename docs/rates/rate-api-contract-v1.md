@@ -1,12 +1,12 @@
 # CurrenSee rate HTTP contract v1
 
-**Status:** proposed contract, documented 16 November 2026. **The `/api/v1/rates` route does not exist today.** The website continues to use the TanStack Start `getRate` server function. This document and its JSON Schema do not expose an endpoint or authorize Flutter to scrape HTML or guess framework transport URLs.
+**Status:** implemented in source on 17 November 2026. `GET /api/v1/rates` now adapts the existing server-side provider and caches to this contract. The website continues to use the TanStack Start `getRate` server function; it does not call this HTTP route. Production availability has not been verified in this batch. Flutter must not scrape HTML or guess framework transport URLs.
 
 The source of truth for current provider behaviour is [currensee-request-path.md](currensee-request-path.md), `src/lib/rate-provider.server.ts`, and `src/lib/rate-provider.server.test.ts` at commit `aa8ee1c`. The machine-checkable schema is [rate-api-contract-v1.schema.json](rate-api-contract-v1.schema.json).
 
 ## Base path and request
 
-Proposed request:
+Request:
 
 ```text
 GET /api/v1/rates?from=AUD&to=EUR&amount=100&history=30d
@@ -195,9 +195,10 @@ Fatal errors use HTTP `Content-Type: application/json` and this shape. Do not in
 | `RATE_LIMITED`               | `429 Too Many Requests`   | The caller or required provider is rate limited. Include `Retry-After` only when a real retry interval is known.                                   |
 | `MALFORMED_UPSTREAM_PAYLOAD` | `502 Bad Gateway`         | The provider response cannot be validated and no valid last-good rate exists.                                                                      |
 | `NRB_UNAVAILABLE`            | `503 Service Unavailable` | Required NRB data is unavailable, including QAR/AED/SAR with no usable published or cached NRB row.                                                |
+| `PROVIDER_UNAVAILABLE`       | `503 Service Unavailable` | A non-NRB required provider failed and no valid last-good rate exists. This is distinct from a timeout, rate limit or malformed payload.             |
 | `HISTORY_UNAVAILABLE`        | `200 OK` warning          | The current rate is valid but history is empty because it could not be retrieved. Put the object in `data.warnings`; do not fail the current rate. |
 
-The existing provider core often throws the generic `Reference rates unavailable` error. The future HTTP adapter must classify failures at the provider boundary to implement these codes; this document does not claim the current server function already returns them.
+The HTTP adapter wraps provider requests with an 8-second timeout and classifies HTTP 408/504, 429, other non-success responses, JSON parsing failures and required-NRB failures. The existing provider core still throws generic errors; the adapter maps its remaining invalid-payload failures without exposing upstream bodies, stack traces or secrets. The website's existing server function is unchanged.
 
 ### Provider timeout example
 
@@ -289,7 +290,7 @@ All required states already have explicit labels, so no visual label was added i
 
 ## Standing constraints
 
-- **Server-side third-party fetches; no secrets in mobile:** provider hosts appear in `src/lib/rate-provider.server.ts`, `src/lib/frankfurter.ts`, and `src/lib/nrb-rates.server.ts`. `src/lib/rates.functions.ts` dynamically imports the server provider. `src/components/experiences/CurrenSeeConverter.tsx` contains no provider hostnames. Covered by `rate-api-contract.test.ts` test `standing constraints keep provider hosts server-side and preserve cache TTL constants`; no Flutter source exists to hold secrets.
+- **Server-side third-party fetches; no secrets in mobile:** provider hosts appear in `src/lib/rate-provider.server.ts`, `src/lib/frankfurter.ts`, and `src/lib/nrb-rates.server.ts`. `src/lib/rates.functions.ts` dynamically imports the server provider. `src/components/experiences/CurrenSeeConverter.tsx` contains no provider hostnames. The route dynamically imports `src/lib/rate-api.server.ts` inside its GET handler. Covered by `rate-api-contract.test.ts` test `standing constraints keep provider hosts server-side and preserve cache TTL constants`; the Flutter source scaffold contains no provider hosts or secrets.
 - **Frankfurter/CoinGecko/NRB attribution and NRB fallback:** exact source strings and the peg source are asserted in `rate-provider.server.test.ts` tests `Frankfurter provider path returns a dated fiat cross-rate and only published history points`, `CoinGecko provider path converts crypto to fiat and marks cross-currency history approximate`, `NRB provider path applies published units and buy/sell midpoint to the pair and history`, and `NPR falls back to the official INR 1.6 peg only when NRB is unavailable`. `QAR fails closed when the required NRB source is unavailable` prevents unsupported substitution. Contract mapping tests assert `attribution === source`.
 - **60-second pair cache:** `rate-cache.test.ts` tests `fresh pair snapshots carry the provider date and false stale flag without refetching before expiry`, `60-second cache expiry retains the exact last good pair rate, date and source with a stale flag`, and `successful recovery replaces the stale rate and clears the stale flag`.
 - **Hourly NRB payload cache and fallback:** `nrb-rates.server.test.ts` tests `expired cache survives a complete provider outage without changing its date or values`, `failed range fetch falls back to the latest published dated feed`, and `an older latest-feed response cannot replace a newer cached NRB day`.
@@ -297,4 +298,4 @@ All required states already have explicit labels, so no visual label was added i
 
 ## Verification
 
-Run `bun run test`. The contract tests use injected mocked `fetch`/NRB loaders only. They do not call the live providers, start an HTTP server, or expose `/api/v1/rates`.
+Run `bun run test`. `rate-api-contract.test.ts` checks provider-to-contract mappings and `rate-api.server.test.ts` exercises the GET handler with injected mocked `fetch`/NRB loaders only. They do not call live providers. The route tests validate success and every documented error code against the JSON Schema and assert that the existing CurrenSee page still uses its original server function.

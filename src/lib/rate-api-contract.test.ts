@@ -334,6 +334,11 @@ test("every documented error code validates in the common error envelope", () =>
     ],
     ["NRB_UNAVAILABLE", "Nepal Rastra Bank reference rates are unavailable for this pair.", true],
     [
+      "PROVIDER_UNAVAILABLE",
+      "The rate provider is unavailable and no cached rate is available.",
+      true,
+    ],
+    [
       "HISTORY_UNAVAILABLE",
       "The current rate is available, but source-backed history is unavailable.",
       true,
