@@ -35,7 +35,7 @@ function readBrokerReply(data: unknown, requestId: string): BrokerReply | null {
 }
 
 /**
- * On a preview surface, broker the auth session to the editor over
+ * On a Lovable preview surface, broker the auth session to the editor over
  * postMessage so the project's preview surfaces share one login; else localStorage.
  */
 export function brokeredPreviewStorage(): PreviewAuthStorage | undefined {
@@ -57,7 +57,7 @@ export function brokeredPreviewStorage(): PreviewAuthStorage | undefined {
   const framed = parentWindow !== null && parentWindow !== window;
   if (!projectId || !framed) return localStorage;
 
-  // Post only to the real editor ancestor, validated as a trusted editor origin, so the
+  // Post only to the real editor ancestor, validated as a Lovable origin, so the
   // session token can never reach an untrusted embedder.
   const dev = host.endsWith('.lovableproject-dev.com') || host.endsWith('.gpt-eng.com');
   const EDITOR = dev
