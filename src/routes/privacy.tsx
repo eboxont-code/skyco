@@ -2,7 +2,7 @@ import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
-const UPDATED = "9 November 2026";
+const UPDATED = "18 November 2026";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -178,6 +178,14 @@ function PrivacyPage() {
           permission. There are no background checks after the page is closed or while it is hidden.
           When you choose Copy link, the selected pair and entered amount are also placed in the
           URL.
+        </p>
+        <p>
+          The public <code>GET /api/v1/rates</code> endpoint accepts two currency codes and an
+          optional history choice in its query string. It also accepts an optional positive amount
+          when a caller wants the server to calculate <code>convertedAmount</code>. The CurrenSee
+          page itself does not send your conversion amount to this endpoint. These query values can
+          appear in the requested URL and hosting logs. The endpoint uses the same server-side
+          providers and caches and does not require an account.
         </p>
 
         <h3>In Chronos</h3>

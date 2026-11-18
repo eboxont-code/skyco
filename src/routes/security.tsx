@@ -2,7 +2,7 @@ import { shareMeta, breadcrumbScript, pageScript } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Prose, Callout } from "@/components/PageShell";
 
-const UPDATED = "9 November 2026";
+const UPDATED = "18 November 2026";
 
 export const Route = createFileRoute("/security")({
   head: () => ({
@@ -48,7 +48,7 @@ const table = [
     device:
       "Browser storage keeps the last pair and amount, recent pairs, favourites, default pair, up to 20 saved conversions, up to 10 alerts, the check interval (5, 15, 30 or 60 minutes) and up to 30 alert-history entries. Alert checks run only while this page is open and visible; optional browser notifications require permission. Copy link also puts the selected pair and amount in the URL.",
     server:
-      "The rate function receives currency codes, not the conversion amount or alert threshold. Each alert check sends only its currency pair. The pair-rate function uses a bounded 60-second server-memory cache; Nepal Rastra Bank source data has a separate freshness-aware cache.",
+      "The website rate function receives currency codes, not the conversion amount or alert threshold. Each alert check sends only its currency pair. The separate public GET /api/v1/rates endpoint accepts currency codes plus optional amount and history query values and returns JSON. The pair-rate path uses a bounded 60-second server-memory cache; Nepal Rastra Bank source data has a separate freshness-aware cache.",
     external:
       "Frankfurter for fiat reference rates, CoinGecko for BTC/ETH/SOL, and Nepal Rastra Bank for supported NPR-related rates. Provider outages can return a dated last-good cached rate with an explicit stale label; without valid data the rate is unavailable.",
   },
@@ -312,7 +312,10 @@ function SecurityPage() {
             </li>
             <li>
               CurrenSee's server-side rate requests go to Frankfurter, CoinGecko or Nepal Rastra
-              Bank as appropriate. The amount being converted is not included in the rate request.
+              Bank as appropriate. The website's conversion amount is not included in its rate
+              request. The separate public <code>GET /api/v1/rates</code> endpoint accepts an
+              optional amount and history choice in the query string; those values and currency
+              codes may be processed in hosting request logs.
             </li>
           </ul>
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'app_identity.dart';
 import 'app_shell.dart';
 import 'app_theme.dart';
 import 'routes.dart';
@@ -17,7 +18,7 @@ class _SkyCoAppState extends State<SkyCoApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SkyCo',
+      title: AppIdentity.displayName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),

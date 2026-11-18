@@ -12,6 +12,15 @@ export type ChangeEntry = {
  */
 export const changelog: ChangeEntry[] = [
   {
+    date: "2026-11-18",
+    title: "Clearer rate data disclosure and easier navigation",
+    tag: "Improvement",
+    items: [
+      "Privacy and Security now describe the public versioned rate endpoint, including optional amount and history query values and hosting-log visibility.",
+      "Navigation, breadcrumb, inline and footer links now have at least 44px tap targets on phones and desktop.",
+    ],
+  },
+  {
     date: "2026-11-16",
     title: "Clearer rate contracts and mobile development guidance",
     tag: "Improvement",

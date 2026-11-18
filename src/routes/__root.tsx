@@ -201,7 +201,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         <a
           href="#main-content"
-          className="fixed left-3 top-3 z-[100] -translate-y-20 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          className="fixed left-3 top-3 z-[100] flex min-h-11 -translate-y-20 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
         >
           Skip to main content
         </a>

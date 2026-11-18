@@ -15,6 +15,9 @@ const waitlistFunction = read("./waitlist.functions.ts");
 const contactForm = read("../components/ContactForm.tsx");
 const currenSeeStore = read("./currensee-store.ts");
 const groceryPreview = read("../components/experiences/GroceryPackPreview.tsx");
+const rateApiRoute = read("../routes/api/v1/rates.ts");
+const flutterPubspec = read("../../apps/skyco_app/pubspec.yaml");
+const flutterPersistence = read("../../apps/skyco_app/lib/services/persistence/local_persistence.dart");
 
 test("privacy coverage follows all five shipped registry products", () => {
   const coverage =
@@ -125,6 +128,23 @@ test("third-party providers and unverified hosting retention remain disclosed", 
     security,
     /active production host and its exact log-retention settings are not established/,
   );
+});
+
+test("public rate endpoint disclosures match its query and server-side behavior", () => {
+  assert.match(rateApiRoute, /GET: async/);
+  assert.match(rateApiRoute, /@\/lib\/rate-api\.server/);
+  assert.match(privacy, /GET \/api\/v1\/rates/);
+  assert.match(privacy, /optional positive amount/);
+  assert.match(privacy, /optional history choice/);
+  assert.match(privacy, /hosting logs/);
+  assert.match(security, /GET \/api\/v1\/rates/);
+  assert.match(security, /optional amount and history query values/);
+});
+
+test("source-only mobile scaffold adds no storage or provider SDK disclosure gap", () => {
+  assert.match(flutterPubspec, /flutter:\s+sdk: flutter/);
+  assert.doesNotMatch(flutterPubspec, /shared_preferences|sqflite|path_provider|http:/);
+  assert.doesNotMatch(flutterPersistence, /SharedPreferences|sqflite|localStorage/);
 });
 
 test("privacy and security copy avoids unsupported blanket claims", () => {

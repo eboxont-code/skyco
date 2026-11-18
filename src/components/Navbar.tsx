@@ -112,7 +112,7 @@ export function Navbar({
               onClick={() => setProjectsOpen((v) => !v)}
               aria-expanded={projectsOpen}
               aria-haspopup="menu"
-              className="flex items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex min-h-11 min-w-11 items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Products
               <ChevronDown
@@ -151,7 +151,7 @@ export function Navbar({
                 key={l.to}
                 to={l.to}
                 activeProps={{ className: "text-foreground", "aria-current": "page" }}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="inline-flex min-h-11 min-w-11 items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {l.label}
               </Link>
@@ -160,7 +160,7 @@ export function Navbar({
           <Link
             to="/support"
             aria-current={pathname === "/support" ? "page" : undefined}
-            className="rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex min-h-11 items-center rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-sky-azure hover:shadow-glow-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Get in touch
           </Link>
@@ -190,7 +190,7 @@ export function Navbar({
                   key={p.href}
                   to={p.href}
                   aria-current={pathname === p.href ? "page" : undefined}
-                  className="block rounded-md px-2 py-2 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
+                  className="block min-h-11 rounded-md px-2 py-2 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
                   onClick={() => setMobileOpen(false)}
                 >
                   <span className="block text-sm font-semibold text-foreground">{p.label}</span>
@@ -209,7 +209,7 @@ export function Navbar({
                   key={l.to}
                   to={l.to}
                   aria-current={pathname === l.to ? "page" : undefined}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground"
+                  className="inline-flex min-h-11 min-w-11 items-center text-sm font-medium text-muted-foreground hover:text-foreground"
                   onClick={() => setMobileOpen(false)}
                 >
                   {l.label}
@@ -220,7 +220,7 @@ export function Navbar({
           <Link
             to="/support"
             aria-current={pathname === "/support" ? "page" : undefined}
-            className="inline-block rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground"
+            className="inline-flex min-h-11 items-center rounded-full bg-sky-deep px-5 py-2 text-sm font-semibold text-primary-foreground"
             onClick={() => setMobileOpen(false)}
           >
             Get in touch

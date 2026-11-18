@@ -47,7 +47,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={project.slug}>
                   <Link
                     to={project.path ?? "/"}
-                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {project.name}
                   </Link>
@@ -59,9 +59,9 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
           <nav aria-label="Currency shortcuts">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky-deep">Currency shortcuts</p>
             <ul className="mt-3 space-y-2">
-              {([["aud-to-npr","AUD to NPR"],["usd-to-npr","USD to NPR"],["npr-to-inr","NPR to INR"],["aud-to-inr","AUD to INR"],["usd-to-aud","USD to AUD"]] as const).map(([slug, label]) => <li key={slug}><Link to="/currensee/$pair" params={{ pair: slug }} className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</Link></li>)}
-              <li><Link to="/currensee/rates" className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">All NPR rates today</Link></li>
-              <li><Link to="/guides/sending-money-to-nepal-from-australia" className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Sending money to Nepal</Link></li>
+              {([["aud-to-npr","AUD to NPR"],["usd-to-npr","USD to NPR"],["npr-to-inr","NPR to INR"],["aud-to-inr","AUD to INR"],["usd-to-aud","USD to AUD"]] as const).map(([slug, label]) => <li key={slug}><Link to="/currensee/$pair" params={{ pair: slug }} className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</Link></li>)}
+              <li><Link to="/currensee/rates" className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">All NPR rates today</Link></li>
+              <li><Link to="/guides/sending-money-to-nepal-from-australia" className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Sending money to Nepal</Link></li>
             </ul>
           </nav>
 
@@ -73,7 +73,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {l.label}
                   </Link>
@@ -89,7 +89,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {l.label}
                   </Link>
@@ -98,7 +98,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
               <li>
                 <a
                   href={`mailto:${SUPPORT_EMAIL}`}
-                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {SUPPORT_EMAIL}
                 </a>
@@ -108,7 +108,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
                   href="https://www.instagram.com/skyco.online/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="inline-flex min-h-11 min-w-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   Instagram
                 </a>
@@ -123,7 +123,7 @@ export function Footer({ directory = fallbackDirectory }: { directory?: Resolved
             {trustStrip.filter(l => l.to !== "/support").map((l) => (
               <span key={l.to} className="flex items-center gap-2">
                 <span aria-hidden="true">&middot;</span>
-                <Link to={l.to} className="inline-flex min-h-11 items-center transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <Link to={l.to} className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   {l.label}
                 </Link>
               </span>

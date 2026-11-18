@@ -1,6 +1,12 @@
 # SkyCo Flutter Android development on Windows
 
-**Status:** setup guide plus an uncompiled source scaffold, updated 17 November 2026. Flutter, Android Studio and an emulator have **not** been installed in this repository environment. The scaffold under `apps/skyco_app/` has not been compiled, analyzed or run. Follow the official installers on a Windows development machine and record the actual tool versions when that work is done.
+**Status:** setup guide plus an uncompiled source scaffold, updated 18 November 2026. Flutter, Android Studio and an emulator have **not** been installed in this repository environment. The scaffold under `apps/skyco_app/` has not been compiled, analyzed or run. Follow the official installers on a Windows development machine and record the actual tool versions when that work is done.
+
+## Pinned source toolchain
+
+The source baseline is **Flutter stable 3.50.0 with Dart 3.14.0**, from Flutter's official stable release manifest published on 11 November 2026. The Flutter release hash is `ab2912035e160d9cad6306df307576da6128ebdb`. `apps/skyco_app/.flutter-version` pins Flutter, and `pubspec.yaml` requires Dart 3.14.0 or later within Dart 3 and Flutter 3.50.0 or later.
+
+Install that exact stable Flutter release on Windows rather than silently moving the app to a newer release. Confirm `flutter --version` reports both pinned versions before generation. Any later toolchain upgrade needs its own source review, tests and documentation update. This pin is not a claim that the SDK is installed or that the app has compiled.
 
 ## Official setup
 

@@ -38,7 +38,7 @@ export function PageShell({
             <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted-foreground">
               <ol className="flex flex-wrap items-center gap-1.5">
                 <li>
-                  <Link to="/" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <Link to="/" className="inline-flex min-h-11 min-w-11 items-center font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     Home
                   </Link>
                 </li>
@@ -46,7 +46,7 @@ export function PageShell({
                 {parent?.to === "/float" && <><li><Link to="/" hash="tools" className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-ring">Products</Link></li><li aria-hidden="true">/</li></>}
                 {parent && (
                   <>
-                    <li><Link to={parent.to} className="inline-flex min-h-11 items-center font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{parent.label}</Link></li>
+                    <li><Link to={parent.to} className="inline-flex min-h-11 min-w-11 items-center font-semibold text-sky-deep underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{parent.label}</Link></li>
                     <li aria-hidden="true">/</li>
                   </>
                 )}
@@ -85,7 +85,7 @@ export function Prose({ children }: { children: ReactNode }) {
         [&_h2]:mt-10 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-foreground
         [&_h3]:mt-6 [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-foreground
         [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5
-        [&_a]:font-medium [&_a]:text-sky-deep [&_a]:underline [&_a]:underline-offset-4
+        [&_a]:inline-flex [&_a]:min-h-11 [&_a]:min-w-11 [&_a]:items-center [&_a]:font-medium [&_a]:text-sky-deep [&_a]:underline [&_a]:underline-offset-4
         [&_strong]:font-semibold [&_strong]:text-foreground"
     >
       {children}
