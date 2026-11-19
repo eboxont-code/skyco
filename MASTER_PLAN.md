@@ -180,8 +180,8 @@ At the start of each run:
 - [x] Secret-scan the tracked `.env` file and repository history without copying secret values into issues, logs or AI prompts; Gitleaks v8.30.1 scanned full reachable history on 6 November 2026 and reported no leaks (Actions run `42201818522`).
 - [x] Review Gitleaks findings for committed credentials; no findings were reported, so no credential owner/scope/rotation follow-up was triggered by this scan. Hosting logs and runtime credentials remain a separate review.
 - [x] Add `.env` / `.env.*` ignore rules (while allowing `.env.example`) and add a placeholder-only `.env.example`; verified on main 5 November 2026.
-- [ ] Confirm deployment/runtime variables are configured in the hosting platform, not committed to Git. **Partially verified / BLOCKED (11 November 2026):** the Git-linked Vercel `skyco` project and verified `skyco.online` / `www.skyco.online` domains are identified. Current `main` commit [`33f5a641`](https://github.com/eboxont-code/skyco/commit/33f5a641224ed8c73dd4bef0bef3b6758eb90891) has a matching **READY production-target** deployment [`dpl_Gw1WG77P4Wdjsp9E5kEp4mKwAC6p`](https://vercel.com/boxont/skyco/Gw1WG77P4Wdjsp9E5kEp4mKwAC6p); its deployment metadata lists both custom domains as aliases. Project metadata still reports `live=false`, and the previously inspected non-decrypted production environment listing returned zero visible and zero hidden entries. Current source requires `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` for the browser client and `SUPABASE_URL` plus `SUPABASE_SERVICE_ROLE_KEY` for trusted Float waitlist inserts. **Blocked:** the owner must confirm/configure the correct production runtime with the required settings, or identify a different serving runtime. No environment values were read or changed; see §35.
-- [ ] Confirm `main` remains a working editor-connected branch; use normal commits only. **Blocked:** requires read-only access to the connected editor project workspace to verify connection and sync status.
+- [ ] Confirm deployment/runtime variables are configured in the hosting platform, not committed to Git. **Current facts (19 November 2026):** production is the Git-linked Vercel project `skyco`, serving `skyco.online` and auto-deploying `main`. Environment variables have not been inspected; this item stays open. **Earlier note (11 November 2026):** the Git-linked Vercel `skyco` project and verified `skyco.online` / `www.skyco.online` domains are identified. Current `main` commit [`33f5a641`](https://github.com/eboxont-code/skyco/commit/33f5a641224ed8c73dd4bef0bef3b6758eb90891) has a matching **READY production-target** deployment [`dpl_Gw1WG77P4Wdjsp9E5kEp4mKwAC6p`](https://vercel.com/boxont/skyco/Gw1WG77P4Wdjsp9E5kEp4mKwAC6p); its deployment metadata lists both custom domains as aliases. Project metadata still reports `live=false`, and the previously inspected non-decrypted production environment listing returned zero visible and zero hidden entries. Current source requires `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` for the browser client and `SUPABASE_URL` plus `SUPABASE_SERVICE_ROLE_KEY` for trusted Float waitlist inserts. **Blocked:** the owner must confirm/configure the correct production runtime with the required settings, or identify a different serving runtime. No environment values were read or changed; see §35.
+- [x] Confirm `main` remains a working editor-connected branch; use normal commits only. **Updated 19 November 2026:** the editor and GitHub `main` are in sync at `ba2ce99`; work is committed directly with normal commits.
 - [x] Establish branch/PR and rollback conventions in `AGENTS.md`; explicitly preserve editor-connected history and document safe revert/deployment recovery rules (6 November 2026).
 - [x] Choose and document the canonical package manager: **Bun 1.3.14**. Verified from the READY Vercel deployment record [`dpl_9A3S1DNMhCaw7XbWJxAwQckjnhvh`](https://vercel.com/boxont/skyco/9A3S1DNMhCaw7XbWJxAwQckjnhvh), target `production`, for main commit [`64f6d364`](https://github.com/eboxont-code/skyco/commit/64f6d3645c623d743ac90588581b97bf652af3db); its build log records `bun install v1.3.14`. README now documents the observed version. This verifies the package-manager version used by that build only; it does not close the separate host, runtime-variable, editor-sync or CI/lint gates.
 - [x] Add a reproducible test command for existing Node tests. `package.json` on `main` now defines `"test": "bun test"` and `"packageManager": "bun@1.3.14"`. Use `bun run test`.
@@ -415,20 +415,20 @@ A phase is not complete because a screen exists. It is complete only when the ev
 
 ### Website gate
 
-- [ ] Five live routes and two planned entries are represented accurately.
+- [x] Five live routes and two planned entries are represented accurately. **Verified 19 November 2026:** all five product routes return 200 with product titles; prior SEO/llms.txt/sitemap check (f4307c6) unchanged; Status lists the two planned entries as planned.
 - [ ] No known P0 secret/privacy/security issue remains open.
-- [ ] Privacy/security/status statements match shipped code.
-- [ ] Production build, lint and defined tests pass.
-- [ ] Mobile and desktop smoke tests pass.
-- [ ] Canonical URL and metadata are correct.
+- [x] Privacy/security/status statements match shipped code. **Verified 19 November 2026:** `src/lib/privacy-security.test.ts` passes in the 241-test suite, including the public rate-route disclosure added in ba2ce99.
+- [ ] Production build, lint and defined tests pass. **PARTIAL 19 November 2026:** `bun run test` 241 pass / 0 fail across 30 files; `bun run build` exit 0. Lint backlog remains (last recorded count 1,585 errors, 10 warnings, 16 November baseline; not rerun to completion today).
+- [x] Mobile and desktop smoke tests pass. **Verified 19 November 2026:** Playwright opened /, the five product routes, /privacy, /security and /status at 390px and 1280px: all HTTP 200, no horizontal overflow. Interactive flows were verified 13 November and tap targets 18 November.
+- [x] Canonical URL and metadata are correct. **Verified 19 November 2026:** each of the nine routes above renders a unique title, meta description, og:title and canonical `https://skyco.online<path>` at both widths.
 
 ### API gate
 
-- [ ] Versioned contract, schema and error model are documented.
-- [ ] Provider names, source dates and fetched timestamps are tested.
-- [ ] Cache and rate-limit behaviour are bounded and documented.
-- [ ] No provider secret is in the app bundle.
-- [ ] Fixtures cover expected failures and fallbacks.
+- [x] Versioned contract, schema and error model are documented. **Verified 19 November 2026:** `docs/rates/rate-api-contract-v1.md` plus JSON Schema; `/api/v1/rates` route tests validate success and every documented error against the schema.
+- [x] Provider names, source dates and fetched timestamps are tested. **Verified 19 November 2026:** provider-mapping, stale-label and route tests assert `source`, `referenceDate` and `fetchedAt`.
+- [x] Cache and rate-limit behaviour are bounded and documented. **Verified 19 November 2026:** contract §cache documents the 60,000 ms bounded pair cache, one-hour NRB cache, 60-second fallback retry, 8-second timeout and 429 `RATE_LIMITED` mapping; cache tests cover fresh, stale and cold-cache cases.
+- [x] No provider secret is in the app bundle. **Verified 19 November 2026:** new `src/lib/client-bundle-secrets.test.ts` scans built `dist/client` for server key names and secret-key values and passes; providers need no keys and are fetched server side only.
+- [x] Fixtures cover expected failures and fallbacks. **Verified 19 November 2026:** deterministic rate fixtures (PR #27) cover missing values, NRB unavailable, timeout, 429, malformed payload and empty history.
 
 ### Android gate
 
@@ -524,7 +524,7 @@ Use official documentation and re-check policy pages immediately before implemen
 
 - [x] Documented branch naming, pull-request expectations, editor-connected main-branch constraints and non-destructive rollback conventions in `AGENTS.md`.
 - [ ] Historical Gitleaks scan remained pending verification **at the time of this entry**; this was superseded by the successful 6 November run documented in section 11 (Actions run `42201818522`, Gitleaks v8.30.1).
-- [ ] Hosting runtime-variable verification remains pending. No Vercel project matching `eboxont-code/skyco` or `skyco` was found, and the README's editor project ID was not accessible in the connected editor workspace. The actual production host is not established by these checks.
+- [ ] **Superseded 19 November 2026:** host identified as the Git-linked Vercel project `skyco` (auto-deploys `main`, serves skyco.online); variables still uninspected. Historical note: Hosting runtime-variable verification remains pending. No Vercel project matching `eboxont-code/skyco` or `skyco` was found, and the README's editor project ID was not accessible in the connected editor workspace. The actual production host is not established by these checks.
 
 ## 8. Audit log — 5 November 2026
 
@@ -536,7 +536,7 @@ Repository: eboxont-code/skyco (private), default branch main. The repository tr
 - [x] Added .env and .env.* ignore rules while explicitly allowing .env.example.
 - [x] Deleted the tracked root .env from the current branch without opening, printing or copying its values.
 - [ ] Scan Git history and hosting logs for exposed credentials; rotate/revoke any affected values. The current-branch deletion does not erase prior commits.
-- [ ] Confirm each required server-side variable in the actual editor/hosting runtime. A Vercel project search by repository and SkyCo/Currensee names returned no projects; this does not establish where the live site is hosted or whether runtime configuration is complete.
+- [ ] **Superseded 19 November 2026:** host identified as the Git-linked Vercel project `skyco` (auto-deploys `main`, serves skyco.online); variables still uninspected. Historical note: Confirm each required server-side variable in the actual editor/hosting runtime. A Vercel project search by repository and SkyCo/Currensee names returned no projects; this does not establish where the live site is hosted or whether runtime configuration is complete.
 
 ### Baseline and delivery notes
 
