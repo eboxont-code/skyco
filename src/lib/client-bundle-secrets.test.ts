@@ -1,4 +1,5 @@
-import { describe, expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -17,13 +18,13 @@ function files(dir: string): string[] {
 }
 
 describe("client bundle", () => {
-  test.skipIf(!existsSync(CLIENT_DIR))("contains no provider or server key names", () => {
+  test("contains no provider or server key names", { skip: !existsSync(CLIENT_DIR) }, () => {
     const hits: string[] = [];
     for (const f of files(CLIENT_DIR)) {
       const text = readFileSync(f, "utf8");
       for (const k of FORBIDDEN) if (text.includes(k)) hits.push(`${f}: ${k}`);
       if (SECRET_VALUE.test(text)) hits.push(`${f}: secret key value`);
     }
-    expect(hits).toEqual([]);
+    assert.deepEqual(hits, []);
   });
 });
